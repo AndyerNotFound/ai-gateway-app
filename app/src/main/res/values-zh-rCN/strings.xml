@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Gateway</string>
+
+    <!-- 首次设置 -->
+    <string name="setup_title">选择运行方式</string>
+    <string name="setup_embedded">应用内运行</string>
+    <string name="setup_embedded_desc">在 App 内嵌网关后端, 无需 Termux, 开箱即用</string>
+    <string name="setup_termux">连接 Termux 运行</string>
+    <string name="setup_termux_desc">连接在 Termux 中运行的 ai-gateway 后端(本机或局域网)</string>
+    <string name="setup_connect_section">连接网关 (可稍后)</string>
+    <string name="setup_quick_local">本机</string>
+    <string name="setup_quick_lan">局域网</string>
+    <string name="setup_connect_enter">连接并进入</string>
+    <string name="setup_skip">暂不连接, 先进入</string>
+    <string name="setup_termux_section">Termux 后端</string>
+
+    <!-- 连接 -->
+    <string name="connect_title">连接到网关</string>
+    <string name="connect_host">网关地址</string>
+    <string name="connect_admin_key">管理密码 (adminKey)</string>
+    <string name="connect_button">连接</string>
+    <string name="connecting">连接中…</string>
+    <string name="connect_mode">运行模式</string>
+    <string name="connect_mode_remote">连接 Termux / 远程网关</string>
+    <string name="connect_hint_nokey">留空 adminKey = 免密连接(网关未设管理密码时)</string>
+    <string name="connect_reselect_mode">重新选择模式</string>
+    <string name="connect_saved">已保存连接</string>
+    <string name="connect_ok">连接成功</string>
+    <string name="connect_failed_entered">连接失败, 已进入(可在「连接设置」重试)</string>
+    <string name="connect_need_url">请填写网关地址</string>
+    <string name="connect_switched_embedded">已切换到应用内运行</string>
+
+    <!-- 导航 -->
+    <string name="nav_overview">总览</string>
+    <string name="nav_providers">提供商</string>
+    <string name="nav_routing">路由</string>
+    <string name="nav_keys">密钥</string>
+    <string name="nav_ports">实例</string>
+    <string name="nav_replace">替换</string>
+    <string name="nav_stats">统计</string>
+    <string name="nav_requests">请求</string>
+    <string name="nav_logs">日志</string>
+    <string name="nav_chat">聊天</string>
+
+    <!-- 标题 -->
+    <string name="title_overview">总览</string>
+    <string name="title_providers">提供商 / 渠道</string>
+    <string name="title_routing">路由 / 模型改名</string>
+    <string name="title_keys">密钥</string>
+    <string name="title_ports">端口 / 实例</string>
+    <string name="title_replace">文本替换</string>
+    <string name="title_stats">统计</string>
+    <string name="title_requests">请求记录</string>
+    <string name="title_logs">日志</string>
+    <string name="title_chat">聊天测试</string>
+
+    <!-- 菜单 -->
+    <string name="menu_theme">颜色 / 主题</string>
+    <string name="menu_connection">连接 / 模式设置</string>
+
+    <!-- 主题设置 -->
+    <string name="theme_title">颜色 / 主题</string>
+    <string name="theme_mode">深色模式</string>
+    <string name="theme_mode_system">跟随系统</string>
+    <string name="theme_mode_light">浅色</string>
+    <string name="theme_mode_dark">深色</string>
+    <string name="theme_dynamic">Material You 动态取色</string>
+    <string name="theme_dynamic_desc">仅 Android 12+ 支持, 从壁纸提取配色</string>
+    <string name="theme_palette">配色方案</string>
+    <string name="theme_palette_purple">紫色 (默认)</string>
+    <string name="theme_palette_blue">蓝色</string>
+    <string name="theme_palette_green">绿色</string>
+    <string name="theme_palette_orange">橙色</string>
+    <string name="theme_palette_red">红色</string>
+    <string name="theme_language">语言</string>
+    <string name="theme_language_system">跟随系统</string>
+    <string name="theme_language_en">English</string>
+    <string name="theme_language_zh">简体中文</string>
+    <string name="theme_applied">设置已生效</string>
+
+    <!-- Termux -->
+    <string name="termux_start_backend">启动 Termux 后端</string>
+    <string name="termux_install">安装/部署到 Termux</string>
+    <string name="termux_not_installed">未检测到 Termux</string>
+    <string name="termux_detected">✓ 已检测到 Termux</string>
+    <string name="termux_not_detected">⚠ 未检测到 Termux (可安装后使用部署功能)</string>
+    <string name="termux_open">打开 Termux</string>
+    <string name="termux_cmd_sent">已发送启动命令到 Termux</string>
+    <string name="termux_cmd_failed">失败: 未检测到 Termux 或未授权外部调用</string>
+    <string name="termux_deploy_title">安装/部署到 Termux</string>
+    <string name="termux_deploy_msg">将把 gateway 后端文件写入 Download/ai-gateway-deploy/, 并调起 Termux 执行安装脚本(安装 Node.js、部署到 ~/ai-gateway、启动)。\n\n需要 Termux 已执行过 termux-setup-storage 且允许外部调用。</string>
+    <string name="termux_deploy_start">开始</string>
+    <string name="termux_deploy_ok">已调起 Termux 执行安装</string>
+    <string name="termux_deploy_failed">部署失败</string>
+
+    <!-- 总览 -->
+    <string name="ov_checking">检测中…</string>
+    <string name="ov_connected">已连接</string>
+    <string name="ov_connect_failed">连接失败</string>
+    <string name="ov_not_connected">未连接</string>
+    <string name="ov_total_requests">总请求</string>
+    <string name="ov_errors">错误</string>
+    <string name="ov_uptime">运行时间</string>
+    <string name="ov_current_instance">当前实例</string>
+    <string name="ov_loading">加载中…</string>
+    <string name="ov_quick_actions">快捷操作</string>
+    <string name="ov_refresh">刷新状态</string>
+    <string name="ov_configure_first">请先在「连接 / 模式设置」里配置</string>
+    <string name="ov_unreachable">无法连接到网关, 请检查地址/密码或启动后端</string>
+    <string name="ov_no_instance">无实例</string>
+    <string name="ov_load_failed">加载失败: %1$s</string>
+    <string name="ov_mode_embedded">应用内运行 · 内嵌网关</string>
+    <string name="ov_mode_remote">远程网关 · %1$s</string>
+    <string name="ov_mode_unset">未设置</string>
+    <string name="ov_recent_requests">最近请求</string>
+    <string name="ov_view_all">查看全部</string>
+    <string name="ov_no_requests">暂无请求记录</string>
+    <string name="ov_stats_by_channel">按渠道统计</string>
+
+    <!-- 提供商 -->
+    <string name="pv_empty">暂无渠道\n点右下角 + 新增</string>
+    <string name="pv_add">新增渠道</string>
+    <string name="pv_edit">编辑渠道</string>
+    <string name="pv_fetch_models">获取模型</string>
+    <string name="pv_edit_btn">编辑</string>
+    <string name="pv_delete_btn">删除</string>
+    <string name="pv_name">渠道名称 *</string>
+    <string name="pv_type">上游格式 *</string>
+    <string name="pv_base_url">Base URL * (如 https://api.deepseek.com)</string>
+    <string name="pv_api_key">API Key (留空保持不变)</string>
+    <string name="pv_proxy">代理名 (可选)</string>
+    <string name="pv_models">模型列表 (逗号分隔)</string>
+    <string name="pv_model_map">模型改名 (每行: 对外名=上游名)</string>
+    <string name="pv_delay">请求延迟 (毫秒, 0=关)</string>
+    <string name="pv_default">设为默认渠道(兜底)</string>
+    <string name="pv_insecure">跳过证书校验 (自签中转站)</string>
+    <string name="pv_need_fields">名称和 Base URL 必填</string>
+    <string name="pv_bad_type">格式必须是 openai / gemini / claude</string>
+    <string name="pv_saved">已保存渠道</string>
+    <string name="pv_save_failed">保存失败: %1$s</string>
+    <string name="pv_delete_title">删除渠道</string>
+    <string name="pv_delete_msg">确定删除渠道「%1$s」吗?</string>
+    <string name="pv_deleted">已删除</string>
+    <string name="pv_fetching">正在从上游获取模型…</string>
+    <string name="pv_models_title">上游模型 (%1$d)</string>
+    <string name="pv_fill_models">填入 models 并保存</string>
+    <string name="pv_no_models">未获取到模型: %1$s</string>
+    <string name="pv_filled">已填入 %1$d 个模型</string>
+    <string name="pv_no_key">无 key</string>
+    <string name="pv_models_count">%1$d 模型</string>
+
+    <!-- 路由 -->
+    <string name="rt_hint">客户端请求的模型名按以下规则路由: 渠道 modelMap 精确命中 &gt; models 列表 &gt; 默认渠道 &gt; 第一个渠道。改名请在「提供商」编辑渠道的 modelMap。</string>
+    <string name="rt_empty">暂无模型\n(在「提供商」为渠道添加 models / modelMap)</string>
+    <string name="rt_no_channel">(无渠道)</string>
+
+    <!-- 密钥 -->
+    <string name="keys_gateway_title">网关访问密钥 (gatewayKey)</string>
+    <string name="keys_gateway_desc">客户端调用 AI 接口时需携带此 key (Bearer / x-api-key / ?key=)。留空 = 免密。</string>
+    <string name="keys_admin_title">管理密码 (adminKey)</string>
+    <string name="keys_admin_desc">管理面板 / admin API 的鉴权密码。留空 = 免密管理(局域网自用)。</string>
+    <string name="keys_save">保存密钥</string>
+    <string name="keys_warn">⚠ 修改 adminKey 后, 本 App 的连接密码也需同步更新(连接/模式设置)。修改后网关会重启生效。</string>
+    <string name="keys_saved">已保存密钥(网关可能重启)</string>
+
+    <!-- 端口 / 实例 -->
+    <string name="pt_new">新建实例</string>
+    <string name="pt_shutdown_all">全部停止</string>
+    <string name="pt_current">当前</string>
+    <string name="pt_running">运行中</string>
+    <string name="pt_stopped">已停止</string>
+    <string name="pt_channels">%1$d 渠道</string>
+    <string name="pt_delete_title">删除实例</string>
+    <string name="pt_delete_msg">确定删除实例「%1$s」吗? 将删除其配置文件。</string>
+    <string name="pt_shutdown_title">停止全部实例</string>
+    <string name="pt_shutdown_msg">确定停止所有运行中的网关实例吗?</string>
+    <string name="pt_new_title">新建实例</string>
+    <string name="pt_inst_name">实例名称 * (字母/数字/连字符)</string>
+    <string name="pt_inst_port">端口 * (如 16390)</string>
+    <string name="pt_inst_key">adminKey (可选)</string>
+    <string name="pt_need_valid">请填有效名称和端口</string>
+    <string name="pt_created">已创建实例「%1$s」</string>
+    <string name="pt_switched">已切换到实例「%1$s」</string>
+    <string name="pt_create_failed">创建失败: %1$s</string>
+    <string name="pt_stopped_all">已停止全部实例</string>
+
+    <!-- 替换 -->
+    <string name="rp_hint">对经过网关的文本做正则替换。model 字段与 data:URL 不受影响。规则改动后网关重启生效。</string>
+    <string name="rp_out_title">发送方向 (请求替换)</string>
+    <string name="rp_inc_title">接收方向 (响应替换)</string>
+    <string name="rp_add_out">添加发送规则</string>
+    <string name="rp_add_inc">添加接收规则</string>
+    <string name="rp_save">保存替换规则</string>
+    <string name="rp_regex">正则表达式 *</string>
+    <string name="rp_to">替换为 (留空=删除匹配内容)</string>
+    <string name="rp_ci">忽略大小写 (ci)</string>
+    <string name="rp_empty_rules">(暂无%1$s规则)</string>
+    <string name="rp_delete_match">(删除匹配)</string>
+    <string name="rp_need_regex">正则表达式不能为空</string>
+    <string name="rp_bad_regex">正则无效: %1$s</string>
+    <string name="rp_saved">已保存替换规则(网关重启生效)</string>
+    <string name="rp_dir_out">发送</string>
+    <string name="rp_dir_inc">接收</string>
+    <string name="rp_add_rule">添加%1$s规则</string>
+    <string name="rp_edit_rule">编辑%1$s规则</string>
+
+    <!-- 统计 -->
+    <string name="st_by_channel">按渠道统计</string>
+    <string name="st_empty">暂无统计数据</string>
+    <string name="st_refresh">刷新</string>
+    <string name="st_channel_detail">请求 %1$d · 输入 %2$d tok · 输出 %3$d tok</string>
+    <string name="st_channel_errors">%1$s · 错误 %2$d</string>
+
+    <!-- 请求记录 -->
+    <string name="rq_empty">暂无请求记录\n(需在网关开启请求记录)</string>
+    <string name="rq_detail_title">请求详情</string>
+    <string name="rq_no_body">(该网关未保存请求正文, 或记录已过期)</string>
+    <string name="rq_section_request">━━ 请求 ━━</string>
+    <string name="rq_section_response">━━ 响应 ━━</string>
+    <string name="rq_empty_value">(空)</string>
+
+    <!-- 日志 -->
+    <string name="lg_lines">行数</string>
+    <string name="lg_loading">加载中…</string>
+    <string name="lg_empty">(暂无日志)</string>
+    <string name="lg_copied">已复制日志</string>
+    <string name="lg_not_connected">后端未连接</string>
+    <string name="lg_load_failed">加载失败: %1$s</string>
+
+    <!-- 聊天 -->
+    <string name="ch_model">模型</string>
+    <string name="ch_model_hint">选择或输入模型名</string>
+    <string name="ch_input_hint">输入消息…</string>
+    <string name="ch_empty">选择模型, 开始对话测试网关</string>
+    <string name="ch_need_model">请先选择/输入模型名</string>
+    <string name="ch_no_backend">后端未连接</string>
+    <string name="ch_you">你</string>
+    <string name="ch_ai">AI</string>
+    <string name="ch_error">[错误] %1$s</string>
+    <string name="ch_load_models_failed">加载模型失败: %1$s</string>
+    <string name="ch_request_failed">请求失败</string>
+
+    <!-- 通用 -->
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="save">保存</string>
+    <string name="delete">删除</string>
+    <string name="close">关闭</string>
+    <string name="refresh">刷新</string>
+    <string name="load_failed">加载失败: %1$s</string>
+    <string name="op_failed">操作失败: %1$s</string>
+    <string name="no_backend_hint">后端未连接, 请先在设置里配置连接</string>
+    <string name="delete_failed">删除失败: %1$s</string>
+    <string name="copy">复制</string>
+    <string name="send">发送</string>
+    <string name="start">启动</string>
+    <string name="stop">停止</string>
+    <string name="restart">重启</string>
+
+    <!-- 路由页附加 -->
+    <string name="rt_model_sync">自动更新模型列表</string>
+    <string name="rt_model_sync_desc">定期从上游渠道拉取模型列表</string>
+    <string name="rt_sync_interval">间隔 (小时)</string>
+    <string name="rt_sync_now">立即同步</string>
+    <string name="rt_syncing">正在同步模型列表…</string>
+    <string name="rt_sync_done">同步完成</string>
+    <string name="rt_redact">隐私数据过滤</string>
+    <string name="rt_redact_desc">转发前把请求里的 API 密钥 / token 替换为 ***（sk-、ghp_、AKIA、AIza、Bearer 等）</string>
+    <string name="rt_redact_extra">额外规则 (每行一个正则)</string>
+    <string name="rt_table_title">模型路由表</string>
+    <string name="rt_saved">已保存 (网关重启生效)</string>
+
+    <!-- 替换页速查表 -->
+    <string name="rp_cheat_title">正则速查表</string>
+    <string name="rp_cheat_syntax_title">语法</string>
+    <string name="rp_cheat_syntax">.        任意字符\n\\d \\w \\s   数字 / 单词字符 / 空白\n[abc]    a b c 之一\n[^abc]   非 a b c\n*  +  ?   0次以上 , 1次以上 , 0或1次\n{2,5}    2 到 5 次\n^  $      文本开头 / 结尾\n(…)      捕获分组\na|b      a 或 b\n\\.       字面小数点 (转义)</string>
+    <string name="rp_cheat_replace_title">替换符号</string>
+    <string name="rp_cheat_replace">$1 $2    第 1 / 2 个分组\n$0       整个匹配\n(留空)   删除匹配内容\n\\$       字面美元符号</string>
+    <string name="rp_cheat_examples_title">实用例子</string>
+    <string name="rp_cheat_examples">1. 打码邮箱\n   正则: [\\w.]+@[\\w.]+\n   替换: ***\n\n2. 交换词序\n   正则: (\\w+) (\\w+)\n   替换: $2 $1\n\n3. 去掉行尾空格\n   正则: [ \\t]+$\n   替换: (留空)\n\n4. 替换词 (忽略大小写请开 ci)\n   正则: chatgpt\n   替换: AI\n\n5. 合并多余空行\n   正则: \\n{3,}\n   替换: \\n\\n</string>
+    <string name="rp_cheat_notes_title">注意事项</string>
+    <string name="rp_cheat_notes">• model 字段和 data: URL 永不被替换。\n• 发送规则作用于请求文本，接收规则作用于响应文本。\n• 流式响应按片段匹配，跨片段的模式可能匹配不到。\n• 规则改动后网关重启生效。</string>
+
+    <!-- 配置加密 -->
+    <string name="menu_config">配置与备份</string>
+    <string name="cfg_crypt_title">配置加密</string>
+    <string name="cfg_crypt_enable">加密存储配置</string>
+    <string name="cfg_crypt_desc">用 AES-256-GCM 加密 App 内配置文件（与网关 AGWENC1 格式兼容）</string>
+    <string name="cfg_crypt_pass">加密口令</string>
+    <string name="cfg_crypt_pass_confirm">确认口令</string>
+    <string name="cfg_crypt_mismatch">两次输入的口令不一致</string>
+    <string name="cfg_crypt_need_pass">启用加密需要填写口令</string>
+    <string name="cfg_crypt_enabled">已启用配置加密</string>
+    <string name="cfg_crypt_disabled">已关闭配置加密（明文存储）</string>
+    <string name="cfg_crypt_embedded_only">作用于应用内运行模式。Termux 模式请在网关侧用 crypt.js 加密。</string>
+
+    <!-- 导入 / 导出 -->
+    <string name="cfg_transfer_title">导入 / 导出配置</string>
+    <string name="cfg_export">导出配置</string>
+    <string name="cfg_export_desc">把当前实例配置保存到文件</string>
+    <string name="cfg_export_encrypt">加密导出的文件</string>
+    <string name="cfg_export_pass">导出口令 (留空=明文)</string>
+    <string name="cfg_exported">配置已导出</string>
+    <string name="cfg_export_failed">导出失败: %1$s</string>
+    <string name="cfg_import">导入配置</string>
+    <string name="cfg_import_desc">读取配置文件；加密文件需要源口令</string>
+    <string name="cfg_import_pass_title">源文件口令</string>
+    <string name="cfg_import_pass_hint">口令 (未加密则留空)</string>
+    <string name="cfg_import_encrypted_hint">该文件已加密 (AGWENC1)，请输入加密时使用的口令。</string>
+    <string name="cfg_import_wrong_pass">口令错误或数据损坏: %1$s</string>
+    <string name="cfg_import_invalid">不是合法配置: %1$s</string>
+    <string name="cfg_import_confirm_title">确认导入</string>
+    <string name="cfg_import_confirm_msg">导入 %1$d 个渠道并覆盖当前实例配置?\n\n来源: %2$s\n导入后会用本 App 自己的口令重新加密。</string>
+    <string name="cfg_import_src_enc">加密文件</string>
+    <string name="cfg_import_src_plain">明文文件</string>
+    <string name="cfg_imported">配置已导入 (%1$d 个渠道)</string>
+    <string name="cfg_import_failed">导入失败: %1$s</string>
+    <string name="cfg_reencrypted">已用本 App 口令重新加密</string>
+
+    <!-- Termux 附加 -->
+    <string name="termux_perm_hint">检测到 Termux，但未授权外部调用。\n\n请在 Termux 里执行:\nmkdir -p ~/.termux &amp;&amp; echo \'allow-external-apps=true\' &gt;&gt; ~/.termux/termux.properties\n\n然后完全重启 Termux。</string>
+    <string name="termux_perm_title">需要授权</string>
+    <string name="termux_copy_cmd">复制命令</string>
+    <string name="termux_cmd_copied">命令已复制</string>
+    <string name="termux_open_anyway">打开 Termux</string>
+
+    <!-- 实例编辑 / TLS -->
+    <string name="pt_edit_title">编辑实例</string>
+    <string name="pt_create">创建</string>
+    <string name="pt_saved">实例已保存 (网关重启生效)</string>
+    <string name="pt_inst_host">监听地址 (0.0.0.0 = 允许局域网访问)</string>
+    <string name="pt_tls_enable">TLS (HTTPS) 加密</string>
+    <string name="pt_tls_desc">用证书提供 HTTPS 服务。证书/私钥文件需存在于网关侧。</string>
+    <string name="pt_tls_port">HTTPS 端口 (留空 = 与 HTTP 同端口, 即纯 HTTPS)</string>
+    <string name="pt_tls_port_hint">填不同端口可同时提供 HTTP 与 HTTPS。</string>
+    <string name="pt_tls_cert">证书文件 (cert.pem)</string>
+    <string name="pt_tls_key">私钥文件 (key.pem)</string>
+
+    <!-- 代理 -->
+    <string name="nav_proxies">代理</string>
+    <string name="title_proxies">代理配置</string>
+    <string name="px_hint">在这里定义命名代理，然后在渠道的「代理名」里引用。渠道代理留空即为直连。</string>
+    <string name="px_empty">暂无代理\n点 + 新增</string>
+    <string name="px_add">新增代理</string>
+    <string name="px_edit">编辑代理</string>
+    <string name="px_name">代理名称 * (供渠道引用)</string>
+    <string name="px_type">类型 *</string>
+    <string name="px_host">主机 * (如 127.0.0.1)</string>
+    <string name="px_port">端口 * (如 7890)</string>
+    <string name="px_user">用户名 (可选)</string>
+    <string name="px_pass">密码 (可选)</string>
+    <string name="px_auth_hint">认证为可选项。SOCKS5 带认证时，应用内引擎使用全局认证器（可用，但多个代理共享）。</string>
+    <string name="px_need_valid">请填写有效的名称、主机和端口</string>
+    <string name="px_bad_type">类型必须是 socks5 或 http</string>
+    <string name="px_saved">代理已保存</string>
+    <string name="px_delete_title">删除代理</string>
+    <string name="px_delete_msg">删除代理「%1$s」吗? 引用它的渠道将改为直连。</string>
+    <string name="px_has_auth">带认证</string>
+
+    <!-- 代码拦截 -->
+    <string name="menu_security">安全与后台</string>
+    <string name="title_security">安全与后台</string>
+    <string name="gd_title">恶意代码拦截</string>
+    <string name="gd_warning">⚠️ 不推荐常规用户开启。扫描会增加延迟，正则匹配可能误报正常代码、也可能漏掉混淆过的代码。它只是辅助提醒，不是安全边界 —— 执行任何代码前请自行审查。</string>
+    <string name="gd_enable">扫描 AI 返回内容中的代码</string>
+    <string name="gd_level">最低报告等级</string>
+    <string name="gd_level_high">仅高危 (破坏性命令、远程执行、凭据外泄)</string>
+    <string name="gd_level_medium">中危及以上 (增加权限/持久化/不安全 eval)</string>
+    <string name="gd_level_low">低危及以上 (增加硬编码密钥、明文 HTTP)</string>
+    <string name="gd_action">命中后动作</string>
+    <string name="gd_action_warn">警告: 追加提示, 保留原内容</string>
+    <string name="gd_action_block">拦截: 用提示替换掉内容</string>
+    <string name="gd_cloud">使用云端扫描 API</string>
+    <string name="gd_cloud_desc">把代码发送到外部 API 分析。会显著增加延迟, 且代码离开本机。</string>
+    <string name="gd_cloud_url">API 地址</string>
+    <string name="gd_cloud_key">API 密钥</string>
+    <string name="gd_rule_count">本地规则库: %1$d 条规则</string>
+    <string name="gd_test">用样例测试</string>
+    <string name="gd_test_found">检出 %1$d 项风险, 最高等级 %2$s</string>
+    <string name="gd_test_clean">该等级下未检出风险</string>
+    <string name="gd_saved">拦截设置已保存</string>
+    <string name="gd_applies_embedded">作用于应用内运行模式(跨格式响应)。</string>
+
+    <!-- 后台保活 -->
+    <string name="bg_title">后台活动保护</string>
+    <string name="bg_desc">让应用内网关在 App 退到后台时保持存活。</string>
+    <string name="bg_keepalive">前台服务保活</string>
+    <string name="bg_keepalive_desc">显示一个常驻的低优先级通知并持有部分唤醒锁, 使网关持续响应请求。</string>
+    <string name="bg_embedded_only">仅在应用内运行模式下有意义。Termux 模式的后端跑在 Termux 里。</string>
+    <string name="bg_started">保活服务已启动</string>
+    <string name="bg_stopped">保活服务已停止</string>
+    <string name="bg_battery_ok">✓ 电池优化: 已豁免</string>
+    <string name="bg_battery_no">⚠ 电池优化: 生效中 (可能杀掉网关)</string>
+    <string name="bg_battery_request">申请电池优化豁免</string>
+    <string name="bg_notif_ok">✓ 通知: 已启用</string>
+    <string name="bg_notif_no">⚠ 通知: 已关闭 (前台服务需要通知)</string>
+    <string name="bg_notif_settings">打开通知设置</string>
+    <string name="bg_svc_running">✓ 保活服务: 运行中</string>
+    <string name="bg_svc_stopped">保活服务: 已停止</string>
+    <string name="bg_app_details">打开应用详情 (自启动 / 后台限制)</string>
+    <string name="bg_oem_hint">部分厂商系统(小米、华为、OPPO、vivo 等)还需额外设置: 允许自启动、在最近任务里锁定应用、关闭后台限制。</string>
+    <string name="svc_channel_name">网关运行中</string>
+    <string name="svc_channel_desc">保持应用内网关在后台存活</string>
+    <string name="svc_title">AI Gateway 运行中</string>
+    <string name="svc_text">端口 %1$d · %2$d 个渠道</string>
+
+    <!-- 二维码 -->
+    <string name="cfg_export_qr">导出为二维码</string>
+    <string name="cfg_import_qr_image">从二维码图片导入</string>
+    <string name="cfg_import_qr_camera">用相机扫描二维码</string>
+    <string name="cfg_qr_info">%1$d 个渠道 · %2$d 字符 → %3$d 字节</string>
+    <string name="cfg_qr_hint">在另一台设备上扫描: 配置与备份 → 用相机扫描二维码</string>
+    <string name="cfg_qr_too_large">配置太大, 单个二维码装不下 (%1$d 字节)。请改用文件导出。</string>
+    <string name="cfg_qr_no_image">无法读取图片</string>
+    <string name="cfg_qr_not_found">图片中未找到二维码</string>
+    <string name="cfg_qr_bad_payload">二维码内容不是有效的配置载荷</string>
+    <string name="cfg_qr_decode_failed">解码失败: %1$s</string>
+    <string name="cfg_qr_need_camera">扫描需要相机权限</string>
+    <string name="cfg_qr_no_camera_app">没有可用的相机应用</string>
+
+    <!-- 请求内容收集 -->
+    <string name="rec_title">请求内容收集</string>
+    <string name="rec_enable">记录请求 / 响应正文</string>
+    <string name="rec_desc">保存完整的请求与响应正文, 使「请求记录」页能查看内容。默认关闭。</string>
+    <string name="rec_server">收集服务器 (可选)</string>
+    <string name="rec_server_hint">留空 = 写入网关的 log/requests-&lt;实例&gt;.jsonl 文件。填 http(s) 地址则把每条记录 POST 到该地址。</string>
+    <string name="rec_max_chars">每条记录最大字符数</string>
+    <string name="rec_privacy_warn">⚠ 收集会保存完整对话内容, 包含你发送的任何敏感信息。非必要请保持关闭。</string>
+    <string name="rec_saved">收集设置已保存 (网关重启生效)</string>
+    <string name="rec_bad_server">服务器地址需以 http:// 或 https:// 开头</string>
+    <string name="ts_title">思考链精简</string>
+    <string name="ts_enable">发送前精简思考链</string>
+    <string name="ts_desc">推理模型的完整思考链会在到达客户端前被精简(按段截取开头,或用便宜模型逐段总结),普通对话不受影响。</string>
+    <string name="ts_mode">精简模式</string>
+    <string name="ts_max_chars">每段保留字数(截断)</string>
+    <string name="ts_sum_url">总结端点 URL</string>
+    <string name="ts_sum_url_hint">OpenAI 兼容,如 https://api.deepseek.com 或 http://127.0.0.1:16392(指向另一 gateway 实例时填该实例的 gatewayKey)</string>
+    <string name="ts_sum_key">API 密钥</string>
+    <string name="ts_sum_model">总结用的模型</string>
+    <string name="ts_sum_prompt">总结提示词</string>
+    <string name="ts_sum_warn">总结模式需等完整思考结束再总结,思考阶段会短暂暂停。</string>
+
+    <!-- 实例流量 -->
+    <string name="pt_req_count">%1$d 请求</string>
+    <string name="pt_err_count">%1$d 错误</string>
+    <string name="pt_no_traffic">无流量</string>
+    <string name="st_hint">当前查看实例「%1$s」。统计按实例独立、网关重启后归零 —— 若为 0, 请求可能打到了别的实例(见「实例」页)。</string>
+</resources>

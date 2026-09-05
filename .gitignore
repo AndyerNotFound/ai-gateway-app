@@ -1,0 +1,24 @@
+# Android / Gradle
+.gradle/
+build/
+app/build/
+local.properties
+captures/
+.cxx/
+
+# IDE
+.idea/
+*.iml
+
+# 日志
+log/
+*.log
+
+# 备份
+backups/
+*.bak
+*.bak-*
+
+# 系统文件
+.DS_Store
+Thumbs.db

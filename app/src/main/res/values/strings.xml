@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Gateway</string>
+
+    <!-- Setup -->
+    <string name="setup_title">Choose how to run</string>
+    <string name="setup_embedded">Run in app</string>
+    <string name="setup_embedded_desc">Built-in gateway backend, no Termux needed</string>
+    <string name="setup_termux">Connect to Termux</string>
+    <string name="setup_termux_desc">Connect to an ai-gateway backend running in Termux (local or LAN)</string>
+    <string name="setup_connect_section">Connect to gateway (optional)</string>
+    <string name="setup_quick_local">Local</string>
+    <string name="setup_quick_lan">LAN</string>
+    <string name="setup_connect_enter">Connect and enter</string>
+    <string name="setup_skip">Skip for now</string>
+    <string name="setup_termux_section">Termux backend</string>
+
+    <!-- Connection -->
+    <string name="connect_title">Connect to gateway</string>
+    <string name="connect_host">Gateway address</string>
+    <string name="connect_admin_key">Admin password (adminKey)</string>
+    <string name="connect_button">Connect</string>
+    <string name="connecting">Connecting…</string>
+    <string name="connect_mode">Run mode</string>
+    <string name="connect_mode_remote">Connect to Termux / remote gateway</string>
+    <string name="connect_hint_nokey">Empty adminKey = passwordless (when the gateway has no admin password)</string>
+    <string name="connect_reselect_mode">Reselect mode</string>
+    <string name="connect_saved">Connection saved</string>
+    <string name="connect_ok">Connected</string>
+    <string name="connect_failed_entered">Connection failed. Entered anyway (retry in Connection settings)</string>
+    <string name="connect_need_url">Please enter the gateway address</string>
+    <string name="connect_switched_embedded">Switched to in-app mode</string>
+
+    <!-- Navigation -->
+    <string name="nav_overview">Overview</string>
+    <string name="nav_providers">Providers</string>
+    <string name="nav_routing">Routing</string>
+    <string name="nav_keys">Keys</string>
+    <string name="nav_ports">Instances</string>
+    <string name="nav_replace">Replace</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_requests">Requests</string>
+    <string name="nav_logs">Logs</string>
+    <string name="nav_chat">Chat</string>
+
+    <!-- Titles -->
+    <string name="title_overview">Overview</string>
+    <string name="title_providers">Providers / Channels</string>
+    <string name="title_routing">Routing / Model mapping</string>
+    <string name="title_keys">Keys</string>
+    <string name="title_ports">Ports / Instances</string>
+    <string name="title_replace">Text replace</string>
+    <string name="title_stats">Statistics</string>
+    <string name="title_requests">Request records</string>
+    <string name="title_logs">Logs</string>
+    <string name="title_chat">Chat test</string>
+
+    <!-- Menu -->
+    <string name="menu_theme">Colors / Theme</string>
+    <string name="menu_connection">Connection / Mode</string>
+
+    <!-- Theme dialog -->
+    <string name="theme_title">Colors / Theme</string>
+    <string name="theme_mode">Dark mode</string>
+    <string name="theme_mode_system">Follow system</string>
+    <string name="theme_mode_light">Light</string>
+    <string name="theme_mode_dark">Dark</string>
+    <string name="theme_dynamic">Material You dynamic colors</string>
+    <string name="theme_dynamic_desc">Android 12+ only, derives colors from wallpaper</string>
+    <string name="theme_palette">Color palette</string>
+    <string name="theme_palette_purple">Purple (default)</string>
+    <string name="theme_palette_blue">Blue</string>
+    <string name="theme_palette_green">Green</string>
+    <string name="theme_palette_orange">Orange</string>
+    <string name="theme_palette_red">Red</string>
+    <string name="theme_language">Language</string>
+    <string name="theme_language_system">Follow system</string>
+    <string name="theme_language_en">English</string>
+    <string name="theme_language_zh">简体中文</string>
+    <string name="theme_applied">Settings applied</string>
+
+    <!-- Termux -->
+    <string name="termux_start_backend">Start Termux backend</string>
+    <string name="termux_install">Install / deploy to Termux</string>
+    <string name="termux_not_installed">Termux not detected</string>
+    <string name="termux_detected">✓ Termux detected</string>
+    <string name="termux_not_detected">⚠ Termux not detected (install it to use deploy)</string>
+    <string name="termux_open">Open Termux</string>
+    <string name="termux_cmd_sent">Start command sent to Termux</string>
+    <string name="termux_cmd_failed">Failed: Termux not found or external calls not allowed</string>
+    <string name="termux_deploy_title">Install / deploy to Termux</string>
+    <string name="termux_deploy_msg">Gateway backend files will be written to Download/ai-gateway-deploy/, then Termux runs the install script (installs Node.js, deploys to ~/ai-gateway, starts it).\n\nRequires termux-setup-storage and allow-external-apps=true.</string>
+    <string name="termux_deploy_start">Start</string>
+    <string name="termux_deploy_ok">Termux launched to run installer</string>
+    <string name="termux_deploy_failed">Deploy failed</string>
+
+    <!-- Overview -->
+    <string name="ov_checking">Checking…</string>
+    <string name="ov_connected">Connected</string>
+    <string name="ov_connect_failed">Connection failed</string>
+    <string name="ov_not_connected">Not connected</string>
+    <string name="ov_total_requests">Total requests</string>
+    <string name="ov_errors">Errors</string>
+    <string name="ov_uptime">Uptime</string>
+    <string name="ov_current_instance">Current instance</string>
+    <string name="ov_loading">Loading…</string>
+    <string name="ov_quick_actions">Quick actions</string>
+    <string name="ov_refresh">Refresh status</string>
+    <string name="ov_configure_first">Configure a connection in Connection / Mode settings</string>
+    <string name="ov_unreachable">Cannot reach the gateway. Check address / password, or start the backend</string>
+    <string name="ov_no_instance">No instance</string>
+    <string name="ov_load_failed">Load failed: %1$s</string>
+    <string name="ov_mode_embedded">In-app mode · built-in gateway</string>
+    <string name="ov_mode_remote">Remote gateway · %1$s</string>
+    <string name="ov_mode_unset">Not configured</string>
+    <string name="ov_recent_requests">Recent requests</string>
+    <string name="ov_view_all">View all</string>
+    <string name="ov_no_requests">No request records yet</string>
+    <string name="ov_stats_by_channel">By channel</string>
+
+    <!-- Providers -->
+    <string name="pv_empty">No channels\nTap + to add one</string>
+    <string name="pv_add">Add channel</string>
+    <string name="pv_edit">Edit channel</string>
+    <string name="pv_fetch_models">Fetch models</string>
+    <string name="pv_edit_btn">Edit</string>
+    <string name="pv_delete_btn">Delete</string>
+    <string name="pv_name">Channel name *</string>
+    <string name="pv_type">Upstream format *</string>
+    <string name="pv_base_url">Base URL * (e.g. https://api.deepseek.com)</string>
+    <string name="pv_api_key">API Key (leave empty to keep)</string>
+    <string name="pv_proxy">Proxy name (optional)</string>
+    <string name="pv_models">Model list (comma separated)</string>
+    <string name="pv_model_map">Model mapping (one per line: public=upstream)</string>
+    <string name="pv_delay">Request delay (ms, 0 = off)</string>
+    <string name="pv_default">Set as default channel (fallback)</string>
+    <string name="pv_insecure">Skip certificate check (self-signed)</string>
+    <string name="pv_need_fields">Name and Base URL are required</string>
+    <string name="pv_bad_type">Format must be openai / gemini / claude</string>
+    <string name="pv_saved">Channel saved</string>
+    <string name="pv_save_failed">Save failed: %1$s</string>
+    <string name="pv_delete_title">Delete channel</string>
+    <string name="pv_delete_msg">Delete channel \"%1$s\"?</string>
+    <string name="pv_deleted">Deleted</string>
+    <string name="pv_fetching">Fetching models from upstream…</string>
+    <string name="pv_models_title">Upstream models (%1$d)</string>
+    <string name="pv_fill_models">Fill into models and save</string>
+    <string name="pv_no_models">No models returned: %1$s</string>
+    <string name="pv_filled">Filled %1$d models</string>
+    <string name="pv_no_key">no key</string>
+    <string name="pv_models_count">%1$d models</string>
+
+    <!-- Routing -->
+    <string name="rt_hint">Requested model names are routed by: channel modelMap &gt; models list &gt; default channel &gt; first channel. Edit mappings in Providers.</string>
+    <string name="rt_empty">No models\n(add models / modelMap to a channel in Providers)</string>
+    <string name="rt_no_channel">(no channel)</string>
+
+    <!-- Keys -->
+    <string name="keys_gateway_title">Gateway access key (gatewayKey)</string>
+    <string name="keys_gateway_desc">Clients must send this key when calling AI endpoints (Bearer / x-api-key / ?key=). Empty = no auth.</string>
+    <string name="keys_admin_title">Admin password (adminKey)</string>
+    <string name="keys_admin_desc">Auth for the admin panel / admin API. Empty = passwordless management (LAN personal use).</string>
+    <string name="keys_save">Save keys</string>
+    <string name="keys_warn">⚠ After changing adminKey, update this app\'s connection password too (Connection / Mode). The gateway restarts to apply.</string>
+    <string name="keys_saved">Keys saved (gateway may restart)</string>
+
+    <!-- Ports / instances -->
+    <string name="pt_new">New instance</string>
+    <string name="pt_shutdown_all">Stop all</string>
+    <string name="pt_current">current</string>
+    <string name="pt_running">running</string>
+    <string name="pt_stopped">stopped</string>
+    <string name="pt_channels">%1$d channels</string>
+    <string name="pt_delete_title">Delete instance</string>
+    <string name="pt_delete_msg">Delete instance \"%1$s\"? Its config file will be removed.</string>
+    <string name="pt_shutdown_title">Stop all instances</string>
+    <string name="pt_shutdown_msg">Stop all running gateway instances?</string>
+    <string name="pt_new_title">New instance</string>
+    <string name="pt_inst_name">Instance name * (letters/digits/hyphen)</string>
+    <string name="pt_inst_port">Port * (e.g. 16390)</string>
+    <string name="pt_inst_key">adminKey (optional)</string>
+    <string name="pt_need_valid">Enter a valid name and port</string>
+    <string name="pt_created">Instance \"%1$s\" created</string>
+    <string name="pt_switched">Switched to instance \"%1$s\"</string>
+    <string name="pt_create_failed">Create failed: %1$s</string>
+    <string name="pt_stopped_all">All instances stopped</string>
+
+    <!-- Replace -->
+    <string name="rp_hint">Apply regex replacements to text passing through the gateway. The model field and data: URLs are untouched. Restart the gateway to apply.</string>
+    <string name="rp_out_title">Outgoing (request)</string>
+    <string name="rp_inc_title">Incoming (response)</string>
+    <string name="rp_add_out">Add outgoing rule</string>
+    <string name="rp_add_inc">Add incoming rule</string>
+    <string name="rp_save">Save replace rules</string>
+    <string name="rp_regex">Regular expression *</string>
+    <string name="rp_to">Replace with (empty = delete match)</string>
+    <string name="rp_ci">Ignore case (ci)</string>
+    <string name="rp_empty_rules">(no %1$s rules)</string>
+    <string name="rp_delete_match">(delete match)</string>
+    <string name="rp_need_regex">Regular expression cannot be empty</string>
+    <string name="rp_bad_regex">Invalid regex: %1$s</string>
+    <string name="rp_saved">Replace rules saved (restart to apply)</string>
+    <string name="rp_dir_out">outgoing</string>
+    <string name="rp_dir_inc">incoming</string>
+    <string name="rp_add_rule">Add %1$s rule</string>
+    <string name="rp_edit_rule">Edit %1$s rule</string>
+
+    <!-- Stats -->
+    <string name="st_by_channel">By channel</string>
+    <string name="st_empty">No statistics yet</string>
+    <string name="st_refresh">Refresh</string>
+    <string name="st_channel_detail">requests %1$d · in %2$d tok · out %3$d tok</string>
+    <string name="st_channel_errors">%1$s · errors %2$d</string>
+
+    <!-- Requests -->
+    <string name="rq_empty">No request records\n(enable request recording on the gateway)</string>
+    <string name="rq_detail_title">Request detail</string>
+    <string name="rq_no_body">(this gateway did not store request bodies, or the record expired)</string>
+    <string name="rq_section_request">━━ Request ━━</string>
+    <string name="rq_section_response">━━ Response ━━</string>
+    <string name="rq_empty_value">(empty)</string>
+
+    <!-- Logs -->
+    <string name="lg_lines">Lines</string>
+    <string name="lg_loading">Loading…</string>
+    <string name="lg_empty">(no logs)</string>
+    <string name="lg_copied">Logs copied</string>
+    <string name="lg_not_connected">Backend not connected</string>
+    <string name="lg_load_failed">Load failed: %1$s</string>
+
+    <!-- Chat -->
+    <string name="ch_model">Model</string>
+    <string name="ch_model_hint">Pick or type a model name</string>
+    <string name="ch_input_hint">Type a message…</string>
+    <string name="ch_empty">Pick a model and start testing the gateway</string>
+    <string name="ch_need_model">Pick or type a model name first</string>
+    <string name="ch_no_backend">Backend not connected</string>
+    <string name="ch_you">You</string>
+    <string name="ch_ai">AI</string>
+    <string name="ch_error">[Error] %1$s</string>
+    <string name="ch_load_models_failed">Failed to load models: %1$s</string>
+    <string name="ch_request_failed">Request failed</string>
+
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="close">Close</string>
+    <string name="refresh">Refresh</string>
+    <string name="load_failed">Load failed: %1$s</string>
+    <string name="op_failed">Operation failed: %1$s</string>
+    <string name="no_backend_hint">Backend not connected. Configure a connection first</string>
+    <string name="delete_failed">Delete failed: %1$s</string>
+    <string name="copy">Copy</string>
+    <string name="send">Send</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="restart">Restart</string>
+
+    <!-- Routing extras -->
+    <string name="rt_model_sync">Auto-update model lists</string>
+    <string name="rt_model_sync_desc">Periodically fetch model lists from upstream channels</string>
+    <string name="rt_sync_interval">Interval (hours)</string>
+    <string name="rt_sync_now">Sync now</string>
+    <string name="rt_syncing">Syncing model lists…</string>
+    <string name="rt_sync_done">Sync finished</string>
+    <string name="rt_redact">Privacy data filter</string>
+    <string name="rt_redact_desc">Replace API keys / tokens in requests with *** before forwarding (sk-, ghp_, AKIA, AIza, Bearer …)</string>
+    <string name="rt_redact_extra">Extra patterns (one regex per line)</string>
+    <string name="rt_table_title">Model routing table</string>
+    <string name="rt_saved">Saved (gateway restarts to apply)</string>
+
+    <!-- Replace cheatsheet -->
+    <string name="rp_cheat_title">Regex cheatsheet</string>
+    <string name="rp_cheat_syntax_title">Syntax</string>
+    <string name="rp_cheat_syntax">.        any char\n\\d \\w \\s   digit / word / whitespace\n[abc]    one of a b c\n[^abc]   not a b c\n*  +  ?   0+ , 1+ , 0 or 1\n{2,5}    2 to 5 times\n^  $      start / end of text\n(…)      capture group\na|b      a or b\n\\.       literal dot (escape)</string>
+    <string name="rp_cheat_replace_title">Replacement</string>
+    <string name="rp_cheat_replace">$1 $2    group 1 / 2\n$0       whole match\n(empty)  delete the match\n\\$       literal dollar sign</string>
+    <string name="rp_cheat_examples_title">Examples</string>
+    <string name="rp_cheat_examples">1. Mask emails\n   regex: [\\w.]+@[\\w.]+\n   to:    ***\n\n2. Swap word order\n   regex: (\\w+) (\\w+)\n   to:    $2 $1\n\n3. Strip trailing spaces\n   regex: [ \\t]+$\n   to:    (empty)\n\n4. Replace a term (case-insensitive, turn on ci)\n   regex: chatgpt\n   to:    AI\n\n5. Collapse blank lines\n   regex: \\n{3,}\n   to:    \\n\\n</string>
+    <string name="rp_cheat_notes_title">Notes</string>
+    <string name="rp_cheat_notes">• The model field and data: URLs are never touched.\n• Outgoing rules apply to request text, incoming to response text.\n• Streaming responses are matched per chunk, so patterns spanning chunks may not match.\n• Rules take effect after the gateway restarts.</string>
+
+    <!-- Config encryption -->
+    <string name="menu_config">Config &amp; backup</string>
+    <string name="cfg_crypt_title">Config encryption</string>
+    <string name="cfg_crypt_enable">Encrypt stored config</string>
+    <string name="cfg_crypt_desc">Encrypt the in-app config file with AES-256-GCM (compatible with the gateway\'s AGWENC1 format)</string>
+    <string name="cfg_crypt_pass">Encryption password</string>
+    <string name="cfg_crypt_pass_confirm">Confirm password</string>
+    <string name="cfg_crypt_mismatch">Passwords do not match</string>
+    <string name="cfg_crypt_need_pass">Enter a password to enable encryption</string>
+    <string name="cfg_crypt_enabled">Config encryption enabled</string>
+    <string name="cfg_crypt_disabled">Config encryption disabled (stored as plain text)</string>
+    <string name="cfg_crypt_embedded_only">Applies to in-app mode. For Termux mode use crypt.js on the gateway side.</string>
+
+    <!-- Import / export -->
+    <string name="cfg_transfer_title">Import / export config</string>
+    <string name="cfg_export">Export config</string>
+    <string name="cfg_export_desc">Save the current instance config to a file</string>
+    <string name="cfg_export_encrypt">Encrypt the exported file</string>
+    <string name="cfg_export_pass">Export password (empty = plain text)</string>
+    <string name="cfg_exported">Config exported</string>
+    <string name="cfg_export_failed">Export failed: %1$s</string>
+    <string name="cfg_import">Import config</string>
+    <string name="cfg_import_desc">Read a config file; encrypted files need the source password</string>
+    <string name="cfg_import_pass_title">Source file password</string>
+    <string name="cfg_import_pass_hint">Password (empty if not encrypted)</string>
+    <string name="cfg_import_encrypted_hint">This file is encrypted (AGWENC1). Enter the password used to encrypt it.</string>
+    <string name="cfg_import_wrong_pass">Wrong password or corrupted data: %1$s</string>
+    <string name="cfg_import_invalid">Not a valid config: %1$s</string>
+    <string name="cfg_import_confirm_title">Confirm import</string>
+    <string name="cfg_import_confirm_msg">Import %1$d channels and overwrite the current instance config?\n\nSource: %2$s\nIt will be re-encrypted with this app\'s own password.</string>
+    <string name="cfg_import_src_enc">encrypted file</string>
+    <string name="cfg_import_src_plain">plain text file</string>
+    <string name="cfg_imported">Config imported (%1$d channels)</string>
+    <string name="cfg_import_failed">Import failed: %1$s</string>
+    <string name="cfg_reencrypted">Re-encrypted with this app\'s password</string>
+
+    <!-- Termux extras -->
+    <string name="termux_perm_hint">Termux found but external calls are not authorized.\n\nRun in Termux:\nmkdir -p ~/.termux &amp;&amp; echo \'allow-external-apps=true\' &gt;&gt; ~/.termux/termux.properties\n\nThen fully restart Termux.</string>
+    <string name="termux_perm_title">Authorization needed</string>
+    <string name="termux_copy_cmd">Copy command</string>
+    <string name="termux_cmd_copied">Command copied</string>
+    <string name="termux_open_anyway">Open Termux</string>
+
+    <!-- Instance edit / TLS -->
+    <string name="pt_edit_title">Edit instance</string>
+    <string name="pt_create">Create</string>
+    <string name="pt_saved">Instance saved (gateway restarts)</string>
+    <string name="pt_inst_host">Listen address (0.0.0.0 = LAN accessible)</string>
+    <string name="pt_tls_enable">TLS (HTTPS) encryption</string>
+    <string name="pt_tls_desc">Serve HTTPS with a certificate. Cert/key files must exist on the gateway side.</string>
+    <string name="pt_tls_port">HTTPS port (empty = same as HTTP, i.e. HTTPS only)</string>
+    <string name="pt_tls_port_hint">Set a different port to serve HTTP and HTTPS at the same time.</string>
+    <string name="pt_tls_cert">Certificate file (cert.pem)</string>
+    <string name="pt_tls_key">Private key file (key.pem)</string>
+
+    <!-- Proxies -->
+    <string name="nav_proxies">Proxies</string>
+    <string name="title_proxies">Proxy configuration</string>
+    <string name="px_hint">Define named proxies here, then reference them by name in a channel\'s Proxy field. Leave a channel\'s proxy empty for a direct connection.</string>
+    <string name="px_empty">No proxies\nTap + to add one</string>
+    <string name="px_add">Add proxy</string>
+    <string name="px_edit">Edit proxy</string>
+    <string name="px_name">Proxy name * (referenced by channels)</string>
+    <string name="px_type">Type *</string>
+    <string name="px_host">Host * (e.g. 127.0.0.1)</string>
+    <string name="px_port">Port * (e.g. 7890)</string>
+    <string name="px_user">Username (optional)</string>
+    <string name="px_pass">Password (optional)</string>
+    <string name="px_auth_hint">Authentication is optional. For SOCKS5 with auth, the in-app engine uses a global authenticator (works, but shared across proxies).</string>
+    <string name="px_need_valid">Enter a valid name, host and port</string>
+    <string name="px_bad_type">Type must be socks5 or http</string>
+    <string name="px_saved">Proxy saved</string>
+    <string name="px_delete_title">Delete proxy</string>
+    <string name="px_delete_msg">Delete proxy \"%1$s\"? Channels referencing it will fall back to a direct connection.</string>
+    <string name="px_has_auth">auth</string>
+
+    <!-- Code guard -->
+    <string name="menu_security">Security &amp; background</string>
+    <string name="title_security">Security &amp; background</string>
+    <string name="gd_title">Malicious code interception</string>
+    <string name="gd_warning">⚠️ Not recommended for typical users. Scanning adds latency, and pattern matching can flag safe code (false positives) or miss obfuscated code (false negatives). It is a reminder, not a security boundary — always review code before running it.</string>
+    <string name="gd_enable">Scan code in AI responses</string>
+    <string name="gd_level">Minimum level to report</string>
+    <string name="gd_level_high">High only (destructive commands, RCE, credential exfiltration)</string>
+    <string name="gd_level_medium">Medium and above (adds permission/persistence/unsafe eval)</string>
+    <string name="gd_level_low">Low and above (adds hardcoded secrets, plain HTTP)</string>
+    <string name="gd_action">On detection</string>
+    <string name="gd_action_warn">Warn: append a notice, keep the content</string>
+    <string name="gd_action_block">Block: replace the content with the notice</string>
+    <string name="gd_cloud">Use a cloud scanning API</string>
+    <string name="gd_cloud_desc">Send code to an external API for analysis. Adds significant latency and sends code off-device.</string>
+    <string name="gd_cloud_url">API URL</string>
+    <string name="gd_cloud_key">API key</string>
+    <string name="gd_rule_count">Local rule library: %1$d rules</string>
+    <string name="gd_test">Test with a sample</string>
+    <string name="gd_test_found">Detected %1$d issue(s), max level %2$s</string>
+    <string name="gd_test_clean">No issues found at this level</string>
+    <string name="gd_saved">Interception settings saved</string>
+    <string name="gd_applies_embedded">Applies to in-app mode (cross-format responses).</string>
+
+    <!-- Background keep-alive -->
+    <string name="bg_title">Background activity protection</string>
+    <string name="bg_desc">Keeps the in-app gateway alive when the app is in the background.</string>
+    <string name="bg_keepalive">Foreground service keep-alive</string>
+    <string name="bg_keepalive_desc">Shows a persistent low-priority notification and holds a partial wake lock so the gateway keeps serving requests.</string>
+    <string name="bg_embedded_only">Only useful in in-app mode. In Termux mode the backend runs inside Termux.</string>
+    <string name="bg_started">Keep-alive service started</string>
+    <string name="bg_stopped">Keep-alive service stopped</string>
+    <string name="bg_battery_ok">✓ Battery optimization: exempted</string>
+    <string name="bg_battery_no">⚠ Battery optimization: active (may kill the gateway)</string>
+    <string name="bg_battery_request">Request battery optimization exemption</string>
+    <string name="bg_notif_ok">✓ Notifications: enabled</string>
+    <string name="bg_notif_no">⚠ Notifications: disabled (foreground service needs it)</string>
+    <string name="bg_notif_settings">Open notification settings</string>
+    <string name="bg_svc_running">✓ Keep-alive service: running</string>
+    <string name="bg_svc_stopped">Keep-alive service: stopped</string>
+    <string name="bg_app_details">Open app details (autostart / background limits)</string>
+    <string name="bg_oem_hint">Some vendor ROMs (Xiaomi, Huawei, OPPO, vivo…) need extra settings: allow autostart, lock the app in recents, and disable background restrictions.</string>
+    <string name="svc_channel_name">Gateway running</string>
+    <string name="svc_channel_desc">Keeps the in-app gateway alive in the background</string>
+    <string name="svc_title">AI Gateway is running</string>
+    <string name="svc_text">Port %1$d · %2$d channels</string>
+
+    <!-- QR -->
+    <string name="cfg_export_qr">Export as QR code</string>
+    <string name="cfg_import_qr_image">Import from QR image</string>
+    <string name="cfg_import_qr_camera">Scan QR with camera</string>
+    <string name="cfg_qr_info">%1$d channels · %2$d chars → %3$d bytes</string>
+    <string name="cfg_qr_hint">Scan this from another device: Config &amp; backup → Scan QR with camera</string>
+    <string name="cfg_qr_too_large">Config is too large for one QR code (%1$d bytes). Use file export instead.</string>
+    <string name="cfg_qr_no_image">Could not read the image</string>
+    <string name="cfg_qr_not_found">No QR code found in the image</string>
+    <string name="cfg_qr_bad_payload">QR content is not a valid config payload</string>
+    <string name="cfg_qr_decode_failed">Decode failed: %1$s</string>
+    <string name="cfg_qr_need_camera">Camera permission is required to scan</string>
+    <string name="cfg_qr_no_camera_app">No camera app available</string>
+
+    <!-- Request recording -->
+    <string name="rec_title">Request content recording</string>
+    <string name="rec_enable">Record request / response bodies</string>
+    <string name="rec_desc">Stores full request and response bodies so the Requests page can show them. Off by default.</string>
+    <string name="rec_server">Collector server (optional)</string>
+    <string name="rec_server_hint">Empty = write to log/requests-&lt;instance&gt;.jsonl on the gateway. Set an http(s) URL to POST each record there instead.</string>
+    <string name="rec_max_chars">Max characters per record</string>
+    <string name="rec_privacy_warn">⚠ Recording stores full conversation content, including anything sensitive you send. Keep it off unless you need it.</string>
+    <string name="rec_saved">Recording settings saved (gateway restarts)</string>
+    <string name="rec_bad_server">Server address must start with http:// or https://</string>
+    <string name="ts_title">Thinking chain summarization</string>
+    <string name="ts_enable">Simplify reasoning before sending</string>
+    <string name="ts_desc">The full thinking of reasoning models is condensed before reaching the client (keep first N chars per segment, or summarize each segment with a cheap model). No effect on normal chats.</string>
+    <string name="ts_mode">Simplify mode</string>
+    <string name="ts_max_chars">Chars kept per segment (truncate)</string>
+    <string name="ts_sum_url">Summarize endpoint URL</string>
+    <string name="ts_sum_url_hint">OpenAI-compatible, e.g. https://api.deepseek.com or http://127.0.0.1:16392 (use that instance\'s gatewayKey when pointing to another gateway)</string>
+    <string name="ts_sum_key">API key</string>
+    <string name="ts_sum_model">Summarize model</string>
+    <string name="ts_sum_prompt">Summarize prompt</string>
+    <string name="ts_sum_warn">Summarize mode waits for the full thinking to finish before summarizing, so the thinking stage will pause briefly.</string>
+
+    <!-- Instance traffic -->
+    <string name="pt_req_count">%1$d req</string>
+    <string name="pt_err_count">%1$d err</string>
+    <string name="pt_no_traffic">no traffic</string>
+    <string name="st_hint">Showing instance \"%1$s\". Stats are per instance and reset when the gateway restarts — if this is 0, requests may be going to another instance (see Instances).</string>
+</resources>
