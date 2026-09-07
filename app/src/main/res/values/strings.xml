@@ -134,6 +134,7 @@
     <string name="pv_model_map">Model mapping (one per line: public=upstream)</string>
     <string name="pv_delay">Request delay (ms, 0 = off)</string>
     <string name="pv_default">Set as default channel (fallback)</string>
+    <string name="pv_use_responses">Upstream uses Responses API (/v1/responses, openai only)</string>
     <string name="pv_insecure">Skip certificate check (self-signed)</string>
     <string name="pv_need_fields">Name and Base URL are required</string>
     <string name="pv_bad_type">Format must be openai / gemini / claude</string>
@@ -266,6 +267,10 @@
     <string name="rt_syncing">Syncing model lists…</string>
     <string name="rt_sync_done">Sync finished</string>
     <string name="rt_redact">Privacy data filter</string>
+    <string name="rt_oe_enable">OpenAI extended endpoints (Responses / Images / Embeddings…)</string>
+    <string name="rt_oe_enable_desc">Expose /v1/responses, /v1/images/generations, /v1/embeddings, /v1/audio/speech, /v1/completions, /v1/moderations; also allows OpenAI channels to use Responses API upstream. Restart instance to apply.</string>
+    <string name="rt_oe_upstream">OpenAI upstream uses Responses API by default (/v1/responses)</string>
+    <string name="rt_oe_upstream_desc">Global default; per-channel \"Upstream uses Responses API\" overrides. When off, upstream still uses /v1/chat/completions.</string>
     <string name="rt_redact_desc">Replace API keys / tokens in requests with *** before forwarding (sk-, ghp_, AKIA, AIza, Bearer …)</string>
     <string name="rt_redact_extra">Extra patterns (one regex per line)</string>
     <string name="rt_table_title">Model routing table</string>
@@ -319,7 +324,7 @@
     <string name="cfg_reencrypted">Re-encrypted with this app\'s password</string>
 
     <!-- Termux extras -->
-    <string name="termux_perm_hint">Termux found but external calls are not authorized.\n\nRun in Termux:\nmkdir -p ~/.termux &amp;&amp; echo \'allow-external-apps=true\' &gt;&gt; ~/.termux/termux.properties\n\nThen fully restart Termux.</string>
+    <string name="termux_perm_hint">Termux refused the call.\n\nPlease grant the permission in system settings: Settings → Apps → this app → Permissions → Additional permissions → enable "Run commands in Termux environment".\n\nIf already granted but still failing, check the Termux variant setting (ZeroTermux / Official) on the setup page.</string>
     <string name="termux_perm_title">Authorization needed</string>
     <string name="termux_copy_cmd">Copy command</string>
     <string name="termux_cmd_copied">Command copied</string>
@@ -446,4 +451,7 @@
     <string name="pt_err_count">%1$d err</string>
     <string name="pt_no_traffic">no traffic</string>
     <string name="st_hint">Showing instance \"%1$s\". Stats are per instance and reset when the gateway restarts — if this is 0, requests may be going to another instance (see Instances).</string>
+    <string name="termux_variant_label">Termux variant</string>
+    <string name="termux_variant_zero">ZeroTermux</string>
+    <string name="termux_variant_official">Official Termux</string>
 </resources>

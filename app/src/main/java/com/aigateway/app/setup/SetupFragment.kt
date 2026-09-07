@@ -61,6 +61,17 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             if (!TermuxHelper.openTermux(requireContext())) toast(getString(R.string.termux_not_installed))
         }
 
+        // Termux 协议类型开关（ZeroTermux=旧协议 / 官方=新协议）
+        b.toggleTermuxVariant.check(
+            if (app.settings.termuxVariant == "official") R.id.btnVariantOfficial else R.id.btnVariantZero
+        )
+        b.toggleTermuxVariant.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                app.settings.termuxVariant =
+                    if (checkedId == R.id.btnVariantOfficial) "official" else "zero"
+            }
+        }
+
         updateTermuxStatus()
     }
 

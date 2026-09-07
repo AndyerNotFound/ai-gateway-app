@@ -134,6 +134,7 @@
     <string name="pv_model_map">模型改名 (每行: 对外名=上游名)</string>
     <string name="pv_delay">请求延迟 (毫秒, 0=关)</string>
     <string name="pv_default">设为默认渠道(兜底)</string>
+    <string name="pv_use_responses">上游用 Responses API (/v1/responses, 仅 openai 类型)</string>
     <string name="pv_insecure">跳过证书校验 (自签中转站)</string>
     <string name="pv_need_fields">名称和 Base URL 必填</string>
     <string name="pv_bad_type">格式必须是 openai / gemini / claude</string>
@@ -266,6 +267,10 @@
     <string name="rt_syncing">正在同步模型列表…</string>
     <string name="rt_sync_done">同步完成</string>
     <string name="rt_redact">隐私数据过滤</string>
+    <string name="rt_oe_enable">OpenAI 扩展端点 (Responses / Images / Embeddings…)</string>
+    <string name="rt_oe_enable_desc">对外开放 /v1/responses、/v1/images/generations、/v1/embeddings、/v1/audio/speech、/v1/completions、/v1/moderations; 并允许 OpenAI 渠道上游走 Responses API。重启实例后生效。</string>
+    <string name="rt_oe_upstream">OpenAI 上游默认用 Responses API (/v1/responses)</string>
+    <string name="rt_oe_upstream_desc">全局默认; 单个渠道可在渠道设置里用「上游用 Responses API」覆盖。不开启时上游仍走 /v1/chat/completions。</string>
     <string name="rt_redact_desc">转发前把请求里的 API 密钥 / token 替换为 ***（sk-、ghp_、AKIA、AIza、Bearer 等）</string>
     <string name="rt_redact_extra">额外规则 (每行一个正则)</string>
     <string name="rt_table_title">模型路由表</string>
@@ -319,7 +324,7 @@
     <string name="cfg_reencrypted">已用本 App 口令重新加密</string>
 
     <!-- Termux 附加 -->
-    <string name="termux_perm_hint">检测到 Termux，但未授权外部调用。\n\n请在 Termux 里执行:\nmkdir -p ~/.termux &amp;&amp; echo \'allow-external-apps=true\' &gt;&gt; ~/.termux/termux.properties\n\n然后完全重启 Termux。</string>
+    <string name="termux_perm_hint">Termux 拒绝了调用。\n\n请到系统设置 → 应用 → 本应用 → 权限 → 其他权限，开启「在 Termux 环境中运行命令」。\n\n若已开启仍失败，请检查设置页的 Termux 类型（ZeroTermux/官方）是否选对。</string>
     <string name="termux_perm_title">需要授权</string>
     <string name="termux_copy_cmd">复制命令</string>
     <string name="termux_cmd_copied">命令已复制</string>
@@ -446,4 +451,7 @@
     <string name="pt_err_count">%1$d 错误</string>
     <string name="pt_no_traffic">无流量</string>
     <string name="st_hint">当前查看实例「%1$s」。统计按实例独立、网关重启后归零 —— 若为 0, 请求可能打到了别的实例(见「实例」页)。</string>
+    <string name="termux_variant_label">Termux 类型</string>
+    <string name="termux_variant_zero">ZeroTermux</string>
+    <string name="termux_variant_official">官方 Termux</string>
 </resources>

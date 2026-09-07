@@ -55,7 +55,8 @@ class ProvidersFragment : BaseFragment() {
 
     private fun loadAfterDelay() {
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(1200)
+            // 网关 self-restart 约 3 秒(scheduleRestart 300ms + stop + start), 太短会读到重启前的旧进程
+            delay(3500)
             if (isAdded) load()
         }
     }
@@ -83,6 +84,7 @@ class ProvidersFragment : BaseFragment() {
             db.editModelMap.setText(existing.modelMap?.entries?.joinToString("\n") { "${it.key}=${it.value}" } ?: "")
             db.editDelayMs.setText(existing.delayMs.toString())
             db.switchDefault.isChecked = existing.default
+            db.switchUseResponses.isChecked = existing.useResponses
             db.switchInsecure.isChecked = existing.insecure
         } else {
             db.editType.setText("openai", false)
@@ -111,7 +113,8 @@ class ProvidersFragment : BaseFragment() {
         val channel = Channel(
             name = name, type = type, baseUrl = baseUrl, apiKey = apiKey,
             label = existing?.label, proxy = proxy, models = models, modelMap = modelMap,
-            default = db.switchDefault.isChecked, delayMs = delayMs, insecure = db.switchInsecure.isChecked
+            default = db.switchDefault.isChecked, delayMs = delayMs, insecure = db.switchInsecure.isChecked,
+            useResponses = db.switchUseResponses.isChecked
         )
         val backend = backendOrNull() ?: return
         run({ snack(getString(R.string.pv_save_failed, it)) }, {

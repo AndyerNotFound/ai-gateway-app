@@ -20,13 +20,49 @@ import java.io.File
 object TermuxHelper {
 
     const val TERMUX_PACKAGE = "com.termux"
-    private const val ACTION_RUN_COMMAND = "com.termux.app.RUN_COMMAND"
     private const val RUN_COMMAND_SERVICE = "com.termux.app.RunCommandService"
-    private const val EXTRA_PATH = "com.termux.app.RUN_COMMAND_PATH"
-    private const val EXTRA_ARGS = "com.termux.app.RUN_COMMAND_ARGUMENTS"
-    private const val EXTRA_WORKDIR = "com.termux.app.RUN_COMMAND_WORKDIR"
-    private const val EXTRA_BACKGROUND = "com.termux.app.RUN_COMMAND_BACKGROUND"
     private const val BASH = "/data/data/com.termux/files/usr/bin/bash"
+
+    /*
+     * ZeroTermux(旧协议) 与官方 Termux(新协议) 的 RUN_COMMAND 意图名不同（已实机验证）：
+     * 旧: action=com.termux.RUN_COMMAND, extras=com.termux.RUN_COMMAND_*
+     * 新: action=com.termux.app.RUN_COMMAND, extras=com.termux.app.RUN_COMMAND_*
+     * 发错会被目标服务弹"无效意图操作"拒收。
+     */
+    private data class Proto(
+        val action: String,
+        val path: String,
+        val args: String,
+        val workdir: String,
+        val background: String,
+        val sessionAction: String
+    )
+
+    private fun proto(variant: String): Proto =
+        if (variant == "official") {
+            Proto(
+                "com.termux.app.RUN_COMMAND",
+                "com.termux.app.RUN_COMMAND_PATH",
+                "com.termux.app.RUN_COMMAND_ARGUMENTS",
+                "com.termux.app.RUN_COMMAND_WORKDIR",
+                "com.termux.app.RUN_COMMAND_BACKGROUND",
+                "com.termux.app.RUN_COMMAND_SESSION_ACTION"
+            )
+        } else {
+            Proto(
+                "com.termux.RUN_COMMAND",
+                "com.termux.RUN_COMMAND_PATH",
+                "com.termux.RUN_COMMAND_ARGUMENTS",
+                "com.termux.RUN_COMMAND_WORKDIR",
+                "com.termux.RUN_COMMAND_BACKGROUND",
+                "com.termux.RUN_COMMAND_SESSION_ACTION"
+            )
+        }
+
+    /** 当前 Termux 类型设置（zero/official），默认 zero（ZeroTermux） */
+    private fun variant(context: Context): String =
+        context.getSharedPreferences("ai_gateway_settings", Context.MODE_PRIVATE)
+            .getString("termux_variant", "zero") ?: "zero"
 
     /** 检测 Termux 是否安装(多重手段, 兼容 Android 11+ 包可见性) */
     fun isTermuxInstalled(context: Context): Boolean {
@@ -40,10 +76,13 @@ object TermuxHelper {
         try {
             if (pm.getLaunchIntentForPackage(TERMUX_PACKAGE) != null) return true
         } catch (_: Exception) {}
-        // 3) 查 RUN_COMMAND 服务是否可解析
+        // 3) 查 RUN_COMMAND 服务是否可解析（新旧协议各试一次）
         try {
-            val intent = Intent(ACTION_RUN_COMMAND).setClassName(TERMUX_PACKAGE, RUN_COMMAND_SERVICE)
-            if (pm.queryIntentServices(intent, 0).isNotEmpty()) return true
+            val ok = listOf("zero", "official").any { v ->
+                val intent = Intent(proto(v).action).setClassName(TERMUX_PACKAGE, RUN_COMMAND_SERVICE)
+                pm.queryIntentServices(intent, 0).isNotEmpty()
+            }
+            if (ok) return true
         } catch (_: Exception) {}
         // 4) 兜底: Termux 的 files 目录存在(同机 Termux 通常可见)
         return try { java.io.File("/data/data/com.termux/files/usr/bin/bash").exists() } catch (_: Exception) { false }
@@ -51,8 +90,10 @@ object TermuxHelper {
 
     /** RUN_COMMAND 服务是否可用(判断是否授权外部调用) */
     fun isRunCommandAvailable(context: Context): Boolean = try {
-        val intent = Intent(ACTION_RUN_COMMAND).setClassName(TERMUX_PACKAGE, RUN_COMMAND_SERVICE)
-        context.packageManager.queryIntentServices(intent, 0).isNotEmpty()
+        listOf("zero", "official").any { v ->
+            val intent = Intent(proto(v).action).setClassName(TERMUX_PACKAGE, RUN_COMMAND_SERVICE)
+            context.packageManager.queryIntentServices(intent, 0).isNotEmpty()
+        }
     } catch (_: Exception) { false }
 
     /** 打开 Termux 主界面 */
@@ -80,14 +121,15 @@ object TermuxHelper {
      */
     fun runCommandDetailed(context: Context, command: String, background: Boolean = true): RunResult {
         if (!isTermuxInstalled(context)) return RunResult.NotInstalled
+        val p = proto(variant(context))
         return try {
-            val intent = Intent(ACTION_RUN_COMMAND)
+            val intent = Intent(p.action)
             intent.setClassName(TERMUX_PACKAGE, RUN_COMMAND_SERVICE)
-            intent.putExtra(EXTRA_PATH, BASH)
-            intent.putExtra(EXTRA_ARGS, arrayOf("-lc", command))
-            intent.putExtra(EXTRA_WORKDIR, "/data/data/com.termux/files/home")
-            intent.putExtra(EXTRA_BACKGROUND, background)
-            intent.putExtra("com.termux.app.RUN_COMMAND_SESSION_ACTION", "0")
+            intent.putExtra(p.path, BASH)
+            intent.putExtra(p.args, arrayOf("-lc", command))
+            intent.putExtra(p.workdir, "/data/data/com.termux/files/home")
+            intent.putExtra(p.background, background)
+            intent.putExtra(p.sessionAction, "0")
             // Android 8+ 后台启动服务受限, Termux 的 RunCommandService 是前台服务
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)

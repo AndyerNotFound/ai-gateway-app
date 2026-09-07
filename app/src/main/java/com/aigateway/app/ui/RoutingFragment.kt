@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.aigateway.app.R
 import com.aigateway.app.data.Channel
 import com.aigateway.app.databinding.FragmentRoutingBinding
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /** 路由 —— 自动更新模型列表 + 隐私数据过滤 + 模型路由表 */
 class RoutingFragment : BaseFragment() {
@@ -45,6 +48,9 @@ class RoutingFragment : BaseFragment() {
             // 隐私数据过滤
             b.switchRedact.isChecked = cfg.redact.enable
             b.editRedactExtra.setText(cfg.redact.extra?.joinToString("\n") ?: "")
+            // OpenAI 扩展端点
+            b.switchOeEnable.isChecked = cfg.openaiExtras.enable
+            b.switchOeUpstream.isChecked = cfg.openaiExtras.upstreamResponses
             // 路由表
             renderRoutes(cfg.channels)
         }
@@ -101,11 +107,23 @@ class RoutingFragment : BaseFragment() {
                 addProperty("enable", b.switchRedact.isChecked)
                 add("extra", JsonArray().apply { extra.forEach { add(it) } })
             })
+            add("openaiExtras", JsonObject().apply {
+                addProperty("enable", b.switchOeEnable.isChecked)
+                addProperty("upstreamResponses", b.switchOeUpstream.isChecked)
+            })
         }
         run({ snack(getString(R.string.pv_save_failed, it)) }, {
             backend.saveConfig(app.connectionStore.activeInstance, patch)
         }) { r ->
-            if (r.ok) toast(getString(R.string.rt_saved)) else snack(getString(R.string.pv_save_failed, r.error ?: ""))
+            if (r.ok) { snack(getString(R.string.rt_saved)); loadAfterDelay() }
+            else snack(getString(R.string.pv_save_failed, r.error ?: ""))
+        }
+    }
+
+    private fun loadAfterDelay() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(3500)
+            if (isAdded) load()
         }
     }
 

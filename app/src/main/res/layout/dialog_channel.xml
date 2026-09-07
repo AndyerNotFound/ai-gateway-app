@@ -121,6 +121,12 @@
             android:text="@string/pv_default" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchUseResponses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pv_use_responses" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switchInsecure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

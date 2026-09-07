@@ -39,6 +39,7 @@ data class Channel(
     val default: Boolean = false,
     val delayMs: Int = 0,
     val insecure: Boolean = false,
+    val useResponses: Boolean = false,
     val hasKey: Boolean = false,
     val keyPrefix: String? = null
 )
@@ -85,6 +86,12 @@ data class ModelSync(
     val intervalHours: Int = 24
 )
 
+/** OpenAI 扩展端点: enable=对外开放 /v1/responses 与 images/embeddings/audio 等; upstreamResponses=全局默认上游用 Responses API */
+data class OpenaiExtras(
+    val enable: Boolean = false,
+    val upstreamResponses: Boolean = false
+)
+
 data class GatewayConfig(
     val name: String = "",
     val port: Int = 16384,
@@ -97,6 +104,7 @@ data class GatewayConfig(
     val record: Record = Record(),
     val thinkingSummary: ThinkingSummary = ThinkingSummary(),
     val modelSync: ModelSync = ModelSync(),
+    val openaiExtras: OpenaiExtras = OpenaiExtras(),
     val proxies: Map<String, Proxy> = emptyMap(),
     val channels: List<Channel> = emptyList(),
     val modelMap: Map<String, String> = emptyMap(),

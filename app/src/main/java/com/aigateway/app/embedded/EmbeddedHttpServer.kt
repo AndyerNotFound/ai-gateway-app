@@ -89,7 +89,9 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
 
     private class HttpRequest(
         val method: String, val path: String, val query: Map<String, String>,
-        val headers: Map<String, String>, val body: String
+        val headers: Map<String, String>, val body: String,
+        val rawBody: ByteArray = ByteArray(0),
+        val contentType: String = ""
     )
 
     private fun parseRequest(input: InputStream): HttpRequest? {
@@ -115,8 +117,10 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
             if (idx > 0) headers[line.substring(0, idx).trim().lowercase()] = line.substring(idx + 1).trim()
         }
         val contentLength = headers["content-length"]?.toIntOrNull() ?: 0
-        val body = if (contentLength > 0) String(readFully(input, contentLength), Charsets.UTF_8) else ""
-        return HttpRequest(method, path, query, headers, body)
+        // 保留原始字节(multipart/音频等二进制), 同时提供 UTF-8 字符串视图
+        val rawBody = if (contentLength > 0) readFully(input, contentLength) else ByteArray(0)
+        val body = String(rawBody, Charsets.UTF_8)
+        return HttpRequest(method, path, query, headers, body, rawBody, headers["content-type"] ?: "")
     }
 
     private fun urlDec(s: String): String = try { URLDecoder.decode(s, "UTF-8") } catch (e: Exception) { s }
@@ -138,6 +142,18 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
         sb.append("Content-Length: ${body.size}\r\nConnection: close\r\n\r\n")
         out.write(sb.toString().toByteArray(Charsets.ISO_8859_1))
         out.write(body)
+        out.flush()
+    }
+
+    /** 任意字节响应(图片/音频/JSON 透传) */
+    private fun writeRaw(out: OutputStream, status: Int, bytes: ByteArray, contentType: String, extraHeaders: Map<String, String> = emptyMap()) {
+        val sb = StringBuilder("HTTP/1.1 $status ${reason(status)}\r\n")
+        sb.append("Content-Type: $contentType\r\n")
+        sb.append("Access-Control-Allow-Origin: *\r\n")
+        extraHeaders.forEach { (k, v) -> sb.append("$k: $v\r\n") }
+        sb.append("Content-Length: ${bytes.size}\r\nConnection: close\r\n\r\n")
+        out.write(sb.toString().toByteArray(Charsets.ISO_8859_1))
+        out.write(bytes)
         out.flush()
     }
 
@@ -183,6 +199,15 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
 
     private val geminiRe = Regex("^/v1(?:beta|alpha)?/models/([^:]+):(generateContent|streamGenerateContent|countTokens)$")
 
+    // OpenAI 扩展直通端点(仅 openaiExtras.enable 时开放; 原样转发到选中的 openai 渠道)
+    private val extraEndpoints = setOf(
+        "/v1/images/generations", "/v1/images/edits", "/v1/images/variations",
+        "/v1/embeddings",
+        "/v1/audio/speech", "/v1/audio/transcriptions", "/v1/audio/translations",
+        "/v1/completions",
+        "/v1/moderations"
+    )
+
     private suspend fun route(req: HttpRequest, out: OutputStream) {
         val p = req.path
         if (req.method == "OPTIONS") {
@@ -206,17 +231,34 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
             val fmt = if (p == "/v1beta/models") "gemini" else "openai"
             writeJson(out, 200, engine.modelsResponse(fmt)); return
         }
+        // OpenAI 扩展直通端点(图片/嵌入/音频/补全/审核): 原样转发到 openai 渠道, 响应字节透传
+        if (req.method == "POST" && engine.openaiExtrasEnabled() && extraEndpoints.contains(p)) {
+            if (!checkGatewayKey(req)) { writeJson(out, 401, engine.errorBody("openai", 401, "invalid gateway key")); return }
+            when (val r = engine.extraEndpoint(p, req.rawBody, req.contentType)) {
+                is GatewayEngine.ExtraResult.Raw -> writeRaw(out, r.status, r.bytes, r.contentType, mapOf("X-AI-Gateway-Channel" to ""))
+                is GatewayEngine.ExtraResult.Fail -> writeJson(out, r.status, engine.errorBody("openai", r.status, r.message))
+            }
+            return
+        }
         if (req.method != "POST") {
             writeJson(out, 404, engine.errorBody("openai", 404, "not found: ${req.method} $p")); return
         }
 
         // 识别客户端格式
         var clientFormat: String? = null
+        var clientApi = "chat"
         var urlModel: String? = null
         var forceStream = false
         when {
             p == "/v1/chat/completions" || p == "/chat/completions" -> clientFormat = "openai"
             p == "/v1/messages" || p == "/messages" -> clientFormat = "claude"
+            p == "/v1/responses" -> {
+                if (!engine.openaiExtrasEnabled()) {
+                    writeJson(out, 404, engine.errorBody("openai", 404, "unknown endpoint: $p (OpenAI 扩展端点未开启)")); return
+                }
+                clientFormat = "openai"
+                clientApi = "responses"
+            }
             else -> {
                 val m = geminiRe.find(p)
                 if (m != null) {
@@ -242,7 +284,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
 
         // 流式收集
         var headWritten = false
-        engine.chat(clientFormat, bodyJson, urlModel, forceStream, keyOk).collect { ev ->
+        engine.chat(clientFormat, bodyJson, urlModel, forceStream, keyOk, clientApi).collect { ev ->
             when (ev) {
                 is EngineEvent.Head -> {
                     if (ev.streaming) { writeSseHead(out, ev.channelName); headWritten = true }

@@ -37,6 +37,7 @@ class SettingsStore(context: Context) {
         private const val K_GUARD_CLOUD = "guard_cloud"
         private const val K_GUARD_CLOUD_URL = "guard_cloud_url"
         private const val K_GUARD_CLOUD_KEY = "guard_cloud_key"
+        private const val K_TERMUX_VARIANT = "termux_variant"
         private const val K_BG_KEEPALIVE = "bg_keepalive"
     }
 
@@ -69,6 +70,11 @@ class SettingsStore(context: Context) {
     var guardCloudKey: String
         get() = sp.getString(K_GUARD_CLOUD_KEY, "") ?: ""
         set(v) = sp.edit().putString(K_GUARD_CLOUD_KEY, v).apply()
+
+    /** Termux 类型: zero=ZeroTermux(旧协议), official=官方 Termux(新协议) */
+    var termuxVariant: String
+        get() = sp.getString(K_TERMUX_VARIANT, "zero") ?: "zero"
+        set(v) = sp.edit().putString(K_TERMUX_VARIANT, v).apply()
 
     // ---- 后台保活 ----
 

@@ -121,6 +121,73 @@ class GatewayEngine(private val configFile: File) {
     fun port(): Int = cfg.port
     fun gatewayKey(): String = cfg.gatewayKey
     fun adminKey(): String = cfg.adminKey
+    /** OpenAI 扩展端点总开关(路由 /v1/responses 等时判断) */
+    fun openaiExtrasEnabled(): Boolean = cfg.openaiExtras.enable
+
+    // ================= OpenAI 扩展直通端点 (images/embeddings/audio/completions/moderations) =================
+
+    sealed class ExtraResult {
+        data class Raw(val status: Int, val bytes: ByteArray, val contentType: String) : ExtraResult()
+        data class Fail(val status: Int, val message: String) : ExtraResult()
+    }
+
+    /** 扩展端点直通: 只支持 openai 渠道; JSON 端点应用 modelMap 改名, multipart 原样透传; 响应字节原样返回 */
+    fun extraEndpoint(pathname: String, bodyBytes: ByteArray, contentType: String): ExtraResult {
+        if (!cfg.openaiExtras.enable) return ExtraResult.Fail(404, "unknown endpoint: $pathname (OpenAI 扩展端点未开启)")
+        var model = ""
+        var parsed: JsonObject? = null
+        if (contentType.startsWith("application/json")) {
+            parsed = runCatching { JsonParser.parseString(String(bodyBytes, Charsets.UTF_8)).asJsonObject }.getOrNull()
+            model = parsed?.str("model") ?: ""
+        }
+        val candidates = pickChannels(model.ifBlank { null }).filter { it.channel.type == "openai" }
+        if (candidates.isEmpty()) {
+            synchronized(this) { statErrors++ }
+            return ExtraResult.Fail(503, "no openai channel for extended endpoint $pathname (扩展端点只支持 openai 类型渠道)")
+        }
+        synchronized(this) { statRequests++ }
+        log("→ [extra] $pathname model=${model.ifBlank { "-" }} (${candidates.size}个候选渠道)")
+        var lastErr = ""
+        var lastStatus = 0
+        for (cand in candidates) {
+            val ch = cand.channel
+            try {
+                var outBytes = bodyBytes
+                if (parsed != null && cand.upstreamModel.isNotBlank() && parsed.str("model") != cand.upstreamModel) {
+                    parsed.put("model", cand.upstreamModel)
+                    outBytes = parsed.toString().toByteArray(Charsets.UTF_8)
+                }
+                val client = UpstreamClient.clientFor(resolveProxy(ch.proxy), ch.insecure)
+                val rb = Request.Builder().url(joinUrl(ch.baseUrl, pathname))
+                rb.header("authorization", "Bearer " + ch.apiKey)
+                rb.header("Content-Type", contentType.ifBlank { "application/json" })
+                rb.post(outBytes.toRequestBody(null))
+                val resp = client.newCall(rb.build()).execute()
+                val bytes = resp.body?.bytes() ?: ByteArray(0)
+                val ct = resp.headers["content-type"] ?: contentType.ifBlank { "application/json" }
+                if (!resp.isSuccessful) {
+                    lastErr = "渠道 ${ch.name} 返回 ${resp.code}: " + String(bytes, Charsets.UTF_8).take(200)
+                    lastStatus = resp.code
+                    bumpChannelError(ch.name)
+                    if (resp.code in RETRYABLE && candidates.size > 1) { continue }
+                    synchronized(this) { statErrors++ }
+                    return ExtraResult.Fail(resp.code, lastErr)
+                }
+                bumpChannel(ch.name, 0, 0)
+                log("✓ [extra] $pathname ch=${ch.name} [${ch.type}] ${resp.code}")
+                return ExtraResult.Raw(resp.code, bytes, ct)
+            } catch (e: Exception) {
+                lastErr = e.message ?: "connection error"
+                lastStatus = 502
+                bumpChannelError(ch.name)
+                if (candidates.size > 1) continue
+                synchronized(this) { statErrors++ }
+                return ExtraResult.Fail(502, "upstream connection failed: $lastErr")
+            }
+        }
+        synchronized(this) { statErrors++ }
+        return ExtraResult.Fail(if (lastStatus > 0) lastStatus else 502, lastErr.ifBlank { "all channels failed" })
+    }
 
     private fun resolveProxy(name: String?): Proxy? =
         if (name.isNullOrBlank()) null else cfg.proxies[name]
@@ -217,10 +284,11 @@ class GatewayEngine(private val configFile: File) {
         body: JsonObject,
         urlModel: String?,
         forceStream: Boolean,
-        gatewayKeyOk: Boolean
+        gatewayKeyOk: Boolean,
+        clientApi: String = "chat"
     ): Flow<EngineEvent> = flow {
         if (!gatewayKeyOk) { emit(EngineEvent.Fail(401, "invalid gateway key")); return@flow }
-        val toCanon = Converters.TO_CANON[clientFormat]
+        val toCanon = if (clientApi == "responses") Converters::responsesToCanonical else Converters.TO_CANON[clientFormat]
         if (toCanon == null) { emit(EngineEvent.Fail(400, "unknown client format")); return@flow }
         val canonical = try { toCanon(body, urlModel) } catch (e: Exception) {
             emit(EngineEvent.Fail(400, "invalid body: ${e.message}")); return@flow
@@ -236,7 +304,7 @@ class GatewayEngine(private val configFile: File) {
         val stream = canonical.bool("stream") ?: false
         val t0 = System.currentTimeMillis()
         val reqId = randId("req")
-        log("→ [$clientFormat] model=$model stream=$stream (${candidates.size}个候选渠道)")
+        log("→ [$clientFormat${if (clientApi == "responses") "/responses" else ""}] model=$model stream=$stream (${candidates.size}个候选渠道)")
 
         var attempt = 0
         var lastStatus = 0
@@ -245,7 +313,7 @@ class GatewayEngine(private val configFile: File) {
             attempt++
             val ch = cand.channel
             try {
-                val built = buildRequest(ch, clientFormat, canonical, body, cand.upstreamModel, stream)
+                val built = buildRequest(ch, clientFormat, clientApi, canonical, body, cand.upstreamModel, stream)
                 val client = UpstreamClient.clientFor(resolveProxy(ch.proxy), ch.insecure)
                 val reqBuilder = Request.Builder().url(built.url)
                 built.headers.forEach { (k, v) -> reqBuilder.header(k, v) }
@@ -253,7 +321,7 @@ class GatewayEngine(private val configFile: File) {
                 val resp = client.newCall(reqBuilder.build()).execute()
                 if (resp.isSuccessful) {
                     log("✓ ${ch.name} [${ch.type}] ${if (built.direct) "直通" else "转换"}")
-                    handleSuccess(resp, ch, clientFormat, canonical, built.direct, stream, model, reqId, t0)
+                    handleSuccess(resp, ch, clientFormat, clientApi, canonical, built.direct, built.upApi, stream, model, reqId, t0)
                     return@flow
                 }
                 lastStatus = resp.code
@@ -286,10 +354,19 @@ class GatewayEngine(private val configFile: File) {
 
     // ---- 构建上游请求 ----
 
-    private data class Built(val url: String, val headers: Map<String, String>, val body: JsonObject, val direct: Boolean)
+    private data class Built(val url: String, val headers: Map<String, String>, val body: JsonObject, val direct: Boolean, val upApi: String)
 
-    private fun buildRequest(ch: Channel, clientFormat: String, canonical: JsonObject, origBody: JsonObject, upstreamModel: String, stream: Boolean): Built {
-        val direct = clientFormat == ch.type
+    /** OpenAI 渠道是否用 Responses API 上游 (仅 openaiExtras.enable 时生效; 渠道 useResponses 覆盖全局 upstreamResponses) */
+    private fun chUsesResponses(ch: Channel): Boolean {
+        if (ch.type != "openai") return false
+        val oe = cfg.openaiExtras
+        if (!oe.enable) return false
+        return if (ch.useResponses) true else oe.upstreamResponses
+    }
+
+    private fun buildRequest(ch: Channel, clientFormat: String, clientApi: String, canonical: JsonObject, origBody: JsonObject, upstreamModel: String, stream: Boolean): Built {
+        val upApi = if (chUsesResponses(ch)) "responses" else "chat"
+        val direct = clientFormat == ch.type && clientApi == upApi
         val headers = LinkedHashMap<String, String>()
         var url: String
         val bodyBuf: JsonObject
@@ -297,7 +374,7 @@ class GatewayEngine(private val configFile: File) {
             val body = origBody.deepCopy()
             when (ch.type) {
                 "openai" -> {
-                    url = joinUrl(ch.baseUrl, "/v1/chat/completions")
+                    url = joinUrl(ch.baseUrl, if (upApi == "responses") "/v1/responses" else "/v1/chat/completions")
                     body.put("model", upstreamModel)
                     headers["authorization"] = "Bearer " + ch.apiKey
                 }
@@ -319,8 +396,8 @@ class GatewayEngine(private val configFile: File) {
             uc.put("model", upstreamModel)
             when (ch.type) {
                 "openai" -> {
-                    url = joinUrl(ch.baseUrl, "/v1/chat/completions")
-                    bodyBuf = Converters.BUILD_BODY["openai"]!!.invoke(uc)
+                    url = joinUrl(ch.baseUrl, if (upApi == "responses") "/v1/responses" else "/v1/chat/completions")
+                    bodyBuf = if (upApi == "responses") Converters.canonicalToResponsesBody(uc) else Converters.BUILD_BODY["openai"]!!.invoke(uc)
                     headers["authorization"] = "Bearer " + ch.apiKey
                 }
                 "claude" -> {
@@ -338,16 +415,23 @@ class GatewayEngine(private val configFile: File) {
             }
         }
         if (stream) headers["accept"] = "text/event-stream"
-        return Built(url, headers, bodyBuf, direct)
+        return Built(url, headers, bodyBuf, direct, upApi)
     }
 
-    private fun joinUrl(base: String, path: String): String = base.removeSuffix("/") + path
+    private fun joinUrl(base: String, suffix: String): String {
+        val b = base.removeSuffix("/")
+        return when {
+            suffix.startsWith("/v1beta/") && b.endsWith("/v1beta") -> b + suffix.substring(7)
+            suffix.startsWith("/v1/") && b.endsWith("/v1") -> b + suffix.substring(3)
+            else -> b + suffix
+        }
+    }
 
     // ---- 处理成功响应 ----
 
     private suspend fun FlowCollector<EngineEvent>.handleSuccess(
-        resp: Response, ch: Channel, clientFormat: String, canonical: JsonObject,
-        direct: Boolean, stream: Boolean, model: String, reqId: String, t0: Long
+        resp: Response, ch: Channel, clientFormat: String, clientApi: String, canonical: JsonObject,
+        direct: Boolean, upApi: String, stream: Boolean, model: String, reqId: String, t0: Long
     ) {
         if (direct) {
             // 同格式直通: 零损耗原样转发
@@ -384,7 +468,7 @@ class GatewayEngine(private val configFile: File) {
         }
 
         // 跨格式: 收集上游(可能流式) → canonical 响应 → 客户端格式
-        val cresp = collectToCanonical(resp, ch.type)
+        val cresp = collectToCanonical(resp, upApi)
         resp.close()
         val usage = cresp.obj("usage") ?: JsonObject()
         val inT = (usage.int("input") ?: 0).toLong()
@@ -395,12 +479,17 @@ class GatewayEngine(private val configFile: File) {
         emit(EngineEvent.Head(200, stream, ch.name))
         if (stream) {
             // 伪流式: 按客户端格式发 chunk + 结束
-            for (chunk in buildStreamChunks(clientFormat, applyGuard(cresp), model)) emit(EngineEvent.Sse(chunk))
+            val chunks = if (clientFormat == "openai" && clientApi == "responses")
+                Converters.buildResponsesStreamChunks(applyGuard(cresp), model)
+            else
+                buildStreamChunks(clientFormat, applyGuard(cresp), model)
+            for (chunk in chunks) emit(EngineEvent.Sse(chunk))
         } else {
             val guarded = applyGuard(cresp)
-            val out = when (clientFormat) {
-                "openai" -> Converters.canonicalToOpenAIResp(guarded, model)
-                "claude" -> Converters.canonicalToClaudeResp(guarded, model)
+            val out = when {
+                clientFormat == "openai" && clientApi == "responses" -> Converters.canonicalToResponsesResp(guarded, model)
+                clientFormat == "openai" -> Converters.canonicalToOpenAIResp(guarded, model)
+                clientFormat == "claude" -> Converters.canonicalToClaudeResp(guarded, model)
                 else -> Converters.canonicalToGeminiResp(guarded, model)
             }
             emit(EngineEvent.JsonBody(out))
@@ -441,7 +530,7 @@ class GatewayEngine(private val configFile: File) {
         val isEventStream = ct.contains("event-stream")
         if (!isEventStream) {
             val j = safeParse(resp.body?.string())?.takeIf { it.isJsonObject }?.asJsonObject ?: JsonObject()
-            return Converters.UP_RESP[upFormat]!!.invoke(j)
+            return if (upFormat == "responses") Converters.responsesRespToCanonical(j) else Converters.UP_RESP[upFormat]!!.invoke(j)
         }
         // 流式: 累积文本
         val text = StringBuilder()
@@ -455,6 +544,17 @@ class GatewayEngine(private val configFile: File) {
                 if (data == "[DONE]") break
                 val j = safeParse(data)?.takeIf { it.isJsonObject }?.asJsonObject ?: continue
                 when (upFormat) {
+                    "responses" -> {
+                        when (j.str("type")) {
+                            "response.output_text.delta" -> j.str("delta")?.let { text.append(it) }
+                            "response.function_call_arguments.delta" -> { /* 伪流式不做工具参数累积到文本 */ }
+                            "response.completed", "response.incomplete", "response.failed" -> {
+                                val r = j.obj("response")
+                                val u = r?.obj("usage")
+                                u?.let { inT = it.int("input_tokens") ?: inT; outT = it.int("output_tokens") ?: outT }
+                            }
+                        }
+                    }
                     "openai" -> {
                         val delta = j.arr("choices")?.get(0)?.asJsonObject?.obj("delta")
                         delta?.str("content")?.let { text.append(it) }
