@@ -13,23 +13,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-/** Fragment 基类 —— 后端访问 / 协程 / 提示 / 实例变化自动刷新 */
+
 abstract class BaseFragment : Fragment() {
 
     val app: App get() = requireActivity().application as App
 
     fun backendOrNull(): GatewayBackend? = app.backend()
 
-    /** 上次加载时的 (实例 + 连接) 标识, 用于检测变化 */
+    
     private var lastDataKey: String? = null
 
-    /** 当前数据标识: 实例名 + 后端连接 */
-    private fun dataKey(): String =
+    
+    open fun dataKey(): String =
         app.connectionStore.activeInstance + "|" + (backendOrNull()?.connectionDesc ?: "none")
 
-    /**
-     * 子类覆盖以支持自动刷新(切实例/切连接后回到该页会自动重载)。
-     */
+    
+
+
     open fun reload() {}
 
     override fun onResume() {
@@ -41,7 +41,7 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    /** 强制标记需要重载(下次 onResume 生效) */
+    
     fun invalidateData() {
         lastDataKey = null
     }
@@ -54,9 +54,9 @@ abstract class BaseFragment : Fragment() {
         view?.let { Snackbar.make(it, msg, Snackbar.LENGTH_LONG).show() } ?: toast(msg)
     }
 
-    /**
-     * 后台执行后端调用, 主线程回调, 自动捕获异常。
-     */
+    
+
+
     fun <T> run(
         onError: (String) -> Unit = { snack(it) },
         block: suspend () -> T,

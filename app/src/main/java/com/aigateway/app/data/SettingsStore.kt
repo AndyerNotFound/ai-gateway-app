@@ -5,20 +5,20 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 
-/** 深色模式 */
+
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
-/** 配色方案 */
+
 enum class Palette { PURPLE, BLUE, GREEN, ORANGE, RED }
 
-/** 语言 */
+
 enum class AppLanguage(val tag: String) {
     SYSTEM(""), ENGLISH("en"), CHINESE("zh-CN")
 }
 
-/**
- * 外观/语言设置存储 —— SharedPreferences 持久化 + 应用到 AppCompat。
- */
+
+
+
 class SettingsStore(context: Context) {
 
     private val sp: SharedPreferences =
@@ -39,26 +39,32 @@ class SettingsStore(context: Context) {
         private const val K_GUARD_CLOUD_KEY = "guard_cloud_key"
         private const val K_TERMUX_VARIANT = "termux_variant"
         private const val K_BG_KEEPALIVE = "bg_keepalive"
+        private const val K_APP_MODE = "app_mode"
     }
 
-    // ---- 代码拦截(CodeGuard) ----
+    
+    var appMode: String
+        get() = sp.getString(K_APP_MODE, "") ?: ""
+        set(v) = sp.edit().putString(K_APP_MODE, v).apply()
 
-    /** 是否启用代码安全扫描 */
+    
+
+    
     var guardEnabled: Boolean
         get() = sp.getBoolean(K_GUARD_ENABLE, false)
         set(v) = sp.edit().putBoolean(K_GUARD_ENABLE, v).apply()
 
-    /** 最低报告等级: LOW / MEDIUM / HIGH */
+    
     var guardLevel: String
         get() = sp.getString(K_GUARD_LEVEL, "MEDIUM") ?: "MEDIUM"
         set(v) = sp.edit().putString(K_GUARD_LEVEL, v).apply()
 
-    /** 命中动作: WARN(仅标注) / BLOCK(拦截替换内容) */
+    
     var guardAction: String
         get() = sp.getString(K_GUARD_ACTION, "WARN") ?: "WARN"
         set(v) = sp.edit().putString(K_GUARD_ACTION, v).apply()
 
-    /** 启用云端扫描 API */
+    
     var guardCloudEnabled: Boolean
         get() = sp.getBoolean(K_GUARD_CLOUD, false)
         set(v) = sp.edit().putBoolean(K_GUARD_CLOUD, v).apply()
@@ -71,24 +77,24 @@ class SettingsStore(context: Context) {
         get() = sp.getString(K_GUARD_CLOUD_KEY, "") ?: ""
         set(v) = sp.edit().putString(K_GUARD_CLOUD_KEY, v).apply()
 
-    /** Termux 类型: zero=ZeroTermux(旧协议), official=官方 Termux(新协议) */
+    
     var termuxVariant: String
         get() = sp.getString(K_TERMUX_VARIANT, "zero") ?: "zero"
         set(v) = sp.edit().putString(K_TERMUX_VARIANT, v).apply()
 
-    // ---- 后台保活 ----
+    
 
-    /** 启用前台服务保活(仅应用内运行模式有意义) */
+    
     var bgKeepAlive: Boolean
         get() = sp.getBoolean(K_BG_KEEPALIVE, false)
         set(v) = sp.edit().putBoolean(K_BG_KEEPALIVE, v).apply()
 
-    /** 内嵌配置是否加密存储 */
+    
     var cryptEnabled: Boolean
         get() = sp.getBoolean(K_CRYPT_ENABLE, false)
         set(v) = sp.edit().putBoolean(K_CRYPT_ENABLE, v).apply()
 
-    /** 配置加密口令(用于内嵌配置文件 + 导入导出默认口令) */
+    
     var cryptPassword: String
         get() = sp.getString(K_CRYPT_PASS, "") ?: ""
         set(v) = sp.edit().putString(K_CRYPT_PASS, v).apply()
@@ -98,7 +104,7 @@ class SettingsStore(context: Context) {
             .getOrDefault(ThemeMode.SYSTEM)
         set(v) = sp.edit().putString(K_MODE, v.name).apply()
 
-    /** Material You 动态取色(Android 12+) */
+    
     var dynamicColors: Boolean
         get() = sp.getBoolean(K_DYNAMIC, true)
         set(v) = sp.edit().putBoolean(K_DYNAMIC, v).apply()
@@ -113,7 +119,7 @@ class SettingsStore(context: Context) {
             .getOrDefault(AppLanguage.SYSTEM)
         set(v) = sp.edit().putString(K_LANG, v.name).apply()
 
-    /** 应用深色模式(立即生效) */
+    
     fun applyThemeMode() {
         AppCompatDelegate.setDefaultNightMode(
             when (themeMode) {
@@ -124,14 +130,14 @@ class SettingsStore(context: Context) {
         )
     }
 
-    /** 应用语言(per-app language, 立即生效) */
+    
     fun applyLanguage() {
         val locales = if (language == AppLanguage.SYSTEM) LocaleListCompat.getEmptyLocaleList()
         else LocaleListCompat.forLanguageTags(language.tag)
         AppCompatDelegate.setApplicationLocales(locales)
     }
 
-    /** 配色方案对应的 theme overlay 资源 id */
+    
     fun paletteOverlay(): Int = when (palette) {
         Palette.PURPLE -> com.aigateway.app.R.style.ThemeOverlay_Palette_Purple
         Palette.BLUE -> com.aigateway.app.R.style.ThemeOverlay_Palette_Blue

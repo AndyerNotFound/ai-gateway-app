@@ -1,20 +1,20 @@
-#!/usr/bin/env node
-/**
- * ai-gateway — 通用 AI 本地网关 (Termux / Node.js, 零依赖)
- *
- * 功能:
- *   - 三种 API 格式入口自动识别: OpenAI Chat Completions / Gemini generateContent / Claude messages
- *   - 上游渠道三种格式: openai / gemini / claude, 任意入格式 × 任意出格式自动互转(请求+响应+流式SSE)
- *   - 同格式直通(请求体原样转发, 仅换模型名/鉴权), 跨格式走转换中枢
- *   - 出站支持 SOCKS5 / HTTP 代理(零依赖手写握手), 可按渠道指定代理或直连
- *   - 多实例: 每实例一份配置文件+端口, 互不干扰
- *   - 本地回环 + 局域网访问(监听地址可配)
- *
- * 用法: node gateway.js [配置文件路径] [端口覆盖]
- *   node gateway.js                      → 用同目录 config.json
- *   node gateway.js config.office.json   → 指定配置
- *   node gateway.js config.json 9000     → 指定配置+临时改端口
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 'use strict';
 
 const http = require('http');
@@ -30,7 +30,7 @@ const { handleAdmin } = admin;
 
 const VERSION = '1.4.0';
 
-/* ================= 小工具 ================= */
+
 function ts() { return new Date().toISOString().slice(11, 19); }
 function log(...a) { console.log('[' + ts() + ']', ...a); }
 function logErr(...a) { console.error('[' + ts() + ']', ...a); }
@@ -38,7 +38,7 @@ function randId(prefix) { return prefix + crypto.randomBytes(10).toString('hex')
 function nowSec() { return Math.floor(Date.now() / 1000); }
 function safeParse(s) { try { return JSON.parse(s); } catch (e) { return undefined; } }
 
-/* ---- 文本替换(用户自定义正则规则, config.replace = {out:[{re,to,ci}],inc:[...]}) ---- */
+
 function rpCompile(rules) {
   const out = [];
   for (const r of (rules || [])) {
@@ -53,11 +53,11 @@ function rpApplyText(s, rules) {
 }
 function rpWalk(v, rules, depth, skipModel) {
   if (v == null || depth > 12) return v;
-  if (typeof v === 'string') return v.startsWith('data:') ? v : rpApplyText(v, rules); // data:URL 不动(护图片)
+  if (typeof v === 'string') return v.startsWith('data:') ? v : rpApplyText(v, rules); 
   if (Array.isArray(v)) { for (let i = 0; i < v.length; i++) v[i] = rpWalk(v[i], rules, depth + 1, skipModel); return v; }
   if (typeof v === 'object') {
     for (const k of Object.keys(v)) {
-      if (skipModel && k === 'model') continue; // 不动 model 字段, 保护路由
+      if (skipModel && k === 'model') continue; 
       v[k] = rpWalk(v[k], rules, depth + 1, skipModel);
     }
     return v;
@@ -65,20 +65,20 @@ function rpWalk(v, rules, depth, skipModel) {
   return v;
 }
 
-/* ---- 配置加解密(可选, 由 crypt.js 提供) ---- */
+
 let crypt = null; try { crypt = require('./crypt.js'); } catch (_) {}
 
-/* ---- 隐私过滤: 请求体里的密钥/token 替换为 *** ---- */
+
 const REDACT_PATTERNS = [
-  /\bsk-[A-Za-z0-9_-]{10,}/g,            // OpenAI/DeepSeek/Anthropic 风格
-  /\bgh[pou]_[A-Za-z0-9]{20,}/g,          // GitHub
+  /\bsk-[A-Za-z0-9_-]{10,}/g,            
+  /\bgh[pou]_[A-Za-z0-9]{20,}/g,          
   /\bgithub_pat_[A-Za-z0-9_]{20,}/g,
-  /\bxox[baprs]-[A-Za-z0-9-]{10,}/g,      // Slack
-  /\bAKIA[0-9A-Z]{16}/g,                  // AWS
-  /\bAIza[0-9A-Za-z_-]{30,}/g,            // Google
-  /\bglpat-[A-Za-z0-9_-]{15,}/g,          // GitLab
-  /\bhf_[A-Za-z0-9]{20,}/g,               // HuggingFace
-  /\bBearer\s+[A-Za-z0-9._~-]{16,}/g,     // 文本里粘贴的 Bearer 头
+  /\bxox[baprs]-[A-Za-z0-9-]{10,}/g,      
+  /\bAKIA[0-9A-Z]{16}/g,                  
+  /\bAIza[0-9A-Za-z_-]{30,}/g,            
+  /\bglpat-[A-Za-z0-9_-]{15,}/g,          
+  /\bhf_[A-Za-z0-9]{20,}/g,               
+  /\bBearer\s+[A-Za-z0-9._~-]{16,}/g,     
 ];
 const REDACT_FIELD_RE = /api[-_]?key|apikey|secret|password|passwd|token|authorization/i;
 function redactText(s, extra) {
@@ -88,7 +88,7 @@ function redactText(s, extra) {
 }
 function redactDeep(v, extra, depth) {
   if (v == null || depth > 12) return v;
-  if (typeof v === 'string') return v.startsWith('data:') ? v : redactText(v, extra); // 跳过 data:URL(图片/音频)
+  if (typeof v === 'string') return v.startsWith('data:') ? v : redactText(v, extra); 
   if (Array.isArray(v)) { for (let i = 0; i < v.length; i++) v[i] = redactDeep(v[i], extra, depth + 1); return v; }
   if (typeof v === 'object') {
     for (const k of Object.keys(v)) {
@@ -114,7 +114,7 @@ function normStop(v) {
   return [String(v)];
 }
 
-/* ================= 配置加载 ================= */
+
 function normalizeProxy(p) {
   if (!p) return null;
   if (typeof p === 'object') {
@@ -125,7 +125,7 @@ function normalizeProxy(p) {
     if (!o.host || !o.port) return null;
     return o;
   }
-  // 字符串: socks5://user:pass@host:port 或 http://host:port
+  
   const m = /^(socks5h?|socks|http|https):\/\/(?:([^:@\/]+)(?::([^@\/]*))?@)?([^:\/@]+):(\d+)\/?$/i.exec(String(p).trim());
   if (!m) return null;
   const scheme = m[1].toLowerCase();
@@ -141,18 +141,18 @@ function applyDefaults(cfg) {
   cfg.listen.host = String(cfg.listen.host || '0.0.0.0');
   cfg.gatewayKey = cfg.gatewayKey ? String(cfg.gatewayKey) : '';
   cfg.modelSync = cfg.modelSync && typeof cfg.modelSync === 'object' ? cfg.modelSync : {};
-  cfg.modelSync.enable = cfg.modelSync.enable !== false; // 默认开
+  cfg.modelSync.enable = cfg.modelSync.enable !== false; 
   cfg.modelSync.intervalHours = Math.max(1, Number(cfg.modelSync.intervalHours) || 24);
   cfg.maxBodyBytes = Number(cfg.maxBodyBytes || 64 * 1024 * 1024);
   cfg.connectTimeout = Number(cfg.connectTimeout || 15000);
   cfg.responseTimeout = Number(cfg.responseTimeout || 180000);
   cfg.cors = cfg.cors !== false;
-  // TLS 配置解析
+  
   cfg.tls = cfg.tls || (cfg.listen && cfg.listen.tls) || {};
   if (cfg.tls.enable) {
     cfg.tls.cert = String(cfg.tls.cert || 'cert.pem');
     cfg.tls.key = String(cfg.tls.key || 'key.pem');
-    cfg.tls.port = cfg.tls.port != null ? Number(cfg.tls.port) : null; // null=与HTTP同端口(纯HTTPS)
+    cfg.tls.port = cfg.tls.port != null ? Number(cfg.tls.port) : null; 
   }
   cfg.adminKey = cfg.adminKey ? String(cfg.adminKey) : '';
   if (cfg.proxies && typeof cfg.proxies === 'object' && !Array.isArray(cfg.proxies)) {
@@ -214,7 +214,7 @@ function loadConfig(file) {
   return cfg;
 }
 
-/* ================= 代理连接层 (SOCKS5 / HTTP CONNECT, 零依赖手写) ================= */
+
 function dialTcp(host, port, timeout) {
   return new Promise((resolve, reject) => {
     const sock = net.connect({ host, port });
@@ -226,7 +226,7 @@ function dialTcp(host, port, timeout) {
   });
 }
 
-/** 在裸 socket 上做定长/定界读取(仅握手阶段用, 握手完 detach) */
+
 function makeReader(sock) {
   const st = { buf: Buffer.alloc(0), waiters: [] };
   function pump() {
@@ -320,7 +320,7 @@ async function dialViaProxy(proxy, targetHost, targetPort, timeout) {
   }
 }
 
-/* ================= Agent 缓存 ================= */
+
 let directAgents = null;
 function getDirectAgents() {
   if (!directAgents) {
@@ -381,17 +381,17 @@ function getAgents(cfg, ch) {
   return a;
 }
 
-/* ================= 入口解析: 客户端格式 → canonical =================
- * canonical request: {
- *   model, stream,
- *   messages: [{ role:'system'|'user'|'assistant'|'tool',
- *                content: string | [{type:'text',text}|{type:'image_url',image_url:{url}}],
- *                name?, tool_call_id?, tool_calls?: [{id,type:'function',function:{name,arguments:string}}] }],
- *   temperature?, top_p?, max_tokens?, stop?, tools?(OpenAI形), tool_choice?(OpenAI形) }
- * canonical resp: { text, reasoning?, tool_calls?, finish_reason:'stop'|'length'|'tool_calls'|'content_filter', usage:{input,output} }
- * canonical 事件: {type:'start',usage?} {type:'text',t} {type:'reasoning',t}
- *                {type:'tool_start',i,id,name} {type:'tool_delta',i,s} {type:'end',finish_reason,usage}
- * ================================================================ */
+
+
+
+
+
+
+
+
+
+
+
 function openaiToCanonical(body, urlModel) {
   const messages = [];
   for (const m of (body.messages || [])) {
@@ -469,7 +469,7 @@ function claudeToCanonical(body, urlModel) {
           : (Array.isArray(b.content) ? b.content.filter(x => x && x.type === 'text').map(x => x.text || '').join('\n') : '');
         messages.push({ role: 'tool', tool_call_id: b.tool_use_id || '', content: c });
       }
-      // thinking / document / server_tool_use 等其余 block 类型忽略
+      
     }
     if (m.role === 'assistant') {
       if (textParts.length || toolCalls.length) {
@@ -568,7 +568,7 @@ function geminiToCanonical(body, urlModel) {
   };
 }
 
-/* ================= 出口构建: canonical → 上游格式 ================= */
+
 function canonicalToOpenAIBody(c, opts = {}) {
   const messages = [];
   for (const m of (c.messages || [])) {
@@ -585,7 +585,7 @@ function canonicalToOpenAIBody(c, opts = {}) {
       messages.push({ role: 'system', content: toText(m.content) });
     } else {
       let content = m.content;
-      // 纯文本数组扁平化为字符串(最大兼容 OpenAI 兼容站); 含图片则保留数组
+      
       if (Array.isArray(content) && content.every(x => x && x.type === 'text')) {
         content = content.map(x => x.text || '').join('');
       }
@@ -674,7 +674,7 @@ function canonicalToClaudeBody(c) {
     }));
     if (c.tool_choice === 'auto') body.tool_choice = { type: 'auto' };
     else if (c.tool_choice === 'required') body.tool_choice = { type: 'any' };
-    else if (c.tool_choice === 'none') { /* Claude 无 none 语义, 保留 tools 默认 auto */ }
+    else if (c.tool_choice === 'none') {  }
     else if (c.tool_choice && typeof c.tool_choice === 'object' && c.tool_choice.function) body.tool_choice = { type: 'tool', name: c.tool_choice.function.name };
   }
   return body;
@@ -756,7 +756,7 @@ function canonicalToGeminiBody(c) {
   return body;
 }
 
-/* ================= 上游响应(JSON) → canonical ================= */
+
 function openaiRespToCanonical(j) {
   const choice = (j.choices && j.choices[0]) || {};
   const msg = choice.message || {};
@@ -823,7 +823,7 @@ function geminiRespToCanonical(j) {
   };
 }
 
-/* ================= canonical → 客户端格式响应(JSON) ================= */
+
 function canonicalToOpenAIResp(cresp, model) {
   const message = { role: 'assistant', content: cresp.text === '' ? null : cresp.text };
   if (cresp.reasoning) message.reasoning_content = cresp.reasoning;
@@ -869,7 +869,7 @@ function canonicalToGeminiResp(cresp, model) {
   };
 }
 
-/* ================= SSE 解码 + 上游流 → canonical 事件 ================= */
+
 class SSEDecoder {
   constructor(onData) { this.onData = onData; this.buf = ''; this.lines = []; }
   push(s) {
@@ -942,8 +942,8 @@ class UpstreamStreamParser {
         if (d.stop_reason) this.finishReason = ({ end_turn: 'stop', stop_sequence: 'stop', max_tokens: 'length', tool_use: 'tool_calls', refusal: 'content_filter' })[d.stop_reason] || 'stop';
         if (j.usage && j.usage.output_tokens != null) this.usage = { input: (this.usage && this.usage.input) || 0, output: j.usage.output_tokens };
       }
-      // message_stop / ping / error: end 统一在 finish() 发
-    } else { // gemini
+      
+    } else { 
       const cand = (j.candidates && j.candidates[0]) || {};
       for (const p of ((cand.content && cand.content.parts) || [])) {
         if (!p) continue;
@@ -970,7 +970,7 @@ class UpstreamStreamParser {
   }
 }
 
-/* ================= canonical 事件 → 客户端流式写出 ================= */
+
 function sseData(res, obj) { res.write('data: ' + JSON.stringify(obj) + '\n\n'); }
 function sseEvent(res, ev, obj) { res.write('event: ' + ev + '\ndata: ' + JSON.stringify(obj) + '\n\n'); }
 
@@ -1065,7 +1065,7 @@ function makeWriter(format, res, model, opts = {}) {
     };
   }
 
-  // gemini: alt=sse 时 SSE 格式, 否则 JSON 数组分块流
+  
   const isArray = !!opts.geminiArray;
   let firstArray = true;
   let toolBuf = null;
@@ -1106,35 +1106,35 @@ function makeWriter(format, res, model, opts = {}) {
   };
 }
 
-/* ================= 渠道路由 / 鉴权 / 错误 / 模型列表 ================= */
 
-// 收集所有匹配该 model 的候选渠道, 按 round-robin 计数器旋转起始位置
-// 返回 [{ ch, upstreamModel }, ...] (已旋转, 第一个该本轮使用)
+
+
+
 function pickChannels(cfg, model) {
   const chs = cfg.channels || [];
   const candidates = [];
   if (model) {
-    // 1) modelMap 精确命中
+    
     for (const ch of chs) {
       if (ch.modelMap && Object.prototype.hasOwnProperty.call(ch.modelMap, model)) {
         candidates.push({ ch, upstreamModel: String(ch.modelMap[model]) });
       }
     }
-    // 2) models 列表命中 (避免和 modelMap 重复加入同一渠道)
+    
     if (!candidates.length) {
       for (const ch of chs) {
         if (ch.models && ch.models.includes(model)) candidates.push({ ch, upstreamModel: model });
       }
     }
   }
-  // 3) 没有任何精确命中 → 用 default 渠道 (可多个) 或全部渠道兜底
+  
   if (!candidates.length) {
     const defs = chs.filter(c => c.default);
     const pool = defs.length ? defs : chs;
     for (const ch of pool) candidates.push({ ch, upstreamModel: model || '' });
   }
   if (!candidates.length) return [];
-  // round-robin: 用 model 做 key 的计数器决定起始偏移
+  
   if (!cfg._rr) cfg._rr = {};
   const key = model || '__nomodel__';
   cfg._rr[key] = ((cfg._rr[key] || 0) + 1) % candidates.length;
@@ -1142,7 +1142,7 @@ function pickChannels(cfg, model) {
   return candidates.slice(rot).concat(candidates.slice(0, rot));
 }
 
-// 向后兼容: 返回第一个候选
+
 function pickChannel(cfg, model) {
   const cs = pickChannels(cfg, model);
   return cs.length ? cs[0] : null;
@@ -1196,11 +1196,11 @@ function modelsResponse(cfg, format) {
   if (format === 'gemini') {
     return { models: ms.map(m => ({ name: 'models/' + m, displayName: m, supportedGenerationMethods: ['generateContent', 'streamGenerateContent', 'countTokens'] })) };
   }
-  // openai 与 claude 字段合并, 两边 SDK 都能读
+  
   return { object: 'list', data: ms.map(m => ({ id: m, object: 'model', type: 'model', created: 1700000000, owned_by: 'ai-gateway', display_name: m })) };
 }
 
-/* ================= 上游请求 ================= */
+
 function joinUrl(base, suffix) {
   const b = String(base || '').replace(/\/+$/, '');
   if (suffix.startsWith('/v1beta/') && /\/v1beta$/.test(b)) return b + suffix.slice(7);
@@ -1236,17 +1236,17 @@ function upstreamRequest(cfg, ch, urlStr, headers, bodyBuf, cb, method) {
   return req;
 }
 
-/* ================= 核心转发 ================= */
+
 const TO_CANON = { openai: openaiToCanonical, claude: claudeToCanonical, gemini: geminiToCanonical };
 
-// 拉取渠道上游的模型列表(供管理面板"获取模型列表"用; 服务端发起, 用真实 apiKey, 走渠道代理)
+
 function fetchUpstreamModels(cfg, ch) {
   return new Promise((resolve, reject) => {
     const base = String(ch.baseUrl || '').replace(/\/+$/, '');
     let url; const headers = {};
     try {
       if (ch.type === 'openai') {
-        url = joinUrl(base, '/v1/models');   // 与网关聊天路径同约定: baseUrl 不含 /v1, 由这里补
+        url = joinUrl(base, '/v1/models');   
         if (ch.apiKey) headers.authorization = 'Bearer ' + ch.apiKey;
       } else if (ch.type === 'claude') {
         url = joinUrl(base, '/v1/models');
@@ -1279,7 +1279,7 @@ function fetchUpstreamModels(cfg, ch) {
     }, 'GET');
   });
 }
-// 自动同步本实例各渠道的模型列表(定期/手动): 拉上游 /models, 合并进 ch.models(只增不减), 内存+磁盘都更新
+
 let _syncing = false;
 async function syncModels(cfg) {
   if (_syncing) return { busy: true };
@@ -1316,14 +1316,14 @@ async function syncModels(cfg) {
 const UP_RESP = { openai: openaiRespToCanonical, claude: claudeRespToCanonical, gemini: geminiRespToCanonical };
 const BUILD_BODY = { openai: canonicalToOpenAIBody, claude: canonicalToClaudeBody, gemini: canonicalToGeminiBody };
 
-// 可重试的上游错误: 鉴权失败(换 key 重试)/限流/服务端错误/超时
+
 const RETRYABLE = new Set([401, 403, 408, 409, 425, 429, 500, 502, 503, 504, 529]);
 
-// 为指定渠道构建上游请求的 url / headers / body
+
 function buildRequestForChannel(cfg, ch, clientFormat, canonical, body, urlInfo, req) {
   const direct = clientFormat === ch.type;
   const stream = canonical.stream;
-  const upstreamModel = canonical.model; // 已被调用方改写为该渠道的上游模型名
+  const upstreamModel = canonical.model; 
   let url, headers = {}, bodyBuf;
   if (direct) {
     if (ch.type === 'openai') {
@@ -1363,13 +1363,13 @@ function buildRequestForChannel(cfg, ch, clientFormat, canonical, body, urlInfo,
   return { url, headers, bodyBuf, direct, stream };
 }
 
-// 处理上游成功响应(2xx): 直通或跨格式转换. 提取自原 handleChat.
-/* ================= 请求记录 (config.record: {enable, server, maxChars}) ================= */
+
+
 function instName(cfg) {
   const bn = cfg._configFile ? path.basename(cfg._configFile, '.json') : 'config';
   return bn === 'config' ? 'default' : bn.replace(/^config\./, '');
 }
-// 写一条记录: 配了 server 就 POST JSON 过去(异步, 不阻塞响应), 否则追加到本机 log/requests-<实例>.jsonl
+
 function writeRequestRecord(cfg, recCfg, rec) {
   const line = JSON.stringify(rec);
   if (recCfg.server) { postRequestRecord(recCfg.server, line); return; }
@@ -1377,7 +1377,7 @@ function writeRequestRecord(cfg, recCfg, rec) {
     const dir = path.join(path.dirname(cfg._configFile || process.cwd()), 'log');
     fs.mkdirSync(dir, { recursive: true });
     const f = path.join(dir, 'requests-' + instName(cfg) + '.jsonl');
-    // 简单轮转: 超过 5MB 时只保留尾部约 2MB (按行截断, 不截断 JSON)
+    
     try {
       const st = fs.statSync(f);
       if (st.size > 5 * 1024 * 1024) {
@@ -1431,7 +1431,7 @@ function handleUpstreamResponse(cfg, ch, clientFormat, canonical, body, urlInfo,
       upRes.on('error', () => { try { res.end(); } catch (_) {} });
     }
     if (rpInc.length) {
-      // 流式逐行转换: 缓冲不完整行, 对完整行应用替换后写出(保持原始 SSE 结构; 按行匹配, 跨行规则不生效)
+      
       let buf = '';
       upRes.on('data', c => {
         try {
@@ -1449,7 +1449,7 @@ function handleUpstreamResponse(cfg, ch, clientFormat, canonical, body, urlInfo,
     return;
   }
 
-  // 跨格式转换
+  
   if (stream) {
     const isArrayStream = clientFormat === 'gemini' && !urlInfo.altSse;
     try {
@@ -1508,21 +1508,21 @@ function handleChat(cfg, clientFormat, req, res, urlInfo, bodyStr) {
   let body;
   try { body = JSON.parse(bodyStr || '{}'); } catch (e) { return sendError(clientFormat, res, 400, 'invalid JSON body: ' + e.message); }
   if (!body || typeof body !== 'object') return sendError(clientFormat, res, 400, 'request body must be a JSON object');
-  // 隐私过滤: 转发前把请求体里的密钥/token 替换为 *** (config.redact.enable=false 可关闭, 重启实例生效)
+  
   if (!(cfg.redact && cfg.redact.enable === false)) body = redactDeep(body, cfg.redact && cfg.redact.extra, 0);
-  // 文本替换(发送方向): config.replace.out 规则作用于请求文本(model 字段与 data:URL 跳过)
+  
   const rpOutRules = (cfg.replace && Array.isArray(cfg.replace.out)) ? rpCompile(cfg.replace.out) : [];
   if (rpOutRules.length) body = rpWalk(body, rpOutRules, 0, true);
 
   const canonical = TO_CANON[clientFormat](body, urlInfo.model);
-  if (urlInfo.stream) canonical.stream = true; // gemini: 流式标志在 URL 路径里
+  if (urlInfo.stream) canonical.stream = true; 
   if (!canonical.model) return sendError(clientFormat, res, 400, 'missing "model"');
 
   const candidates = pickChannels(cfg, canonical.model);
   if (!candidates.length) return sendError(clientFormat, res, 503, 'no channel configured in config.json');
 
   stats.requests++;
-  // 请求记录(可选, 默认关闭): 包一层 res.write/res.end 捕获实际发给客户端的响应正文
+  
   const reqId = randId('req');
   const recCfg = (cfg.record && cfg.record.enable) ? cfg.record : null;
   const recState = { status: 0, chName: '' };
@@ -1565,10 +1565,10 @@ function handleChat(cfg, clientFormat, req, res, urlInfo, bodyStr) {
   let lastErrStatus = 0;
   let lastErrMsg = '';
 
-  // 逐个候选渠道尝试, 连接失败或可重试的 HTTP 错误 → 切下一个; 不可重试错误(如 400) → 直接透传
+  
   const tryNext = () => {
     if (attempt >= candidates.length) {
-      // 全部候选都失败了
+      
       stats.errors++;
       recordReq(lastErrStatus || 502, '', 0, 0);
       const msg = lastErrMsg || ('all ' + candidates.length + ' channels failed');
@@ -1580,7 +1580,7 @@ function handleChat(cfg, clientFormat, req, res, urlInfo, bodyStr) {
     const built = buildRequestForChannel(cfg, ch, clientFormat, myCanonical, body, urlInfo, req);
     attempt++;
 
-    // HTTP 头只允许 ASCII, 中文/全角字符的 apiKey 会让 node 抛内部错误
+    
     for (const [hk, hv] of Object.entries(built.headers)) {
       if (typeof hv === 'string' && !/^[\x09\x20-\x7e]*$/.test(hv)) {
         return sendError(clientFormat, res, 500, `渠道 "${ch.name}" 的请求头 ${hk} 含非 ASCII 字符(可能是 apiKey 里残留了中文占位符), 请修改 config.json`);
@@ -1601,7 +1601,7 @@ function handleChat(cfg, clientFormat, req, res, urlInfo, bodyStr) {
     stats.byChannel[ch.name] = stats.byChannel[ch.name] || { requests: 0, inputTokens: 0, outputTokens: 0 };
     stats.byChannel[ch.name].requests++;
 
-    // 渠道级排队延迟(渠道字段 delayMs, 毫秒): 每个请求发出前先等待; 同一渠道的并发请求经 _gate 链按间隔串行发出(并发也撞不到上游), 缓解 429 限流
+    
     const delayMs = Math.min(120000, Number(ch.delayMs) || 0);
     const doSend = () => upstreamRequest(cfg, ch, built.url, built.headers, built.bodyBuf, (err, upRes) => {
       if (err) {
@@ -1614,7 +1614,7 @@ function handleChat(cfg, clientFormat, req, res, urlInfo, bodyStr) {
       }
 
       if (upRes.statusCode >= 400 && RETRYABLE.has(upRes.statusCode) && attempt < candidates.length) {
-        // 可重试错误 & 还有候选 → 排空响应体后切换
+        
         const sc = upRes.statusCode;
         const chunks = [];
         upRes.on('data', c => chunks.push(c));
@@ -1629,7 +1629,7 @@ function handleChat(cfg, clientFormat, req, res, urlInfo, bodyStr) {
       }
 
       if (upRes.statusCode >= 400) {
-        // 不可重试错误(如 400) 或已是最后候选 → 原样透传错误
+        
         const chunks = [];
         upRes.on('data', c => chunks.push(c));
         upRes.on('end', () => {
@@ -1645,7 +1645,7 @@ function handleChat(cfg, clientFormat, req, res, urlInfo, bodyStr) {
         return;
       }
 
-      // 成功(2xx) → 正常处理, 从此不可回退
+      
       handleUpstreamResponse(cfg, ch, clientFormat, myCanonical, body, urlInfo, req, res, upRes, built, ctx);
     });
     if (delayMs > 0) {
@@ -1658,7 +1658,7 @@ function handleChat(cfg, clientFormat, req, res, urlInfo, bodyStr) {
   tryNext();
 }
 
-/* ================= HTTP 服务 ================= */
+
 const GEMINI_RE = /^\/v1(?:beta|alpha)?\/models\/([^:]+):(generateContent|streamGenerateContent|countTokens)$/;
 
 async function handleHttp(cfg, req, res) {
@@ -1682,10 +1682,10 @@ async function handleHttp(cfg, req, res) {
     }));
   }
 
-  // ===== Web 管理面板 (/admin + /admin/api/*) =====
+  
   if (p === '/admin' || p === '/admin/' || p.startsWith('/admin/api/') || p.startsWith('/admin/m3')) {
-    // 管理页面不需要收集 body 前置处理, handleAdmin 内部自行处理
-    // 但 POST/DELETE 的 body 需要先收集
+    
+    
     if (req.method === 'POST' || req.method === 'DELETE') {
       let adminBody = '';
       req.on('data', c => { adminBody += c.toString('utf8'); if (adminBody.length > 4 * 1024 * 1024) req.destroy(); });
@@ -1758,7 +1758,7 @@ function startServer(cfg, opts = {}) {
   if (cfg.modelSync && cfg.modelSync.enable !== false) {
     const hrs = Math.max(1, Number(cfg.modelSync.intervalHours) || 24);
     const run = () => syncModels(cfg).catch(e => logErr('[sync] 定时任务出错:', e.message));
-    setTimeout(run, 30000); // 启动 30 秒后首次同步, 不阻塞启动
+    setTimeout(run, 30000); 
     setInterval(run, hrs * 3600 * 1000);
   }
   cfg._stats = { startedAt: new Date().toISOString(), requests: 0, errors: 0, byChannel: {}, recent: [] };
@@ -1771,7 +1771,7 @@ function startServer(cfg, opts = {}) {
   const host = opts.host || cfg.listen.host;
   const port = opts.port != null ? opts.port : cfg.listen.port;
 
-  // 检查 TLS 证书是否可用
+  
   let tlsCfg = null;
   if (cfg.tls && cfg.tls.enable) {
     const certPath = path.isAbsolute(cfg.tls.cert) ? cfg.tls.cert : path.join(path.dirname(cfg._configFile || process.cwd()), cfg.tls.cert);
@@ -1792,7 +1792,7 @@ function startServer(cfg, opts = {}) {
   }
 
   if (!tlsCfg) {
-    // 纯 HTTP 模式
+    
     const server = http.createServer(handler);
     return new Promise((resolve, reject) => {
       server.once('error', reject);
@@ -1807,7 +1807,7 @@ function startServer(cfg, opts = {}) {
     });
   }
 
-  // TLS 模式: 如果 tls.port 独立指定 → HTTP + HTTPS 双开; 否则纯 HTTPS
+  
   const httpsPort = tlsCfg.port != null ? tlsCfg.port : port;
   const dualMode = tlsCfg.port != null && tlsCfg.port !== port;
 
@@ -1831,7 +1831,7 @@ function startServer(cfg, opts = {}) {
     };
     const onErr = (e) => reject(e);
 
-    // HTTPS 服务器
+    
     const httpsServer = https.createServer({ cert: tlsCfg.cert, key: tlsCfg.key }, handler);
     httpsServer.once('error', onErr);
     httpsServer.listen(httpsPort, host, () => {
@@ -1839,7 +1839,7 @@ function startServer(cfg, opts = {}) {
       onReady(httpsServer, httpsServer.address().port, 'https');
     });
 
-    // HTTP 服务器(双开模式)
+    
     if (dualMode) {
       const httpServer = http.createServer(handler);
       httpServer.once('error', onErr);
@@ -1851,7 +1851,7 @@ function startServer(cfg, opts = {}) {
   });
 }
 
-/* ================= main ================= */
+
 function main() {
   const args = process.argv.slice(2);
   let configPath = path.join(__dirname, 'config.json');

@@ -13,12 +13,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
-/**
- * 远程后端 —— 通过 HTTP 调 gateway 内置 admin API (x-admin-key 鉴权)。
- */
+
+
+
 class RemoteBackend(
     baseUrl: String,
-    private val adminKey: String
+    val adminKey: String
 ) : GatewayBackend {
 
     private val base = baseUrl.trim().removeSuffix("/")
@@ -31,13 +31,16 @@ class RemoteBackend(
         .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
-    // 流式用单独 client(读超时更长)
+    
     private val streamClient = client.newBuilder()
         .readTimeout(5, TimeUnit.MINUTES)
         .build()
 
     override val modeLabel: String = "远程网关"
     override val connectionDesc: String = base
+
+    
+    override fun panelUrl(): String = base + "/admin/m3" + (if (adminKey.isNotBlank()) "?adminKey=" + adminKey else "")
 
     private fun enc(s: String) = URLEncoder.encode(s, "UTF-8")
 
@@ -47,7 +50,7 @@ class RemoteBackend(
         return b
     }
 
-    /** 执行请求, 返回 body 字符串; 非 2xx 抛异常 */
+    
     private fun exec(req: Request): String {
         client.newCall(req).execute().use { resp ->
             val body = resp.body?.string().orEmpty()
@@ -88,7 +91,7 @@ class RemoteBackend(
             error = get("error")?.asString
         )
 
-    // ---------- 接口实现 ----------
+    
 
     override suspend fun testConnection(): Boolean = withContext(Dispatchers.IO) {
         runCatching { getJson("/admin/api/instances"); true }.getOrDefault(false)
@@ -116,6 +119,46 @@ class RemoteBackend(
 
     override suspend fun deleteInstance(name: String): ActionResult =
         withContext(Dispatchers.IO) { delete("/admin/api/instance/${enc(name)}").toActionResult() }
+
+    override suspend fun renameInstance(name: String, newName: String): ActionResult =
+        withContext(Dispatchers.IO) {
+            val p = JsonObject().apply { addProperty("newName", newName) }
+            post("/admin/api/instance-rename/${enc(name)}", p).toActionResult()
+        }
+
+    
+    override suspend fun getKeys(inst: String): KeysResponse = withContext(Dispatchers.IO) {
+        getObj("/admin/api/keys/${enc(inst)}")
+    }
+
+    override suspend fun createKey(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
+        post("/admin/api/keys/${enc(inst)}", body)
+    }
+
+    override suspend fun updateKey(inst: String, body: JsonObject): ActionResult = withContext(Dispatchers.IO) {
+        post("/admin/api/keys-update/${enc(inst)}", body).toActionResult()
+    }
+
+    override suspend fun deleteKey(inst: String, key: String): ActionResult = withContext(Dispatchers.IO) {
+        delete("/admin/api/keys/${enc(inst)}/${enc(key)}").toActionResult()
+    }
+
+    
+    override suspend fun getUsers(inst: String): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/users/${enc(inst)}") }
+    override suspend fun createUser(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/users/${enc(inst)}", body) }
+    override suspend fun updateUser(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/users-update/${enc(inst)}", body) }
+    override suspend fun deleteUser(inst: String, uid: String): JsonObject = withContext(Dispatchers.IO) { delete("/admin/api/users/${enc(inst)}/${enc(uid)}") }
+    override suspend fun getAdminAuth(inst: String): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/admin-auth/${enc(inst)}") }
+    override suspend fun setAdminAuth(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/admin-auth/${enc(inst)}", body) }
+    override suspend fun getTunnel(): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/tunnel") }
+    override suspend fun tunnelAction(action: String): JsonObject = withContext(Dispatchers.IO) {
+        post("/admin/api/tunnel", JsonObject().apply { addProperty("action", action) })
+    }
+    override suspend fun getBalance(inst: String, ch: String): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/balance/${enc(inst)}/${enc(ch)}") }
+    override suspend fun getPlugins(inst: String): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/plugins/${enc(inst)}") }
+    override suspend fun installPlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/plugins-install/${enc(inst)}", body) }
+    override suspend fun removePlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/plugins-remove/${enc(inst)}", body) }
+    override suspend fun enablePlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/plugins-enable/${enc(inst)}", body) }
 
     override suspend fun saveChannel(inst: String, channel: Channel): ActionResult =
         withContext(Dispatchers.IO) {
@@ -193,7 +236,7 @@ class RemoteBackend(
         }
     }
 
-    /** 解析 OpenAI SSE 流, 提取 delta.content */
+    
     private fun parseSse(resp: okhttp3.Response, onDelta: (String) -> Unit) {
         val src = resp.body?.source() ?: return
         while (true) {

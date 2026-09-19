@@ -6,14 +6,14 @@ import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-/**
- * 配置加解密 —— 与 ai-gateway 的 crypt.js 完全兼容。
- *
- * 格式: "AGWENC1:" + base64(salt[16] | iv[12] | authTag[16] | ciphertext)
- * 算法: AES-256-GCM, 密钥 = scrypt(pass, salt, N=16384, r=8, p=1) → 32 字节
- *
- * 注: Android 无内置 scrypt API, 这里用纯 Kotlin 实现(RFC 7914)。
- */
+
+
+
+
+
+
+
+
 object ConfigCrypto {
 
     const val MAGIC = "AGWENC1:"
@@ -27,7 +27,7 @@ object ConfigCrypto {
 
     fun isEncrypted(text: String): Boolean = text.trimStart().startsWith(MAGIC)
 
-    /** 加密为 AGWENC1 文本 */
+    
     fun encrypt(plain: String, pass: String): String {
         val rnd = SecureRandom()
         val salt = ByteArray(SALT_LEN).also { rnd.nextBytes(it) }
@@ -36,16 +36,16 @@ object ConfigCrypto {
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(TAG_LEN * 8, iv))
         val out = cipher.doFinal(plain.toByteArray(Charsets.UTF_8))
-        // Java GCM 输出 = ciphertext || tag; Node 格式是 tag 在前
+        
         val ct = out.copyOfRange(0, out.size - TAG_LEN)
         val tag = out.copyOfRange(out.size - TAG_LEN, out.size)
         val body = salt + iv + tag + ct
         return MAGIC + Base64.encodeToString(body, Base64.NO_WRAP)
     }
 
-    /**
-     * 解密 AGWENC1 文本。口令错误/数据损坏抛 CryptoException。
-     */
+    
+
+
     fun decrypt(enc: String, pass: String): String {
         val trimmed = enc.trim()
         if (!isEncrypted(trimmed)) throw CryptoException("不是 AGWENC1 加密内容")
@@ -63,7 +63,7 @@ object ConfigCrypto {
         return try {
             val cipher = Cipher.getInstance("AES/GCM/NoPadding")
             cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(TAG_LEN * 8, iv))
-            String(cipher.doFinal(ct + tag), Charsets.UTF_8)  // Java 需要 ct||tag
+            String(cipher.doFinal(ct + tag), Charsets.UTF_8)  
         } catch (e: javax.crypto.AEADBadTagException) {
             throw CryptoException("口令错误或数据被篡改")
         } catch (e: Exception) {
@@ -77,10 +77,10 @@ object ConfigCrypto {
     class CryptoException(message: String) : Exception(message)
 }
 
-/**
- * scrypt (RFC 7914) 纯 Kotlin 实现 —— Android 无内置 API。
- * 与 Node crypto.scryptSync 结果一致。
- */
+
+
+
+
 internal object Scrypt {
 
     fun derive(pass: ByteArray, salt: ByteArray, n: Int, r: Int, p: Int, dkLen: Int): ByteArray {
@@ -90,7 +90,7 @@ internal object Scrypt {
         val v = IntArray(32 * n * r)
         val xy = IntArray(64 * r)
         val bi = IntArray(p * mfLen / 4)
-        // little-endian 解包
+        
         for (i in bi.indices) {
             bi[i] = (b[i * 4].toInt() and 0xff) or
                     ((b[i * 4 + 1].toInt() and 0xff) shl 8) or
@@ -100,7 +100,7 @@ internal object Scrypt {
         for (i in 0 until p) {
             sMix(bi, i * 32 * r, r, n, v, xy)
         }
-        // 打包回字节
+        
         val b2 = ByteArray(b.size)
         for (i in bi.indices) {
             b2[i * 4] = (bi[i] and 0xff).toByte()
@@ -168,7 +168,7 @@ internal object Scrypt {
         for (k in 0 until 16) b[k] = b[k] + x[k]
     }
 
-    /** PBKDF2-HMAC-SHA256 —— 自实现, 直接处理原始字节(避免 PBEKeySpec char[] 二次编码) */
+    
     private fun pbkdf2Sha256(pass: ByteArray, salt: ByteArray, iterations: Int, dkLen: Int): ByteArray {
         val hLen = 32
         val blocks = (dkLen + hLen - 1) / hLen
@@ -189,7 +189,7 @@ internal object Scrypt {
         return out.copyOf(dkLen)
     }
 
-    /** HMAC-SHA256(手工实现, 支持空密钥) */
+    
     private fun hmacSha256(key: ByteArray, data: ByteArray): ByteArray {
         val blockSize = 64
         val md = java.security.MessageDigest.getInstance("SHA-256")

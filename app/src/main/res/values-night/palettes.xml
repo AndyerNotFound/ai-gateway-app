@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 配色方案 overlay (深色) -->
+    
 
     <style name="ThemeOverlay.Palette.Purple" parent="">
         <item name="colorPrimary">#D0BCFF</item>

@@ -10,13 +10,15 @@ import com.aigateway.app.embedded.EmbeddedHttpServer
 import com.aigateway.app.embedded.GatewayEngine
 import com.aigateway.app.net.RemoteBackend
 import com.aigateway.app.data.SettingsStore
+import com.aigateway.app.data.UserStore
+import com.aigateway.app.net.UserBackend
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import java.io.File
 
-/**
- * Application —— 主题/语言 + 运行模式/后端管理。
- */
+
+
+
 class App : Application() {
 
     lateinit var connectionStore: ConnectionStore
@@ -25,22 +27,37 @@ class App : Application() {
     lateinit var settings: SettingsStore
         private set
 
-    // 内嵌
+    lateinit var userStore: UserStore
+        private set
+
+    private var userBackend: UserBackend? = null
+
+    
     private var embeddedEngine: GatewayEngine? = null
     private var embeddedServer: EmbeddedHttpServer? = null
     private var embeddedBackend: EmbeddedBackend? = null
 
-    // 远程
+    
     private var remoteBackend: RemoteBackend? = null
     private var remoteKey: String? = null
 
     override fun onCreate() {
+        
+        Thread.setDefaultUncaughtExceptionHandler { _, e ->
+            try {
+                java.io.File(filesDir, "crash.txt").writeText(
+                    (e.message ?: "") + "\n\n" + e.stackTraceToString()
+                )
+            } catch (_: Exception) {}
+            android.os.Process.killProcess(android.os.Process.myPid())
+        }
         super.onCreate()
         settings = SettingsStore(this)
         connectionStore = ConnectionStore(this)
+        userStore = UserStore(this)
         settings.applyThemeMode()
         settings.applyLanguage()
-        // 动态取色: 按用户开关决定(每个 Activity 创建时读取)
+        
         DynamicColors.applyToActivitiesIfAvailable(
             this,
             DynamicColorsOptions.Builder()
@@ -49,20 +66,20 @@ class App : Application() {
         )
     }
 
-    /** 当前后端(按模式)。未设置模式返回 null。 */
+    
     fun backend(): GatewayBackend? = when (connectionStore.runMode) {
         RunMode.EMBEDDED -> embeddedBackend()
         RunMode.TERMUX -> remoteBackend()
-        null -> null
+        RunMode.USER, null -> null
     }
 
-    /** 内嵌后端(惰性创建 + 启动服务器) */
+    
     @Synchronized
     fun embeddedBackend(): EmbeddedBackend {
         embeddedBackend?.let { return it }
         val dir = File(filesDir, "embedded")
         val engine = GatewayEngine(File(dir, "config.json"))
-        // 注入配置加密口令(启用加密时)
+        
         engine.cryptPassword = if (settings.cryptEnabled) settings.cryptPassword else ""
         engine.load()
         if (engine.getConfig().name.isBlank()) {
@@ -74,7 +91,7 @@ class App : Application() {
         embeddedEngine = engine
         embeddedServer = server
         applyGuardSettings()
-        // 启用了保活则拉起前台服务
+        
         if (settings.bgKeepAlive) {
             runCatching { com.aigateway.app.service.GatewayService.start(this) }
         }
@@ -83,7 +100,7 @@ class App : Application() {
         return b
     }
 
-    /** 把代码扫描设置应用到内嵌引擎 */
+    
     fun applyGuardSettings() {
         val e = embeddedEngine ?: return
         e.guardEnabled = settings.guardEnabled
@@ -93,7 +110,7 @@ class App : Application() {
         e.guardBlock = settings.guardAction == "BLOCK"
     }
 
-    /** 远程后端(按当前连接配置)。配置变化会重建。 */
+    
     @Synchronized
     fun remoteBackend(): RemoteBackend? {
         val profile = connectionStore.getCurrentProfile() ?: return null
@@ -106,7 +123,7 @@ class App : Application() {
         return b
     }
 
-    /** 切换运行模式(清理旧后端) */
+    
     @Synchronized
     fun setMode(mode: RunMode) {
         if (connectionStore.runMode == mode) return
@@ -115,11 +132,11 @@ class App : Application() {
         remoteBackend = null
         remoteKey = null
         if (mode == RunMode.EMBEDDED) {
-            embeddedBackend() // 预热
+            embeddedBackend() 
         }
     }
 
-    /** 更新远程连接配置并重建后端 */
+    
     @Synchronized
     fun updateRemoteProfile(profile: ConnectionProfile) {
         connectionStore.saveProfile(profile)
@@ -130,4 +147,16 @@ class App : Application() {
     }
 
     fun embeddedEngineOrNull(): GatewayEngine? = embeddedEngine
+
+    
+    @Synchronized
+    fun userBackend(): UserBackend {
+        userBackend?.let { return it }
+        val b = UserBackend(userStore)
+        userBackend = b
+        return b
+    }
+
+    
+    val isUserMode: Boolean get() = settings.appMode == "user"
 }

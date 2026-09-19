@@ -15,24 +15,24 @@ import java.io.ByteArrayOutputStream
 import java.util.zip.Deflater
 import java.util.zip.Inflater
 
-/**
- * 二维码编解码 —— 配置导入导出用。
- *
- * 容量: QR 版本40 + 纠错L 最多约 2953 字节。配置常超限, 所以:
- *   1) 先 deflate 压缩 + Base64 → 通常能压到 30-40%
- *   2) 仍超限则报明确错误(建议改用文件导出)
- * 载荷格式: "AGWQR1:" + base64(deflate(json 或 AGWENC1 文本))
- */
+
+
+
+
+
+
+
+
 object QrCodec {
 
     private const val MAGIC = "AGWQR1:"
-    /** QR 单码安全容量(字节, 留余量) */
+    
     private const val MAX_PAYLOAD = 2600
 
     class QrTooLargeException(val actual: Int, val limit: Int = MAX_PAYLOAD) :
         Exception("payload too large: $actual > $limit")
 
-    /** 把文本编码为二维码载荷字符串 */
+    
     fun buildPayload(text: String): String {
         val compressed = deflate(text.toByteArray(Charsets.UTF_8))
         val b64 = android.util.Base64.encodeToString(compressed, android.util.Base64.NO_WRAP)
@@ -41,7 +41,7 @@ object QrCodec {
         return payload
     }
 
-    /** 从二维码载荷还原文本; 非本格式则原样返回(兼容直接扫明文 JSON) */
+    
     fun parsePayload(payload: String): String {
         val t = payload.trim()
         if (!t.startsWith(MAGIC)) return t
@@ -49,7 +49,7 @@ object QrCodec {
         return String(inflate(raw), Charsets.UTF_8)
     }
 
-    /** 生成二维码位图 */
+    
     fun encodeBitmap(payload: String, size: Int = 720): Bitmap {
         val hints = mapOf(
             EncodeHintType.CHARACTER_SET to "UTF-8",
@@ -71,7 +71,7 @@ object QrCodec {
         }
     }
 
-    /** 从位图解码二维码; 失败返回 null */
+    
     fun decodeBitmap(bitmap: Bitmap): String? {
         val w = bitmap.width
         val h = bitmap.height
@@ -83,7 +83,7 @@ object QrCodec {
             DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE),
             DecodeHintType.CHARACTER_SET to "UTF-8"
         )
-        // 正常 + 反色两次尝试
+        
         for (src in listOf(source, source.invert())) {
             runCatching {
                 val result = MultiFormatReader().apply { setHints(hints) }
@@ -94,7 +94,7 @@ object QrCodec {
         return null
     }
 
-    // ---------- 压缩 ----------
+    
 
     private fun deflate(data: ByteArray): ByteArray {
         val deflater = Deflater(Deflater.BEST_COMPRESSION)

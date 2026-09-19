@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <!-- 主界面 -->
+    
     <LinearLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
@@ -25,14 +25,14 @@
                 app:menu="@menu/top_menu" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- 主导航页(可左右滑动) -->
+        
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- 二级页(顶栏菜单进入, 带淡入动画) -->
+        
         <FrameLayout
             android:id="@+id/secondaryContainer"
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             app:labelVisibilityMode="labeled" />
     </LinearLayout>
 
-    <!-- 首次设置 -->
+    
     <FrameLayout
         android:id="@+id/setupContainer"
         android:layout_width="match_parent"

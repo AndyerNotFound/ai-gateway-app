@@ -11,7 +11,7 @@ import com.aigateway.app.R
 import com.aigateway.app.data.ChatMessage
 import com.google.android.material.card.MaterialCardView
 
-/** 聊天气泡适配器(用户靠右 / AI 靠左) */
+
 class ChatAdapter : RecyclerView.Adapter<ChatAdapter.VH>() {
 
     val messages = mutableListOf<ChatMessage>()

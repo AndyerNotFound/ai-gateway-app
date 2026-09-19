@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- MD3 baseline (dark) -->
+    
     <color name="md_primary">#D0BCFF</color>
     <color name="md_on_primary">#381E72</color>
     <color name="md_primary_container">#4F378B</color>

@@ -58,7 +58,7 @@ class PortsFragment : BaseFragment() {
         }
     }
 
-    /** 并发拉取各实例统计, 用于卡片上显示请求数(帮助定位哪个实例在被使用) */
+    
     private fun loadStats(instances: List<Instance>) {
         val backend = backendOrNull() ?: return
         viewLifecycleOwner.lifecycleScope.launch {
@@ -130,7 +130,7 @@ class PortsFragment : BaseFragment() {
             .show()
     }
 
-    /** 新建/编辑实例。existing=null 为新建 */
+    
     private fun showInstanceDialog(existing: Instance?) {
         val db = DialogInstanceBinding.inflate(layoutInflater)
         db.switchTls.setOnCheckedChangeListener { _, on ->
@@ -142,9 +142,9 @@ class PortsFragment : BaseFragment() {
             db.editTlsKey.setText("key.pem")
             showDialog(db, null)
         } else {
-            // 编辑: 先拉取完整配置(端口/host/TLS/adminKey)
+            
             db.editInstName.setText(existing.name)
-            db.editInstName.isEnabled = false
+            db.editInstName.isEnabled = (existing.name != "default")  
             db.editInstPort.setText(existing.port.toString())
             val backend = backendOrNull() ?: return
             run({ snack(getString(R.string.load_failed, it)) }, {
@@ -194,7 +194,7 @@ class PortsFragment : BaseFragment() {
         }
         val backend = backendOrNull() ?: return
         if (existing == null) {
-            // 新建: 先创建, 再补 TLS 配置
+            
             run({ snack(getString(R.string.pt_create_failed, it)) }, {
                 backend.createInstance(name, port, key)
             }) { r ->
@@ -216,6 +216,8 @@ class PortsFragment : BaseFragment() {
                 add("tls", tlsJson)
             }
             run({ snack(getString(R.string.pv_save_failed, it)) }, {
+                
+                if (name != existing.name) backend.renameInstance(existing.name, name)
                 backend.saveConfig(name, patch)
             }) { r ->
                 if (r.ok) { toast(getString(R.string.pt_saved)); loadAfterDelay() }
@@ -224,7 +226,7 @@ class PortsFragment : BaseFragment() {
         }
     }
 
-    // ---------- Adapter ----------
+    
 
     inner class InstanceAdapter : RecyclerView.Adapter<InstanceAdapter.VH>() {
         var current: String = ""
@@ -233,7 +235,7 @@ class PortsFragment : BaseFragment() {
         var onSelect: ((Instance) -> Unit)? = null
         var onEdit: ((Instance) -> Unit)? = null
         private val items = mutableListOf<Instance>()
-        /** 实例名 → (请求数, 错误数) */
+        
         private val stats = HashMap<String, Pair<Long, Long>>()
 
         fun setStats(m: Map<String, Pair<Long, Long>>) {
@@ -263,6 +265,22 @@ class PortsFragment : BaseFragment() {
 
         override fun onBindViewHolder(h: VH, position: Int) {
             val inst = items[position]
+            
+            val cPrimary = resolveColor(com.google.android.material.R.attr.colorPrimary)
+            val cOnSurface = resolveColor(com.google.android.material.R.attr.colorOnSurface)
+            val cOnSurfaceVariant = resolveColor(com.google.android.material.R.attr.colorOnSurfaceVariant)
+            val cSurfaceContainer = resolveColor(com.google.android.material.R.attr.colorSurfaceContainer)
+            val cError = resolveColor(com.google.android.material.R.attr.colorError)
+            (h.itemView as? com.google.android.material.card.MaterialCardView)
+                ?.setCardBackgroundColor(cSurfaceContainer)
+            h.cur.setTextColor(cPrimary)
+            h.meta.setTextColor(cOnSurfaceVariant)
+            h.btnStart.imageTintList = ColorStateList.valueOf(cPrimary)
+            h.btnStop.imageTintList = ColorStateList.valueOf(cPrimary)
+            h.btnRestart.imageTintList = ColorStateList.valueOf(cPrimary)
+            h.btnEdit.imageTintList = ColorStateList.valueOf(cPrimary)
+            h.btnDelete.imageTintList = ColorStateList.valueOf(cError)
+
             h.name.text = inst.name
             h.cur.visibility = if (inst.name == current) View.VISIBLE else View.GONE
             val st = stats[inst.name]
@@ -273,12 +291,11 @@ class PortsFragment : BaseFragment() {
                 else -> " · " + getString(R.string.pt_no_traffic)
             }
             h.meta.text = ":${inst.port} · ${getString(R.string.pt_channels, inst.chCount)}" +
-                    (if (inst.tlsOn) " · TLS" else "") + reqPart
-            // 有流量的实例名用主色强调, 方便一眼定位
+                    (if (inst.tlsOn) " · TLS" else "") +
+                    (if (!inst.pathPrefix.isNullOrBlank()) " · ${inst.pathPrefix}/v1" else "") + reqPart
+            
             val hasTraffic = (st?.first ?: 0L) > 0L
-            h.name.setTextColor(resolveColor(
-                if (hasTraffic) com.google.android.material.R.attr.colorPrimary
-                else com.google.android.material.R.attr.colorOnSurface))
+            h.name.setTextColor(if (hasTraffic) cPrimary else cOnSurface)
             val dotColor = ContextCompat.getColor(requireContext(),
                 if (inst.running) android.R.color.holo_green_dark else android.R.color.holo_red_dark)
             h.dot.backgroundTintList = ColorStateList.valueOf(dotColor)
@@ -302,7 +319,7 @@ class PortsFragment : BaseFragment() {
         }
     }
 
-    /** 基类在实例/连接变化时调用 */
+    
     override fun reload() {
         if (_b != null) load()
     }

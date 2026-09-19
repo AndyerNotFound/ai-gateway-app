@@ -30,7 +30,7 @@ class ReplaceFragment : BaseFragment() {
         b.btnAddOut.setOnClickListener { editRule(outRules, -1, getString(R.string.rp_dir_out)) }
         b.btnAddInc.setOnClickListener { editRule(incRules, -1, getString(R.string.rp_dir_inc)) }
         b.btnSaveReplace.setOnClickListener { save() }
-        // 正则速查表折叠
+        
         b.cheatHeader.setOnClickListener {
             val show = b.cheatBody.visibility != View.VISIBLE
             b.cheatBody.visibility = if (show) View.VISIBLE else View.GONE
@@ -130,7 +130,7 @@ class ReplaceFragment : BaseFragment() {
         }
     }
 
-    /** 基类在实例/连接变化时调用 */
+    
     override fun reload() {
         if (_b != null) load()
     }

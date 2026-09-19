@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-/** 首次启动: 模式选择 + 可选连接 + Termux 操作 */
+
 class SetupFragment : Fragment(R.layout.fragment_setup) {
 
     private var _b: FragmentSetupBinding? = null
@@ -32,6 +32,11 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         b.cardEmbedded.setOnClickListener {
             app.setMode(RunMode.EMBEDDED)
             finishSetup()
+        }
+
+        b.cardUser.setOnClickListener {
+            
+            (activity as? MainActivity)?.showUserLogin()
         }
 
         b.cardTermux.setOnClickListener {
@@ -61,7 +66,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             if (!TermuxHelper.openTermux(requireContext())) toast(getString(R.string.termux_not_installed))
         }
 
-        // Termux 协议类型开关（ZeroTermux=旧协议 / 官方=新协议）
+        
         b.toggleTermuxVariant.check(
             if (app.settings.termuxVariant == "official") R.id.btnVariantOfficial else R.id.btnVariantZero
         )
@@ -117,7 +122,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             .show()
     }
 
-    /** Termux 未授权外部调用: 提示开启方法 */
+    
     private fun showPermHint() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.termux_perm_title)

@@ -13,11 +13,11 @@ import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
-/**
- * 上游 HTTP 客户端工厂 —— 按 (代理 + insecure) 缓存 OkHttpClient。
- * 支持 直连 / HTTP 代理(带认证) / SOCKS5 代理(认证经全局 Authenticator, 简化)。
- * insecure=true 跳过证书校验(自签名中转站, 对应 Node 版 channels[].insecure)。
- */
+
+
+
+
+
 object UpstreamClient {
 
     private val cache = ConcurrentHashMap<String, OkHttpClient>()
@@ -52,7 +52,7 @@ object UpstreamClient {
                         }
                     }
                 }
-                else -> { // socks5
+                else -> { 
                     b.proxy(java.net.Proxy(java.net.Proxy.Type.SOCKS, addr))
                     if (!proxy.username.isNullOrEmpty()) {
                         val user = proxy.username

@@ -15,12 +15,12 @@ import com.aigateway.app.App
 import com.aigateway.app.MainActivity
 import com.aigateway.app.R
 
-/**
- * 前台服务 —— 保持内嵌网关在后台存活。
- *
- * 仅在「应用内运行」模式下需要: 内嵌 HTTP 服务器跑在 App 进程里,
- * 没有前台服务时进程可能被系统回收, 导致网关中断。
- */
+
+
+
+
+
+
 class GatewayService : Service() {
 
     private var wakeLock: PowerManager.WakeLock? = null
@@ -54,7 +54,7 @@ class GatewayService : Service() {
         }
         startForeground(NOTIF_ID, buildNotification())
         acquireWakeLock()
-        return START_STICKY   // 被杀后尽量重启
+        return START_STICKY   
     }
 
     override fun onDestroy() {
@@ -64,7 +64,7 @@ class GatewayService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    // ---------- 通知 ----------
+    
 
     private fun createChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
@@ -73,7 +73,7 @@ class GatewayService : Service() {
         val ch = NotificationChannel(
             CHANNEL_ID,
             getString(R.string.svc_channel_name),
-            NotificationManager.IMPORTANCE_LOW   // 无声音, 不打扰
+            NotificationManager.IMPORTANCE_LOW   
         ).apply {
             description = getString(R.string.svc_channel_desc)
             setShowBadge(false)
@@ -109,7 +109,7 @@ class GatewayService : Service() {
             .build()
     }
 
-    // ---------- WakeLock(部分唤醒, 仅保 CPU) ----------
+    
 
     private fun acquireWakeLock() {
         if (wakeLock?.isHeld == true) return

@@ -68,7 +68,7 @@
             app:icon="@drawable/ic_check"
             android:text="@string/rp_save" />
 
-        <!-- 正则速查表 -->
+        
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

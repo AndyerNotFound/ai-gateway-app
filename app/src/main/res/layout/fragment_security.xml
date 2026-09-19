@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- ===== 代码拦截 ===== -->
+        
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                     android:text="@string/gd_title"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                <!-- 警告横幅 -->
+                
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                             android:text="@string/gd_action_block" />
                     </RadioGroup>
 
-                    <!-- 云端扫描 -->
+                    
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchGuardCloud"
                         android:layout_width="match_parent"
@@ -193,7 +193,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ===== 后台活动保护 ===== -->
+        
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -241,7 +241,7 @@
                     android:layout_marginVertical="12dp"
                     android:background="?attr/colorOutlineVariant" />
 
-                <!-- 状态检查项 -->
+                
                 <TextView
                     android:id="@+id/textBattStatus"
                     android:layout_width="match_parent"

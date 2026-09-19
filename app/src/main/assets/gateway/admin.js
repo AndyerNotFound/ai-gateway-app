@@ -1,9 +1,9 @@
 'use strict';
-/**
- * ai-gateway Web 管理面板 (Material Design 3 风格)
- * 被 gateway.js 引用, 在每个实例的 /admin 路径提供管理界面
- * 管理 API 需 adminKey 鉴权, 可跨实例管理所有 config.*.json
- */
+
+
+
+
+
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -11,14 +11,14 @@ const { exec, execFile } = require('child_process');
 const http = require('http');
 const zlib = require('zlib');
 
-// DIR 优先用当前实例配置文件所在目录, 回落到 ~/ai-gateway
+
 let crypt = null; try { crypt = require('./crypt.js'); } catch (_) {}
 let DIR = path.join(os.homedir(), 'ai-gateway');
 function setDir(dir) { DIR = dir; }
 let upstreamModelsFn = null;
-function setUpstreamModels(fn) { upstreamModelsFn = fn; } // 由 gateway 注入: ch -> Promise<模型id数组>
+function setUpstreamModels(fn) { upstreamModelsFn = fn; } 
 let syncFn = null;
-function setSyncFn(fn) { syncFn = fn; } // 由 gateway 注入: () -> Promise<同步摘要>
+function setSyncFn(fn) { syncFn = fn; } 
 function cfgFile(name) {
   return name === 'default' ? path.join(DIR, 'config.json') : path.join(DIR, `config.${name}.json`);
 }
@@ -46,7 +46,7 @@ function loadCfg(name) {
 }
 function saveCfg(name, cfg) {
   let text = JSON.stringify(cfg, null, 2) + '\n';
-  if (crypt) { const pass = crypt.loadPass(); if (pass) text = crypt.encryptText(text, pass); } // 有密钥=落盘即加密
+  if (crypt) { const pass = crypt.loadPass(); if (pass) text = crypt.encryptText(text, pass); } 
   fs.writeFileSync(cfgFile(name), text);
 }
 function readLog(name, lines) {
@@ -70,7 +70,7 @@ function getInstanceStatus(name) {
   return { name, pid, running };
 }
 
-// 执行 agw.sh 命令(非阻塞, 返回 promise)
+
 function runAgw(args) {
   return new Promise(resolve => {
     execFile('bash', [path.join(DIR, 'agw.sh'), ...args], { timeout: 15000 }, (err, stdout, stderr) => {
@@ -79,7 +79,7 @@ function runAgw(args) {
   });
 }
 
-// 保存配置后自动重启实例(300ms 后执行, 先让响应发出去; 自我重启用 setsid 临时脚本脱离进程组)
+
 function scheduleRestart(cfg, name) {
   setTimeout(() => {
     if (name === currentName(cfg)) {
@@ -97,17 +97,17 @@ function scheduleRestart(cfg, name) {
   }, 300);
 }
 
-// 管理鉴权
+
 function checkAdminAuth(cfg, req, query) {
   const key = cfg.adminKey;
-  if (!key) return true; // 没设 adminKey = 免密管理(局域网自用); 要安全请给实例设置 adminKey
+  if (!key) return true; 
   const h = req.headers;
   const auth = h.authorization || '';
   const bearer = auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
   if (bearer === key) return true;
   if (h['x-admin-key'] === key) return true;
   if (query && query.get('adminKey') === key) return true;
-  // cookie
+  
   const cookie = h.cookie || '';
   if (cookie.includes(`adminKey=${key}`)) return true;
   return false;
@@ -123,7 +123,7 @@ function textRes(res, status, text, ct) {
   res.end(text);
 }
 
-// 从配置中提取打码的渠道信息(key 不外泄)
+
 function maskedChannels(cfg, reveal) {
   return (cfg.channels || []).map(c => ({
     name: c.name, type: c.type, baseUrl: c.baseUrl,
@@ -134,7 +134,7 @@ function maskedChannels(cfg, reveal) {
   }));
 }
 
-// 当前实例名 (config.json → 'default', config.xxx.json → 'xxx')
+
 function currentName(cfg) {
   if (!cfg._configFile) return 'default';
   const base = path.basename(cfg._configFile, '.json');
@@ -142,8 +142,8 @@ function currentName(cfg) {
   return base.replace(/^config\./, '');
 }
 
-// 本机回环代理到目标实例获取 JSON (跨实例统计/请求)
-// 优先走 /admin/api/<path>(带目标 adminKey); 目标没设 adminKey 则回退 /status(仅需 gatewayKey)
+
+
 function proxyInstance(targetName, adminPath) {
   return new Promise(resolve => {
     const tc = loadCfg(targetName);
@@ -181,15 +181,15 @@ function proxyInstance(targetName, adminPath) {
   });
 }
 
-/* ====================== 处理管理请求 ====================== */
-// cfg=当前实例配置, req, res, u=URL对象, p=pathname, bodyStr=请求体
+
+
 async function handleAdmin(cfg, req, res, u, p, bodyStr) {
-  // /admin 页面(内置HTML)
+  
   if (req.method === 'GET' && (p === '/admin' || p === '/admin/')) {
     return textRes(res, 200, adminHTML(cfg), 'text/html; charset=utf-8');
   }
 
-  // /admin/m3/ 静态文件(独立 M3 面板, 不鉴权, 密码在页面内输)
+  
   if (req.method === 'GET' && (p === '/admin/m3' || p === '/admin/m3/')) {
     const f = path.join(DIR, 'm3', 'index.html');
     if (!fs.existsSync(f)) return textRes(res, 404, 'M3 面板未找到, 请把 index.html 放到 ' + path.join(DIR, 'm3'));
@@ -203,7 +203,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return res.end(fs.readFileSync(f, 'utf8'));
   }
 
-  // /admin/m3/v2 — Material Web 版面板(与手写版并存, 便于对比回退)
+  
   if (req.method === 'GET' && (p === '/admin/m3/v2' || p === '/admin/m3/v2/')) {
     const f = path.join(DIR, 'm3', 'v2', 'index.html');
     if (!fs.existsSync(f)) return textRes(res, 404, 'M3 v2 面板未找到: ' + f);
@@ -211,8 +211,8 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return res.end(fs.readFileSync(f, 'utf8'));
   }
 
-  // /admin/m3/<静态资源> — vendor JS / 字体等
-  // 安全: 必须落在 m3 目录内(禁 .. 穿越), 且必须是文件
+  
+  
   if (req.method === 'GET' && p.startsWith('/admin/m3/')) {
     let rel;
     try { rel = decodeURIComponent(p.slice('/admin/m3/'.length)); } catch (e) { rel = ''; }
@@ -228,11 +228,11 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
       let buf = fs.readFileSync(f);
       const hdr = {
         'Content-Type': MIME[ext] || 'application/octet-stream',
-        // 面板本体不缓存; vendor 资源可缓存一天(体积大且按内容变更命名)
+        
         'Cache-Control': ext === '.html' ? 'no-store, no-cache, must-revalidate' : 'public, max-age=86400',
         'Access-Control-Allow-Origin': '*', 'Vary': 'Accept-Encoding',
       };
-      // 文本类资源 >1KB 且客户端支持 → gzip(288KB 的组件包压到 ~56KB)
+      
       if (buf.length > 1024 && ['.js', '.mjs', '.css', '.json', '.map'].includes(ext)
           && /\bgzip\b/.test(req.headers['accept-encoding'] || '')) {
         buf = zlib.gzipSync(buf, { level: 9 });
@@ -244,8 +244,8 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     }
   }
 
-  // 以下都是 /admin/api/* → 需要 adminKey 鉴权
-  if (!p.startsWith('/admin/api/')) return null; // 不是管理路由, 交给后续
+  
+  if (!p.startsWith('/admin/api/')) return null; 
 
   if (!checkAdminAuth(cfg, req, u.searchParams)) {
     return jsonRes(res, 401, { error: '需要管理密码 (adminKey)' });
@@ -253,7 +253,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
 
   const api = p.slice('/admin/api/'.length);
 
-  // GET /admin/api/instances — 所有实例状态
+  
   if (req.method === 'GET' && api === 'instances') {
     const insts = listInstances().map(name => {
       const st = getInstanceStatus(name);
@@ -264,7 +264,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return jsonRes(res, 200, { instances: insts, current: currentName(cfg) });
   }
 
-  // GET /admin/api/config/:name — 读取某实例配置(?reveal=1 时密钥明文回显, 供面板编辑)
+  
   if (req.method === 'GET' && api.startsWith('config/')) {
     const name = decodeURIComponent(api.slice('config/'.length));
     const reveal = !!(u.searchParams && u.searchParams.get('reveal') === '1');
@@ -284,14 +284,14 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     });
   }
 
-  // POST /admin/api/config/:name — 保存配置(整体替换 channels/port 等)
+  
   if (req.method === 'POST' && api.startsWith('config/')) {
     const name = decodeURIComponent(api.slice('config/'.length));
     const c = loadCfg(name);
     if (!c) return jsonRes(res, 404, { error: '实例不存在' });
     let data;
     try { data = JSON.parse(bodyStr || '{}'); } catch (e) { return jsonRes(res, 400, { error: 'JSON 无效' }); }
-    // 只允许修改部分字段, apiKey 保留原值(前端只发 keyPrefix, 不发明文)
+    
     if (data.port != null) { c.listen = c.listen || {}; c.listen.port = Number(data.port); }
     if (data.host != null) { c.listen = c.listen || {}; c.listen.host = data.host; }
     if (data.gatewayKey !== undefined) c.gatewayKey = data.gatewayKey;
@@ -311,7 +311,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
         intervalHours: Math.max(1, Number(data.modelSync.intervalHours) || 24),
       };
     }
-    // 请求记录: enable 开关 + server 收集地址(留空=本机 JSONL 文件)
+    
     if (data.record !== undefined && data.record && typeof data.record === 'object') {
       c.record = {
         enable: !!data.record.enable,
@@ -321,7 +321,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     }
     if (data.proxies !== undefined) c.proxies = data.proxies;
     if (Array.isArray(data.channels)) {
-      // 保留 apiKey: 前端传的 channel 如果 hasKey 但没 apiKey, 从旧配置取
+      
       const oldMap = {};
       for (const ch of (c.channels || [])) oldMap[ch.name] = ch.apiKey;
       c.channels = data.channels.map(ch => {
@@ -337,7 +337,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return;
   }
 
-  // POST /admin/api/instance-create/:name — 新建实例(写 config.<name>.json, 仅当不存在时; 启动由前端调 action/start)
+  
   if (req.method === 'POST' && api.startsWith('instance-create/')) {
     const name = decodeURIComponent(api.slice('instance-create/'.length));
     if (!/^[A-Za-z0-9_-]{1,32}$/.test(name)) return jsonRes(res, 400, { error: '实例名只能含字母/数字/中划线/下划线, 最长32字符' });
@@ -365,7 +365,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return jsonRes(res, 200, { ok: true });
   }
 
-  // POST /admin/api/channel/:name — 添加/修改单个渠道
+  
   if (req.method === 'POST' && api.startsWith('channel/')) {
     const name = decodeURIComponent(api.slice('channel/'.length));
     const c = loadCfg(name);
@@ -373,7 +373,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     let ch;
     try { ch = JSON.parse(bodyStr || '{}'); } catch (e) { return jsonRes(res, 400, { error: 'JSON 无效' }); }
     if (!ch.name) return jsonRes(res, 400, { error: '需要渠道名' });
-    // 如果是修改(同名存在) 且 没传 apiKey, 保留旧的
+    
     const existing = (c.channels || []).find(x => x.name === ch.name);
     if (existing && (!ch.apiKey || ch.apiKey.includes('***'))) ch.apiKey = existing.apiKey;
     if (ch.default) { for (const x of (c.channels || [])) x.default = false; }
@@ -386,7 +386,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return;
   }
 
-  // DELETE /admin/api/channel/:name/:chname — 删除渠道
+  
   if (req.method === 'DELETE' && api.startsWith('channel/')) {
     const parts = api.slice('channel/'.length).split('/');
     const name = decodeURIComponent(parts[0]);
@@ -404,21 +404,21 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return jsonRes(res, 404, { error: '渠道不存在' });
   }
 
-  // DELETE /admin/api/instance/:name — 删除实例(先停止进程, 再删配置/日志/pid; default 与面板宿主不可删)
+  
   if (req.method === 'DELETE' && api.startsWith('instance/')) {
     const name = decodeURIComponent(api.slice('instance/'.length));
     if (!/^[A-Za-z0-9_-]{1,32}$/.test(name)) return jsonRes(res, 400, { error: '实例名非法' });
     if (name === 'default') return jsonRes(res, 400, { error: 'default 是主实例, 不能删除' });
     if (name === currentName(cfg)) return jsonRes(res, 400, { error: '不能删除承载面板的实例' });
     if (!fs.existsSync(cfgFile(name))) return jsonRes(res, 404, { error: '实例不存在' });
-    await runAgw(['stop', name]); // 运行中先停止(未运行时 agw.sh stop 无害)
+    await runAgw(['stop', name]); 
     try { fs.unlinkSync(cfgFile(name)); } catch (e) { return jsonRes(res, 500, { error: '删除配置失败: ' + e.message }); }
     try { fs.unlinkSync(path.join(DIR, 'log', name + '.log')); } catch (e) {}
     try { fs.unlinkSync(path.join(DIR, '.run', name + '.pid')); } catch (e) {}
     return jsonRes(res, 200, { ok: true });
   }
 
-  // POST /admin/api/sync-models — 立即同步本实例(承载实例)的渠道模型列表
+  
   if (req.method === 'POST' && api === 'sync-models') {
     if (!syncFn) return jsonRes(res, 501, { error: '网关未提供同步能力' });
     try {
@@ -427,7 +427,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     } catch (e) { return jsonRes(res, 502, { error: e.message }); }
   }
 
-  // POST /admin/api/channel-models/:inst — 拉取渠道上游模型列表(服务端代 fetch: 避免浏览器CORS, 用真实apiKey与渠道代理)
+  
   if (req.method === 'POST' && api.startsWith('channel-models/')) {
     const inst = decodeURIComponent(api.slice('channel-models/'.length));
     const c = loadCfg(inst);
@@ -447,17 +447,17 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return;
   }
 
-  // POST /admin/api/action/:name/:action — start/stop/restart
+  
   if (req.method === 'POST' && api.startsWith('action/')) {
     const parts = api.slice('action/'.length).split('/');
     const name = decodeURIComponent(parts[0]);
     const action = parts[1];
     if (!['start', 'stop', 'restart'].includes(action)) return jsonRes(res, 400, { error: '未知操作' });
-    // 操作目标是当前实例自己: stop/restart 会导致进程自杀, 响应中断 + start 可能执行不到
-    // → 先回复客户端, 再用 setsid 启动完全独立的子进程执行 stop/start (脱离父进程组, 父死不影响)
+    
+    
     if (name === currentName(cfg) && (action === 'stop' || action === 'restart')) {
       jsonRes(res, 200, { ok: true, output: action + ' ' + name + ' (自我' + (action==='restart'?'重启':'停止') + ', 稍候生效, 请刷新页面)', self: true });
-      // 写临时脚本: setsid + nohup 确保脱离进程组, 父进程死亡后仍能执行完
+      
       const tmpScript = path.join(os.tmpdir() || DIR, '.agw-self-' + action + '.sh');
       const agwPath = path.join(DIR, 'agw.sh');
       if (action === 'restart') {
@@ -466,7 +466,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
         fs.writeFileSync(tmpScript, '#!/bin/bash\nsleep 1\nbash "' + agwPath + '" stop ' + name + ' 2>/dev/null\nrm -f "' + tmpScript + '"\n');
       }
       fs.chmodSync(tmpScript, 0o755);
-      // setsid 开新会话, stdio ignore, unref — 父进程被杀后这个脚本继续跑
+      
       const cp = exec('setsid bash "' + tmpScript + '" </dev/null >/dev/null 2>&1 &', { stdio: 'ignore' }, () => {});
       try { cp.unref(); } catch (e) {}
       return;
@@ -475,27 +475,27 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return jsonRes(res, 200, { ok: r.ok, output: (r.stdout + r.stderr).trim() });
   }
 
-  // POST /admin/api/shutdown-all — 关闭所有实例(含自己, 面板随之失效)
-  // 直接 process.kill 各实例 pid(先杀别人, 最后杀自己), 不依赖 bash 子进程(避免父进程死亡导致子进程中断)
+  
+  
   if (req.method === 'POST' && api === 'shutdown-all') {
     jsonRes(res, 200, { ok: true, message: '正在关闭所有实例...' });
     const myPid = process.pid;
     setTimeout(() => {
       for (const name of listInstances()) {
-        if (name === currentName(cfg)) continue; // 自己最后杀
+        if (name === currentName(cfg)) continue; 
         try {
           const pid = parseInt(fs.readFileSync(path.join(DIR, '.run', name + '.pid'), 'utf8').trim(), 10);
           if (pid && pid !== myPid) { try { process.kill(pid, 'SIGTERM'); } catch (e) {} }
         } catch (e) {}
       }
-      // 1秒后杀自己(给其他实例留时间优雅退出)
+      
       setTimeout(() => { try { process.kill(myPid, 'SIGTERM'); } catch (e) {} }, 1000);
     }, 500);
     return;
   }
 
-  // POST /admin/api/chat — 聊天测试(代理到目标实例 /v1/chat/completions, 自动注入 gatewayKey, 透传流式)
-  // body 里可带 instance 指定目标实例(面板顶栏选中的实例), 缺省=本实例
+  
+  
   if (req.method === 'POST' && api === 'chat') {
     let target = cfg, bodyOut = bodyStr || '{}';
     try {
@@ -523,14 +523,14 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return;
   }
 
-  // GET /admin/api/logs/:name — 读日志
+  
   if (req.method === 'GET' && api.startsWith('logs/')) {
     const name = decodeURIComponent(api.slice('logs/'.length));
     const lines = parseInt(u.searchParams.get('lines') || '50', 10) || 50;
     return textRes(res, 200, readLog(name, lines), 'text/plain; charset=utf-8');
   }
 
-  // GET /admin/api/stats?instance=X — 实例实时统计(支持跨实例本机代理)
+  
   if (req.method === 'GET' && api === 'stats') {
     const inst = u.searchParams.get('instance') || currentName(cfg);
     if (inst === currentName(cfg)) {
@@ -546,7 +546,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return jsonRes(res, 200, { requests: st.requests || 0, errors: st.errors || 0, byChannel: st.byChannel || {}, startedAt: j.startedAt, uptime: j.uptime || 0 });
   }
 
-  // GET /admin/api/requests/:name — 请求记录(环形缓冲, 支持跨实例代理)
+  
   if (req.method === 'GET' && api.startsWith('requests/')) {
     const inst = decodeURIComponent(api.slice('requests/'.length));
     if (inst === currentName(cfg)) {
@@ -557,7 +557,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
     return jsonRes(res, 200, Array.isArray(j) ? j : (j.recent || []));
   }
 
-  // GET /admin/api/record-body/:name?id=req_xxx — 从本机 JSONL 记录文件里按 id 查请求/响应正文
+  
   if (req.method === 'GET' && api.startsWith('record-body/')) {
     const name = decodeURIComponent(api.slice('record-body/'.length));
     const id = (u.searchParams && u.searchParams.get('id')) || '';
@@ -579,7 +579,7 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
   return jsonRes(res, 404, { error: '未知 API: ' + api });
 }
 
-/* ====================== MD3 风格 HTML ====================== */
+
 function adminHTML(cfg) {
   const instName = cfg._configFile ? path.basename(cfg._configFile, '.json').replace(/^config\./, '') : 'default';
   return `<!DOCTYPE html>

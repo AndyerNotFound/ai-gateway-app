@@ -11,24 +11,24 @@ import android.os.Environment
 import android.provider.MediaStore
 import java.io.File
 
-/**
- * Termux 集成 —— 检测 / RUN_COMMAND 关联启动 / 部署脚本生成。
- *
- * 前提: Termux 侧 ~/.termux/termux.properties 需 `allow-external-apps=true`。
- * App 已声明权限 com.termux.permission.RUN_COMMAND。
- */
+
+
+
+
+
+
 object TermuxHelper {
 
     const val TERMUX_PACKAGE = "com.termux"
     private const val RUN_COMMAND_SERVICE = "com.termux.app.RunCommandService"
     private const val BASH = "/data/data/com.termux/files/usr/bin/bash"
 
-    /*
-     * ZeroTermux(旧协议) 与官方 Termux(新协议) 的 RUN_COMMAND 意图名不同（已实机验证）：
-     * 旧: action=com.termux.RUN_COMMAND, extras=com.termux.RUN_COMMAND_*
-     * 新: action=com.termux.app.RUN_COMMAND, extras=com.termux.app.RUN_COMMAND_*
-     * 发错会被目标服务弹"无效意图操作"拒收。
-     */
+    
+
+
+
+
+
     private data class Proto(
         val action: String,
         val path: String,
@@ -59,24 +59,24 @@ object TermuxHelper {
             )
         }
 
-    /** 当前 Termux 类型设置（zero/official），默认 zero（ZeroTermux） */
+    
     private fun variant(context: Context): String =
         context.getSharedPreferences("ai_gateway_settings", Context.MODE_PRIVATE)
             .getString("termux_variant", "zero") ?: "zero"
 
-    /** 检测 Termux 是否安装(多重手段, 兼容 Android 11+ 包可见性) */
+    
     fun isTermuxInstalled(context: Context): Boolean {
         val pm = context.packageManager
-        // 1) 直接查包信息(需 <queries> 声明)
+        
         try {
             pm.getPackageInfo(TERMUX_PACKAGE, 0)
             return true
         } catch (_: Exception) {}
-        // 2) 查启动 Intent
+        
         try {
             if (pm.getLaunchIntentForPackage(TERMUX_PACKAGE) != null) return true
         } catch (_: Exception) {}
-        // 3) 查 RUN_COMMAND 服务是否可解析（新旧协议各试一次）
+        
         try {
             val ok = listOf("zero", "official").any { v ->
                 val intent = Intent(proto(v).action).setClassName(TERMUX_PACKAGE, RUN_COMMAND_SERVICE)
@@ -84,11 +84,11 @@ object TermuxHelper {
             }
             if (ok) return true
         } catch (_: Exception) {}
-        // 4) 兜底: Termux 的 files 目录存在(同机 Termux 通常可见)
+        
         return try { java.io.File("/data/data/com.termux/files/usr/bin/bash").exists() } catch (_: Exception) { false }
     }
 
-    /** RUN_COMMAND 服务是否可用(判断是否授权外部调用) */
+    
     fun isRunCommandAvailable(context: Context): Boolean = try {
         listOf("zero", "official").any { v ->
             val intent = Intent(proto(v).action).setClassName(TERMUX_PACKAGE, RUN_COMMAND_SERVICE)
@@ -96,7 +96,7 @@ object TermuxHelper {
         }
     } catch (_: Exception) { false }
 
-    /** 打开 Termux 主界面 */
+    
     fun openTermux(context: Context): Boolean {
         val intent = context.packageManager.getLaunchIntentForPackage(TERMUX_PACKAGE) ?: return false
         return try {
@@ -108,17 +108,17 @@ object TermuxHelper {
         }
     }
 
-    /** 执行结果 */
+    
     sealed class RunResult {
         object Success : RunResult()
         object NotInstalled : RunResult()
         data class Failed(val reason: String) : RunResult()
     }
 
-    /**
-     * 通过 RUN_COMMAND 在 Termux 执行 bash 命令。
-     * @param background true=后台执行(不弹出 Termux 界面)
-     */
+    
+
+
+
     fun runCommandDetailed(context: Context, command: String, background: Boolean = true): RunResult {
         if (!isTermuxInstalled(context)) return RunResult.NotInstalled
         val p = proto(variant(context))
@@ -130,7 +130,7 @@ object TermuxHelper {
             intent.putExtra(p.workdir, "/data/data/com.termux/files/home")
             intent.putExtra(p.background, background)
             intent.putExtra(p.sessionAction, "0")
-            // Android 8+ 后台启动服务受限, Termux 的 RunCommandService 是前台服务
+            
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)
             } else {
@@ -138,7 +138,7 @@ object TermuxHelper {
             }
             RunResult.Success
         } catch (e: SecurityException) {
-            // 未授权外部调用(allow-external-apps 未开)
+            
             RunResult.Failed("permission")
         } catch (e: Exception) {
             RunResult.Failed(e.message ?: "unknown")
@@ -148,38 +148,38 @@ object TermuxHelper {
     fun runCommand(context: Context, command: String, background: Boolean = true): Boolean =
         runCommandDetailed(context, command, background) is RunResult.Success
 
-    // ---------- 常用命令 ----------
+    
 
-    /** 启动 Termux 里的 gateway 后端 */
+    
     fun startBackend(context: Context): Boolean =
         runCommand(context, START_CMD, background = true)
 
     const val START_CMD = "bash ~/ai-gateway/agw.sh start"
 
-    /** 启动后端(详细结果, 供 UI 区分提示) */
+    
     fun startBackendDetailed(context: Context): RunResult =
         runCommandDetailed(context, START_CMD, background = true)
 
-    /** 停止后端 */
+    
     fun stopBackend(context: Context): Boolean =
         runCommand(context, "bash ~/ai-gateway/agw.sh stop", background = true)
 
-    /** 重启后端 */
+    
     fun restartBackend(context: Context): Boolean =
         runCommand(context, "bash ~/ai-gateway/agw.sh restart", background = true)
 
-    /** 查看后端状态(后台执行) */
+    
     fun checkBackendStatus(context: Context): Boolean =
         runCommand(context, "bash ~/ai-gateway/agw.sh status", background = true)
 
-    // ---------- 部署 ----------
+    
 
     private const val DEPLOY_DIR = "ai-gateway-deploy"
 
-    /**
-     * 把 assets/gateway/ 的后端文件写到 Download/ai-gateway-deploy/ (供 Termux 读取)。
-     * 返回部署到的 Download 相对路径。
-     */
+    
+
+
+
     fun deployGatewayFiles(context: Context): Boolean {
         return try {
             val assetFiles = context.assets.list("gateway") ?: return false
@@ -187,7 +187,7 @@ object TermuxHelper {
                 val bytes = context.assets.open("gateway/$name").readBytes()
                 writeToDownload(context, DEPLOY_DIR, name, bytes)
             }
-            // 生成安装脚本
+            
             val installScript = buildInstallScript()
             writeToDownload(context, DEPLOY_DIR, "install.sh", installScript.toByteArray(Charsets.UTF_8))
             true
@@ -216,7 +216,7 @@ object TermuxHelper {
     }
 
     private fun buildInstallScript(): String {
-        val s = "${'$'}" // 字面 $, 供 shell 变量用
+        val s = "${'$'}" 
         return """#!/data/data/com.termux/files/usr/bin/bash
 # ai-gateway 一键部署脚本 (由 AI Gateway App 生成)
 set -e
@@ -244,7 +244,7 @@ echo "=== 完成! 网关默认端口 16384 ==="
 """
     }
 
-    /** 执行部署(写文件 + 让 Termux 跑安装脚本, 会弹出 Termux 界面显示进度) */
+    
     fun deployAndInstall(context: Context): Boolean {
         if (!deployGatewayFiles(context)) return false
         return runCommand(context, "bash ~/storage/downloads/$DEPLOY_DIR/install.sh", background = false)

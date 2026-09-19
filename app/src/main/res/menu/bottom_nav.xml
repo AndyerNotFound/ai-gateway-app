@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nav_overview" android:icon="@drawable/ic_home" android:title="@string/nav_overview" />
     <item android:id="@+id/nav_providers" android:icon="@drawable/ic_cloud" android:title="@string/nav_providers" />
-    <item android:id="@+id/nav_routing" android:icon="@drawable/ic_sync" android:title="@string/nav_routing" />
     <item android:id="@+id/nav_ports" android:icon="@drawable/ic_power" android:title="@string/nav_ports" />
     <item android:id="@+id/nav_chat" android:icon="@drawable/ic_chat" android:title="@string/nav_chat" />
+    <item android:id="@+id/nav_settings" android:icon="@drawable/ic_settings" android:title="@string/nav_settings" />
 </menu>

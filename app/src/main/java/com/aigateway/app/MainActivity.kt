@@ -19,9 +19,14 @@ import com.aigateway.app.data.ThemeMode
 import com.aigateway.app.databinding.ActivityMainBinding
 import com.aigateway.app.databinding.DialogConnectionBinding
 import com.aigateway.app.databinding.DialogThemeBinding
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import com.aigateway.app.setup.SetupFragment
 import com.aigateway.app.termux.TermuxHelper
 import com.aigateway.app.ui.*
+import com.aigateway.app.ui.user.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity() {
@@ -29,8 +34,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var b: ActivityMainBinding
     private val app get() = application as App
 
-    /** 主导航页(可滑动切换), 与底栏一一对应 */
-    private val pagerTags = listOf("overview", "providers", "routing", "ports", "chat")
+    
+    private val adminPagerTags = listOf("overview", "providers", "ports", "chat", "settings")
+
+    
+    private val userPagerTags = listOf("uhome", "umodels", "ucredits", "uprofile")
+
+    private val pagerTags: List<String> get() = if (app.isUserMode) userPagerTags else adminPagerTags
     private var secondaryTag: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,14 +48,30 @@ class MainActivity : AppCompatActivity() {
             theme.applyStyle(app.settings.paletteOverlay(), true)
         }
         super.onCreate(savedInstanceState)
+
+        
+        try {
+            val cf = java.io.File(filesDir, "crash.txt")
+            if (cf.exists()) {
+                val txt = cf.readText()
+                cf.delete()
+                com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                    .setTitle("上次崩溃日志(请截图发给开发者)")
+                    .setMessage(txt.take(3000))
+                    .setPositiveButton("知道了", null)
+                    .show()
+            }
+        } catch (_: Exception) {}
+
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
-        if (app.connectionStore.setupDone && app.connectionStore.runMode != null) showMain()
+        if (app.isUserMode) { if (app.userStore.loggedIn) showMain() else showSetup() }
+        else if (app.connectionStore.setupDone && app.connectionStore.runMode != null) showMain()
         else showSetup()
     }
 
-    // ---------- setup ----------
+    
 
     private fun showSetup() {
         b.setupContainer.visibility = View.VISIBLE
@@ -57,7 +83,129 @@ class MainActivity : AppCompatActivity() {
 
     fun onSetupDone() = showMain()
 
-    // ---------- main ----------
+    
+    fun showUserLogin() {
+        val db = com.aigateway.app.databinding.DialogUserLoginBinding.inflate(layoutInflater)
+        val us = app.userStore
+        db.editUlServer.setText(us.serverUrl)
+        db.editUlBranch.setText(us.branch)
+        db.editUlToken.setText(us.token)
+        db.ulAuthToggle.check(R.id.ulAuthToken)
+        db.ulAuthToggle.addOnButtonCheckedListener { _, id, checked ->
+            if (!checked) return@addOnButtonCheckedListener
+            db.ulTokenLayout.visibility = if (id == R.id.ulAuthToken) android.view.View.VISIBLE else android.view.View.GONE
+            db.ulAccountLayout.visibility = if (id == R.id.ulAuthAccount) android.view.View.VISIBLE else android.view.View.GONE
+            db.ulRegisterLayout.visibility = if (id == R.id.ulAuthRegister) android.view.View.VISIBLE else android.view.View.GONE
+            if (id == R.id.ulAuthRegister) loadRegisterInfo(db)
+        }
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.ul_title)
+            .setView(db.root)
+            .setPositiveButton(R.string.ul_login) { _, _ ->
+                val server = db.editUlServer.text?.toString()?.trim().orEmpty()
+                if (server.isBlank()) { Toast.makeText(this, R.string.ul_need_server, Toast.LENGTH_SHORT).show(); return@setPositiveButton }
+                us.serverUrl = server
+                us.branch = db.editUlBranch.text?.toString()?.trim().orEmpty()
+                when (db.ulAuthToggle.checkedButtonId) {
+                    R.id.ulAuthToken -> {
+                        us.token = db.editUlToken.text?.toString()?.trim().orEmpty()
+                        if (us.token.isBlank()) { Toast.makeText(this, R.string.ul_need_token, Toast.LENGTH_SHORT).show(); return@setPositiveButton }
+                        verifyUserLogin(null, null)
+                    }
+                    R.id.ulAuthAccount -> {
+                        verifyUserLogin(db.editUlUid.text?.toString()?.trim().orEmpty(), db.editUlPassword.text?.toString().orEmpty())
+                    }
+                    R.id.ulAuthRegister -> {
+                        doRegister(db)
+                    }
+                }
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    
+    private fun loadRegisterInfo(db: com.aigateway.app.databinding.DialogUserLoginBinding) {
+        val us = app.userStore
+        if (us.serverUrl.isBlank()) return
+        lifecycleScope.launch {
+            try {
+                val j = withContext(Dispatchers.IO) { app.userBackend().registerInfo() }
+                if (j.get("enable")?.asBoolean != true) {
+                    db.ulRegHint.text = getString(R.string.ul_reg_closed)
+                    db.ulRegisterLayout.alpha = 0.4f
+                } else {
+                    db.ulRegHint.text = getString(R.string.ul_reg_hint_fmt, j.get("minPasswordLen")?.asInt ?: 8)
+                    db.ulRegEmailLayout.visibility = if (j.get("emailRequired")?.asBoolean == true) android.view.View.VISIBLE else android.view.View.GONE
+                }
+            } catch (e: Exception) {
+                db.ulRegHint.text = getString(R.string.ul_reg_query_fail, e.message ?: "")
+            }
+        }
+    }
+
+    
+    private fun doRegister(db: com.aigateway.app.databinding.DialogUserLoginBinding) {
+        val us = app.userStore
+        val uid = db.editUlRegUid.text?.toString()?.trim().orEmpty()
+        val pw = db.editUlRegPassword.text?.toString().orEmpty()
+        val pw2 = db.editUlRegPassword2.text?.toString().orEmpty()
+        val email = db.editUlRegEmail.text?.toString()?.trim().orEmpty()
+        if (uid.isBlank() || pw.isBlank()) { Toast.makeText(this, R.string.ul_reg_fill_all, Toast.LENGTH_SHORT).show(); return }
+        if (pw != pw2) { Toast.makeText(this, R.string.ul_reg_pw_mismatch, Toast.LENGTH_SHORT).show(); return }
+        lifecycleScope.launch {
+            try {
+                val j = withContext(Dispatchers.IO) { app.userBackend().register(uid, pw, email) }
+                val key = j.get("key")?.asString ?: ""
+                us.token = key; us.uid = uid; us.userName = uid
+                Toast.makeText(this@MainActivity, R.string.ul_reg_ok, Toast.LENGTH_LONG).show()
+                app.settings.appMode = "user"
+                pagerReady = false
+                showMain()
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, getString(R.string.ul_reg_fail, e.message ?: ""), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    
+    private fun verifyUserLogin(uid: String?, password: String?) {
+        val us = app.userStore
+        lifecycleScope.launch {
+            try {
+                val ub = app.userBackend()
+                if (uid != null) {
+                    
+                    val j = withContext(Dispatchers.IO) { ub.login(uid, password ?: "") }
+                    val keys = j.getAsJsonArray("keys")
+                    if (keys == null || keys.size() == 0) {
+                        Toast.makeText(this@MainActivity, R.string.ul_no_keys, Toast.LENGTH_LONG).show(); return@launch
+                    }
+                    us.token = keys[0].asJsonObject.get("key").asString
+                    us.uid = j.get("uid")?.asString ?: ""
+                    us.userName = j.get("name")?.asString ?: ""
+                } else {
+                    val j = withContext(Dispatchers.IO) { ub.credits() }
+                    us.userName = j.get("name")?.asString ?: ""
+                }
+                Toast.makeText(this@MainActivity, R.string.ul_login_ok, Toast.LENGTH_SHORT).show()
+                app.settings.appMode = "user"
+                pagerReady = false
+                showMain()
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, getString(R.string.ul_login_fail, e.message ?: ""), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    
+    fun switchToAdminMode() {
+        app.settings.appMode = ""
+        pagerReady = false
+        if (app.connectionStore.setupDone && app.connectionStore.runMode != null) showMain() else showSetup()
+    }
+
+    
 
     private var pagerReady = false
 
@@ -87,12 +235,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNav() {
+        
+        if (app.isUserMode) {
+            b.bottomNav.menu.clear()
+            b.bottomNav.inflateMenu(R.menu.bottom_nav_user)
+        }
         b.bottomNav.setOnItemSelectedListener { item ->
             val tag = tagForNavId(item.itemId)
             if (tag != null) {
                 closeSecondary()
                 val idx = pagerTags.indexOf(tag)
-                if (idx >= 0) b.viewPager.setCurrentItem(idx, true)  // true = 平滑滚动动画
+                if (idx >= 0) b.viewPager.setCurrentItem(idx, true)  
             }
             true
         }
@@ -105,7 +258,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_logs -> openSecondary("logs")
                 R.id.nav_proxies -> openSecondary("proxies")
                 R.id.nav_security -> openSecondary("security")
+                R.id.nav_cards -> openSecondary("cards")
+                R.id.nav_panel -> openSecondary("panel")
                 R.id.nav_config -> openSecondary("config")
+                R.id.nav_plugins -> openSecondary("plugins")
                 R.id.action_theme -> showThemeDialog()
                 R.id.action_termux_start -> startTermuxBackend()
                 R.id.action_connection -> showConnectionDialog()
@@ -115,23 +271,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navIdFor(tag: String) = when (tag) {
+        "uhome" -> R.id.nav_u_home
+        "umodels" -> R.id.nav_u_models
+        "ucredits" -> R.id.nav_u_credits
+        "uprofile" -> R.id.nav_u_profile
         "providers" -> R.id.nav_providers
-        "routing" -> R.id.nav_routing
         "ports" -> R.id.nav_ports
         "chat" -> R.id.nav_chat
+        "settings" -> R.id.nav_settings
         else -> R.id.nav_overview
     }
 
     private fun tagForNavId(id: Int) = when (id) {
+        R.id.nav_u_home -> "uhome"
+        R.id.nav_u_models -> "umodels"
+        R.id.nav_u_credits -> "ucredits"
+        R.id.nav_u_profile -> "uprofile"
         R.id.nav_overview -> "overview"
         R.id.nav_providers -> "providers"
-        R.id.nav_routing -> "routing"
         R.id.nav_ports -> "ports"
         R.id.nav_chat -> "chat"
+        R.id.nav_settings -> "settings"
         else -> null
     }
 
-    /** 打开二级页(顶栏菜单), 带淡入+上移动画 */
+    
+    
+    fun openSecondaryPublic(tag: String) = openSecondary(tag)
+    fun showConnectionDialogPublic() = showConnectionDialog()
+
     private fun openSecondary(tag: String) {
         secondaryTag = tag
         b.toolbar.title = titleFor(tag)
@@ -154,7 +322,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /** 返回键: 二级页优先关闭 */
+    
     private fun setupBackHandler() {
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -172,6 +340,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fragmentFor(tag: String): Fragment = when (tag) {
+        "uhome" -> UserHomeFragment()
+        "umodels" -> UserModelsFragment()
+        "ucredits" -> UserCreditsFragment()
+        "uprofile" -> UserProfileFragment()
+        "ukeys" -> UserKeysFragment()
         "providers" -> ProvidersFragment()
         "routing" -> RoutingFragment()
         "keys" -> KeysFragment()
@@ -182,12 +355,25 @@ class MainActivity : AppCompatActivity() {
         "logs" -> LogsFragment()
         "chat" -> ChatFragment()
         "config" -> ConfigFragment()
+        "cards" -> CardsFragment()
+        "panel" -> PanelFragment()
+        "settings" -> SettingsHubFragment()
+        "secondauth" -> SecondAuthFragment()
+        "tunnel" -> TunnelFragment()
+        "reg" -> RegSettingsFragment()
+        "users" -> UsersFragment()
         "proxies" -> ProxiesFragment()
         "security" -> SecurityFragment()
+        "plugins" -> PluginsMgmtFragment()
         else -> OverviewFragment()
     }
 
     private fun titleFor(tag: String): String = getString(when (tag) {
+        "uhome" -> R.string.nav_u_home
+        "umodels" -> R.string.nav_u_models
+        "ucredits" -> R.string.nav_u_credits
+        "uprofile" -> R.string.nav_u_profile
+        "ukeys" -> R.string.up_my_keys
         "providers" -> R.string.title_providers
         "routing" -> R.string.title_routing
         "keys" -> R.string.title_keys
@@ -198,12 +384,20 @@ class MainActivity : AppCompatActivity() {
         "logs" -> R.string.title_logs
         "chat" -> R.string.title_chat
         "config" -> R.string.menu_config
+        "cards" -> R.string.title_cards
+        "panel" -> R.string.title_panel
+        "settings" -> R.string.nav_settings
+        "secondauth" -> R.string.st_secondauth
+        "tunnel" -> R.string.st_tunnel
+        "reg" -> R.string.st_reg
+        "users" -> R.string.us_title
         "proxies" -> R.string.title_proxies
         "security" -> R.string.title_security
+        "plugins" -> R.string.title_plugins
         else -> R.string.title_overview
     })
 
-    /** 供 Fragment 跳转(总览"查看全部") */
+    
     fun showFragment(tag: String) {
         val idx = pagerTags.indexOf(tag)
         if (idx >= 0) { closeSecondary(); b.viewPager.setCurrentItem(idx, true) }
@@ -216,11 +410,11 @@ class MainActivity : AppCompatActivity() {
             RunMode.EMBEDDED -> getString(R.string.setup_embedded) + " · " + inst
             RunMode.TERMUX -> (app.connectionStore.getCurrentProfile()?.baseUrl
                 ?: getString(R.string.ov_mode_unset)) + " · " + inst
-            null -> ""
+            RunMode.USER, null -> if (app.isUserMode) app.userStore.serverUrl else ""
         }
     }
 
-    // ---------- Termux ----------
+    
 
     fun startTermuxBackendPublic() = startTermuxBackend()
 
@@ -232,7 +426,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /** 未授权外部调用: 给出可复制的开启命令 */
+    
     private fun showTermuxPermDialog() {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.termux_perm_title)
@@ -248,7 +442,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    // ---------- 主题 / 语言 ----------
+    
 
     fun showThemeDialogPublic() = showThemeDialog()
 
@@ -323,7 +517,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    // ---------- 连接设置 ----------
+    
 
     fun showConnectionDialog() {
         val db = DialogConnectionBinding.inflate(layoutInflater)
@@ -360,7 +554,7 @@ class MainActivity : AppCompatActivity() {
                     toast(getString(R.string.connect_saved))
                 }
                 updateSubtitle()
-                // 刷新所有页(强制重建 pager)
+                
                 b.viewPager.adapter = MainPagerAdapter(this)
             }
             .setNegativeButton(R.string.cancel, null)

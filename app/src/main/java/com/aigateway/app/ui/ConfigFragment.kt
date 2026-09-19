@@ -25,7 +25,7 @@ import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/** 配置与备份 —— 配置加密 + 导入/导出 */
+
 class ConfigFragment : BaseFragment() {
 
     private var _b: FragmentConfigBinding? = null
@@ -33,7 +33,7 @@ class ConfigFragment : BaseFragment() {
     private lateinit var transfer: ConfigTransfer
     private val gson = Gson()
 
-    /** 导出: 创建文件 */
+    
     private val exportLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -42,7 +42,7 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    /** 导入: 选择文件 */
+    
     private val importLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -51,7 +51,7 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    /** 选图片(相册)解码二维码 */
+    
     private val qrImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -60,7 +60,7 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    /** 相机拍照解码二维码 */
+    
     private val qrCameraLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -71,7 +71,7 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    /** 相机权限 */
+    
     private val cameraPermLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
@@ -104,14 +104,14 @@ class ConfigFragment : BaseFragment() {
                 b.editExportPass.setText(s.cryptPassword)
             }
         }
-        // 请求内容收集
+        
         b.switchRecord.setOnCheckedChangeListener { _, on ->
             b.recordSection.visibility = if (on) View.VISIBLE else View.GONE
         }
         b.btnSaveRecord.setOnClickListener { saveRecord() }
         loadRecord()
 
-        // 思考链精简
+        
         b.switchTs.setOnCheckedChangeListener { _, on ->
             b.tsSection.visibility = if (on) View.VISIBLE else View.GONE
         }
@@ -126,7 +126,7 @@ class ConfigFragment : BaseFragment() {
         b.btnImportQrCamera.setOnClickListener { requestCameraThenScan() }
     }
 
-    // ---------- 请求内容收集 ----------
+    
 
     private fun loadRecord() {
         val backend = backendOrNull() ?: return
@@ -143,7 +143,7 @@ class ConfigFragment : BaseFragment() {
     private fun saveRecord() {
         val backend = backendOrNull() ?: return
         val server = b.editRecordServer.text?.toString()?.trim().orEmpty()
-        // 填了服务器地址就校验一下格式
+        
         if (server.isNotEmpty() && !(server.startsWith("http://") || server.startsWith("https://"))) {
             snack(getString(R.string.rec_bad_server)); return
         }
@@ -163,7 +163,7 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    // ---------- 思考链精简 ----------
+    
 
     private fun loadThinkingSummary() {
         val backend = backendOrNull() ?: return
@@ -210,13 +210,13 @@ class ConfigFragment : BaseFragment() {
         if (_b != null) { loadRecord(); loadThinkingSummary() }
     }
 
-    // ---------- 配置加密 ----------
+    
 
     private fun saveCrypt() {
         val s = app.settings
         val on = b.switchCrypt.isChecked
         if (!on) {
-            // 关闭加密: 把内嵌配置转回明文
+            
             s.cryptEnabled = false
             s.cryptPassword = ""
             app.embeddedEngineOrNull()?.changeCryptPassword("")
@@ -229,12 +229,12 @@ class ConfigFragment : BaseFragment() {
         if (p1 != p2) { snack(getString(R.string.cfg_crypt_mismatch)); return }
         s.cryptEnabled = true
         s.cryptPassword = p1
-        // 立即用新口令重写内嵌配置
+        
         app.embeddedEngineOrNull()?.changeCryptPassword(p1)
         toast(getString(R.string.cfg_crypt_enabled))
     }
 
-    // ---------- 导出 ----------
+    
 
     private fun pickExportFile() {
         val encrypt = b.switchExportEncrypt.isChecked
@@ -261,7 +261,7 @@ class ConfigFragment : BaseFragment() {
         }) { toast(getString(R.string.cfg_exported)) }
     }
 
-    // ---------- 导入 ----------
+    
 
     private fun pickImportFile() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -280,7 +280,7 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    /** 加密文件: 弹窗要源口令 */
+    
     private fun askPasswordThenImport(raw: String) {
         val db = DialogImportPassBinding.inflate(layoutInflater)
         db.textHint.text = getString(R.string.cfg_import_encrypted_hint)
@@ -317,10 +317,10 @@ class ConfigFragment : BaseFragment() {
             .show()
     }
 
-    /** 应用导入: 写入当前后端(内嵌模式会用本 App 口令重新加密) */
+    
     private fun applyImport(cfg: GatewayConfig) {
         val backend = backendOrNull() ?: run { snack(getString(R.string.no_backend_hint)); return }
-        // 组 patch: 端口/密钥/渠道/代理/替换/过滤/同步 全量覆盖
+        
         val patch = JsonParser.parseString(gson.toJson(cfg)).asJsonObject
         patch.remove("name")
         run({ snack(getString(R.string.cfg_import_failed, it)) }, {
@@ -328,7 +328,7 @@ class ConfigFragment : BaseFragment() {
         }) { r ->
             if (r.ok) {
                 toast(getString(R.string.cfg_imported, cfg.channels.size))
-                // 内嵌模式 + 已启用加密 → 配置已按本 App 口令加密存储
+                
                 if (app.connectionStore.runMode == RunMode.EMBEDDED && app.settings.cryptEnabled) {
                     app.embeddedEngineOrNull()?.changeCryptPassword(app.settings.cryptPassword)
                     snack(getString(R.string.cfg_reencrypted))
@@ -337,7 +337,7 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    // ---------- 二维码导出 ----------
+    
 
     private fun exportQr() {
         val backend = backendOrNull() ?: run { snack(getString(R.string.no_backend_hint)); return }
@@ -363,7 +363,7 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    // ---------- 二维码导入 ----------
+    
 
     private fun pickQrImage() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {

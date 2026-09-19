@@ -15,11 +15,11 @@ import java.net.Socket
 import java.net.URLDecoder
 import java.util.concurrent.atomic.AtomicBoolean
 
-/**
- * 内嵌零依赖 HTTP 服务器 —— ServerSocket + 协程, 每连接一协程。
- * 路由: /health /status /v1/models /v1/chat/completions /v1/messages /v1beta/models/{m}:action
- * 支持 gatewayKey 鉴权 + SSE 流式。
- */
+
+
+
+
+
 class EmbeddedHttpServer(private val engine: GatewayEngine) {
 
     private var serverSocket: ServerSocket? = null
@@ -61,7 +61,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
         }
     }
 
-    // ---------- 请求解析 ----------
+    
 
     private fun readHeaderLine(input: InputStream): String? {
         val out = ByteArrayOutputStream()
@@ -117,7 +117,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
             if (idx > 0) headers[line.substring(0, idx).trim().lowercase()] = line.substring(idx + 1).trim()
         }
         val contentLength = headers["content-length"]?.toIntOrNull() ?: 0
-        // 保留原始字节(multipart/音频等二进制), 同时提供 UTF-8 字符串视图
+        
         val rawBody = if (contentLength > 0) readFully(input, contentLength) else ByteArray(0)
         val body = String(rawBody, Charsets.UTF_8)
         return HttpRequest(method, path, query, headers, body, rawBody, headers["content-type"] ?: "")
@@ -125,7 +125,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
 
     private fun urlDec(s: String): String = try { URLDecoder.decode(s, "UTF-8") } catch (e: Exception) { s }
 
-    // ---------- 响应写出 ----------
+    
 
     private fun reason(status: Int): String = when (status) {
         200 -> "OK"; 400 -> "Bad Request"; 401 -> "Unauthorized"; 404 -> "Not Found"
@@ -145,7 +145,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
         out.flush()
     }
 
-    /** 任意字节响应(图片/音频/JSON 透传) */
+    
     private fun writeRaw(out: OutputStream, status: Int, bytes: ByteArray, contentType: String, extraHeaders: Map<String, String> = emptyMap()) {
         val sb = StringBuilder("HTTP/1.1 $status ${reason(status)}\r\n")
         sb.append("Content-Type: $contentType\r\n")
@@ -170,7 +170,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
         out.flush()
     }
 
-    // ---------- 鉴权 ----------
+    
 
     private fun checkGatewayKey(req: HttpRequest): Boolean {
         val k = engine.gatewayKey()
@@ -183,7 +183,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
         return false
     }
 
-    // ---------- 路由 ----------
+    
 
     private suspend fun handleConnection(socket: Socket) {
         socket.soTimeout = 120000
@@ -199,7 +199,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
 
     private val geminiRe = Regex("^/v1(?:beta|alpha)?/models/([^:]+):(generateContent|streamGenerateContent|countTokens)$")
 
-    // OpenAI 扩展直通端点(仅 openaiExtras.enable 时开放; 原样转发到选中的 openai 渠道)
+    
     private val extraEndpoints = setOf(
         "/v1/images/generations", "/v1/images/edits", "/v1/images/variations",
         "/v1/embeddings",
@@ -231,7 +231,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
             val fmt = if (p == "/v1beta/models") "gemini" else "openai"
             writeJson(out, 200, engine.modelsResponse(fmt)); return
         }
-        // OpenAI 扩展直通端点(图片/嵌入/音频/补全/审核): 原样转发到 openai 渠道, 响应字节透传
+        
         if (req.method == "POST" && engine.openaiExtrasEnabled() && extraEndpoints.contains(p)) {
             if (!checkGatewayKey(req)) { writeJson(out, 401, engine.errorBody("openai", 401, "invalid gateway key")); return }
             when (val r = engine.extraEndpoint(p, req.rawBody, req.contentType)) {
@@ -244,7 +244,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
             writeJson(out, 404, engine.errorBody("openai", 404, "not found: ${req.method} $p")); return
         }
 
-        // 识别客户端格式
+        
         var clientFormat: String? = null
         var clientApi = "chat"
         var urlModel: String? = null
@@ -282,7 +282,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
             writeJson(out, 400, engine.errorBody(clientFormat, 400, "invalid JSON body")); return
         }
 
-        // 流式收集
+        
         var headWritten = false
         engine.chat(clientFormat, bodyJson, urlModel, forceStream, keyOk, clientApi).collect { ev ->
             when (ev) {
@@ -301,7 +301,7 @@ class EmbeddedHttpServer(private val engine: GatewayEngine) {
                 }
             }
         }
-        // 流式结束标记(仅 OpenAI 格式)
+        
         if (headWritten && clientFormat == "openai") {
             runCatching {
                 out.write("data: [DONE]\n\n".toByteArray(Charsets.UTF_8))

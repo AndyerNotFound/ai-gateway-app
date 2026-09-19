@@ -12,7 +12,7 @@ import com.aigateway.app.service.BackgroundGuard
 import com.aigateway.app.service.GatewayService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-/** 安全与后台 —— 代码拦截 + 后台活动保护 */
+
 class SecurityFragment : BaseFragment() {
 
     private var _b: FragmentSecurityBinding? = null
@@ -26,7 +26,7 @@ class SecurityFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val s = app.settings
 
-        // ---- 代码拦截 ----
+        
         b.switchGuard.isChecked = s.guardEnabled
         b.guardSection.visibility = if (s.guardEnabled) View.VISIBLE else View.GONE
         b.switchGuard.setOnCheckedChangeListener { _, on ->
@@ -49,7 +49,7 @@ class SecurityFragment : BaseFragment() {
         b.btnTestGuard.setOnClickListener { testGuard() }
         b.btnSaveGuard.setOnClickListener { saveGuard() }
 
-        // ---- 后台保活 ----
+        
         b.switchKeepAlive.isChecked = s.bgKeepAlive
         b.switchKeepAlive.setOnCheckedChangeListener { _, on ->
             s.bgKeepAlive = on
@@ -96,7 +96,7 @@ class SecurityFragment : BaseFragment() {
         b.textSvcStatus.text = getString(if (svc) R.string.bg_svc_running else R.string.bg_svc_stopped)
     }
 
-    // ---- 保存拦截设置 ----
+    
 
     private fun saveGuard() {
         val s = app.settings
@@ -110,12 +110,12 @@ class SecurityFragment : BaseFragment() {
         s.guardCloudEnabled = b.switchGuardCloud.isChecked
         s.guardCloudUrl = b.editCloudUrl.text?.toString()?.trim().orEmpty()
         s.guardCloudKey = b.editCloudKey.text?.toString()?.trim().orEmpty()
-        // 应用到内嵌引擎
+        
         app.applyGuardSettings()
         toast(getString(R.string.gd_saved))
     }
 
-    /** 用内置样例验证扫描是否工作 */
+    
     private fun testGuard() {
         val sample = """
             Here is a script:

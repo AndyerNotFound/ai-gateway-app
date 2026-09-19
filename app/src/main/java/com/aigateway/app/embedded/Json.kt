@@ -8,9 +8,9 @@ import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
 import java.security.SecureRandom
 
-/**
- * Gson 动态 JSON 辅助 —— 让 Kotlin 能像 JS 一样操作宽松 JSON, 便于忠实移植 gateway.js。
- */
+
+
+
 
 private val random = SecureRandom()
 
@@ -25,7 +25,7 @@ fun nowSec(): Long = System.currentTimeMillis() / 1000
 fun safeParse(s: String?): JsonElement? =
     if (s.isNullOrBlank()) null else runCatching { JsonParser.parseString(s) }.getOrNull()
 
-// ---- JsonObject 宽松取值 ----
+
 fun JsonObject.str(k: String): String? =
     get(k)?.takeIf { it.isJsonPrimitive }?.let { if (it.asJsonPrimitive.isString) it.asString else it.asString }
 
@@ -43,7 +43,7 @@ fun JsonObject.arr(k: String): JsonArray? = get(k)?.takeIf { it.isJsonArray }?.a
 
 fun JsonObject.hasNonNull(k: String): Boolean = has(k) && !get(k).isJsonNull
 
-// ---- JsonElement 判断/转换 ----
+
 val JsonElement?.isStr: Boolean get() = this != null && isJsonPrimitive && asJsonPrimitive.isString
 val JsonElement?.asStrOrNull: String? get() = if (isStr) this!!.asString else null
 
@@ -63,7 +63,7 @@ fun jsonArr(vararg items: JsonElement?): JsonArray {
     return a
 }
 
-// ---- 链式 put (null 跳过) ----
+
 fun JsonObject.put(k: String, v: String?): JsonObject = apply { if (v != null) addProperty(k, v) }
 fun JsonObject.put(k: String, v: Number?): JsonObject = apply { if (v != null) addProperty(k, v) }
 fun JsonObject.put(k: String, v: Boolean?): JsonObject = apply { if (v != null) addProperty(k, v) }
@@ -72,7 +72,7 @@ fun JsonObject.copyFrom(src: JsonObject, vararg keys: String): JsonObject = appl
     for (k in keys) src.get(k)?.let { add(k, it) }
 }
 
-/** content 转纯文本 (string 或 blocks 数组 → 拼接 text) */
+
 fun toText(content: JsonElement?): String {
     if (content == null || content.isJsonNull) return ""
     if (content.isJsonPrimitive) return if (content.asJsonPrimitive.isString) content.asString else content.asString
@@ -88,7 +88,7 @@ fun toText(content: JsonElement?): String {
     return ""
 }
 
-/** stop 归一化为 List<String> */
+
 fun normStop(v: JsonElement?): List<String>? {
     if (v == null || v.isJsonNull) return null
     if (v.isJsonPrimitive) return listOf(v.asString)

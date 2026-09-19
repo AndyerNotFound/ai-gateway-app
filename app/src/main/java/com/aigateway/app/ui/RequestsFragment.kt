@@ -82,7 +82,7 @@ class RequestsFragment : BaseFragment() {
         }.getOrDefault(v.toString())
     }
 
-    // ---------- Adapter ----------
+    
 
     inner class RequestAdapter : RecyclerView.Adapter<RequestAdapter.VH>() {
         var onClick: ((RequestEntry) -> Unit)? = null
@@ -120,7 +120,7 @@ class RequestsFragment : BaseFragment() {
         override fun getItemCount(): Int = items.size
     }
 
-    /** 基类在实例/连接变化时调用 */
+    
     override fun reload() {
         if (_b != null) load()
     }

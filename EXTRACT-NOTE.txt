@@ -1,0 +1,33 @@
+ai-gateway-app 源码提取包 (2026-09-19)
+======================================
+版本: v0.2.0 / versionCode 7 (开发版)
+说明: 旧版网关 (16384) 的原生 Android 客户端。
+  手机当前安装版为 v0.2.0(6); 本源码包为其后的开发版 (versionCode 7),
+  新增「插件管理」页 (PluginsMgmtFragment) —— 该功能尚未打包安装。
+
+【内容】
+ai-gateway-app/   原生 Android App (Kotlin + Material)
+  app/src/main/java/       全部源码 (连接/实例/渠道/卡密/用户/统计/日志/隧道/插件管理 ...)
+  app/src/main/res/        资源
+  app/src/main/assets/gateway/  随 APK 内置的网关文件副本 (含 config.default.json 模板)
+  app/src/test/kotlin/     单元测试 (Converters / Engine)
+  app/build.gradle.kts     versionCode 7 / versionName 0.2.0
+  gradle/ gradlew          构建包装器
+
+【处理】
+- 去注释: .kt/.kts/.xml/.js 注释移除
+- 脱敏: 真实局域网 IP 替换为示例 192.168.1.100;
+  abc.trycloudflare.com 为界面提示文案中的示例地址, 非真实隧道
+- 排除: build 产物 / .gradle / 备份 / patch 脚本 / local.properties
+- 最小修正 (1 处, 透明记录): BaseFragment.dataKey() 由 private 改为 open
+  —— 新增插件管理页需要覆写它, 原状态无法通过编译
+
+【验证 (全部真跑)】
+- Kotlin 全量类型检查: EXIT 0
+  (K2JVMCompiler + android.jar + androidx/material 依赖 + R/BuildConfig/40 个 ViewBinding 生成桩)
+- assets/gateway 的 JS: node --check 通过
+- 与手机当前安装版对照: 本包 = 更新 (含插件管理页)
+
+【构建】
+- 需 Android SDK + Gradle (示例: ./gradlew :app:assembleDebug)
+- 内置网关模式: 安装后可在 App 内启动本地网关 (assets 自带文件)

@@ -60,7 +60,7 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- TLS / HTTPS -->
+        
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

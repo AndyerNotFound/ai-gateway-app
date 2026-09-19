@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- MD3 baseline (light) — Android 12+ 会被动态色覆盖 -->
+    
     <color name="md_primary">#6750A4</color>
     <color name="md_on_primary">#FFFFFF</color>
     <color name="md_primary_container">#EADDFF</color>

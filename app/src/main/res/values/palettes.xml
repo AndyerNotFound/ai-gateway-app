@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 配色方案 overlay (浅色) —— 仅覆盖主色系, 其余继承主题 -->
+    
 
     <style name="ThemeOverlay.Palette.Purple" parent="">
         <item name="colorPrimary">#6750A4</item>

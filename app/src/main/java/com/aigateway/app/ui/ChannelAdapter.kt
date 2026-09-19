@@ -1,5 +1,7 @@
 package com.aigateway.app.ui
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aigateway.app.R
 import com.aigateway.app.data.Channel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 
 class ChannelAdapter(
     private val onEdit: (Channel) -> Unit,
@@ -17,6 +20,9 @@ class ChannelAdapter(
 ) : RecyclerView.Adapter<ChannelAdapter.VH>() {
 
     private val items = mutableListOf<Channel>()
+
+    
+    var themeContext: Context? = null
 
     fun submit(list: List<Channel>) {
         items.clear()
@@ -42,7 +48,23 @@ class ChannelAdapter(
 
     override fun onBindViewHolder(h: VH, position: Int) {
         val ch = items[position]
-        val ctx = h.itemView.context
+        val ctx = themeContext ?: h.itemView.context
+        
+        val cPrimary = resolveColor(ctx, com.google.android.material.R.attr.colorPrimary)
+        val cOnSurface = resolveColor(ctx, com.google.android.material.R.attr.colorOnSurface)
+        val cOnSurfaceVariant = resolveColor(ctx, com.google.android.material.R.attr.colorOnSurfaceVariant)
+        val cSurfaceContainer = resolveColor(ctx, com.google.android.material.R.attr.colorSurfaceContainer)
+        val cError = resolveColor(ctx, com.google.android.material.R.attr.colorError)
+        (h.itemView as? MaterialCardView)?.setCardBackgroundColor(cSurfaceContainer)
+        h.name.setTextColor(cOnSurface)
+        h.type.setTextColor(cPrimary)
+        h.url.setTextColor(cOnSurfaceVariant)
+        h.meta.setTextColor(cOnSurfaceVariant)
+        h.star.imageTintList = ColorStateList.valueOf(cPrimary)
+        h.btnFetch.setTextColor(cPrimary)
+        h.btnEdit.setTextColor(cPrimary)
+        h.btnDelete.setTextColor(cError)
+
         h.name.text = ch.name
         h.type.text = ch.type.uppercase()
         h.url.text = ch.baseUrl
@@ -63,4 +85,9 @@ class ChannelAdapter(
     }
 
     override fun getItemCount(): Int = items.size
+
+    private fun resolveColor(ctx: Context, attr: Int): Int {
+        val ta = ctx.theme.obtainStyledAttributes(intArrayOf(attr))
+        val c = ta.getColor(0, 0); ta.recycle(); return c
+    }
 }

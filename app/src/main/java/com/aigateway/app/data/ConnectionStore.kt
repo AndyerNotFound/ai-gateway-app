@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.UUID
 
-/** 一个连接配置(远程网关) */
+
 data class ConnectionProfile(
     val id: String = UUID.randomUUID().toString(),
     var label: String = "",
@@ -16,12 +16,12 @@ data class ConnectionProfile(
     fun displayName(): String = label.ifBlank { baseUrl }
 }
 
-/** 运行模式 */
-enum class RunMode { EMBEDDED, TERMUX }
 
-/**
- * 连接/模式配置存储 —— SharedPreferences 持久化。
- */
+enum class RunMode { EMBEDDED, TERMUX, USER }
+
+
+
+
 class ConnectionStore(context: Context) {
 
     private val sp: SharedPreferences =
@@ -35,7 +35,7 @@ class ConnectionStore(context: Context) {
         private const val K_CURRENT_ID = "current_profile_id"
         private const val K_ACTIVE_INSTANCE = "active_instance"
         const val DEFAULT_TERMUX_URL = "http://127.0.0.1:16384"
-        const val DEFAULT_LAN_URL = "http://192.168.1.7:16384"
+        const val DEFAULT_LAN_URL = "http://192.168.1.100:16384"
     }
 
     var setupDone: Boolean
@@ -48,12 +48,12 @@ class ConnectionStore(context: Context) {
         }
         set(v) = sp.edit().putString(K_MODE, v?.name).apply()
 
-    /** 当前激活实例名(管理面板里选中的实例) */
+    
     var activeInstance: String
         get() = sp.getString(K_ACTIVE_INSTANCE, "default") ?: "default"
         set(v) = sp.edit().putString(K_ACTIVE_INSTANCE, v).apply()
 
-    // ---- 连接配置列表 ----
+    
 
     fun getProfiles(): MutableList<ConnectionProfile> {
         val raw = sp.getString(K_PROFILES, null) ?: return mutableListOf()
@@ -90,13 +90,13 @@ class ConnectionStore(context: Context) {
         return getProfiles().firstOrNull { it.id == id }
     }
 
-    /** 确保至少有一个默认配置(首次进 TERMUX 模式用) */
+    
     fun ensureDefaultProfiles() {
         if (getProfiles().isEmpty()) {
             saveProfile(ConnectionProfile(label = "本机 Termux", baseUrl = DEFAULT_TERMUX_URL))
         }
     }
 
-    /** 重置全部(调试用) */
+    
     fun clear() = sp.edit().clear().apply()
 }

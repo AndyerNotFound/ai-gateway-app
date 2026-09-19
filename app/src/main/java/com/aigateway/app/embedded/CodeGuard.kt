@@ -1,28 +1,28 @@
 package com.aigateway.app.embedded
 
-/**
- * 代码安全扫描 —— 扫描 AI 返回内容里的危险代码模式。
- *
- * 定位: 辅助提醒, 不是安全边界。基于正则的本地规则库 + 可选云端 API。
- * ⚠️ 局限: 正则无法理解语义, 会有漏报和误报; 混淆/变形代码可绕过。
- *   真正的安全依赖用户审查代码后再执行。
- *
- * 性能: 仅扫描代码块(``` 围栏内)和可疑命令行, 避免全文正则。
- */
+
+
+
+
+
+
+
+
+
 object CodeGuard {
 
-    /** 风险等级 */
+    
     enum class Level { LOW, MEDIUM, HIGH }
 
-    /** 一条命中 */
+    
     data class Finding(
         val ruleId: String,
         val level: Level,
-        val title: String,      // 规则描述(英文 key, UI 侧本地化)
-        val snippet: String     // 命中的代码片段(截断)
+        val title: String,      
+        val snippet: String     
     )
 
-    /** 扫描结果 */
+    
     data class Result(
         val findings: List<Finding>,
         val maxLevel: Level?,
@@ -38,12 +38,12 @@ object CodeGuard {
         val regex: Regex
     )
 
-    /**
-     * 本地规则库。聚焦"执行后可能造成实际破坏/外泄"的模式。
-     * 用 IGNORE_CASE, 但不用 DOT_MATCHES_ALL(避免跨行贪婪)。
-     */
+    
+
+
+
     private val RULES: List<Rule> = listOf(
-        // ===== HIGH: 破坏性文件操作 =====
+        
         Rule("rm_rf_root", Level.HIGH, "Recursive delete of root or home",
             Regex("""\brm\s+(-[a-zA-Z]*\s+)*-?[rRfF]{2,}[a-zA-Z]*\s+(/|~|/\*|\*)(\s|$|;)""")),
         Rule("rm_rf_generic", Level.HIGH, "Forced recursive delete",
@@ -57,7 +57,7 @@ object CodeGuard {
         Rule("overwrite_dev", Level.HIGH, "Writing to raw device",
             Regex(""">\s*/dev/(sd[a-z]|nvme|block|mmcblk)""")),
 
-        // ===== HIGH: 远程代码执行 =====
+        
         Rule("curl_pipe_sh", Level.HIGH, "Download and execute (curl|sh)",
             Regex("""\b(curl|wget)\b[^\n|]*\|\s*(sudo\s+)?(ba|z|k|da)?sh\b""")),
         Rule("eval_download", Level.HIGH, "Eval of downloaded content",
@@ -69,7 +69,7 @@ object CodeGuard {
         Rule("base64_exec", Level.HIGH, "Base64-decoded execution",
             Regex("""\b(base64\s+-d|b64decode|FromBase64String)[^\n]{0,80}\|\s*(ba)?sh|\b(ba)?sh\s+-c\s+["']?\$\(\s*base64""", RegexOption.IGNORE_CASE)),
 
-        // ===== HIGH: 凭据外泄 =====
+        
         Rule("exfil_env", Level.HIGH, "Sending environment variables out",
             Regex("""\b(curl|wget|nc|Invoke-WebRequest)\b[^\n]*(\$\{?ENV|printenv|\benv\b|process\.env|os\.environ)""", RegexOption.IGNORE_CASE)),
         Rule("exfil_ssh_key", Level.HIGH, "Reading private keys / credentials",
@@ -77,7 +77,7 @@ object CodeGuard {
         Rule("reverse_shell", Level.HIGH, "Reverse shell",
             Regex("""\b(nc|ncat|netcat)\b[^\n]*\s-[a-z]*e[a-z]*\s|\bbash\s+-i\s+>&\s*/dev/tcp/|socket\.socket\([^\n]*\)[^\n]*connect\(""", RegexOption.IGNORE_CASE)),
 
-        // ===== MEDIUM: 权限/系统改动 =====
+        
         Rule("chmod_777", Level.MEDIUM, "World-writable permissions",
             Regex("""\bchmod\s+(-[a-zA-Z]+\s+)*777\b""")),
         Rule("sudo_nopasswd", Level.MEDIUM, "Passwordless sudo modification",
@@ -89,7 +89,7 @@ object CodeGuard {
         Rule("kill_all", Level.MEDIUM, "Mass process kill",
             Regex("""\bkill(all)?\s+-9\s+(-1|\*)|\bpkill\s+-9\s+-u\b""")),
 
-        // ===== MEDIUM: 危险动态执行 =====
+        
         Rule("js_eval_input", Level.MEDIUM, "eval() of dynamic input",
             Regex("""\beval\s*\(\s*(req\.|request\.|input|argv|params|body)""", RegexOption.IGNORE_CASE)),
         Rule("py_pickle_load", Level.MEDIUM, "Unsafe deserialization (pickle)",
@@ -99,7 +99,7 @@ object CodeGuard {
         Rule("sql_concat", Level.MEDIUM, "SQL built by string concatenation",
             Regex("""(SELECT|INSERT|UPDATE|DELETE)\b[^\n]{0,80}(\+\s*(input|argv|req|params|user)|%s['"]?\s*%|f["'][^\n]*\{)""", RegexOption.IGNORE_CASE)),
 
-        // ===== LOW: 值得留意 =====
+        
         Rule("hardcoded_secret", Level.LOW, "Hardcoded credential-looking string",
             Regex("""\b(api[_-]?key|secret|password|token)\s*[=:]\s*["'][A-Za-z0-9_\-]{16,}["']""", RegexOption.IGNORE_CASE)),
         Rule("http_plain", Level.LOW, "Plain HTTP request to external host",
@@ -108,22 +108,22 @@ object CodeGuard {
             Regex("""verify\s*=\s*False|rejectUnauthorized\s*:\s*false|InsecureSkipVerify\s*:\s*true|--no-check-certificate""", RegexOption.IGNORE_CASE))
     )
 
-    /** 代码围栏提取: ```lang ... ``` */
+    
     private val FENCE = Regex("```[a-zA-Z0-9_+-]*\\s*\\n?([\\s\\S]*?)```")
 
-    /** 单行命令特征(未包裹在代码块里的裸命令) */
+    
     private val LOOSE_CMD = Regex("""^\s*[$#>]?\s*(sudo\s+)?(rm|dd|mkfs|chmod|curl|wget|nc|eval|kill|pkill|crontab)\b.*$""", RegexOption.MULTILINE)
 
-    /**
-     * 扫描文本。
-     * @param minLevel 只报告 >= 此等级的命中
-     * @param maxChars 扫描上限(防超长文本拖慢), 0=不限
-     */
+    
+
+
+
+
     fun scan(text: String, minLevel: Level = Level.MEDIUM, maxChars: Int = 200_000): Result {
         if (text.isBlank()) return Result(emptyList(), null, 0)
         val body = if (maxChars > 0 && text.length > maxChars) text.substring(0, maxChars) else text
 
-        // 只扫代码块 + 裸命令行, 降低误报与开销
+        
         val segments = ArrayList<String>()
         FENCE.findAll(body).forEach { segments.add(it.groupValues[1]) }
         LOOSE_CMD.findAll(body).forEach { segments.add(it.value) }
@@ -135,7 +135,7 @@ object CodeGuard {
             for (rule in RULES) {
                 if (rule.level.ordinal < minLevel.ordinal) continue
                 val m = rule.regex.find(seg) ?: continue
-                if (!seen.add(rule.id)) continue     // 同规则只报一次
+                if (!seen.add(rule.id)) continue     
                 findings.add(Finding(rule.id, rule.level, rule.title, m.value.trim().take(160)))
             }
         }
@@ -143,12 +143,12 @@ object CodeGuard {
         return Result(findings, max, body.length)
     }
 
-    /** 供 UI 显示的摘要 */
+    
     fun summarize(r: Result): String {
         if (!r.hasRisk) return "OK"
         return r.findings.joinToString("\n") { "[${it.level}] ${it.title}\n    ${it.snippet}" }
     }
 
-    /** 规则总数(UI 展示) */
+    
     fun ruleCount(): Int = RULES.size
 }

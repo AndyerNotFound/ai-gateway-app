@@ -1,9 +1,11 @@
 package com.aigateway.app.data
 
-/**
- * ai-gateway 数据模型 —— 与 Node 版 admin API / config.json 字段对齐。
- * Gson 解析: 未知字段忽略, 缺失字段取默认值, 保证健壮。
- */
+import com.google.gson.JsonObject
+
+
+
+
+
 
 data class Instance(
     val name: String = "",
@@ -11,12 +13,15 @@ data class Instance(
     val running: Boolean = false,
     val chCount: Int = 0,
     val tlsOn: Boolean = false,
-    val current: Boolean = false
+    val current: Boolean = false,
+    val pathPrefix: String? = null
 )
 
 data class InstancesResponse(
     val instances: List<Instance> = emptyList(),
-    val current: String = ""
+    val current: String = "",
+    val multi: Boolean = false,
+    val mainPort: Int = 0
 )
 
 data class Proxy(
@@ -41,7 +46,27 @@ data class Channel(
     val insecure: Boolean = false,
     val useResponses: Boolean = false,
     val hasKey: Boolean = false,
-    val keyPrefix: String? = null
+    val keyPrefix: String? = null,
+    val oldName: String? = null   
+)
+
+
+data class ApiKeyEntry(
+    val key: String = "",
+    val name: String = "",
+    val enable: Boolean = true,
+    val quotaTokens: Long = 0,
+    val usedTokens: Long = 0,
+    val models: List<String>? = null,
+    val channels: List<String>? = null,
+    val expiresAt: String = "",
+    val note: String = "",
+    val createdAt: String = ""
+)
+
+data class KeysResponse(
+    val keys: List<ApiKeyEntry> = emptyList(),
+    val gatewayKeySet: Boolean = false
 )
 
 data class Tls(
@@ -72,11 +97,11 @@ data class Record(
 
 data class ThinkingSummary(
     val enable: Boolean = false,
-    val mode: String = "truncate",        // truncate=按段截取开头(零延迟) | summarize=用便宜模型逐段总结
+    val mode: String = "truncate",        
     val maxCharsPerSegment: Int = 80,
-    val summarizeBaseUrl: String = "",    // OpenAI 兼容端点, 如 https://api.deepseek.com 或 http://127.0.0.1:16392
-    val summarizeApiKey: String = "",     // 对应 apiKey(指向另一 gateway 实例时填该实例 gatewayKey)
-    val summarizeModel: String = "",      // 模型名
+    val summarizeBaseUrl: String = "",    
+    val summarizeApiKey: String = "",     
+    val summarizeModel: String = "",      
     val summarizePrompt: String = "用一句话中文概括以下思考片段:",
     val maxSegments: Int = 12
 )
@@ -86,7 +111,7 @@ data class ModelSync(
     val intervalHours: Int = 24
 )
 
-/** OpenAI 扩展端点: enable=对外开放 /v1/responses 与 images/embeddings/audio 等; upstreamResponses=全局默认上游用 Responses API */
+
 data class OpenaiExtras(
     val enable: Boolean = false,
     val upstreamResponses: Boolean = false
@@ -105,6 +130,8 @@ data class GatewayConfig(
     val thinkingSummary: ThinkingSummary = ThinkingSummary(),
     val modelSync: ModelSync = ModelSync(),
     val openaiExtras: OpenaiExtras = OpenaiExtras(),
+    val keyLength: Int? = null,
+    val registration: JsonObject? = null,
     val proxies: Map<String, Proxy> = emptyMap(),
     val channels: List<Channel> = emptyList(),
     val modelMap: Map<String, String> = emptyMap(),
@@ -155,13 +182,13 @@ data class RecordDetail(
     val response: Any? = null
 )
 
-/** 聊天消息(简化, 支持 OpenAI 格式) */
+
 data class ChatMessage(
     val role: String = "user",
     val content: String = ""
 )
 
-/** 后端通用操作结果 */
+
 data class ActionResult(
     val ok: Boolean = false,
     val output: String = "",
@@ -170,7 +197,7 @@ data class ActionResult(
     val error: String? = null
 )
 
-/** 模型列表拉取结果 */
+
 data class ModelsResult(
     val models: List<String> = emptyList(),
     val error: String? = null

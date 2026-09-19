@@ -77,7 +77,7 @@ class ChatFragment : BaseFragment() {
         updateEmpty()
         scrollToBottom()
 
-        // 历史: 过滤掉空占位的 assistant 消息
+        
         val history = adapter.messages.filter { !(it.role == "assistant" && it.content.isBlank()) }
         val instance = app.connectionStore.activeInstance
 
@@ -108,7 +108,7 @@ class ChatFragment : BaseFragment() {
         if (adapter.itemCount > 0) b.chatList.scrollToPosition(adapter.itemCount - 1)
     }
 
-    /** 基类在实例/连接变化时调用 */
+    
     override fun reload() {
         if (_b != null) loadModels()
     }

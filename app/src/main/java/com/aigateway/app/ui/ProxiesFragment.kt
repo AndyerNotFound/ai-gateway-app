@@ -15,7 +15,7 @@ import com.aigateway.app.databinding.FragmentProxiesBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 
-/** 代理配置 —— 管理 config.proxies (渠道通过代理名引用) */
+
 class ProxiesFragment : BaseFragment() {
 
     private var _b: FragmentProxiesBinding? = null
@@ -72,7 +72,7 @@ class ProxiesFragment : BaseFragment() {
         b.emptyHint.visibility = if (empty) View.VISIBLE else View.GONE
     }
 
-    // ---------- 新增/编辑 ----------
+    
 
     private fun showProxyDialog(existingName: String?) {
         val db = DialogProxyBinding.inflate(layoutInflater)
@@ -127,7 +127,7 @@ class ProxiesFragment : BaseFragment() {
             .show()
     }
 
-    /** 整体写回 config.proxies */
+    
     private fun pushProxies(successMsg: String) {
         val backend = backendOrNull() ?: return
         val obj = JsonObject()

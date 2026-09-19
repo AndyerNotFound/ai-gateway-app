@@ -21,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-/** 总览 —— 状态 + 统计 + 最近请求 + 快捷操作 */
+
 class OverviewFragment : BaseFragment() {
 
     private var _b: FragmentOverviewBinding? = null
@@ -34,6 +34,7 @@ class OverviewFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         b.btnRefresh.setOnClickListener { load() }
+        b.btnRouting.setOnClickListener { (activity as? MainActivity)?.showFragment("routing") }
         b.btnConnection.setOnClickListener { (activity as? MainActivity)?.showConnectionDialog() }
         b.btnTheme.setOnClickListener { (activity as? MainActivity)?.showThemeDialogPublic() }
         b.btnAllStats.setOnClickListener { (activity as? MainActivity)?.showFragment("stats") }
@@ -45,9 +46,9 @@ class OverviewFragment : BaseFragment() {
         load()
     }
 
-    /** 运行时间本地秒进 + 定期全量刷新 */
-    private var uptimeBase = 0L          // 上次从后端取到的运行秒数
-    private var uptimeAt = 0L            // 取到的时刻(SystemClock)
+    
+    private var uptimeBase = 0L          
+    private var uptimeAt = 0L            
     private var ticking = false
     private val tickHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private val tick = object : Runnable {
@@ -58,7 +59,7 @@ class OverviewFragment : BaseFragment() {
                 b.textUptime.text = formatUptime(uptimeBase + elapsed)
             }
             refreshTick++
-            // 每 10 秒全量刷新一次统计
+            
             if (refreshTick % 10 == 0) load()
             tickHandler.postDelayed(this, 1000)
         }
@@ -89,7 +90,7 @@ class OverviewFragment : BaseFragment() {
             RunMode.EMBEDDED -> getString(R.string.ov_mode_embedded)
             RunMode.TERMUX -> getString(R.string.ov_mode_remote,
                 app.connectionStore.getCurrentProfile()?.baseUrl ?: getString(R.string.ov_mode_unset))
-            null -> getString(R.string.ov_mode_unset)
+            RunMode.USER, null -> getString(R.string.ov_mode_unset)
         }
         if (backend == null) {
             setStatus(false, getString(R.string.ov_not_connected))
@@ -108,7 +109,7 @@ class OverviewFragment : BaseFragment() {
                 b.recentRequestsContainer.removeAllViews()
                 return@launch
             }
-            // 实例信息
+            
             runCatching {
                 val inst = withContext(Dispatchers.IO) { backend.getInstances() }
                 if (!isAdded || _b == null) return@runCatching
@@ -124,19 +125,19 @@ class OverviewFragment : BaseFragment() {
             }.onFailure {
                 if (isAdded && _b != null) b.textInstance.text = getString(R.string.ov_load_failed, it.message ?: "")
             }
-            // 统计
+            
             val stats = withContext(Dispatchers.IO) {
                 runCatching { backend.getStats(app.connectionStore.activeInstance) }.getOrNull()
             }
             if (!isAdded || _b == null) return@launch
             b.textRequests.text = (stats?.requests ?: 0).toString()
             b.textErrors.text = (stats?.errors ?: 0).toString()
-            // 记录基准, 由 tick 每秒本地累加
+            
             uptimeBase = stats?.uptime ?: 0
             uptimeAt = android.os.SystemClock.elapsedRealtime()
             b.textUptime.text = formatUptime(uptimeBase)
             renderChannelStats(stats?.byChannel ?: emptyMap())
-            // 最近请求(取前 5 条)
+            
             val reqs = withContext(Dispatchers.IO) {
                 runCatching { backend.getRequests(app.connectionStore.activeInstance) }.getOrDefault(emptyList())
             }
@@ -145,7 +146,7 @@ class OverviewFragment : BaseFragment() {
         }
     }
 
-    // ---------- 渲染 ----------
+    
 
     private fun renderChannelStats(byChannel: Map<String, ChannelStat>) {
         b.channelStatsContainer.removeAllViews()

@@ -96,7 +96,7 @@ class StatsFragment : BaseFragment() {
         b.emptyHint.visibility = if (empty) View.VISIBLE else View.GONE
     }
 
-    /** 基类在实例/连接变化时调用 */
+    
     override fun reload() {
         if (_b != null) load()
     }

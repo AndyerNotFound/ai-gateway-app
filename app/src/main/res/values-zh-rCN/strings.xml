@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">AI Gateway</string>
 
-    <!-- 首次设置 -->
+    
     <string name="setup_title">选择运行方式</string>
     <string name="setup_embedded">应用内运行</string>
     <string name="setup_embedded_desc">在 App 内嵌网关后端, 无需 Termux, 开箱即用</string>
@@ -15,7 +15,7 @@
     <string name="setup_skip">暂不连接, 先进入</string>
     <string name="setup_termux_section">Termux 后端</string>
 
-    <!-- 连接 -->
+    
     <string name="connect_title">连接到网关</string>
     <string name="connect_host">网关地址</string>
     <string name="connect_admin_key">管理密码 (adminKey)</string>
@@ -31,7 +31,7 @@
     <string name="connect_need_url">请填写网关地址</string>
     <string name="connect_switched_embedded">已切换到应用内运行</string>
 
-    <!-- 导航 -->
+    
     <string name="nav_overview">总览</string>
     <string name="nav_providers">提供商</string>
     <string name="nav_routing">路由</string>
@@ -43,7 +43,7 @@
     <string name="nav_logs">日志</string>
     <string name="nav_chat">聊天</string>
 
-    <!-- 标题 -->
+    
     <string name="title_overview">总览</string>
     <string name="title_providers">提供商 / 渠道</string>
     <string name="title_routing">路由 / 模型改名</string>
@@ -55,11 +55,11 @@
     <string name="title_logs">日志</string>
     <string name="title_chat">聊天测试</string>
 
-    <!-- 菜单 -->
+    
     <string name="menu_theme">颜色 / 主题</string>
     <string name="menu_connection">连接 / 模式设置</string>
 
-    <!-- 主题设置 -->
+    
     <string name="theme_title">颜色 / 主题</string>
     <string name="theme_mode">深色模式</string>
     <string name="theme_mode_system">跟随系统</string>
@@ -79,7 +79,7 @@
     <string name="theme_language_zh">简体中文</string>
     <string name="theme_applied">设置已生效</string>
 
-    <!-- Termux -->
+    
     <string name="termux_start_backend">启动 Termux 后端</string>
     <string name="termux_install">安装/部署到 Termux</string>
     <string name="termux_not_installed">未检测到 Termux</string>
@@ -94,7 +94,7 @@
     <string name="termux_deploy_ok">已调起 Termux 执行安装</string>
     <string name="termux_deploy_failed">部署失败</string>
 
-    <!-- 总览 -->
+    
     <string name="ov_checking">检测中…</string>
     <string name="ov_connected">已连接</string>
     <string name="ov_connect_failed">连接失败</string>
@@ -118,7 +118,7 @@
     <string name="ov_no_requests">暂无请求记录</string>
     <string name="ov_stats_by_channel">按渠道统计</string>
 
-    <!-- 提供商 -->
+    
     <string name="pv_empty">暂无渠道\n点右下角 + 新增</string>
     <string name="pv_add">新增渠道</string>
     <string name="pv_edit">编辑渠道</string>
@@ -151,12 +151,12 @@
     <string name="pv_no_key">无 key</string>
     <string name="pv_models_count">%1$d 模型</string>
 
-    <!-- 路由 -->
+    
     <string name="rt_hint">客户端请求的模型名按以下规则路由: 渠道 modelMap 精确命中 &gt; models 列表 &gt; 默认渠道 &gt; 第一个渠道。改名请在「提供商」编辑渠道的 modelMap。</string>
     <string name="rt_empty">暂无模型\n(在「提供商」为渠道添加 models / modelMap)</string>
     <string name="rt_no_channel">(无渠道)</string>
 
-    <!-- 密钥 -->
+    
     <string name="keys_gateway_title">网关访问密钥 (gatewayKey)</string>
     <string name="keys_gateway_desc">客户端调用 AI 接口时需携带此 key (Bearer / x-api-key / ?key=)。留空 = 免密。</string>
     <string name="keys_admin_title">管理密码 (adminKey)</string>
@@ -165,7 +165,7 @@
     <string name="keys_warn">⚠ 修改 adminKey 后, 本 App 的连接密码也需同步更新(连接/模式设置)。修改后网关会重启生效。</string>
     <string name="keys_saved">已保存密钥(网关可能重启)</string>
 
-    <!-- 端口 / 实例 -->
+    
     <string name="pt_new">新建实例</string>
     <string name="pt_shutdown_all">全部停止</string>
     <string name="pt_current">当前</string>
@@ -186,7 +186,7 @@
     <string name="pt_create_failed">创建失败: %1$s</string>
     <string name="pt_stopped_all">已停止全部实例</string>
 
-    <!-- 替换 -->
+    
     <string name="rp_hint">对经过网关的文本做正则替换。model 字段与 data:URL 不受影响。规则改动后网关重启生效。</string>
     <string name="rp_out_title">发送方向 (请求替换)</string>
     <string name="rp_inc_title">接收方向 (响应替换)</string>
@@ -206,14 +206,14 @@
     <string name="rp_add_rule">添加%1$s规则</string>
     <string name="rp_edit_rule">编辑%1$s规则</string>
 
-    <!-- 统计 -->
+    
     <string name="st_by_channel">按渠道统计</string>
     <string name="st_empty">暂无统计数据</string>
     <string name="st_refresh">刷新</string>
     <string name="st_channel_detail">请求 %1$d · 输入 %2$d tok · 输出 %3$d tok</string>
     <string name="st_channel_errors">%1$s · 错误 %2$d</string>
 
-    <!-- 请求记录 -->
+    
     <string name="rq_empty">暂无请求记录\n(需在网关开启请求记录)</string>
     <string name="rq_detail_title">请求详情</string>
     <string name="rq_no_body">(该网关未保存请求正文, 或记录已过期)</string>
@@ -221,7 +221,7 @@
     <string name="rq_section_response">━━ 响应 ━━</string>
     <string name="rq_empty_value">(空)</string>
 
-    <!-- 日志 -->
+    
     <string name="lg_lines">行数</string>
     <string name="lg_loading">加载中…</string>
     <string name="lg_empty">(暂无日志)</string>
@@ -229,7 +229,7 @@
     <string name="lg_not_connected">后端未连接</string>
     <string name="lg_load_failed">加载失败: %1$s</string>
 
-    <!-- 聊天 -->
+    
     <string name="ch_model">模型</string>
     <string name="ch_model_hint">选择或输入模型名</string>
     <string name="ch_input_hint">输入消息…</string>
@@ -242,7 +242,7 @@
     <string name="ch_load_models_failed">加载模型失败: %1$s</string>
     <string name="ch_request_failed">请求失败</string>
 
-    <!-- 通用 -->
+    
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
     <string name="save">保存</string>
@@ -259,7 +259,7 @@
     <string name="stop">停止</string>
     <string name="restart">重启</string>
 
-    <!-- 路由页附加 -->
+    
     <string name="rt_model_sync">自动更新模型列表</string>
     <string name="rt_model_sync_desc">定期从上游渠道拉取模型列表</string>
     <string name="rt_sync_interval">间隔 (小时)</string>
@@ -276,7 +276,7 @@
     <string name="rt_table_title">模型路由表</string>
     <string name="rt_saved">已保存 (网关重启生效)</string>
 
-    <!-- 替换页速查表 -->
+    
     <string name="rp_cheat_title">正则速查表</string>
     <string name="rp_cheat_syntax_title">语法</string>
     <string name="rp_cheat_syntax">.        任意字符\n\\d \\w \\s   数字 / 单词字符 / 空白\n[abc]    a b c 之一\n[^abc]   非 a b c\n*  +  ?   0次以上 , 1次以上 , 0或1次\n{2,5}    2 到 5 次\n^  $      文本开头 / 结尾\n(…)      捕获分组\na|b      a 或 b\n\\.       字面小数点 (转义)</string>
@@ -287,7 +287,7 @@
     <string name="rp_cheat_notes_title">注意事项</string>
     <string name="rp_cheat_notes">• model 字段和 data: URL 永不被替换。\n• 发送规则作用于请求文本，接收规则作用于响应文本。\n• 流式响应按片段匹配，跨片段的模式可能匹配不到。\n• 规则改动后网关重启生效。</string>
 
-    <!-- 配置加密 -->
+    
     <string name="menu_config">配置与备份</string>
     <string name="cfg_crypt_title">配置加密</string>
     <string name="cfg_crypt_enable">加密存储配置</string>
@@ -300,7 +300,7 @@
     <string name="cfg_crypt_disabled">已关闭配置加密（明文存储）</string>
     <string name="cfg_crypt_embedded_only">作用于应用内运行模式。Termux 模式请在网关侧用 crypt.js 加密。</string>
 
-    <!-- 导入 / 导出 -->
+    
     <string name="cfg_transfer_title">导入 / 导出配置</string>
     <string name="cfg_export">导出配置</string>
     <string name="cfg_export_desc">把当前实例配置保存到文件</string>
@@ -323,14 +323,14 @@
     <string name="cfg_import_failed">导入失败: %1$s</string>
     <string name="cfg_reencrypted">已用本 App 口令重新加密</string>
 
-    <!-- Termux 附加 -->
+    
     <string name="termux_perm_hint">Termux 拒绝了调用。\n\n请到系统设置 → 应用 → 本应用 → 权限 → 其他权限，开启「在 Termux 环境中运行命令」。\n\n若已开启仍失败，请检查设置页的 Termux 类型（ZeroTermux/官方）是否选对。</string>
     <string name="termux_perm_title">需要授权</string>
     <string name="termux_copy_cmd">复制命令</string>
     <string name="termux_cmd_copied">命令已复制</string>
     <string name="termux_open_anyway">打开 Termux</string>
 
-    <!-- 实例编辑 / TLS -->
+    
     <string name="pt_edit_title">编辑实例</string>
     <string name="pt_create">创建</string>
     <string name="pt_saved">实例已保存 (网关重启生效)</string>
@@ -342,7 +342,7 @@
     <string name="pt_tls_cert">证书文件 (cert.pem)</string>
     <string name="pt_tls_key">私钥文件 (key.pem)</string>
 
-    <!-- 代理 -->
+    
     <string name="nav_proxies">代理</string>
     <string name="title_proxies">代理配置</string>
     <string name="px_hint">在这里定义命名代理，然后在渠道的「代理名」里引用。渠道代理留空即为直连。</string>
@@ -363,9 +363,23 @@
     <string name="px_delete_msg">删除代理「%1$s」吗? 引用它的渠道将改为直连。</string>
     <string name="px_has_auth">带认证</string>
 
-    <!-- 代码拦截 -->
+    
     <string name="menu_security">安全与后台</string>
     <string name="title_security">安全与后台</string>
+    <string name="title_plugins">插件管理</string>
+    <string name="pm_install">安装插件</string>
+    <string name="pm_instance">实例: %1$s</string>
+    <string name="pm_empty">该实例暂无已装插件</string>
+    <string name="pm_no_backend">请先连接网关</string>
+    <string name="pm_enabled">已启用 · 点击禁用</string>
+    <string name="pm_disabled">已禁用 · 点击启用</string>
+    <string name="pm_remove_title">卸载插件</string>
+    <string name="pm_remove_msg">确认卸载 \"%1$s\"?</string>
+    <string name="pm_removed">已卸载</string>
+    <string name="pm_install_title">安装插件</string>
+    <string name="pm_install_hint">输入 .tar.gz 插件包直链URL</string>
+    <string name="pm_installed">安装成功</string>
+    <string name="pm_url_empty">请填写URL</string>
     <string name="gd_title">恶意代码拦截</string>
     <string name="gd_warning">⚠️ 不推荐常规用户开启。扫描会增加延迟，正则匹配可能误报正常代码、也可能漏掉混淆过的代码。它只是辅助提醒，不是安全边界 —— 执行任何代码前请自行审查。</string>
     <string name="gd_enable">扫描 AI 返回内容中的代码</string>
@@ -387,7 +401,7 @@
     <string name="gd_saved">拦截设置已保存</string>
     <string name="gd_applies_embedded">作用于应用内运行模式(跨格式响应)。</string>
 
-    <!-- 后台保活 -->
+    
     <string name="bg_title">后台活动保护</string>
     <string name="bg_desc">让应用内网关在 App 退到后台时保持存活。</string>
     <string name="bg_keepalive">前台服务保活</string>
@@ -410,7 +424,7 @@
     <string name="svc_title">AI Gateway 运行中</string>
     <string name="svc_text">端口 %1$d · %2$d 个渠道</string>
 
-    <!-- 二维码 -->
+    
     <string name="cfg_export_qr">导出为二维码</string>
     <string name="cfg_import_qr_image">从二维码图片导入</string>
     <string name="cfg_import_qr_camera">用相机扫描二维码</string>
@@ -424,7 +438,7 @@
     <string name="cfg_qr_need_camera">扫描需要相机权限</string>
     <string name="cfg_qr_no_camera_app">没有可用的相机应用</string>
 
-    <!-- 请求内容收集 -->
+    
     <string name="rec_title">请求内容收集</string>
     <string name="rec_enable">记录请求 / 响应正文</string>
     <string name="rec_desc">保存完整的请求与响应正文, 使「请求记录」页能查看内容。默认关闭。</string>
@@ -446,7 +460,7 @@
     <string name="ts_sum_prompt">总结提示词</string>
     <string name="ts_sum_warn">总结模式需等完整思考结束再总结,思考阶段会短暂暂停。</string>
 
-    <!-- 实例流量 -->
+    
     <string name="pt_req_count">%1$d 请求</string>
     <string name="pt_err_count">%1$d 错误</string>
     <string name="pt_no_traffic">无流量</string>
@@ -454,4 +468,185 @@
     <string name="termux_variant_label">Termux 类型</string>
     <string name="termux_variant_zero">ZeroTermux</string>
     <string name="termux_variant_official">官方 Termux</string>
+    
+    <string name="menu_cards">卡密</string>
+    <string name="title_cards">卡密管理</string>
+    <string name="cd_hint">多用户 Key: 发卡给他人使用, 支持限额/禁用/过期/模型白名单。目标实例 = 当前选中实例</string>
+    <string name="cd_empty">暂无卡密, 点右下角发卡</string>
+    <string name="cd_add">发卡</string>
+    <string name="cd_copy">复制</string>
+    <string name="cd_toggle">禁用/启用</string>
+    <string name="cd_recharge">充值/重置</string>
+    <string name="cd_copied">已复制完整 Key</string>
+    <string name="cd_unnamed">(无名卡)</string>
+    <string name="cd_state_disabled">已禁用</string>
+    <string name="cd_state_expired">已过期</string>
+    <string name="cd_state_usedup">已用尽</string>
+    <string name="cd_state_active">启用中</string>
+    <string name="cd_usage_fmt">用量 %1$s / %2$s (%3$d%%)</string>
+    <string name="cd_usage_unlimited">用量 %1$s (不限额)</string>
+    <string name="cd_limit_models">限 %1$d 个模型</string>
+    <string name="cd_limit_expires">%1$s 到期</string>
+    <string name="cd_new_title">发新卡 (实例 %1$s)</string>
+    <string name="cd_need_name">名称必填</string>
+    <string name="cd_created">发卡成功</string>
+    <string name="cd_created_msg">完整 Key (随时可在列表复制):\n\n%1$s</string>
+    <string name="cd_disabled_ok">已禁用</string>
+    <string name="cd_enabled_ok">已启用</string>
+    <string name="cd_del_title">删除卡密</string>
+    <string name="cd_del_msg">删除「%1$s」? 该 Key 立即失效, 不可恢复</string>
+    <string name="cd_deleted">已删除</string>
+    <string name="cd_add_quota">追加额度(万 tokens)</string>
+    <string name="cd_reset_usage">重置已用量为 0</string>
+    <string name="cd_recharge_title">充值/重置 「%1$s」</string>
+    <string name="cd_name">名称(给谁用的)</string>
+    <string name="cd_quota">额度(万 tokens)</string>
+    <string name="cd_quota_helper">0 或留空 = 不限量; 100 = 100万 tokens</string>
+    <string name="cd_models">限定模型(逗号分隔)</string>
+    <string name="cd_models_helper">留空 = 全部模型可用</string>
+    <string name="cd_expires">有效期</string>
+    <string name="cd_expires_helper">留空 = 永久; 格式 2026-12-31</string>
+    <string name="cd_note">备注(可选)</string>
+    <string name="fmt_yi">%1$.2f亿</string>
+    <string name="fmt_wan">%1$.1f万</string>
+    
+    <string name="setup_user">我是用户</string>
+    <string name="setup_user_desc">用卡密/账号使用别人部署的网关服务</string>
+    <string name="nav_u_home">首页</string>
+    <string name="nav_u_models">模型广场</string>
+    <string name="nav_u_credits">额度</string>
+    <string name="nav_u_profile">个人</string>
+    <string name="ul_title">登录服务器</string>
+    <string name="ul_server">服务器地址</string>
+    <string name="ul_server_hint">http://域名或IP:端口, 如 http://abc.trycloudflare.com</string>
+    <string name="ul_branch">分支(实例名, 可选)</string>
+    <string name="ul_branch_hint">同一个Key可访问不同分组; 留空=default</string>
+    <string name="ul_by_token">卡密登录</string>
+    <string name="ul_by_account">账密登录</string>
+    <string name="ul_token">卡密</string>
+    <string name="ul_token_hint">管理员发给你的 sk-xxx</string>
+    <string name="ul_uid">UID</string>
+    <string name="ul_password">密码</string>
+    <string name="ul_login">登录</string>
+    <string name="ul_login_ok">登录成功</string>
+    <string name="ul_login_fail">登录失败: %1$s</string>
+    <string name="ul_need_server">请填服务器地址</string>
+    <string name="ul_need_token">请填卡密</string>
+    <string name="ul_no_keys">该账号下没有可用卡密, 请联系管理员发卡</string>
+    <string name="uh_status">服务状态</string>
+    <string name="uh_loading">加载中…</string>
+    <string name="uh_offline">无法连接: %1$s</string>
+    <string name="uh_info_fmt">版本 %1$s · 已运行 %2$s</string>
+    <string name="uh_success_rate">渠道成功率</string>
+    <string name="uh_probe_hint">管理员未开启成功率探测(默认关闭, 减少消耗)</string>
+    <string name="uh_probe_row">%1$s · 成功率 %2$s (%3$d 次)</string>
+    <string name="uh_branch">分支切换</string>
+    <string name="uh_branch_hint">同一 Key 可通过不同分支名访问不同分组(实例)</string>
+    <string name="uh_branch_name">分支名(留空=default)</string>
+    <string name="uh_branch_saved">已保存, 正在刷新</string>
+    <string name="uh_plugins">插件</string>
+    <string name="uh_plugins_loading">加载中…</string>
+    <string name="uh_plugins_empty">该站点暂无可用插件</string>
+    <string name="um_count">共 %1$d 个可用模型</string>
+    <string name="um_refresh">刷新</string>
+    <string name="um_empty">暂无模型或加载失败</string>
+    <string name="uc_remaining">剩余额度</string>
+    <string name="uc_admin">管理员账户</string>
+    <string name="uc_unlimited">不限额度</string>
+    <string name="uc_no_expire">永久有效</string>
+    <string name="uc_all_models">全部模型可用</string>
+    <string name="uc_models_limited">限定模型: %1$s</string>
+    <string name="up_token_user">卡密用户</string>
+    <string name="up_branch_fmt">当前分支: %1$s</string>
+    <string name="up_switch">切换账号/服务器</string>
+    <string name="up_admin_mode">切换到管理端</string>
+    <string name="disclaimer_short">⚠️ 本项目仅供实验学习, 请勿用于真实交易业务!</string>
+    <string name="disclaimer_full">⚠️ 免责声明: 本项目(ai-gateway)仅供实验与学习用途, 不构成任何商业服务承诺。请勿用于真实交易业务! 使用本平台产生的任何费用、数据安全与服务稳定性问题, 由部署者与使用者自行承担。</string>
+    
+    <string name="ul_by_register">注册</string>
+    <string name="ul_reg_uid">用户名 (UID)</string>
+    <string name="ul_reg_uid_hint">3-32位 字母/数字/下划线, 注册后自动发一张卡</string>
+    <string name="ul_reg_password2">确认密码</string>
+    <string name="ul_reg_email">邮箱</string>
+    <string name="ul_reg_closed">该服务器未开放注册</string>
+    <string name="ul_reg_hint_fmt">密码至少 %1$d 位</string>
+    <string name="ul_reg_query_fail">查询注册状态失败: %1$s</string>
+    <string name="ul_reg_fill_all">请填完整</string>
+    <string name="ul_reg_pw_mismatch">两次密码不一致</string>
+    <string name="ul_reg_ok">注册成功! 已自动登录</string>
+    <string name="ul_reg_fail">注册失败: %1$s</string>
+    <string name="um_search">搜索模型</string>
+    <string name="um_sort">排序</string>
+    <string name="um_sort_asc">名称 A→Z</string>
+    <string name="um_sort_desc">名称 Z→A</string>
+    <string name="um_group_all">全部(%1$d)</string>
+    <string name="menu_panel">面板</string>
+    <string name="title_panel">完整面板</string>
+    <string name="panel_loading">加载管理面板…</string>
+    
+    <string name="nav_settings">设置</string>
+    <string name="st_panel_sub">完整管理面板(网页)</string>
+    <string name="st_secondauth">第二验证</string>
+    <string name="st_secondauth_sub">管理端登录需第二密码或TOTP</string>
+    <string name="st_tunnel">公网隧道</string>
+    <string name="st_tunnel_sub">cloudflared 免费临时域名</string>
+    <string name="st_reg">注册与卡密</string>
+    <string name="st_reg_sub">开放注册/卡密长度/人机验证</string>
+    <string name="st_theme_sub">深色/浅色/配色/语言</string>
+    <string name="st_conn_sub">远程网关地址与密码</string>
+    <string name="st_security_sub">代码拦截/后台保活</string>
+    <string name="st_config_sub">配置加密/备份/导入导出</string>
+    <string name="st_about">关于与免责</string>
+    
+    <string name="sa_second_key">第二密码</string>
+    <string name="sa_save_second">保存第二密码</string>
+    <string name="sa_totp">TOTP 动态验证</string>
+    <string name="sa_totp_enable">启用 TOTP</string>
+    <string name="sa_totp_disable">停用</string>
+    <string name="sa_totp_secret_fmt">密钥(请立即保存到验证器): %1$s</string>
+    <string name="sa_totp_save_warn">TOTP 已启用, 请立即保存密钥!</string>
+    <string name="sa_status_fmt">管理密码 %1$s · 第二密码 %2$s · TOTP %3$s</string>
+    
+    <string name="tn_title">公网隧道 (cloudflared)</string>
+    <string name="tn_desc">免费临时域名, 让外网访问本网关。手机/内网部署适用。</string>
+    <string name="tn_start">启动隧道</string>
+    <string name="tn_stop">停止隧道</string>
+    <string name="tn_running">运行中</string>
+    <string name="tn_starting">启动中, 等待域名分配…</string>
+    <string name="tn_stopped">未启动</string>
+    <string name="tn_warn">⚠️ 隧道开启=公网可访问! 务必先设网关密码和管理密码</string>
+    
+    <string name="rg_key_length">卡密长度(8-128)</string>
+    <string name="rg_key_length_helper">不含 sk- 前缀, 默认 24</string>
+    <string name="rg_enable">开放注册</string>
+    <string name="rg_enable_hint">公网中转站才开; 注册自动发卡</string>
+    <string name="rg_default_quota">注册默认额度(万 tokens)</string>
+    <string name="rg_default_quota_helper">0 = 不限量</string>
+    <string name="rg_min_pw">密码最小长度</string>
+    <string name="rg_captcha">人机验证</string>
+    <string name="rg_captcha_none">无</string>
+    <string name="rg_captcha_turnstile">Cloudflare Turnstile(免费)</string>
+    <string name="rg_captcha_sitekey">Turnstile Site Key(公开)</string>
+    <string name="rg_captcha_secret">Turnstile Secret Key(保密)</string>
+    <string name="rg_captcha_hint">cloudflare.com → Turnstile → Add site 免费获取; App 注册页暂不支持 Turnstile 渲染, 开启后用户请在浏览器注册</string>
+    
+    <string name="us_title">用户管理</string>
+    <string name="us_empty">暂无用户</string>
+    <string name="us_new">新建用户</string>
+    <string name="us_uid">UID(留空自动生成)</string>
+    <string name="us_password">密码</string>
+    <string name="us_keys_fmt">卡密 %1$d 张</string>
+    <string name="us_reset_pw">重置密码</string>
+    <string name="cd_bind_user">绑定用户(可选)</string>
+    <string name="cd_bind_user_hint">绑定后该用户账密登录可见此卡</string>
+    <string name="us_sub">账密登录账号, 发卡可绑定</string>
+    <string name="pv_balance">查余额</string>
+    <string name="pv_balance_loading">查询 %1$s 余额…</string>
+    <string name="pv_balance_title">余额 · %1$s</string>
+    <string name="up_my_keys">我的卡密</string>
+    <string name="up_edit_profile">编辑资料</string>
+    <string name="up_nickname">昵称</string>
+    <string name="up_avatar">头像 URL</string>
+    <string name="uk_main">主卡</string>
+    <string name="uk_new">自助发卡</string>
 </resources>

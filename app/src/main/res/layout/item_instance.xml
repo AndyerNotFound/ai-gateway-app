@@ -22,7 +22,7 @@
             android:layout_height="8dp"
             android:background="@drawable/bg_dot" />
 
-        <!-- 名称 + 信息(两行紧凑) -->
+        
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:ellipsize="end"
+                    android:textColor="?attr/colorOnSurface"
                     android:textAppearance="?attr/textAppearanceTitleSmall" />
 
                 <TextView
@@ -65,7 +66,7 @@
                 android:textColor="?attr/colorOnSurfaceVariant" />
         </LinearLayout>
 
-        <!-- 操作图标(紧凑排列) -->
+        
         <ImageButton
             android:id="@+id/btnStart"
             android:layout_width="36dp"

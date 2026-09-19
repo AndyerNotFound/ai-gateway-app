@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">AI Gateway</string>
 
-    <!-- Setup -->
+    
     <string name="setup_title">Choose how to run</string>
     <string name="setup_embedded">Run in app</string>
     <string name="setup_embedded_desc">Built-in gateway backend, no Termux needed</string>
@@ -15,7 +15,7 @@
     <string name="setup_skip">Skip for now</string>
     <string name="setup_termux_section">Termux backend</string>
 
-    <!-- Connection -->
+    
     <string name="connect_title">Connect to gateway</string>
     <string name="connect_host">Gateway address</string>
     <string name="connect_admin_key">Admin password (adminKey)</string>
@@ -31,7 +31,7 @@
     <string name="connect_need_url">Please enter the gateway address</string>
     <string name="connect_switched_embedded">Switched to in-app mode</string>
 
-    <!-- Navigation -->
+    
     <string name="nav_overview">Overview</string>
     <string name="nav_providers">Providers</string>
     <string name="nav_routing">Routing</string>
@@ -43,7 +43,7 @@
     <string name="nav_logs">Logs</string>
     <string name="nav_chat">Chat</string>
 
-    <!-- Titles -->
+    
     <string name="title_overview">Overview</string>
     <string name="title_providers">Providers / Channels</string>
     <string name="title_routing">Routing / Model mapping</string>
@@ -55,11 +55,11 @@
     <string name="title_logs">Logs</string>
     <string name="title_chat">Chat test</string>
 
-    <!-- Menu -->
+    
     <string name="menu_theme">Colors / Theme</string>
     <string name="menu_connection">Connection / Mode</string>
 
-    <!-- Theme dialog -->
+    
     <string name="theme_title">Colors / Theme</string>
     <string name="theme_mode">Dark mode</string>
     <string name="theme_mode_system">Follow system</string>
@@ -79,7 +79,7 @@
     <string name="theme_language_zh">简体中文</string>
     <string name="theme_applied">Settings applied</string>
 
-    <!-- Termux -->
+    
     <string name="termux_start_backend">Start Termux backend</string>
     <string name="termux_install">Install / deploy to Termux</string>
     <string name="termux_not_installed">Termux not detected</string>
@@ -94,7 +94,7 @@
     <string name="termux_deploy_ok">Termux launched to run installer</string>
     <string name="termux_deploy_failed">Deploy failed</string>
 
-    <!-- Overview -->
+    
     <string name="ov_checking">Checking…</string>
     <string name="ov_connected">Connected</string>
     <string name="ov_connect_failed">Connection failed</string>
@@ -118,7 +118,7 @@
     <string name="ov_no_requests">No request records yet</string>
     <string name="ov_stats_by_channel">By channel</string>
 
-    <!-- Providers -->
+    
     <string name="pv_empty">No channels\nTap + to add one</string>
     <string name="pv_add">Add channel</string>
     <string name="pv_edit">Edit channel</string>
@@ -151,12 +151,12 @@
     <string name="pv_no_key">no key</string>
     <string name="pv_models_count">%1$d models</string>
 
-    <!-- Routing -->
+    
     <string name="rt_hint">Requested model names are routed by: channel modelMap &gt; models list &gt; default channel &gt; first channel. Edit mappings in Providers.</string>
     <string name="rt_empty">No models\n(add models / modelMap to a channel in Providers)</string>
     <string name="rt_no_channel">(no channel)</string>
 
-    <!-- Keys -->
+    
     <string name="keys_gateway_title">Gateway access key (gatewayKey)</string>
     <string name="keys_gateway_desc">Clients must send this key when calling AI endpoints (Bearer / x-api-key / ?key=). Empty = no auth.</string>
     <string name="keys_admin_title">Admin password (adminKey)</string>
@@ -165,7 +165,7 @@
     <string name="keys_warn">⚠ After changing adminKey, update this app\'s connection password too (Connection / Mode). The gateway restarts to apply.</string>
     <string name="keys_saved">Keys saved (gateway may restart)</string>
 
-    <!-- Ports / instances -->
+    
     <string name="pt_new">New instance</string>
     <string name="pt_shutdown_all">Stop all</string>
     <string name="pt_current">current</string>
@@ -186,7 +186,7 @@
     <string name="pt_create_failed">Create failed: %1$s</string>
     <string name="pt_stopped_all">All instances stopped</string>
 
-    <!-- Replace -->
+    
     <string name="rp_hint">Apply regex replacements to text passing through the gateway. The model field and data: URLs are untouched. Restart the gateway to apply.</string>
     <string name="rp_out_title">Outgoing (request)</string>
     <string name="rp_inc_title">Incoming (response)</string>
@@ -206,14 +206,14 @@
     <string name="rp_add_rule">Add %1$s rule</string>
     <string name="rp_edit_rule">Edit %1$s rule</string>
 
-    <!-- Stats -->
+    
     <string name="st_by_channel">By channel</string>
     <string name="st_empty">No statistics yet</string>
     <string name="st_refresh">Refresh</string>
     <string name="st_channel_detail">requests %1$d · in %2$d tok · out %3$d tok</string>
     <string name="st_channel_errors">%1$s · errors %2$d</string>
 
-    <!-- Requests -->
+    
     <string name="rq_empty">No request records\n(enable request recording on the gateway)</string>
     <string name="rq_detail_title">Request detail</string>
     <string name="rq_no_body">(this gateway did not store request bodies, or the record expired)</string>
@@ -221,7 +221,7 @@
     <string name="rq_section_response">━━ Response ━━</string>
     <string name="rq_empty_value">(empty)</string>
 
-    <!-- Logs -->
+    
     <string name="lg_lines">Lines</string>
     <string name="lg_loading">Loading…</string>
     <string name="lg_empty">(no logs)</string>
@@ -229,7 +229,7 @@
     <string name="lg_not_connected">Backend not connected</string>
     <string name="lg_load_failed">Load failed: %1$s</string>
 
-    <!-- Chat -->
+    
     <string name="ch_model">Model</string>
     <string name="ch_model_hint">Pick or type a model name</string>
     <string name="ch_input_hint">Type a message…</string>
@@ -242,7 +242,7 @@
     <string name="ch_load_models_failed">Failed to load models: %1$s</string>
     <string name="ch_request_failed">Request failed</string>
 
-    <!-- Common -->
+    
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
@@ -259,7 +259,7 @@
     <string name="stop">Stop</string>
     <string name="restart">Restart</string>
 
-    <!-- Routing extras -->
+    
     <string name="rt_model_sync">Auto-update model lists</string>
     <string name="rt_model_sync_desc">Periodically fetch model lists from upstream channels</string>
     <string name="rt_sync_interval">Interval (hours)</string>
@@ -276,7 +276,7 @@
     <string name="rt_table_title">Model routing table</string>
     <string name="rt_saved">Saved (gateway restarts to apply)</string>
 
-    <!-- Replace cheatsheet -->
+    
     <string name="rp_cheat_title">Regex cheatsheet</string>
     <string name="rp_cheat_syntax_title">Syntax</string>
     <string name="rp_cheat_syntax">.        any char\n\\d \\w \\s   digit / word / whitespace\n[abc]    one of a b c\n[^abc]   not a b c\n*  +  ?   0+ , 1+ , 0 or 1\n{2,5}    2 to 5 times\n^  $      start / end of text\n(…)      capture group\na|b      a or b\n\\.       literal dot (escape)</string>
@@ -287,7 +287,7 @@
     <string name="rp_cheat_notes_title">Notes</string>
     <string name="rp_cheat_notes">• The model field and data: URLs are never touched.\n• Outgoing rules apply to request text, incoming to response text.\n• Streaming responses are matched per chunk, so patterns spanning chunks may not match.\n• Rules take effect after the gateway restarts.</string>
 
-    <!-- Config encryption -->
+    
     <string name="menu_config">Config &amp; backup</string>
     <string name="cfg_crypt_title">Config encryption</string>
     <string name="cfg_crypt_enable">Encrypt stored config</string>
@@ -300,7 +300,7 @@
     <string name="cfg_crypt_disabled">Config encryption disabled (stored as plain text)</string>
     <string name="cfg_crypt_embedded_only">Applies to in-app mode. For Termux mode use crypt.js on the gateway side.</string>
 
-    <!-- Import / export -->
+    
     <string name="cfg_transfer_title">Import / export config</string>
     <string name="cfg_export">Export config</string>
     <string name="cfg_export_desc">Save the current instance config to a file</string>
@@ -323,14 +323,14 @@
     <string name="cfg_import_failed">Import failed: %1$s</string>
     <string name="cfg_reencrypted">Re-encrypted with this app\'s password</string>
 
-    <!-- Termux extras -->
+    
     <string name="termux_perm_hint">Termux refused the call.\n\nPlease grant the permission in system settings: Settings → Apps → this app → Permissions → Additional permissions → enable "Run commands in Termux environment".\n\nIf already granted but still failing, check the Termux variant setting (ZeroTermux / Official) on the setup page.</string>
     <string name="termux_perm_title">Authorization needed</string>
     <string name="termux_copy_cmd">Copy command</string>
     <string name="termux_cmd_copied">Command copied</string>
     <string name="termux_open_anyway">Open Termux</string>
 
-    <!-- Instance edit / TLS -->
+    
     <string name="pt_edit_title">Edit instance</string>
     <string name="pt_create">Create</string>
     <string name="pt_saved">Instance saved (gateway restarts)</string>
@@ -342,7 +342,7 @@
     <string name="pt_tls_cert">Certificate file (cert.pem)</string>
     <string name="pt_tls_key">Private key file (key.pem)</string>
 
-    <!-- Proxies -->
+    
     <string name="nav_proxies">Proxies</string>
     <string name="title_proxies">Proxy configuration</string>
     <string name="px_hint">Define named proxies here, then reference them by name in a channel\'s Proxy field. Leave a channel\'s proxy empty for a direct connection.</string>
@@ -363,9 +363,23 @@
     <string name="px_delete_msg">Delete proxy \"%1$s\"? Channels referencing it will fall back to a direct connection.</string>
     <string name="px_has_auth">auth</string>
 
-    <!-- Code guard -->
+    
     <string name="menu_security">Security &amp; background</string>
     <string name="title_security">Security &amp; background</string>
+    <string name="title_plugins">Plugin Management</string>
+    <string name="pm_install">Install Plugin</string>
+    <string name="pm_instance">Instance: %1$s</string>
+    <string name="pm_empty">No installed plugins on this instance</string>
+    <string name="pm_no_backend">Connect gateway first</string>
+    <string name="pm_enabled">Enabled · tap to disable</string>
+    <string name="pm_disabled">Disabled · tap to enable</string>
+    <string name="pm_remove_title">Uninstall Plugin</string>
+    <string name="pm_remove_msg">Uninstall \"%1$s\"?</string>
+    <string name="pm_removed">Uninstalled</string>
+    <string name="pm_install_title">Install Plugin</string>
+    <string name="pm_install_hint">Enter the .tar.gz plugin package direct URL</string>
+    <string name="pm_installed">Installed successfully</string>
+    <string name="pm_url_empty">URL is required</string>
     <string name="gd_title">Malicious code interception</string>
     <string name="gd_warning">⚠️ Not recommended for typical users. Scanning adds latency, and pattern matching can flag safe code (false positives) or miss obfuscated code (false negatives). It is a reminder, not a security boundary — always review code before running it.</string>
     <string name="gd_enable">Scan code in AI responses</string>
@@ -387,7 +401,7 @@
     <string name="gd_saved">Interception settings saved</string>
     <string name="gd_applies_embedded">Applies to in-app mode (cross-format responses).</string>
 
-    <!-- Background keep-alive -->
+    
     <string name="bg_title">Background activity protection</string>
     <string name="bg_desc">Keeps the in-app gateway alive when the app is in the background.</string>
     <string name="bg_keepalive">Foreground service keep-alive</string>
@@ -410,7 +424,7 @@
     <string name="svc_title">AI Gateway is running</string>
     <string name="svc_text">Port %1$d · %2$d channels</string>
 
-    <!-- QR -->
+    
     <string name="cfg_export_qr">Export as QR code</string>
     <string name="cfg_import_qr_image">Import from QR image</string>
     <string name="cfg_import_qr_camera">Scan QR with camera</string>
@@ -424,7 +438,7 @@
     <string name="cfg_qr_need_camera">Camera permission is required to scan</string>
     <string name="cfg_qr_no_camera_app">No camera app available</string>
 
-    <!-- Request recording -->
+    
     <string name="rec_title">Request content recording</string>
     <string name="rec_enable">Record request / response bodies</string>
     <string name="rec_desc">Stores full request and response bodies so the Requests page can show them. Off by default.</string>
@@ -446,7 +460,7 @@
     <string name="ts_sum_prompt">Summarize prompt</string>
     <string name="ts_sum_warn">Summarize mode waits for the full thinking to finish before summarizing, so the thinking stage will pause briefly.</string>
 
-    <!-- Instance traffic -->
+    
     <string name="pt_req_count">%1$d req</string>
     <string name="pt_err_count">%1$d err</string>
     <string name="pt_no_traffic">no traffic</string>
@@ -454,4 +468,185 @@
     <string name="termux_variant_label">Termux variant</string>
     <string name="termux_variant_zero">ZeroTermux</string>
     <string name="termux_variant_official">Official Termux</string>
+    
+    <string name="menu_cards">Key Cards</string>
+    <string name="title_cards">Key Cards</string>
+    <string name="cd_hint">Multi-user keys: issue cards with quota/disable/expiry/model whitelist. Target = active instance</string>
+    <string name="cd_empty">No key cards yet. Tap + to issue one</string>
+    <string name="cd_add">Issue</string>
+    <string name="cd_copy">Copy</string>
+    <string name="cd_toggle">Disable/Enable</string>
+    <string name="cd_recharge">Recharge/Reset</string>
+    <string name="cd_copied">Full key copied</string>
+    <string name="cd_unnamed">(unnamed)</string>
+    <string name="cd_state_disabled">Disabled</string>
+    <string name="cd_state_expired">Expired</string>
+    <string name="cd_state_usedup">Used up</string>
+    <string name="cd_state_active">Active</string>
+    <string name="cd_usage_fmt">Usage %1$s / %2$s (%3$d%%)</string>
+    <string name="cd_usage_unlimited">Usage %1$s (unlimited)</string>
+    <string name="cd_limit_models">%1$d models only</string>
+    <string name="cd_limit_expires">expires %1$s</string>
+    <string name="cd_new_title">Issue Key Card (instance %1$s)</string>
+    <string name="cd_need_name">Name required</string>
+    <string name="cd_created">Key Issued</string>
+    <string name="cd_created_msg">Full key (can copy from list anytime):\n\n%1$s</string>
+    <string name="cd_disabled_ok">Disabled</string>
+    <string name="cd_enabled_ok">Enabled</string>
+    <string name="cd_del_title">Delete Key Card</string>
+    <string name="cd_del_msg">Delete "%1$s"? The key stops working immediately</string>
+    <string name="cd_deleted">Deleted</string>
+    <string name="cd_add_quota">Add quota (10k tokens)</string>
+    <string name="cd_reset_usage">Reset used tokens to 0</string>
+    <string name="cd_recharge_title">Recharge/Reset "%1$s"</string>
+    <string name="cd_name">Name (who is this for)</string>
+    <string name="cd_quota">Quota (10k tokens)</string>
+    <string name="cd_quota_helper">0 or blank = unlimited; 100 = 1M tokens</string>
+    <string name="cd_models">Allowed models (comma separated)</string>
+    <string name="cd_models_helper">Blank = all models allowed</string>
+    <string name="cd_expires">Expiry</string>
+    <string name="cd_expires_helper">Blank = never; format 2026-12-31</string>
+    <string name="cd_note">Note (optional)</string>
+    <string name="fmt_yi">%1$.1fB</string>
+    <string name="fmt_wan">%1$.1fW</string>
+    
+    <string name="setup_user">I\'m a User</string>
+    <string name="setup_user_desc">Use a gateway deployed by someone else with a key card / account</string>
+    <string name="nav_u_home">Home</string>
+    <string name="nav_u_models">Models</string>
+    <string name="nav_u_credits">Credits</string>
+    <string name="nav_u_profile">Profile</string>
+    <string name="ul_title">Login to Server</string>
+    <string name="ul_server">Server address</string>
+    <string name="ul_server_hint">http://domain-or-IP:port, e.g. http://abc.trycloudflare.com</string>
+    <string name="ul_branch">Branch (instance, optional)</string>
+    <string name="ul_branch_hint">Same key accesses different groups; blank = default</string>
+    <string name="ul_by_token">Key Card</string>
+    <string name="ul_by_account">Account</string>
+    <string name="ul_token">Key card</string>
+    <string name="ul_token_hint">The sk-xxx given by your admin</string>
+    <string name="ul_uid">UID</string>
+    <string name="ul_password">Password</string>
+    <string name="ul_login">Login</string>
+    <string name="ul_login_ok">Logged in</string>
+    <string name="ul_login_fail">Login failed: %1$s</string>
+    <string name="ul_need_server">Server address required</string>
+    <string name="ul_need_token">Key card required</string>
+    <string name="ul_no_keys">No key cards under this account. Ask your admin.</string>
+    <string name="uh_status">Service Status</string>
+    <string name="uh_loading">Loading…</string>
+    <string name="uh_offline">Unreachable: %1$s</string>
+    <string name="uh_info_fmt">Version %1$s · Uptime %2$s</string>
+    <string name="uh_success_rate">Channel Success Rate</string>
+    <string name="uh_probe_hint">Admin has not enabled probing (off by default to save tokens)</string>
+    <string name="uh_probe_row">%1$s · success %2$s (%3$d probes)</string>
+    <string name="uh_branch">Switch Branch</string>
+    <string name="uh_branch_hint">Same key can access different groups (instances) via branch name</string>
+    <string name="uh_branch_name">Branch name (blank = default)</string>
+    <string name="uh_branch_saved">Saved, refreshing</string>
+    <string name="uh_plugins">Plugins</string>
+    <string name="uh_plugins_loading">Loading…</string>
+    <string name="uh_plugins_empty">No plugins available on this server</string>
+    <string name="um_count">%1$d models available</string>
+    <string name="um_refresh">Refresh</string>
+    <string name="um_empty">No models or failed to load</string>
+    <string name="uc_remaining">Remaining</string>
+    <string name="uc_admin">Admin Account</string>
+    <string name="uc_unlimited">Unlimited</string>
+    <string name="uc_no_expire">Never expires</string>
+    <string name="uc_all_models">All models available</string>
+    <string name="uc_models_limited">Limited to: %1$s</string>
+    <string name="up_token_user">Key Card User</string>
+    <string name="up_branch_fmt">Branch: %1$s</string>
+    <string name="up_switch">Switch Account / Server</string>
+    <string name="up_admin_mode">Switch to Admin Mode</string>
+    <string name="disclaimer_short">⚠️ Experimental project. Not for real commercial use!</string>
+    <string name="disclaimer_full">⚠️ Disclaimer: ai-gateway is for experimentation and learning only, with no commercial service guarantee. Do NOT use for real transactions! Any cost, data security or service stability issues are the responsibility of the deployer and users.</string>
+    
+    <string name="ul_by_register">Register</string>
+    <string name="ul_reg_uid">Username (UID)</string>
+    <string name="ul_reg_uid_hint">3-32 chars (letter/digit/underscore). A key card is auto-issued</string>
+    <string name="ul_reg_password2">Confirm password</string>
+    <string name="ul_reg_email">Email</string>
+    <string name="ul_reg_closed">Registration is closed on this server</string>
+    <string name="ul_reg_hint_fmt">Password at least %1$d chars</string>
+    <string name="ul_reg_query_fail">Failed to query registration: %1$s</string>
+    <string name="ul_reg_fill_all">Fill all fields</string>
+    <string name="ul_reg_pw_mismatch">Passwords do not match</string>
+    <string name="ul_reg_ok">Registered! Logged in automatically</string>
+    <string name="ul_reg_fail">Register failed: %1$s</string>
+    <string name="um_search">Search models</string>
+    <string name="um_sort">Sort</string>
+    <string name="um_sort_asc">Name A→Z</string>
+    <string name="um_sort_desc">Name Z→A</string>
+    <string name="um_group_all">All(%1$d)</string>
+    <string name="menu_panel">Panel</string>
+    <string name="title_panel">Full Panel</string>
+    <string name="panel_loading">Loading admin panel…</string>
+    
+    <string name="nav_settings">Settings</string>
+    <string name="st_panel_sub">Full admin panel (web)</string>
+    <string name="st_secondauth">Second Auth</string>
+    <string name="st_secondauth_sub">Admin login requires 2nd key or TOTP</string>
+    <string name="st_tunnel">Public Tunnel</string>
+    <string name="st_tunnel_sub">cloudflared free temporary domain</string>
+    <string name="st_reg">Registration &amp; Keys</string>
+    <string name="st_reg_sub">Open registration / key length / captcha</string>
+    <string name="st_theme_sub">Dark/light/palette/language</string>
+    <string name="st_conn_sub">Remote gateway URL &amp; key</string>
+    <string name="st_security_sub">Code guard / background keepalive</string>
+    <string name="st_config_sub">Config encryption / backup / transfer</string>
+    <string name="st_about">About &amp; Disclaimer</string>
+    
+    <string name="sa_second_key">Second Key</string>
+    <string name="sa_save_second">Save Second Key</string>
+    <string name="sa_totp">TOTP</string>
+    <string name="sa_totp_enable">Enable TOTP</string>
+    <string name="sa_totp_disable">Disable</string>
+    <string name="sa_totp_secret_fmt">Secret (save to authenticator now): %1$s</string>
+    <string name="sa_totp_save_warn">TOTP enabled. Save the secret now!</string>
+    <string name="sa_status_fmt">Admin key %1$s · 2nd key %2$s · TOTP %3$s</string>
+    
+    <string name="tn_title">Public Tunnel (cloudflared)</string>
+    <string name="tn_desc">Free temporary domain exposing this gateway. For phone/LAN deployment.</string>
+    <string name="tn_start">Start Tunnel</string>
+    <string name="tn_stop">Stop Tunnel</string>
+    <string name="tn_running">Running</string>
+    <string name="tn_starting">Starting, waiting for domain…</string>
+    <string name="tn_stopped">Stopped</string>
+    <string name="tn_warn">⚠️ Tunnel = public access! Set gateway key and admin key first</string>
+    
+    <string name="rg_key_length">Key card length (8-128)</string>
+    <string name="rg_key_length_helper">Excluding sk- prefix, default 24</string>
+    <string name="rg_enable">Open Registration</string>
+    <string name="rg_enable_hint">For public relay only; auto-issues a card on register</string>
+    <string name="rg_default_quota">Default quota (10k tokens)</string>
+    <string name="rg_default_quota_helper">0 = unlimited</string>
+    <string name="rg_min_pw">Min password length</string>
+    <string name="rg_captcha">Captcha</string>
+    <string name="rg_captcha_none">None</string>
+    <string name="rg_captcha_turnstile">Cloudflare Turnstile (free)</string>
+    <string name="rg_captcha_sitekey">Turnstile Site Key (public)</string>
+    <string name="rg_captcha_secret">Turnstile Secret Key (secret)</string>
+    <string name="rg_captcha_hint">Get free keys at cloudflare.com → Turnstile → Add site. App register page cannot render Turnstile yet; use browser when enabled</string>
+    
+    <string name="us_title">User Management</string>
+    <string name="us_empty">No users</string>
+    <string name="us_new">New User</string>
+    <string name="us_uid">UID (blank = auto)</string>
+    <string name="us_password">Password</string>
+    <string name="us_keys_fmt">%1$d key cards</string>
+    <string name="us_reset_pw">Reset Password</string>
+    <string name="cd_bind_user">Bind to user (optional)</string>
+    <string name="cd_bind_user_hint">User sees this card after account login</string>
+    <string name="us_sub">Account-login users; cards can bind to them</string>
+    <string name="pv_balance">Balance</string>
+    <string name="pv_balance_loading">Querying %1$s balance…</string>
+    <string name="pv_balance_title">Balance · %1$s</string>
+    <string name="up_my_keys">My Key Cards</string>
+    <string name="up_edit_profile">Edit Profile</string>
+    <string name="up_nickname">Nickname</string>
+    <string name="up_avatar">Avatar URL</string>
+    <string name="uk_main">Main</string>
+    <string name="uk_new">Issue Key</string>
 </resources>

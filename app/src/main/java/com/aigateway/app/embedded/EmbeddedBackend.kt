@@ -9,10 +9,10 @@ import kotlinx.coroutines.withContext
 import okhttp3.Request
 import java.io.File
 
-/**
- * 内嵌后端 —— 直接调 GatewayEngine(不走 HTTP), 实现管理面板全部操作。
- * 单实例(固定 "default")。
- */
+
+
+
+
 class EmbeddedBackend(
     private val engine: GatewayEngine,
     private val server: EmbeddedHttpServer
@@ -25,7 +25,7 @@ class EmbeddedBackend(
 
     override suspend fun testConnection(): Boolean = true
 
-    // ---------- 实例 ----------
+    
 
     override suspend fun getInstances(): InstancesResponse {
         val c = engine.getConfig()
@@ -47,7 +47,7 @@ class EmbeddedBackend(
                 }
                 gson.fromJson(curJson, GatewayConfig::class.java)
             }
-            // 端口变更需重启服务器
+            
             restartServerIfNeeded()
             ActionResult(ok = true, restarting = true)
         }.getOrElse { ActionResult(ok = false, error = it.message) }
@@ -66,16 +66,21 @@ class EmbeddedBackend(
     override suspend fun deleteInstance(name: String): ActionResult =
         ActionResult(ok = false, error = "应用内运行模式不可删除实例")
 
-    // ---------- 渠道 ----------
+    override suspend fun renameInstance(name: String, newName: String): ActionResult =
+        ActionResult(ok = false, error = "应用内运行模式仅支持单个实例, 无需改名")
+
+    
 
     override suspend fun saveChannel(inst: String, channel: Channel): ActionResult = withContext(Dispatchers.IO) {
         runCatching {
             engine.updateConfig { cur ->
                 val list = cur.channels.toMutableList()
                 if (channel.default) list.replaceAll { it.copy(default = false) }
-                val idx = list.indexOfFirst { it.name == channel.name }
-                // apiKey 为空且已存在 → 保留原 key
-                val merged = if (idx >= 0 && channel.apiKey.isBlank()) channel.copy(apiKey = list[idx].apiKey) else channel
+                
+                val oldIdx = if (!channel.oldName.isNullOrBlank() && channel.oldName != channel.name)
+                    list.indexOfFirst { it.name == channel.oldName } else -1
+                val idx = if (oldIdx >= 0) oldIdx else list.indexOfFirst { it.name == channel.name }
+                val merged = if (idx >= 0 && channel.apiKey.isBlank()) channel.copy(apiKey = list[idx].apiKey, oldName = null) else channel.copy(oldName = null)
                 if (idx >= 0) list[idx] = merged else list.add(merged)
                 cur.copy(channels = list)
             }
@@ -125,7 +130,7 @@ class EmbeddedBackend(
     override suspend fun syncModels(inst: String): ActionResult =
         ActionResult(ok = false, error = "内嵌模式暂不支持同步, 请用「获取模型列表」手动添加")
 
-    // ---------- 统计/日志/请求 ----------
+    
 
     override suspend fun getStats(name: String): Stats = engine.getStats()
 
@@ -136,7 +141,7 @@ class EmbeddedBackend(
     override suspend fun getRecordBody(name: String, id: String): RecordBody =
         RecordBody(ok = false, record = null)
 
-    // ---------- 控制 ----------
+    
 
     override suspend fun action(name: String, cmd: String): ActionResult = withContext(Dispatchers.IO) {
         when (cmd) {
@@ -153,7 +158,7 @@ class EmbeddedBackend(
         return ActionResult(ok = true, output = "内嵌网关已停止")
     }
 
-    // ---------- 聊天 ----------
+    
 
     override suspend fun chat(
         instance: String,

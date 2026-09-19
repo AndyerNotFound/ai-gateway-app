@@ -5,16 +5,16 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 
-/**
- * canonical 中枢转换器 —— 移植自 gateway.js。
- * canonical 请求: {model, stream, messages[], temperature?, top_p?, max_tokens?, stop?, tools?, tool_choice?}
- * canonical 消息: {role, content(string|blocks[]), name?, tool_call_id?, tool_calls?}
- *   block: {type:'text',text} | {type:'image_url',image_url:{url}}
- * canonical 响应: {text, reasoning?, tool_calls?, finish_reason, usage:{input,output}}
- */
+
+
+
+
+
+
+
 object Converters {
 
-    // ================= 入站: 客户端格式 → canonical =================
+    
 
     fun openaiToCanonical(body: JsonObject, urlModel: String?): JsonObject {
         val messages = JsonArray()
@@ -104,7 +104,7 @@ object Converters {
 
     fun claudeToCanonical(body: JsonObject, urlModel: String?): JsonObject {
         val messages = JsonArray()
-        // system
+        
         body.get("system")?.let { sysEl ->
             val s = if (sysEl.isStr) sysEl.asString
             else if (sysEl.isJsonArray) sysEl.asJsonArray
@@ -283,7 +283,7 @@ object Converters {
             .putEl("tool_choice", toolChoice)
     }
 
-    // ================= 出站: canonical → 上游格式 body =================
+    
 
     fun canonicalToOpenAIBody(c: JsonObject, addUsage: Boolean = true): JsonObject {
         val messages = JsonArray()
@@ -509,7 +509,7 @@ object Converters {
         return body
     }
 
-    // ================= 上游响应 → canonical 响应 =================
+    
 
     fun openaiRespToCanonical(j: JsonObject): JsonObject = cresp(
         text = run {
@@ -585,7 +585,7 @@ object Converters {
         return o
     }
 
-    // ================= canonical 响应 → 客户端格式 =================
+    
 
     fun canonicalToOpenAIResp(cresp: JsonObject, model: String): JsonObject {
         val text = cresp.str("text") ?: ""
@@ -655,9 +655,9 @@ object Converters {
         )
     }
 
-    // ================= OpenAI Responses API =================
+    
 
-    /** Responses content 数组 → 通用 content (纯文本简化为字符串) */
+    
     private fun responsesContentToContent(content: JsonElement?): JsonElement {
         if (content == null || content.isJsonNull) return je("")
         if (content.isJsonPrimitive) return content
@@ -689,7 +689,7 @@ object Converters {
         return je("")
     }
 
-    /** 客户端 Responses 请求 → canonical */
+    
     fun responsesToCanonical(body: JsonObject, urlModel: String?): JsonObject {
         val messages = JsonArray()
         val instructions = body.get("instructions")
@@ -734,7 +734,7 @@ object Converters {
                         messages.add(jsonObj("role" to je(role), "content" to responsesContentToContent(item.get("content"))))
                     }
                 }
-                else -> {} // reasoning 等忽略
+                else -> {} 
             }
         }
         var tools: JsonElement? = null
@@ -772,7 +772,7 @@ object Converters {
             .putEl("tool_choice", toolChoice)
     }
 
-    /** canonical → 上游 Responses 请求体 (system → instructions, messages → input items) */
+    
     fun canonicalToResponsesBody(c: JsonObject): JsonObject {
         val instructions = StringBuilder()
         val input = JsonArray()
@@ -870,7 +870,7 @@ object Converters {
         return body
     }
 
-    /** 上游 Responses 非流式响应 → canonical 响应 (output 数组解析) */
+    
     fun responsesRespToCanonical(j: JsonObject): JsonObject {
         val text = StringBuilder()
         val reasoning = StringBuilder()
@@ -908,7 +908,7 @@ object Converters {
         return out
     }
 
-    /** canonical 响应 → 客户端 Responses 非流式响应 */
+    
     fun canonicalToResponsesResp(cresp: JsonObject, model: String): JsonObject {
         val output = JsonArray()
         cresp.str("reasoning")?.let {
@@ -945,7 +945,7 @@ object Converters {
         )
     }
 
-    /** 跨格式伪流式: 构造客户端 Responses 格式的 SSE chunk */
+    
     fun buildResponsesStreamChunks(cresp: JsonObject, model: String): List<String> {
         val out = ArrayList<String>()
         val respId = randId("resp_")
@@ -1012,7 +1012,7 @@ object Converters {
     fun geminiFinish(reason: String?): String =
         mapOf("stop" to "STOP", "length" to "MAX_TOKENS", "tool_calls" to "STOP", "content_filter" to "SAFETY")[reason] ?: "STOP"
 
-    // ---- 内部辅助 ----
+    
     private fun JsonElement.asJsonArrayOrNull(): JsonArray? = if (isJsonArray) asJsonArray else null
 
     val TO_CANON: Map<String, (JsonObject, String?) -> JsonObject> = mapOf(

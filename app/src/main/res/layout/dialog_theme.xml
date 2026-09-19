@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- 深色模式 -->
+        
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             android:layout_marginVertical="12dp"
             android:background="?attr/colorOutlineVariant" />
 
-        <!-- 动态取色 -->
+        
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switchDynamic"
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:textAppearance="?attr/textAppearanceBodySmall"
             android:textColor="?attr/colorOnSurfaceVariant" />
 
-        <!-- 配色方案 -->
+        
         <TextView
             android:id="@+id/textPaletteTitle"
             android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
             android:layout_marginVertical="12dp"
             android:background="?attr/colorOutlineVariant" />
 
-        <!-- 语言 -->
+        
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

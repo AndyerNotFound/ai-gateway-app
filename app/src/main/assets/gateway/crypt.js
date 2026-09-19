@@ -1,11 +1,11 @@
-#!/usr/bin/env node
-/* crypt.js - ai-gateway 配置文件加密工具 (零依赖, Node 内置 crypto)
- * 加密方案: AES-256-GCM, 密钥由口令经 scrypt(N=16384,r=8,p=1) 派生, 每文件独立随机 salt+iv
- * 文件格式: "AGWENC1:" + base64(salt[16] | iv[12] | authTag[16] | ciphertext)
- * 口令来源: 环境变量 AGW_CRYPT_PASS 或密钥文件 <ai-gateway>/.agwkey (enable 写入, 权限600)
- * 用法: status / enable [--pass 口令|--genkey] / disable [--keep-key] / changepass [--old 旧 --pass 新] / test
- * 注意: 忘记口令 = 加密配置无法恢复; enable/disable 后需重启各实例
- */
+
+
+
+
+
+
+
+
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -65,9 +65,9 @@ function getRl() {
   _rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    terminal: !!process.stdin.isTTY   // 终端模式: 退格可用; 管道模式: 逐行读取
+    terminal: !!process.stdin.isTTY   
   });
-  _rl._writeToOutput = s => { if (!muted) process.stdout.write(s); };  // 静音, 不回显口令
+  _rl._writeToOutput = s => { if (!muted) process.stdout.write(s); };  
   _rl.on('line', l => { _lines.push(String(l).trim()); _mmFlush(); });
   _rl.on('close', () => { while (_pending.length) { const cb = _pending.shift(); muted = false; cb(''); } });
   _rl.on('SIGINT', () => { process.stdout.write('\n(已取消)\n'); process.exit(130); });
