@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 保留明文: 内嵌引擎 / cloudflared 回源 / 局域网旧服务。
+     信任 system + user —— ai-gateway 私有 CA 装在"用户"证书库, targetSdk>=24 默认不认, 必须在此显式放行。 -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

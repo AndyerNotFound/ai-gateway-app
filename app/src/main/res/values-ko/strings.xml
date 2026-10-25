@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Gateway</string>
+
+    <!-- 초기 설정 -->
+    <string name="setup_title">실행 방식 선택</string>
+    <string name="setup_embedded">앱 내 실행</string>
+    <string name="setup_embedded_desc">내장 게이트웨이 백엔드, Termux 불필요, 바로 사용 가능</string>
+    <string name="setup_termux">Termux에 연결하여 실행</string>
+    <string name="setup_termux_desc">Termux에서 실행 중인 ai-gateway 백엔드에 연결(로컬 또는 LAN)</string>
+    <string name="setup_connect_section">게이트웨이 연결(선택)</string>
+    <string name="setup_quick_local">로컬</string>
+    <string name="setup_quick_lan">LAN</string>
+    <string name="setup_connect_enter">연결 후 진입</string>
+    <string name="setup_skip">지금은 건너뛰기</string>
+    <string name="setup_termux_section">Termux 백엔드</string>
+
+    <!-- 연결 -->
+    <string name="connect_title">게이트웨이에 연결</string>
+    <string name="connect_host">게이트웨이 주소</string>
+    <string name="connect_admin_key">관리 비밀번호 (adminKey)</string>
+    <string name="connect_button">연결</string>
+    <string name="connecting">연결 중…</string>
+    <string name="connect_mode">실행 모드</string>
+    <string name="connect_mode_remote">Termux / 원격 게이트웨이에 연결</string>
+    <string name="connect_hint_nokey">adminKey 비움 = 비밀번호 없이 연결(게이트웨이에 관리 비밀번호 미설정 시)</string>
+    <string name="connect_reselect_mode">모드 다시 선택</string>
+    <string name="connect_saved">연결 저장됨</string>
+    <string name="connect_ok">연결됨</string>
+    <string name="connect_failed_entered">연결 실패. 그래도 진입함(연결 설정에서 재시도)</string>
+    <string name="connect_need_url">게이트웨이 주소를 입력하세요</string>
+    <string name="connect_switched_embedded">앱 내 모드로 전환됨</string>
+
+    <!-- 내비게이션 -->
+    <string name="nav_overview">개요</string>
+    <string name="nav_providers">공급자</string>
+    <string name="nav_routing">라우팅</string>
+    <string name="nav_keys">키</string>
+    <string name="nav_ports">인스턴스</string>
+    <string name="nav_replace">치환</string>
+    <string name="nav_stats">통계</string>
+    <string name="nav_requests">요청</string>
+    <string name="nav_logs">로그</string>
+    <string name="nav_chat">채팅</string>
+
+    <!-- 제목 -->
+    <string name="title_overview">개요</string>
+    <string name="title_providers">공급자 / 채널</string>
+    <string name="title_routing">라우팅 / 모델 매핑</string>
+    <string name="title_keys">키</string>
+    <string name="title_ports">포트 / 인스턴스</string>
+    <string name="title_replace">텍스트 치환</string>
+    <string name="title_stats">통계</string>
+    <string name="title_requests">요청 기록</string>
+    <string name="title_logs">로그</string>
+    <string name="title_chat">채팅 테스트</string>
+
+    <!-- 메뉴 -->
+    <string name="menu_theme">색상 / 테마</string>
+    <string name="menu_connection">연결 / 모드 설정</string>
+
+    <!-- 테마 설정 -->
+    <string name="theme_title">색상 / 테마</string>
+    <string name="theme_mode">다크 모드</string>
+    <string name="theme_mode_system">시스템 따르기</string>
+    <string name="theme_mode_light">라이트</string>
+    <string name="theme_mode_dark">다크</string>
+    <string name="theme_dynamic">Material You 다이내믹 컬러</string>
+    <string name="theme_dynamic_desc">Android 12+ 전용, 배경화면에서 색상 추출</string>
+    <string name="theme_palette">색상 팔레트</string>
+    <string name="theme_palette_purple">보라(기본)</string>
+    <string name="theme_palette_blue">파랑</string>
+    <string name="theme_palette_green">초록</string>
+    <string name="theme_palette_orange">주황</string>
+    <string name="theme_palette_red">빨강</string>
+    <string name="theme_language">언어</string>
+    <string name="theme_language_system">시스템 따르기</string>
+    <string name="theme_language_en">English</string>
+    <string name="theme_language_zh">简体中文</string>
+    <string name="theme_language_zh_tw">繁體中文</string>
+    <string name="theme_language_ja">日本語</string>
+    <string name="theme_language_ko">한국어</string>
+    <string name="theme_language_ru">Русский</string>
+    <string name="theme_language_es">Español</string>
+    <string name="theme_language_fr">Français</string>
+    <string name="theme_language_eo">Esperanto</string>
+    <string name="theme_applied">설정이 적용되었습니다</string>
+
+    <!-- Termux -->
+    <string name="termux_start_backend">Termux 백엔드 시작</string>
+    <string name="termux_install">Termux에 설치/배포</string>
+    <string name="termux_not_installed">Termux가 감지되지 않음</string>
+    <string name="termux_detected">✓ Termux 감지됨</string>
+    <string name="termux_not_detected">⚠ Termux 미감지(설치 후 배포 기능 사용 가능)</string>
+    <string name="termux_open">Termux 열기</string>
+    <string name="termux_cmd_sent">시작 명령을 Termux에 전송했습니다</string>
+    <string name="termux_cmd_failed">실패: Termux 미감지 또는 외부 호출 미허용</string>
+    <string name="termux_deploy_title">Termux에 설치/배포</string>
+    <string name="termux_deploy_msg">게이트웨이 백엔드 파일을 Download/ai-gateway-deploy/에 기록하고, Termux에서 설치 스크립트를 실행합니다(Node.js 설치, ~/ai-gateway 배치, 시작).\n\ntermux-setup-storage 실행 및 allow-external-apps=true 필요.</string>
+    <string name="termux_deploy_start">시작</string>
+    <string name="termux_deploy_ok">Termux를 실행해 설치를 진행했습니다</string>
+    <string name="termux_deploy_failed">배포 실패</string>
+
+    <!-- 개요 -->
+    <string name="ov_checking">확인 중…</string>
+    <string name="ov_connected">연결됨</string>
+    <string name="ov_connect_failed">연결 실패</string>
+    <string name="ov_not_connected">연결 안 됨</string>
+    <string name="ov_total_requests">총 요청</string>
+    <string name="ov_errors">오류</string>
+    <string name="ov_uptime">가동 시간</string>
+    <string name="ov_current_instance">현재 인스턴스</string>
+    <string name="ov_loading">불러오는 중…</string>
+    <string name="ov_quick_actions">빠른 작업</string>
+    <string name="ov_refresh">상태 새로고침</string>
+    <string name="ov_configure_first">먼저「연결 / 모드 설정」에서 구성하세요</string>
+    <string name="ov_unreachable">게이트웨이에 접근할 수 없습니다. 주소/비밀번호 확인 또는 백엔드를 시작하세요</string>
+    <string name="ov_no_instance">인스턴스 없음</string>
+    <string name="ov_load_failed">불러오기 실패: %1$s</string>
+    <string name="ov_mode_embedded">앱 내 모드 · 내장 게이트웨이</string>
+    <string name="ov_mode_remote">원격 게이트웨이 · %1$s</string>
+    <string name="ov_mode_unset">미설정</string>
+    <string name="ov_recent_requests">최근 요청</string>
+    <string name="ov_view_all">전체 보기</string>
+    <string name="ov_no_requests">요청 기록이 아직 없습니다</string>
+    <string name="ov_stats_by_channel">채널별</string>
+
+    <!-- 공급자 -->
+    <string name="pv_empty">채널이 없습니다\n우하단 + 로 추가</string>
+    <string name="pv_add">채널 추가</string>
+    <string name="pv_edit">채널 편집</string>
+    <string name="pv_fetch_models">모델 가져오기</string>
+    <string name="pv_edit_btn">편집</string>
+    <string name="pv_delete_btn">삭제</string>
+    <string name="pv_name">채널 이름 *</string>
+    <string name="pv_type">업스트림 형식 *</string>
+    <string name="pv_base_url">Base URL * (예: https://api.deepseek.com)</string>
+    <string name="pv_api_key">API Key (비우면 유지)</string>
+    <string name="pv_proxy">프록시 이름(선택)</string>
+    <string name="pv_models">모델 목록(쉼표 구분)</string>
+    <string name="pv_model_map">모델 매핑(한 줄에: 공개명=업스트림명)</string>
+    <string name="pv_delay">요청 지연 (ms, 0=끔)</string>
+    <string name="pv_default">기본 채널로 설정(폴백)</string>
+    <string name="pv_use_responses">업스트림이 Responses API 사용 (/v1/responses, openai 전용)</string>
+    <string name="pv_insecure">인증서 검증 건너뛰기(자체 서명)</string>
+    <string name="pv_need_fields">이름과 Base URL은 필수입니다</string>
+    <string name="pv_bad_type">형식은 openai / gemini / claude 중 하나여야 합니다</string>
+    <string name="pv_saved">채널 저장됨</string>
+    <string name="pv_save_failed">저장 실패: %1$s</string>
+    <string name="pv_delete_title">채널 삭제</string>
+    <string name="pv_delete_msg">채널「%1$s」을(를) 삭제할까요?</string>
+    <string name="pv_deleted">삭제됨</string>
+    <string name="pv_fetching">업스트림에서 모델 가져오는 중…</string>
+    <string name="pv_models_title">업스트림 모델 (%1$d)</string>
+    <string name="pv_fill_models">models에 채우고 저장</string>
+    <string name="pv_no_models">모델이 반환되지 않았습니다: %1$s</string>
+    <string name="pv_filled">%1$d개 모델을 채웠습니다</string>
+    <string name="pv_no_key">키 없음</string>
+    <string name="pv_models_count">%1$d 모델</string>
+
+    <!-- 라우팅 -->
+    <string name="rt_hint">요청된 모델명은 다음 순서로 라우팅됩니다: 채널 modelMap &gt; models 목록 &gt; 기본 채널 &gt; 첫 채널. 매핑은「공급자」에서 편집하세요.</string>
+    <string name="rt_empty">모델이 없습니다\n(「공급자」에서 채널에 models / modelMap 추가)</string>
+    <string name="rt_no_channel">(채널 없음)</string>
+
+    <!-- 키 -->
+    <string name="keys_gateway_title">게이트웨이 접근 키 (gatewayKey)</string>
+    <string name="keys_gateway_desc">AI 엔드포인트 호출 시 이 키가 필요합니다 (Bearer / x-api-key / ?key=). 비움 = 인증 없음.</string>
+    <string name="keys_admin_title">관리 비밀번호 (adminKey)</string>
+    <string name="keys_admin_desc">관리 패널 / admin API 인증. 비움 = 비밀번호 없는 관리(LAN 개인용).</string>
+    <string name="keys_save">키 저장</string>
+    <string name="keys_warn">⚠ adminKey 변경 후 이 앱의 연결 비밀번호도 갱신하세요(연결/모드 설정). 게이트웨이가 재시작되어 적용됩니다.</string>
+    <string name="keys_saved">키 저장됨(게이트웨이 재시작 가능)</string>
+
+    <!-- 포트 / 인스턴스 -->
+    <string name="pt_new">새 인스턴스</string>
+    <string name="pt_shutdown_all">모두 중지</string>
+    <string name="pt_current">현재</string>
+    <string name="pt_running">실행 중</string>
+    <string name="pt_stopped">중지됨</string>
+    <string name="pt_channels">%1$d 채널</string>
+    <string name="pt_delete_title">인스턴스 삭제</string>
+    <string name="pt_delete_msg">인스턴스「%1$s」을(를) 삭제할까요? 설정 파일도 삭제됩니다.</string>
+    <string name="pt_shutdown_title">모든 인스턴스 중지</string>
+    <string name="pt_shutdown_msg">실행 중인 모든 게이트웨이 인스턴스를 중지할까요?</string>
+    <string name="pt_new_title">새 인스턴스</string>
+    <string name="pt_inst_name">인스턴스 이름 * (영문/숫자/하이픈)</string>
+    <string name="pt_inst_port">포트 * (예: 16390)</string>
+    <string name="pt_inst_key">adminKey(선택)</string>
+    <string name="pt_need_valid">유효한 이름과 포트를 입력하세요</string>
+    <string name="pt_created">인스턴스「%1$s」생성됨</string>
+    <string name="pt_switched">인스턴스「%1$s」(으)로 전환됨</string>
+    <string name="pt_create_failed">생성 실패: %1$s</string>
+    <string name="pt_stopped_all">모든 인스턴스 중지됨</string>
+
+    <!-- 치환 -->
+    <string name="rp_hint">게이트웨이를 통과하는 텍스트에 정규식 치환을 적용합니다. model 필드와 data: URL은 대상 아님. 적용하려면 게이트웨이 재시작.</string>
+    <string name="rp_out_title">송신 방향(요청 치환)</string>
+    <string name="rp_inc_title">수신 방향(응답 치환)</string>
+    <string name="rp_add_out">송신 규칙 추가</string>
+    <string name="rp_add_inc">수신 규칙 추가</string>
+    <string name="rp_save">치환 규칙 저장</string>
+    <string name="rp_regex">정규식 *</string>
+    <string name="rp_to">바꿀 내용(비움=매치 삭제)</string>
+    <string name="rp_ci">대소문자 무시 (ci)</string>
+    <string name="rp_empty_rules">(%1$s 규칙 없음)</string>
+    <string name="rp_delete_match">(매치 삭제)</string>
+    <string name="rp_need_regex">정규식은 비울 수 없습니다</string>
+    <string name="rp_bad_regex">잘못된 정규식: %1$s</string>
+    <string name="rp_saved">치환 규칙 저장됨(재시작 시 적용)</string>
+    <string name="rp_dir_out">송신</string>
+    <string name="rp_dir_inc">수신</string>
+    <string name="rp_add_rule">%1$s 규칙 추가</string>
+    <string name="rp_edit_rule">%1$s 규칙 편집</string>
+
+    <!-- 통계 -->
+    <string name="st_by_channel">채널별</string>
+    <string name="st_empty">통계 데이터가 아직 없습니다</string>
+    <string name="st_refresh">새로고침</string>
+    <string name="st_channel_detail">요청 %1$d · 입력 %2$d tok · 출력 %3$d tok</string>
+    <string name="st_channel_errors">%1$s · 오류 %2$d</string>
+
+    <!-- 요청 기록 -->
+    <string name="rq_empty">요청 기록 없음\n(게이트웨이에서 기록 활성화 필요)</string>
+    <string name="rq_detail_title">요청 상세</string>
+    <string name="rq_no_body">(이 게이트웨이는 요청 본문을 저장하지 않았거나 기록이 만료됨)</string>
+    <string name="rq_section_request">━━ 요청 ━━</string>
+    <string name="rq_section_response">━━ 응답 ━━</string>
+    <string name="rq_empty_value">(빈 값)</string>
+
+    <!-- 로그 -->
+    <string name="lg_lines">줄 수</string>
+    <string name="lg_loading">불러오는 중…</string>
+    <string name="lg_empty">(로그 없음)</string>
+    <string name="lg_copied">로그 복사됨</string>
+    <string name="lg_not_connected">백엔드 미연결</string>
+    <string name="lg_load_failed">불러오기 실패: %1$s</string>
+
+    <!-- 채팅 -->
+    <string name="ch_model">모델</string>
+    <string name="ch_model_hint">모델명 선택 또는 입력</string>
+    <string name="ch_input_hint">메시지 입력…</string>
+    <string name="ch_empty">모델을 선택하고 게이트웨이 테스트를 시작하세요</string>
+    <string name="ch_need_model">먼저 모델명을 선택/입력하세요</string>
+    <string name="ch_no_backend">백엔드 미연결</string>
+    <string name="ch_you">나</string>
+    <string name="ch_ai">AI</string>
+    <string name="ch_error">[오류] %1$s</string>
+    <string name="ch_load_models_failed">모델 불러오기 실패: %1$s</string>
+    <string name="ch_request_failed">요청 실패</string>
+
+    <!-- 공통 -->
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="save">저장</string>
+    <string name="delete">삭제</string>
+    <string name="close">닫기</string>
+    <string name="refresh">새로고침</string>
+    <string name="load_failed">불러오기 실패: %1$s</string>
+    <string name="op_failed">작업 실패: %1$s</string>
+    <string name="no_backend_hint">백엔드 미연결. 먼저 연결을 설정하세요</string>
+    <string name="delete_failed">삭제 실패: %1$s</string>
+    <string name="copy">복사</string>
+    <string name="send">보내기</string>
+    <string name="start">시작</string>
+    <string name="stop">중지</string>
+    <string name="restart">재시작</string>
+
+    <!-- 라우팅 추가 -->
+    <string name="rt_model_sync">모델 목록 자동 갱신</string>
+    <string name="rt_model_sync_desc">업스트림 채널에서 주기적으로 모델 목록 가져오기</string>
+    <string name="rt_sync_interval">간격(시간)</string>
+    <string name="rt_sync_now">지금 동기화</string>
+    <string name="rt_syncing">모델 목록 동기화 중…</string>
+    <string name="rt_sync_done">동기화 완료</string>
+    <string name="rt_redact">개인정보 데이터 필터</string>
+    <string name="rt_oe_enable">OpenAI 확장 엔드포인트 (Responses / Images / Embeddings…)</string>
+    <string name="rt_oe_enable_desc">/v1/responses, /v1/images/generations, /v1/embeddings, /v1/audio/speech, /v1/completions, /v1/moderations 공개. OpenAI 채널의 업스트림 Responses API 사용도 허용. 적용하려면 인스턴스 재시작.</string>
+    <string name="rt_oe_upstream">OpenAI 업스트림 기본으로 Responses API 사용 (/v1/responses)</string>
+    <string name="rt_oe_upstream_desc">전역 기본값. 채널별「업스트림이 Responses API 사용」으로 재정의 가능. 끄면 업스트림은 /v1/chat/completions 유지.</string>
+    <string name="rt_redact_desc">전달 전 요청 내 API 키 / token을 ***로 치환(sk-, ghp_, AKIA, AIza, Bearer 등)</string>
+    <string name="rt_redact_extra">추가 패턴(한 줄에 정규식 하나)</string>
+    <string name="rt_table_title">모델 라우팅 표</string>
+    <string name="rt_saved">저장됨(게이트웨이 재시작 시 적용)</string>
+
+    <!-- 치환 치트시트 -->
+    <string name="rp_cheat_title">정규식 치트시트</string>
+    <string name="rp_cheat_syntax_title">구문</string>
+    <string name="rp_cheat_syntax">.        임의의 문자\n\\d \\w \\s   숫자 / 단어 문자 / 공백\n[abc]    a b c 중 하나\n[^abc]   a b c 제외\n*  +  ?   0회 이상 , 1회 이상 , 0 또는 1회\n{2,5}    2~5회\n^  $      시작 / 끝\n(…)      캡처 그룹\na|b      a 또는 b\n\\.       리터럴 점(이스케이프)</string>
+    <string name="rp_cheat_replace_title">치환 기호</string>
+    <string name="rp_cheat_replace">$1 $2    그룹 1 / 2\n$0       전체 매치\n(비움)   매치 삭제\n\\$       리터럴 달러 기호</string>
+    <string name="rp_cheat_examples_title">실용 예제</string>
+    <string name="rp_cheat_examples">1. 이메일 마스킹\n   정규식: [\\w.]+@[\\w.]+\n   치환: ***\n\n2. 어순 교환\n   정규식: (\\w+) (\\w+)\n   치환: $2 $1\n\n3. 줄 끝 공백 제거\n   정규식: [ \\t]+$\n   치환: (비움)\n\n4. 단어 치환(대소문자 무시는 ci 켜기)\n   정규식: chatgpt\n   치환: AI\n\n5. 빈 줄 압축\n   정규식: \\n{3,}\n   치환: \n\n</string>
+    <string name="rp_cheat_notes_title">주의 사항</string>
+    <string name="rp_cheat_notes">• model 필드와 data: URL은 절대 치환되지 않습니다.\n• 송신 규칙은 요청 텍스트에, 수신 규칙은 응답 텍스트에 적용됩니다.\n• 스트리밍 응답은 청크 단위로 매칭되므로 청크에 걸친 패턴은 매칭되지 않을 수 있습니다.\n• 규칙은 게이트웨이 재시작 후 적용됩니다.</string>
+
+    <!-- 설정 암호화 -->
+    <string name="menu_config">설정 및 백업</string>
+    <string name="cfg_crypt_title">설정 암호화</string>
+    <string name="cfg_crypt_enable">저장 설정 암호화</string>
+    <string name="cfg_crypt_desc">앱 내 설정 파일을 AES-256-GCM으로 암호화(게이트웨이 AGWENC1 형식 호환)</string>
+    <string name="cfg_crypt_pass">암호화 비밀번호</string>
+    <string name="cfg_crypt_pass_confirm">비밀번호 확인</string>
+    <string name="cfg_crypt_mismatch">비밀번호가 일치하지 않습니다</string>
+    <string name="cfg_crypt_need_pass">암호화 활성화에는 비밀번호가 필요합니다</string>
+    <string name="cfg_crypt_enabled">설정 암호화 활성화됨</string>
+    <string name="cfg_crypt_disabled">설정 암호화 비활성화됨(평문 저장)</string>
+    <string name="cfg_crypt_embedded_only">앱 내 모드에 적용. Termux 모드는 게이트웨이 측 crypt.js를 사용하세요.</string>
+
+    <!-- 가져오기 / 내보내기 -->
+    <string name="cfg_transfer_title">설정 가져오기 / 내보내기</string>
+    <string name="cfg_export">설정 내보내기</string>
+    <string name="cfg_export_desc">현재 인스턴스 설정을 파일로 저장</string>
+    <string name="cfg_export_encrypt">내보낼 파일 암호화</string>
+    <string name="cfg_export_pass">내보내기 비밀번호(비움=평문)</string>
+    <string name="cfg_exported">설정 내보냄</string>
+    <string name="cfg_export_failed">내보내기 실패: %1$s</string>
+    <string name="cfg_import">설정 가져오기</string>
+    <string name="cfg_import_desc">설정 파일 읽기. 암호화 파일은 원본 비밀번호 필요</string>
+    <string name="cfg_import_pass_title">원본 파일 비밀번호</string>
+    <string name="cfg_import_pass_hint">비밀번호(암호화 안 됐으면 비움)</string>
+    <string name="cfg_import_encrypted_hint">이 파일은 암호화되어 있습니다(AGWENC1). 암호화에 사용한 비밀번호를 입력하세요.</string>
+    <string name="cfg_import_wrong_pass">비밀번호 오류 또는 데이터 손상: %1$s</string>
+    <string name="cfg_import_invalid">유효한 설정이 아닙니다: %1$s</string>
+    <string name="cfg_import_confirm_title">가져오기 확인</string>
+    <string name="cfg_import_confirm_msg">%1$d개 채널을 가져오고 현재 인스턴스 설정을 덮어쓸까요?\n\n원본: %2$s\n이 앱의 비밀번호로 재암호화됩니다.</string>
+    <string name="cfg_import_src_enc">암호화 파일</string>
+    <string name="cfg_import_src_plain">평문 파일</string>
+    <string name="cfg_imported">설정 가져옴(%1$d 채널)</string>
+    <string name="cfg_import_failed">가져오기 실패: %1$s</string>
+    <string name="cfg_reencrypted">이 앱의 비밀번호로 재암호화됨</string>
+
+    <!-- Termux 추가 -->
+    <string name="termux_perm_hint">Termux가 호출을 거부했습니다.\n\n시스템 설정 → 앱 → 이 앱 → 권한 → 기타 권한에서「Termux 환경에서 명령 실행」을 켜세요.\n\n켰는데도 실패하면 설정 페이지의 Termux 종류(ZeroTermux/공식)를 확인하세요.</string>
+    <string name="termux_perm_title">권한 필요</string>
+    <string name="termux_copy_cmd">명령 복사</string>
+    <string name="termux_cmd_copied">명령 복사됨</string>
+    <string name="termux_open_anyway">Termux 열기</string>
+
+    <!-- 인스턴스 편집 / TLS -->
+    <string name="pt_edit_title">인스턴스 편집</string>
+    <string name="pt_create">생성</string>
+    <string name="pt_saved">인스턴스 저장됨(게이트웨이 재시작)</string>
+    <string name="pt_inst_host">수신 주소 (0.0.0.0 = LAN 접근 허용)</string>
+    <string name="pt_tls_enable">TLS (HTTPS) 암호화</string>
+    <string name="pt_tls_desc">인증서로 HTTPS 제공. 인증서/개인키 파일은 게이트웨이 측에 있어야 합니다.</string>
+    <string name="pt_tls_port">HTTPS 포트(비움 = HTTP와 동일, HTTPS 전용)</string>
+    <string name="pt_tls_port_hint">다른 포트를 지정하면 HTTP와 HTTPS를 동시에 제공할 수 있습니다.</string>
+    <string name="pt_tls_cert">인증서 파일 (cert.pem)</string>
+    <string name="pt_tls_key">개인키 파일 (key.pem)</string>
+
+    <!-- 프록시 -->
+    <string name="nav_proxies">프록시</string>
+    <string name="title_proxies">프록시 설정</string>
+    <string name="px_hint">여기서 이름 있는 프록시를 정의하고, 채널의「프록시 이름」에서 참조합니다. 채널의 프록시를 비우면 직접 연결.</string>
+    <string name="px_empty">프록시 없음\n+ 로 추가</string>
+    <string name="px_add">프록시 추가</string>
+    <string name="px_edit">프록시 편집</string>
+    <string name="px_name">프록시 이름 * (채널에서 참조)</string>
+    <string name="px_type">유형 *</string>
+    <string name="px_host">호스트 * (예: 127.0.0.1)</string>
+    <string name="px_port">포트 * (예: 7890)</string>
+    <string name="px_user">사용자 이름(선택)</string>
+    <string name="px_pass">비밀번호(선택)</string>
+    <string name="px_auth_hint">인증은 선택입니다. 인증 있는 SOCKS5의 경우 앱 내 엔진은 전역 인증자를 사용합니다(동작하나 여러 프록시가 공유).</string>
+    <string name="px_need_valid">유효한 이름, 호스트, 포트를 입력하세요</string>
+    <string name="px_bad_type">유형은 socks5 또는 http여야 합니다</string>
+    <string name="px_saved">프록시 저장됨</string>
+    <string name="px_delete_title">프록시 삭제</string>
+    <string name="px_delete_msg">프록시「%1$s」을(를) 삭제할까요? 참조하는 채널은 직접 연결로 전환됩니다.</string>
+    <string name="px_has_auth">인증 있음</string>
+
+    <!-- 코드 차단 -->
+    <string name="menu_security">보안 및 백그라운드</string>
+    <string name="title_security">보안 및 백그라운드</string>
+    <string name="title_plugins">플러그인 관리</string>
+    <string name="pm_install">플러그인 설치</string>
+    <string name="pm_instance">인스턴스: %1$s</string>
+    <string name="pm_empty">이 인스턴스에 설치된 플러그인이 없습니다</string>
+    <string name="pm_no_backend">먼저 게이트웨이에 연결하세요</string>
+    <string name="pm_enabled">사용 중 · 탭하여 비활성화</string>
+    <string name="pm_disabled">비활성 · 탭하여 활성화</string>
+    <string name="pm_remove_title">플러그인 제거</string>
+    <string name="pm_remove_msg">「%1$s」을(를) 제거할까요?</string>
+    <string name="pm_removed">제거됨</string>
+    <string name="pm_install_title">플러그인 설치</string>
+    <string name="pm_install_hint">.tar.gz 플러그인 패키지 직접 URL 입력</string>
+    <string name="pm_installed">설치 성공</string>
+    <string name="pm_url_empty">URL은 필수입니다</string>
+    <string name="gd_title">악성 코드 차단</string>
+    <string name="gd_warning">⚠️ 일반 사용자에게는 권장하지 않습니다. 스캔은 지연을 늘리고, 패턴 매칭은 안전한 코드를 오탐하거나 난독화된 코드를 놓칠 수 있습니다. 이는 알림일 뿐 보안 경계가 아닙니다 — 실행 전 반드시 코드를 검토하세요.</string>
+    <string name="gd_enable">AI 응답 내 코드 스캔</string>
+    <string name="gd_level">보고 최소 수준</string>
+    <string name="gd_level_high">높음만(파괴적 명령, RCE, 자격 증명 유출)</string>
+    <string name="gd_level_medium">중간 이상(권한/지속성/위험한 eval 추가)</string>
+    <string name="gd_level_low">낮음 이상(하드코딩된 비밀, 평문 HTTP 추가)</string>
+    <string name="gd_action">감지 시 동작</string>
+    <string name="gd_action_warn">경고: 안내를 덧붙이고 내용 유지</string>
+    <string name="gd_action_block">차단: 내용을 안내로 대체</string>
+    <string name="gd_cloud">클라우드 스캔 API 사용</string>
+    <string name="gd_cloud_desc">코드를 외부 API로 보내 분석합니다. 지연이 크게 늘고 코드가 기기 밖으로 전송됩니다.</string>
+    <string name="gd_cloud_url">API URL</string>
+    <string name="gd_cloud_key">API 키</string>
+    <string name="gd_rule_count">로컬 규칙 라이브러리: %1$d개 규칙</string>
+    <string name="gd_test">샘플로 테스트</string>
+    <string name="gd_test_found">%1$d개 문제 감지, 최고 수준 %2$s</string>
+    <string name="gd_test_clean">이 수준에서는 문제가 발견되지 않았습니다</string>
+    <string name="gd_saved">차단 설정 저장됨</string>
+    <string name="gd_applies_embedded">앱 내 모드에 적용(크로스 포맷 응답).</string>
+
+    <!-- 백그라운드 keep-alive -->
+    <string name="bg_title">백그라운드 동작 보호</string>
+    <string name="bg_desc">앱이 백그라운드에 있어도 내장 게이트웨이를 유지합니다.</string>
+    <string name="bg_keepalive">포그라운드 서비스 keep-alive</string>
+    <string name="bg_keepalive_desc">상시 낮은 우선순위 알림을 표시하고 Partial Wake Lock을 유지해 게이트웨이가 요청에 계속 응답하게 합니다.</string>
+    <string name="bg_embedded_only">앱 내 모드에서만 의미가 있습니다. Termux 모드의 백엔드는 Termux 안에서 실행됩니다.</string>
+    <string name="bg_started">keep-alive 서비스 시작됨</string>
+    <string name="bg_stopped">keep-alive 서비스 중지됨</string>
+    <string name="bg_battery_ok">✓ 배터리 최적화: 제외됨</string>
+    <string name="bg_battery_no">⚠ 배터리 최적화: 적용 중(게이트웨이가 종료될 수 있음)</string>
+    <string name="bg_battery_request">배터리 최적화 제외 신청</string>
+    <string name="bg_notif_ok">✓ 알림: 켜짐</string>
+    <string name="bg_notif_no">⚠ 알림: 꺼짐(포그라운드 서비스에 필요)</string>
+    <string name="bg_notif_settings">알림 설정 열기</string>
+    <string name="bg_svc_running">✓ keep-alive 서비스: 실행 중</string>
+    <string name="bg_svc_stopped">keep-alive 서비스: 중지됨</string>
+    <string name="bg_app_details">앱 정보 열기(자동 시작/백그라운드 제한)</string>
+    <string name="bg_oem_hint">일부 제조사 ROM(Xiaomi, Huawei, OPPO, vivo 등)은 추가 설정이 필요합니다: 자동 시작 허용, 최근 작업에서 앱 고정, 백그라운드 제한 해제.</string>
+    <string name="svc_channel_name">게이트웨이 실행 중</string>
+    <string name="svc_channel_desc">앱 내 게이트웨이를 백그라운드에서 유지</string>
+    <string name="svc_title">AI Gateway 실행 중</string>
+    <string name="svc_text">포트 %1$d · %2$d 채널</string>
+
+    <!-- QR -->
+    <string name="cfg_export_qr">QR 코드로 내보내기</string>
+    <string name="cfg_import_qr_image">QR 이미지에서 가져오기</string>
+    <string name="cfg_import_qr_camera">카메라로 QR 스캔</string>
+    <string name="cfg_qr_info">%1$d 채널 · %2$d 문자 → %3$d 바이트</string>
+    <string name="cfg_qr_hint">다른 기기에서 스캔: 설정 및 백업 → 카메라로 QR 스캔</string>
+    <string name="cfg_qr_too_large">설정이 너무 커서 QR 코드 하나에 담을 수 없습니다(%1$d 바이트). 파일 내보내기를 사용하세요.</string>
+    <string name="cfg_qr_no_image">이미지를 읽을 수 없습니다</string>
+    <string name="cfg_qr_not_found">이미지에서 QR 코드를 찾을 수 없습니다</string>
+    <string name="cfg_qr_bad_payload">QR 내용이 유효한 설정 페이로드가 아닙니다</string>
+    <string name="cfg_qr_decode_failed">디코드 실패: %1$s</string>
+    <string name="cfg_qr_need_camera">스캔에는 카메라 권한이 필요합니다</string>
+    <string name="cfg_qr_no_camera_app">사용 가능한 카메라 앱이 없습니다</string>
+
+    <!-- 요청 기록 -->
+    <string name="rec_title">요청 내용 기록</string>
+    <string name="rec_enable">요청 / 응답 본문 기록</string>
+    <string name="rec_desc">요청과 응답 본문 전체를 저장해 요청 기록 페이지에서 볼 수 있게 합니다. 기본 꺼짐.</string>
+    <string name="rec_server">수집 서버(선택)</string>
+    <string name="rec_server_hint">비움 = 게이트웨이의 log/requests-&lt;instance&gt;.jsonl에 기록. http(s) URL 지정 시 각 레코드를 해당 주소로 POST.</string>
+    <string name="rec_max_chars">레코드당 최대 문자 수</string>
+    <string name="rec_privacy_warn">⚠ 기록은 전송한 민감 정보를 포함한 대화 전체를 저장합니다. 필요 없으면 꺼두세요.</string>
+    <string name="rec_saved">기록 설정 저장됨(게이트웨이 재시작 시 적용)</string>
+    <string name="rec_bad_server">서버 주소는 http:// 또는 https://로 시작해야 합니다</string>
+    <string name="ts_title">사고 연쇄 요약</string>
+    <string name="ts_enable">전송 전 추론 간소화</string>
+    <string name="ts_desc">추론 모델의 전체 사고는 클라이언트에 도달하기 전 간소화됩니다(세그먼트별 앞부분 N자 유지 또는 저렴한 모델로 각 세그먼트 요약). 일반 채팅에는 영향 없음.</string>
+    <string name="ts_mode">간소화 모드</string>
+    <string name="ts_max_chars">세그먼트당 유지 문자 수(절단)</string>
+    <string name="ts_sum_url">요약 엔드포인트 URL</string>
+    <string name="ts_sum_url_hint">OpenAI 호환, 예: https://api.deepseek.com 또는 https://127.0.0.1:16392(다른 게이트웨이를 가리킬 때는 그 인스턴스의 gatewayKey 사용)</string>
+    <string name="ts_sum_key">API 키</string>
+    <string name="ts_sum_model">요약 모델</string>
+    <string name="ts_sum_prompt">요약 프롬프트</string>
+    <string name="ts_sum_warn">요약 모드는 전체 사고가 끝난 뒤 요약하므로 사고 단계가 잠시 멈춥니다.</string>
+
+    <!-- 인스턴스 트래픽 -->
+    <string name="pt_req_count">%1$d 요청</string>
+    <string name="pt_err_count">%1$d 오류</string>
+    <string name="pt_no_traffic">트래픽 없음</string>
+    <string name="st_hint">인스턴스「%1$s」표시 중. 통계는 인스턴스별로 독립적이며 게이트웨이 재시작 시 초기화됩니다 — 0이면 요청이 다른 인스턴스로 갈 수 있습니다(「인스턴스」참조).</string>
+    <string name="termux_variant_label">Termux 종류</string>
+    <string name="termux_variant_zero">ZeroTermux</string>
+    <string name="termux_variant_official">공식 Termux</string>
+    <!-- 키 카드(멀티유저) -->
+    <string name="menu_cards">키 카드</string>
+    <string name="title_cards">키 카드</string>
+    <string name="cd_hint">멀티유저 키: 쿼터/비활성/만료/모델 허용 목록이 있는 카드 발급. 대상 = 활성 인스턴스</string>
+    <string name="cd_empty">키 카드가 없습니다. + 로 발급</string>
+    <string name="cd_add">발급</string>
+    <string name="cd_copy">복사</string>
+    <string name="cd_toggle">비활성/활성</string>
+    <string name="cd_recharge">충전/초기화</string>
+    <string name="cd_copied">전체 키 복사됨</string>
+    <string name="cd_unnamed">(이름 없음)</string>
+    <string name="cd_state_disabled">비활성</string>
+    <string name="cd_state_expired">만료</string>
+    <string name="cd_state_usedup">소진</string>
+    <string name="cd_state_active">활성</string>
+    <string name="cd_usage_fmt">사용량 %1$s / %2$s (%3$d%%)</string>
+    <string name="cd_usage_unlimited">사용량 %1$s(무제한)</string>
+    <string name="cd_limit_models">%1$d개 모델만</string>
+    <string name="cd_limit_expires">%1$s 만료</string>
+    <string name="cd_new_title">키 카드 발급(인스턴스 %1$s)</string>
+    <string name="cd_need_name">이름은 필수입니다</string>
+    <string name="cd_created">발급됨</string>
+    <string name="cd_created_msg">전체 키(목록에서 언제든 복사 가능):\n\n%1$s</string>
+    <string name="cd_disabled_ok">비활성화됨</string>
+    <string name="cd_enabled_ok">활성화됨</string>
+    <string name="cd_del_title">키 카드 삭제</string>
+    <string name="cd_del_msg">「%1$s」을(를) 삭제할까요? 키는 즉시 무효화됩니다</string>
+    <string name="cd_deleted">삭제됨</string>
+    <string name="cd_add_quota">쿼터 추가(만 토큰)</string>
+    <string name="cd_reset_usage">사용 토큰 0으로 초기화</string>
+    <string name="cd_recharge_title">충전/초기화「%1$s」</string>
+    <string name="cd_name">이름(누구를 위한 것인지)</string>
+    <string name="cd_quota">쿼터(만 토큰)</string>
+    <string name="cd_quota_helper">0 또는 비움 = 무제한; 100 = 100만 토큰</string>
+    <string name="cd_models">허용 모델(쉼표 구분)</string>
+    <string name="cd_models_helper">비움 = 모든 모델 허용</string>
+    <string name="cd_expires">만료일</string>
+    <string name="cd_expires_helper">비움 = 무기한; 형식 2026-12-31</string>
+    <string name="cd_note">메모(선택)</string>
+    <string name="fmt_yi">%1$.1f억</string>
+    <string name="fmt_wan">%1$.1f만</string>
+    <!-- 사용자 모드 -->
+    <string name="setup_user">사용자입니다</string>
+    <string name="setup_user_desc">타인이 배포한 게이트웨이를 키 카드/계정으로 이용</string>
+    <string name="nav_u_home">홈</string>
+    <string name="nav_u_models">모델</string>
+    <string name="nav_u_credits">잔액</string>
+    <string name="nav_u_profile">프로필</string>
+    <string name="ul_title">서버 로그인</string>
+    <string name="ul_server">서버 주소</string>
+    <string name="ul_server_hint">http://도메인-또는-IP:포트, 예: http://abc.trycloudflare.com</string>
+    <string name="ul_branch">브랜치(인스턴스, 선택)</string>
+    <string name="ul_branch_hint">같은 키로 다른 그룹 접근; 비움 = 기본</string>
+    <string name="ul_by_token">키 카드</string>
+    <string name="ul_by_account">계정</string>
+    <string name="ul_token">키 카드</string>
+    <string name="ul_token_hint">관리자가 준 sk-xxx</string>
+    <string name="ul_uid">UID</string>
+    <string name="ul_password">비밀번호</string>
+    <string name="ul_login">로그인</string>
+    <string name="ul_login_ok">로그인됨</string>
+    <string name="ul_login_fail">로그인 실패: %1$s</string>
+    <string name="ul_need_server">서버 주소는 필수입니다</string>
+    <string name="ul_need_token">키 카드는 필수입니다</string>
+    <string name="ul_no_keys">이 계정에 키 카드가 없습니다. 관리자에게 문의하세요.</string>
+    <string name="uh_status">서비스 상태</string>
+    <string name="uh_loading">불러오는 중…</string>
+    <string name="uh_offline">접근 불가: %1$s</string>
+    <string name="uh_info_fmt">버전 %1$s · 가동 %2$s</string>
+    <string name="uh_success_rate">채널 성공률</string>
+    <string name="uh_probe_hint">관리자가 프로브를 켜지 않았습니다(토큰 절약을 위해 기본 꺼짐)</string>
+    <string name="uh_probe_row">%1$s · 성공 %2$s (%3$d회)</string>
+    <string name="uh_branch">브랜치 전환</string>
+    <string name="uh_branch_hint">같은 키로 브랜치명을 통해 다른 그룹(인스턴스) 접근</string>
+    <string name="uh_branch_name">브랜치명(비움 = 기본)</string>
+    <string name="uh_branch_saved">저장됨, 새로고침 중</string>
+    <string name="uh_plugins">플러그인</string>
+    <string name="uh_plugins_loading">불러오는 중…</string>
+    <string name="uh_plugins_empty">이 서버에는 사용 가능한 플러그인이 없습니다</string>
+    <string name="um_count">%1$d개 모델 사용 가능</string>
+    <string name="um_refresh">새로고침</string>
+    <string name="um_empty">모델 없음 또는 불러오기 실패</string>
+    <string name="uc_remaining">잔여</string>
+    <string name="uc_admin">관리자 계정</string>
+    <string name="uc_unlimited">무제한</string>
+    <string name="uc_no_expire">만료 없음</string>
+    <string name="uc_all_models">모든 모델 사용 가능</string>
+    <string name="uc_models_limited">제한: %1$s</string>
+    <string name="up_token_user">키 카드 사용자</string>
+    <string name="up_branch_fmt">브랜치: %1$s</string>
+    <string name="up_switch">계정 / 서버 전환</string>
+    <string name="up_admin_mode">관리 모드로 전환</string>
+    <string name="disclaimer_short">⚠️ 실험적 프로젝트. 실제 상업 용도로 사용 금지!</string>
+    <string name="disclaimer_full">⚠️ 면책 조항: ai-gateway는 실험과 학습 전용이며 상업 서비스 보장이 없습니다. 실제 거래에 사용하지 마세요! 비용, 데이터 보안, 서비스 안정성 문제는 배포자와 사용자의 책임입니다.</string>
+    <!-- 가입+필터 -->
+    <string name="ul_by_register">가입</string>
+    <string name="ul_reg_uid">사용자명 (UID)</string>
+    <string name="ul_reg_uid_hint">3-32자(영문/숫자/밑줄). 키 카드가 자동 발급됩니다</string>
+    <string name="ul_reg_password2">비밀번호 확인</string>
+    <string name="ul_reg_email">이메일</string>
+    <string name="ul_reg_closed">이 서버는 가입이 닫혀 있습니다</string>
+    <string name="ul_reg_hint_fmt">비밀번호는 %1$d자 이상</string>
+    <string name="ul_reg_query_fail">가입 상태 조회 실패: %1$s</string>
+    <string name="ul_reg_fill_all">모든 항목을 채우세요</string>
+    <string name="ul_reg_pw_mismatch">비밀번호가 일치하지 않습니다</string>
+    <string name="ul_reg_ok">가입 완료! 자동 로그인되었습니다</string>
+    <string name="ul_reg_fail">가입 실패: %1$s</string>
+    <string name="um_search">모델 검색</string>
+    <string name="um_sort">정렬</string>
+    <string name="um_sort_asc">이름 A→Z</string>
+    <string name="um_sort_desc">이름 Z→A</string>
+    <string name="cd_bind_user">사용자 연결(선택)</string>
+    <string name="cd_bind_user_hint">연결하면 해당 사용자가 로그인 시 이 카드를 볼 수 있음</string>
+    <string name="menu_panel">패널</string>
+    <string name="nav_settings">설정</string>
+    <string name="panel_loading">관리 패널 불러오는 중…</string>
+    <string name="pv_balance">잔액 조회</string>
+    <string name="pv_balance_loading">%1$s 잔액 조회 중…</string>
+    <string name="pv_balance_title">잔액 · %1$s</string>
+    <string name="rg_captcha">캡차</string>
+    <string name="rg_captcha_hint">cloudflare.com → Turnstile → Add site에서 무료 발급. 앱 가입 페이지는 Turnstile 렌더링 미지원이므로, 켜면 브라우저에서 가입하세요</string>
+    <string name="rg_captcha_none">없음</string>
+    <string name="rg_captcha_secret">Turnstile Secret Key(비밀)</string>
+    <string name="rg_captcha_sitekey">Turnstile Site Key(공개)</string>
+    <string name="rg_captcha_turnstile">Cloudflare Turnstile(무료)</string>
+    <string name="rg_default_quota">가입 기본 쿼터(만 토큰)</string>
+    <string name="rg_default_quota_helper">0 = 무제한</string>
+    <string name="rg_enable">가입 허용</string>
+    <string name="rg_enable_hint">공용 릴레이에서만 켜기; 가입 시 카드 자동 발급</string>
+    <string name="rg_key_length">키 길이(8-128)</string>
+    <string name="rg_key_length_helper">sk- 접두어 제외, 기본 24</string>
+    <string name="rg_min_pw">비밀번호 최소 길이</string>
+    <string name="sa_save_second">2차 비밀번호 저장</string>
+    <string name="sa_second_key">2차 비밀번호</string>
+    <string name="sa_status_fmt">관리 비밀번호 %1$s · 2차 비밀번호 %2$s · TOTP %3$s</string>
+    <string name="sa_totp">TOTP 동적 인증</string>
+    <string name="sa_totp_disable">비활성화</string>
+    <string name="sa_totp_enable">TOTP 활성화</string>
+    <string name="sa_totp_save_warn">TOTP가 활성화되었습니다. 지금 시크릿을 저장하세요!</string>
+    <string name="sa_totp_secret_fmt">시크릿(인증 앱에 지금 저장): %1$s</string>
+    <string name="st_about">정보 및 면책</string>
+    <string name="st_config_sub">설정 암호화/백업/가져오기·내보내기</string>
+    <string name="st_conn_sub">원격 게이트웨이 주소와 비밀번호</string>
+    <string name="st_panel_sub">전체 관리 패널(웹)</string>
+    <string name="st_reg">가입 및 키 카드</string>
+    <string name="st_reg_sub">가입 허용/키 길이/캡차</string>
+    <string name="st_secondauth">2차 인증</string>
+    <string name="st_secondauth_sub">관리 로그인에 2차 비밀번호 또는 TOTP</string>
+    <string name="st_security_sub">코드 차단/백그라운드 보호</string>
+    <string name="st_theme_sub">다크/라이트/팔레트/언어</string>
+    <string name="st_tunnel">공개 터널</string>
+    <string name="st_tunnel_sub">cloudflared 무료 임시 도메인</string>
+    <string name="title_panel">전체 패널</string>
+    <string name="tn_desc">무료 임시 도메인으로 외부에서 게이트웨이 접근. 폰/내부망 배포용.</string>
+    <string name="tn_running">실행 중</string>
+    <string name="tn_start">터널 시작</string>
+    <string name="tn_starting">시작 중, 도메인 할당 대기…</string>
+    <string name="tn_stop">터널 중지</string>
+    <string name="tn_stopped">미기동</string>
+    <string name="tn_title">공개 터널 (cloudflared)</string>
+    <string name="tn_warn">⚠️ 터널 켬 = 공개 접근 가능! 먼저 게이트웨이 키와 관리 비밀번호를 설정하세요</string>
+    <string name="uk_main">메인 카드</string>
+    <string name="uk_new">셀프 발급</string>
+    <string name="um_group_all">전체(%1$d)</string>
+    <string name="up_avatar">아바타 URL</string>
+    <string name="up_edit_profile">프로필 편집</string>
+    <string name="up_my_keys">내 카드</string>
+    <string name="up_nickname">닉네임</string>
+    <string name="us_empty">사용자 없음</string>
+    <string name="us_keys_fmt">카드 %1$d장</string>
+    <string name="us_new">사용자 추가</string>
+    <string name="us_password">비밀번호</string>
+    <string name="us_reset_pw">비밀번호 재설정</string>
+    <string name="us_sub">비밀번호 로그인 계정, 카드 연결 가능</string>
+    <string name="us_title">사용자 관리</string>
+    <string name="us_uid">UID(비우면 자동 생성)</string>
+    <string name="pv_balance_section">업스트림 잔액</string>
+    <string name="pv_balance_url">잔액 API URL</string>
+    <string name="pv_balance_url_helper">비우면 내장 프리셋</string>
+    <string name="pv_balance_path">값 경로</string>
+    <string name="pv_balance_unit">단위(선택)</string>
+    <!-- 플로팅 창 -->
+    <string name="st_overlay">플로팅 창</string>
+    <string name="st_overlay_sub">다른 앱 위에 게이트웨이 상태 표시</string>
+    <string name="st_overlay_on">플로팅 창 켜짐</string>
+    <string name="st_overlay_off">플로팅 창 꺼짐</string>
+    <string name="st_overlay_need_perm">오버레이 권한 필요</string>
+    <string name="ovl_perm_title">오버레이 권한</string>
+    <string name="ovl_perm_msg">\"다른 앱 위에 표시\"를 허용하세요. MIUI / EMUI에서는 \"백그라운드 팝업\"도 켜야 합니다. 허용하지 않으면 창이 표시되지 않습니다.</string>
+    <string name="ovl_perm_denied">오버레이 권한이 없습니다</string>
+    <string name="ovl_no_backend">게이트웨이 연결 없음</string>
+    <string name="ovl_offline">오프라인</string>
+    <string name="ovl_online">온라인</string>
+    <string name="ovl_mode">모드</string>
+    <string name="ovl_instance">인스턴스</string>
+    <string name="ovl_port">포트</string>
+    <string name="ovl_requests">요청</string>
+    <string name="ovl_errors">오류</string>
+    <string name="ovl_uptime">가동 시간</string>
+    <string name="ovl_open_app">앱 열기</string>
+    <string name="ovl_start">시작</string>
+    <string name="ovl_stop">중지</string>
+    <string name="ovl_collapse">접기</string>
+    <string name="ovl_close">닫기</string>
+    <string name="ovl_notif_title">플로팅 창 실행 중</string>
+    <string name="ovl_notif_desc">다른 앱 위에 게이트웨이 상태 표시</string>
+    <string name="ovl_balance">잔액</string>
+    <string name="ovl_balance_none">잔액 없음</string>
+    <string name="ovl_look">플로팅 표시</string>
+    <string name="ovl_look_title">플로팅 표시</string>
+    <string name="ovl_look_sub">크기 / 색상 / 표시 항목</string>
+    <string name="ovl_scale">배율</string>
+    <string name="ovl_dim_alpha">대기 투명도</string>
+    <string name="ovl_snap">가장자리로 숨기기</string>
+    <string name="ovl_dim">대기 시 흐리게</string>
+    <string name="ovl_lock">위치 고정</string>
+    <string name="ovl_pin">항상 펼침</string>
+    <string name="ovl_blur">배경 흐림(Android 12+)</string>
+    <string name="ovl_reset">초기화</string>
+    <string name="ovl_look_hint">드래그로 이동 · 탭하여 펼치기 · 두 번 탭하여 접기 · 길게 눌러 새로고침</string>
+    <string name="ovl_size">버블 크기</string>
+    <string name="ovl_panel_width">패널 너비</string>
+    <string name="ovl_bg">색상</string>
+    <string name="ovl_rows_title">표시 항목</string>
+    <string name="ovl_pill_title">버블 내용</string>
+    <string name="ovl_pill_icon">아이콘</string>
+    <string name="ovl_pill_balance">잔액</string>
+    <string name="ovl_pill_requests">요청 수</string>
+    <string name="ovl_bg_theme">테마 따르기</string>
+    <string name="ovl_enable">플로팅 창</string>
+    <string name="ovl_shape">버블 모양</string>
+    <string name="ovl_shape_circle">원형</string>
+    <string name="ovl_shape_pill">캡슐</string>
+    <string name="ovl_shape_square">사각형</string>
+    <string name="ovl_shape_round">둥근 모서리</string>
+    <string name="ovl_icon">사용자 이미지</string>
+    <string name="ovl_icon_pick">이미지 선택</string>
+    <string name="ovl_icon_clear">지우기</string>
+    <string name="ovl_rows_hint">↑ ↓ 순서 변경</string>
+    <string name="ovl_dim_delay">흐려지기까지</string>
+    <string name="ovl_dim_level">흐림 정도</string>
+    <string name="ovl_autoscroll">자동 전환</string>
+    <string name="ovl_scroll_sec">전환 간격</string>
+    <string name="ovl_fail">실패</string>
+    <string name="ovl_warn_below">잔액 경고</string>
+    <string name="pv_balance_warn">경고 기준값</string>
+    <string name="pv_balance_warn_helper">5 또는 CNY=5, USD=1</string>
+    <string name="pv_route_force">다음 요청을 이 채널로</string>
+    <string name="pv_route_clear">대기 중인 라우팅 취소</string>
+    <string name="pv_route_on_msg">현재 이 채널로 고정되어 있습니다. 해제할까요?</string>
+    <string name="pv_route_off_msg">다음 요청만 이 채널로 보내고 이후 자동 선택으로 돌아갑니다.</string>
+    <string name="ovl_route">라우팅</string>
+    <string name="ovl_route_auto">자동</string>
+    <string name="ovl_route_pick">다음 요청을 보낼 채널</string>
+    <string name="ovl_route_empty">사용 가능한 채널이 없습니다</string>
+    <string name="ovl_route_fail">설정 실패</string>
+    <string name="ctx_title">컨텍스트 길이</string>
+    <string name="ctx_table">매칭 표</string>
+    <string name="ctx_bad_line">해석할 수 없음: %1$s</string>
+    <string name="ovl_ctx">컨텍스트</string>
+    <string name="ovl_ctx_none">—</string>
+    <string name="ctx_soft">소프트 상한 (%)</string>
+    <string name="ctx_hard">하드 상한 (%)</string>
+    <string name="ctx_hard_hint">0 = 끔. 추정치가 상한을 넘으면 업스트림 호출 없이 400을 반환합니다.</string>
+    <string name="ctx_pattern">모델 패턴</string>
+    <string name="ctx_window">컨텍스트 창</string>
+    <string name="ctx_cpt">토큰당 문자 수</string>
+    <string name="ctx_cpt_hint">추정용: CJK는 1자 = 1토큰, 그 외 1토큰 = N자.</string>
+    <string name="ctx_empty">규칙이 없습니다. 창을 모르는 모델은 하드 상한이 적용되지 않습니다.</string>
+    <string name="ctx_hint">위에서 아래로 첫 일치를 사용. *는 와일드카드이며 마지막에 둡니다. 창은 128k / 1m / 128000.</string>
+    <string name="ovl_gauge_w">인디케이터 굵기</string>
+    <string name="ovl_gauge_c">인디케이터 색상</string>
+    <string name="ctx_add">규칙 추가</string>
+</resources>

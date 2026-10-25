@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Gateway</string>
+
+    <!-- Configuration initiale -->
+    <string name="setup_title">Choisissez le mode d\'exécution</string>
+    <string name="setup_embedded">Exécuter dans l\'app</string>
+    <string name="setup_embedded_desc">Backend de passerelle intégré, Termux inutile, prêt à l\'emploi</string>
+    <string name="setup_termux">Se connecter à Termux</string>
+    <string name="setup_termux_desc">Connexion au backend ai-gateway dans Termux (local ou LAN)</string>
+    <string name="setup_connect_section">Connexion à la passerelle (facultatif)</string>
+    <string name="setup_quick_local">Local</string>
+    <string name="setup_quick_lan">LAN</string>
+    <string name="setup_connect_enter">Se connecter et entrer</string>
+    <string name="setup_skip">Passer pour l\'instant</string>
+    <string name="setup_termux_section">Backend Termux</string>
+
+    <!-- Connexion -->
+    <string name="connect_title">Connexion à la passerelle</string>
+    <string name="connect_host">Adresse de la passerelle</string>
+    <string name="connect_admin_key">Mot de passe admin (adminKey)</string>
+    <string name="connect_button">Se connecter</string>
+    <string name="connecting">Connexion…</string>
+    <string name="connect_mode">Mode d\'exécution</string>
+    <string name="connect_mode_remote">Connecter Termux / passerelle distante</string>
+    <string name="connect_hint_nokey">adminKey vide = sans mot de passe (quand la passerelle n\'a pas de mot de passe admin)</string>
+    <string name="connect_reselect_mode">Rechoisir le mode</string>
+    <string name="connect_saved">Connexion enregistrée</string>
+    <string name="connect_ok">Connecté</string>
+    <string name="connect_failed_entered">Échec de connexion. Entré quand même (réessayez dans Réglages de connexion)</string>
+    <string name="connect_need_url">Saisissez l\'adresse de la passerelle</string>
+    <string name="connect_switched_embedded">Passé en mode dans l\'app</string>
+
+    <!-- Navigation -->
+    <string name="nav_overview">Aperçu</string>
+    <string name="nav_providers">Fournisseurs</string>
+    <string name="nav_routing">Routage</string>
+    <string name="nav_keys">Clés</string>
+    <string name="nav_ports">Instances</string>
+    <string name="nav_replace">Remplacement</string>
+    <string name="nav_stats">Statistiques</string>
+    <string name="nav_requests">Requêtes</string>
+    <string name="nav_logs">Journaux</string>
+    <string name="nav_chat">Chat</string>
+
+    <!-- Titres -->
+    <string name="title_overview">Aperçu</string>
+    <string name="title_providers">Fournisseurs / Canaux</string>
+    <string name="title_routing">Routage / Mapping des modèles</string>
+    <string name="title_keys">Clés</string>
+    <string name="title_ports">Ports / Instances</string>
+    <string name="title_replace">Remplacement de texte</string>
+    <string name="title_stats">Statistiques</string>
+    <string name="title_requests">Journal des requêtes</string>
+    <string name="title_logs">Journaux</string>
+    <string name="title_chat">Test de chat</string>
+
+    <!-- Menu -->
+    <string name="menu_theme">Couleurs / Thème</string>
+    <string name="menu_connection">Connexion / Mode</string>
+
+    <!-- Boîte de dialogue thème -->
+    <string name="theme_title">Couleurs / Thème</string>
+    <string name="theme_mode">Mode sombre</string>
+    <string name="theme_mode_system">Suivre le système</string>
+    <string name="theme_mode_light">Clair</string>
+    <string name="theme_mode_dark">Sombre</string>
+    <string name="theme_dynamic">Couleurs dynamiques Material You</string>
+    <string name="theme_dynamic_desc">Android 12+ uniquement, couleurs tirées du fond d\'écran</string>
+    <string name="theme_palette">Palette de couleurs</string>
+    <string name="theme_palette_purple">Violet (par défaut)</string>
+    <string name="theme_palette_blue">Bleu</string>
+    <string name="theme_palette_green">Vert</string>
+    <string name="theme_palette_orange">Orange</string>
+    <string name="theme_palette_red">Rouge</string>
+    <string name="theme_language">Langue</string>
+    <string name="theme_language_system">Suivre le système</string>
+    <string name="theme_language_en">English</string>
+    <string name="theme_language_zh">简体中文</string>
+    <string name="theme_language_zh_tw">繁體中文</string>
+    <string name="theme_language_ja">日本語</string>
+    <string name="theme_language_ko">한국어</string>
+    <string name="theme_language_ru">Русский</string>
+    <string name="theme_language_es">Español</string>
+    <string name="theme_language_fr">Français</string>
+    <string name="theme_language_eo">Esperanto</string>
+    <string name="theme_applied">Réglages appliqués</string>
+
+    <!-- Termux -->
+    <string name="termux_start_backend">Démarrer le backend Termux</string>
+    <string name="termux_install">Installer / déployer dans Termux</string>
+    <string name="termux_not_installed">Termux non détecté</string>
+    <string name="termux_detected">✓ Termux détecté</string>
+    <string name="termux_not_detected">⚠ Termux non détecté (installez-le pour le déploiement)</string>
+    <string name="termux_open">Ouvrir Termux</string>
+    <string name="termux_cmd_sent">Commande de démarrage envoyée à Termux</string>
+    <string name="termux_cmd_failed">Échec : Termux introuvable ou appels externes non autorisés</string>
+    <string name="termux_deploy_title">Installer / déployer dans Termux</string>
+    <string name="termux_deploy_msg">Les fichiers du backend seront écrits dans Download/ai-gateway-deploy/, puis Termux exécutera le script d\'installation (installe Node.js, déploie dans ~/ai-gateway et démarre).\n\nNécessite termux-setup-storage et allow-external-apps=true.</string>
+    <string name="termux_deploy_start">Démarrer</string>
+    <string name="termux_deploy_ok">Termux lancé pour exécuter l\'installateur</string>
+    <string name="termux_deploy_failed">Échec du déploiement</string>
+
+    <!-- Aperçu -->
+    <string name="ov_checking">Vérification…</string>
+    <string name="ov_connected">Connecté</string>
+    <string name="ov_connect_failed">Échec de connexion</string>
+    <string name="ov_not_connected">Non connecté</string>
+    <string name="ov_total_requests">Requêtes totales</string>
+    <string name="ov_errors">Erreurs</string>
+    <string name="ov_uptime">Temps de fonctionnement</string>
+    <string name="ov_current_instance">Instance actuelle</string>
+    <string name="ov_loading">Chargement…</string>
+    <string name="ov_quick_actions">Actions rapides</string>
+    <string name="ov_refresh">Actualiser l\'état</string>
+    <string name="ov_configure_first">Configurez d\'abord une connexion dans Réglages Connexion / Mode</string>
+    <string name="ov_unreachable">Passerelle injoignable. Vérifiez l\'adresse/le mot de passe ou démarrez le backend</string>
+    <string name="ov_no_instance">Aucune instance</string>
+    <string name="ov_load_failed">Échec du chargement : %1$s</string>
+    <string name="ov_mode_embedded">Mode dans l\'app · passerelle intégrée</string>
+    <string name="ov_mode_remote">Passerelle distante · %1$s</string>
+    <string name="ov_mode_unset">Non configuré</string>
+    <string name="ov_recent_requests">Requêtes récentes</string>
+    <string name="ov_view_all">Tout voir</string>
+    <string name="ov_no_requests">Aucun enregistrement de requête pour l\'instant</string>
+    <string name="ov_stats_by_channel">Par canal</string>
+
+    <!-- Fournisseurs -->
+    <string name="pv_empty">Aucun canal\nTouchez + pour en ajouter</string>
+    <string name="pv_add">Ajouter un canal</string>
+    <string name="pv_edit">Modifier le canal</string>
+    <string name="pv_fetch_models">Récupérer les modèles</string>
+    <string name="pv_edit_btn">Modifier</string>
+    <string name="pv_delete_btn">Supprimer</string>
+    <string name="pv_name">Nom du canal *</string>
+    <string name="pv_type">Format de l\'amont *</string>
+    <string name="pv_base_url">Base URL * (ex. https://api.deepseek.com)</string>
+    <string name="pv_api_key">API Key (vide = conserver)</string>
+    <string name="pv_proxy">Nom du proxy (facultatif)</string>
+    <string name="pv_models">Liste des modèles (séparés par des virgules)</string>
+    <string name="pv_model_map">Mapping des modèles (une par ligne : public=amont)</string>
+    <string name="pv_delay">Délai de requête (ms, 0 = désactivé)</string>
+    <string name="pv_default">Canal par défaut (repli)</string>
+    <string name="pv_use_responses">L\'amont utilise l\'API Responses (/v1/responses, openai uniquement)</string>
+    <string name="pv_insecure">Ignorer la vérification du certificat (auto-signé)</string>
+    <string name="pv_need_fields">Nom et Base URL obligatoires</string>
+    <string name="pv_bad_type">Le format doit être openai / gemini / claude</string>
+    <string name="pv_saved">Canal enregistré</string>
+    <string name="pv_save_failed">Échec de l\'enregistrement : %1$s</string>
+    <string name="pv_delete_title">Supprimer le canal</string>
+    <string name="pv_delete_msg">Supprimer le canal « %1$s » ?</string>
+    <string name="pv_deleted">Supprimé</string>
+    <string name="pv_fetching">Récupération des modèles depuis l\'amont…</string>
+    <string name="pv_models_title">Modèles de l\'amont (%1$d)</string>
+    <string name="pv_fill_models">Remplir models et enregistrer</string>
+    <string name="pv_no_models">Aucun modèle renvoyé : %1$s</string>
+    <string name="pv_filled">%1$d modèles insérés</string>
+    <string name="pv_no_key">sans clé</string>
+    <string name="pv_models_count">%1$d modèles</string>
+
+    <!-- Routage -->
+    <string name="rt_hint">Les modèles demandés sont routés dans l\'ordre : modelMap du canal &gt; liste models &gt; canal par défaut &gt; premier canal. Modifiez les mappings dans Fournisseurs.</string>
+    <string name="rt_empty">Aucun modèle\n(ajoutez models / modelMap à un canal dans Fournisseurs)</string>
+    <string name="rt_no_channel">(aucun canal)</string>
+
+    <!-- Clés -->
+    <string name="keys_gateway_title">Clé d\'accès à la passerelle (gatewayKey)</string>
+    <string name="keys_gateway_desc">Les clients doivent envoyer cette clé pour appeler les endpoints IA (Bearer / x-api-key / ?key=). Vide = sans authentification.</string>
+    <string name="keys_admin_title">Mot de passe admin (adminKey)</string>
+    <string name="keys_admin_desc">Authentification du panneau admin / API admin. Vide = gestion sans mot de passe (usage personnel en LAN).</string>
+    <string name="keys_save">Enregistrer les clés</string>
+    <string name="keys_warn">⚠ Après modification de adminKey, mettez aussi à jour le mot de passe de connexion de cette app (Connexion / Mode). La passerelle redémarre pour appliquer.</string>
+    <string name="keys_saved">Clés enregistrées (la passerelle peut redémarrer)</string>
+
+    <!-- Ports / instances -->
+    <string name="pt_new">Nouvelle instance</string>
+    <string name="pt_shutdown_all">Tout arrêter</string>
+    <string name="pt_current">actuelle</string>
+    <string name="pt_running">en cours</string>
+    <string name="pt_stopped">arrêtée</string>
+    <string name="pt_channels">%1$d canaux</string>
+    <string name="pt_delete_title">Supprimer l\'instance</string>
+    <string name="pt_delete_msg">Supprimer l\'instance « %1$s » ? Son fichier de configuration sera supprimé.</string>
+    <string name="pt_shutdown_title">Arrêter toutes les instances</string>
+    <string name="pt_shutdown_msg">Arrêter toutes les instances de passerelle en cours ?</string>
+    <string name="pt_new_title">Nouvelle instance</string>
+    <string name="pt_inst_name">Nom de l\'instance * (lettres/chiffres/tiret)</string>
+    <string name="pt_inst_port">Port * (ex. 16390)</string>
+    <string name="pt_inst_key">adminKey (facultatif)</string>
+    <string name="pt_need_valid">Saisissez un nom et un port valides</string>
+    <string name="pt_created">Instance « %1$s » créée</string>
+    <string name="pt_switched">Basculé sur l\'instance « %1$s »</string>
+    <string name="pt_create_failed">Échec de la création : %1$s</string>
+    <string name="pt_stopped_all">Toutes les instances arrêtées</string>
+
+    <!-- Remplacement -->
+    <string name="rp_hint">Applique des remplacements par expressions régulières au texte transitant par la passerelle. Le champ model et les URL data: ne sont pas touchés. Redémarrez la passerelle pour appliquer.</string>
+    <string name="rp_out_title">Sortant (requête)</string>
+    <string name="rp_inc_title">Entrant (réponse)</string>
+    <string name="rp_add_out">Ajouter une règle sortante</string>
+    <string name="rp_add_inc">Ajouter une règle entrante</string>
+    <string name="rp_save">Enregistrer les règles de remplacement</string>
+    <string name="rp_regex">Expression régulière *</string>
+    <string name="rp_to">Remplacer par (vide = supprimer la correspondance)</string>
+    <string name="rp_ci">Ignorer la casse (ci)</string>
+    <string name="rp_empty_rules">(aucune règle %1$s)</string>
+    <string name="rp_delete_match">(supprimer la correspondance)</string>
+    <string name="rp_need_regex">L\'expression régulière ne peut pas être vide</string>
+    <string name="rp_bad_regex">Regex invalide : %1$s</string>
+    <string name="rp_saved">Règles enregistrées (redémarrage pour appliquer)</string>
+    <string name="rp_dir_out">sortantes</string>
+    <string name="rp_dir_inc">entrantes</string>
+    <string name="rp_add_rule">Ajouter une règle %1$s</string>
+    <string name="rp_edit_rule">Modifier une règle %1$s</string>
+
+    <!-- Statistiques -->
+    <string name="st_by_channel">Par canal</string>
+    <string name="st_empty">Pas encore de statistiques</string>
+    <string name="st_refresh">Actualiser</string>
+    <string name="st_channel_detail">requêtes %1$d · entrée %2$d tok · sortie %3$d tok</string>
+    <string name="st_channel_errors">%1$s · erreurs %2$d</string>
+
+    <!-- Requêtes -->
+    <string name="rq_empty">Aucun enregistrement de requête\n(activez l\'enregistrement des requêtes sur la passerelle)</string>
+    <string name="rq_detail_title">Détail de la requête</string>
+    <string name="rq_no_body">(cette passerelle n\'a pas stocké les corps de requête, ou l\'enregistrement a expiré)</string>
+    <string name="rq_section_request">━━ Requête ━━</string>
+    <string name="rq_section_response">━━ Réponse ━━</string>
+    <string name="rq_empty_value">(vide)</string>
+
+    <!-- Journaux -->
+    <string name="lg_lines">Lignes</string>
+    <string name="lg_loading">Chargement…</string>
+    <string name="lg_empty">(aucun journal)</string>
+    <string name="lg_copied">Journaux copiés</string>
+    <string name="lg_not_connected">Backend non connecté</string>
+    <string name="lg_load_failed">Échec du chargement : %1$s</string>
+
+    <!-- Chat -->
+    <string name="ch_model">Modèle</string>
+    <string name="ch_model_hint">Choisissez ou saisissez un modèle</string>
+    <string name="ch_input_hint">Saisissez un message…</string>
+    <string name="ch_empty">Choisissez un modèle et commencez à tester la passerelle</string>
+    <string name="ch_need_model">Choisissez ou saisissez d\'abord un modèle</string>
+    <string name="ch_no_backend">Backend non connecté</string>
+    <string name="ch_you">Vous</string>
+    <string name="ch_ai">IA</string>
+    <string name="ch_error">[Erreur] %1$s</string>
+    <string name="ch_load_models_failed">Échec du chargement des modèles : %1$s</string>
+    <string name="ch_request_failed">Échec de la requête</string>
+
+    <!-- Commun -->
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
+    <string name="save">Enregistrer</string>
+    <string name="delete">Supprimer</string>
+    <string name="close">Fermer</string>
+    <string name="refresh">Actualiser</string>
+    <string name="load_failed">Échec du chargement : %1$s</string>
+    <string name="op_failed">Échec de l\'opération : %1$s</string>
+    <string name="no_backend_hint">Backend non connecté. Configurez d\'abord une connexion</string>
+    <string name="delete_failed">Échec de la suppression : %1$s</string>
+    <string name="copy">Copier</string>
+    <string name="send">Envoyer</string>
+    <string name="start">Démarrer</string>
+    <string name="stop">Arrêter</string>
+    <string name="restart">Redémarrer</string>
+
+    <!-- Routage, extras -->
+    <string name="rt_model_sync">Mise à jour auto des listes de modèles</string>
+    <string name="rt_model_sync_desc">Récupérer périodiquement les listes de modèles des canaux amont</string>
+    <string name="rt_sync_interval">Intervalle (heures)</string>
+    <string name="rt_sync_now">Synchroniser maintenant</string>
+    <string name="rt_syncing">Synchronisation des listes de modèles…</string>
+    <string name="rt_sync_done">Synchronisation terminée</string>
+    <string name="rt_redact">Filtre de données privées</string>
+    <string name="rt_oe_enable">Endpoints étendus OpenAI (Responses / Images / Embeddings…)</string>
+    <string name="rt_oe_enable_desc">Expose /v1/responses, /v1/images/generations, /v1/embeddings, /v1/audio/speech, /v1/completions, /v1/moderations ; permet aussi aux canaux OpenAI d\'utiliser l\'API Responses en amont. Redémarrez l\'instance pour appliquer.</string>
+    <string name="rt_oe_upstream">L\'amont OpenAI utilise l\'API Responses par défaut (/v1/responses)</string>
+    <string name="rt_oe_upstream_desc">Valeur globale par défaut ; surchargée par « L\'amont utilise l\'API Responses » de chaque canal. Si désactivé, l\'amont continue avec /v1/chat/completions.</string>
+    <string name="rt_redact_desc">Avant transfert, remplace les clés API / jetons dans les requêtes par *** (sk-, ghp_, AKIA, AIza, Bearer …)</string>
+    <string name="rt_redact_extra">Motifs supplémentaires (une regex par ligne)</string>
+    <string name="rt_table_title">Table de routage des modèles</string>
+    <string name="rt_saved">Enregistré (la passerelle redémarre pour appliquer)</string>
+
+    <!-- Aide-mémoire regex -->
+    <string name="rp_cheat_title">Aide-mémoire regex</string>
+    <string name="rp_cheat_syntax_title">Syntaxe</string>
+    <string name="rp_cheat_syntax">.        n\'importe quel caractère\n\\d \\w \\s   chiffre / mot / espace\n[abc]    un parmi a b c\n[^abc]   autre que a b c\n*  +  ?   0+ , 1+ , 0 ou 1\n{2,5}    2 à 5 fois\n^  $      début / fin du texte\n(…)      groupe de capture\na|b      a ou b\n\\.       point littéral (échappé)</string>
+    <string name="rp_cheat_replace_title">Remplacement</string>
+    <string name="rp_cheat_replace">$1 $2    groupe 1 / 2\n$0       toute la correspondance\n(vide)   supprimer la correspondance\n\\$       signe dollar littéral</string>
+    <string name="rp_cheat_examples_title">Exemples</string>
+    <string name="rp_cheat_examples">1. Masquer les e-mails\n   regex : [\\w.]+@[\\w.]+\n   par :  ***\n\n2. Inverser deux mots\n   regex : (\\w+) (\\w+)\n   par :  $2 $1\n\n3. Supprimer les espaces en fin de ligne\n   regex : [ \\t]+$\n   par :  (vide)\n\n4. Remplacer un terme (ignorer la casse : activez ci)\n   regex : chatgpt\n   par :  AI\n\n5. Réduire les lignes vides\n   regex : \\n{3,}\n   par :  \n\n</string>
+    <string name="rp_cheat_notes_title">Remarques</string>
+    <string name="rp_cheat_notes">• Le champ model et les URL data: ne sont jamais touchés.\n• Les règles sortantes s\'appliquent au texte de la requête, les entrantes à celui de la réponse.\n• Les réponses en streaming sont appariées par fragments ; les motifs à cheval sur plusieurs fragments peuvent ne pas correspondre.\n• Les règles prennent effet après redémarrage de la passerelle.</string>
+
+    <!-- Chiffrement de la configuration -->
+    <string name="menu_config">Configuration et sauvegarde</string>
+    <string name="cfg_crypt_title">Chiffrement de la configuration</string>
+    <string name="cfg_crypt_enable">Chiffrer la configuration stockée</string>
+    <string name="cfg_crypt_desc">Chiffre le fichier de configuration de l\'app en AES-256-GCM (compatible avec le format AGWENC1 de la passerelle)</string>
+    <string name="cfg_crypt_pass">Mot de passe de chiffrement</string>
+    <string name="cfg_crypt_pass_confirm">Confirmer le mot de passe</string>
+    <string name="cfg_crypt_mismatch">Les mots de passe ne correspondent pas</string>
+    <string name="cfg_crypt_need_pass">Saisissez un mot de passe pour activer le chiffrement</string>
+    <string name="cfg_crypt_enabled">Chiffrement de la configuration activé</string>
+    <string name="cfg_crypt_disabled">Chiffrement de la configuration désactivé (stockage en clair)</string>
+    <string name="cfg_crypt_embedded_only">S\'applique au mode dans l\'app. Pour Termux, utilisez crypt.js côté passerelle.</string>
+
+    <!-- Import / export -->
+    <string name="cfg_transfer_title">Importer / exporter la configuration</string>
+    <string name="cfg_export">Exporter la configuration</string>
+    <string name="cfg_export_desc">Enregistrer la configuration de l\'instance actuelle dans un fichier</string>
+    <string name="cfg_export_encrypt">Chiffrer le fichier exporté</string>
+    <string name="cfg_export_pass">Mot de passe d\'export (vide = clair)</string>
+    <string name="cfg_exported">Configuration exportée</string>
+    <string name="cfg_export_failed">Échec de l\'export : %1$s</string>
+    <string name="cfg_import">Importer la configuration</string>
+    <string name="cfg_import_desc">Lire un fichier de configuration ; les fichiers chiffrés exigent le mot de passe d\'origine</string>
+    <string name="cfg_import_pass_title">Mot de passe du fichier source</string>
+    <string name="cfg_import_pass_hint">Mot de passe (vide si non chiffré)</string>
+    <string name="cfg_import_encrypted_hint">Ce fichier est chiffré (AGWENC1). Saisissez le mot de passe utilisé pour le chiffrer.</string>
+    <string name="cfg_import_wrong_pass">Mot de passe erroné ou données corrompues : %1$s</string>
+    <string name="cfg_import_invalid">Configuration invalide : %1$s</string>
+    <string name="cfg_import_confirm_title">Confirmer l\'import</string>
+    <string name="cfg_import_confirm_msg">Importer %1$d canaux et écraser la configuration de l\'instance actuelle ?\n\nSource : %2$s\nElle sera rechiffrée avec le mot de passe de cette app.</string>
+    <string name="cfg_import_src_enc">fichier chiffré</string>
+    <string name="cfg_import_src_plain">fichier texte</string>
+    <string name="cfg_imported">Configuration importée (%1$d canaux)</string>
+    <string name="cfg_import_failed">Échec de l\'import : %1$s</string>
+    <string name="cfg_reencrypted">Rechiffré avec le mot de passe de cette app</string>
+
+    <!-- Termux, extras -->
+    <string name="termux_perm_hint">Termux a refusé l\'appel.\n\nAccordez l\'autorisation dans les réglages système : Réglages → Applications → cette app → Autorisations → Autorisations supplémentaires → activez « Exécuter des commandes dans l\'environnement Termux ».\n\nSi déjà accordée et toujours en échec, vérifiez la variante de Termux (ZeroTermux / Officiel) sur la page de configuration.</string>
+    <string name="termux_perm_title">Autorisation requise</string>
+    <string name="termux_copy_cmd">Copier la commande</string>
+    <string name="termux_cmd_copied">Commande copiée</string>
+    <string name="termux_open_anyway">Ouvrir Termux</string>
+
+    <!-- Édition d\'instance / TLS -->
+    <string name="pt_edit_title">Modifier l\'instance</string>
+    <string name="pt_create">Créer</string>
+    <string name="pt_saved">Instance enregistrée (la passerelle redémarre)</string>
+    <string name="pt_inst_host">Adresse d\'écoute (0.0.0.0 = accessible depuis le LAN)</string>
+    <string name="pt_tls_enable">Chiffrement TLS (HTTPS)</string>
+    <string name="pt_tls_desc">Servir HTTPS avec un certificat. Les fichiers cert/key doivent exister côté passerelle.</string>
+    <string name="pt_tls_port">Port HTTPS (vide = comme HTTP, donc HTTPS uniquement)</string>
+    <string name="pt_tls_port_hint">Indiquez un port différent pour servir HTTP et HTTPS simultanément.</string>
+    <string name="pt_tls_cert">Fichier de certificat (cert.pem)</string>
+    <string name="pt_tls_key">Fichier de clé privée (key.pem)</string>
+
+    <!-- Proxies -->
+    <string name="nav_proxies">Proxies</string>
+    <string name="title_proxies">Configuration des proxies</string>
+    <string name="px_hint">Définissez ici des proxys nommés, puis référencez-les par leur nom dans le champ Proxy d\'un canal. Laissez le proxy d\'un canal vide pour une connexion directe.</string>
+    <string name="px_empty">Aucun proxy\nTouchez + pour en ajouter</string>
+    <string name="px_add">Ajouter un proxy</string>
+    <string name="px_edit">Modifier le proxy</string>
+    <string name="px_name">Nom du proxy * (référencé par les canaux)</string>
+    <string name="px_type">Type *</string>
+    <string name="px_host">Hôte * (ex. 127.0.0.1)</string>
+    <string name="px_port">Port * (ex. 7890)</string>
+    <string name="px_user">Nom d\'utilisateur (facultatif)</string>
+    <string name="px_pass">Mot de passe (facultatif)</string>
+    <string name="px_auth_hint">L\'authentification est facultative. Pour SOCKS5 avec authentification, le moteur intégré utilise un authentificateur global (fonctionne, mais partagé entre proxys).</string>
+    <string name="px_need_valid">Saisissez un nom, un hôte et un port valides</string>
+    <string name="px_bad_type">Le type doit être socks5 ou http</string>
+    <string name="px_saved">Proxy enregistré</string>
+    <string name="px_delete_title">Supprimer le proxy</string>
+    <string name="px_delete_msg">Supprimer le proxy « %1$s » ? Les canaux qui le référencent repasseront en connexion directe.</string>
+    <string name="px_has_auth">avec authentification</string>
+
+    <!-- Interception de code -->
+    <string name="menu_security">Sécurité et arrière-plan</string>
+    <string name="title_security">Sécurité et arrière-plan</string>
+    <string name="title_plugins">Gestion des plugins</string>
+    <string name="pm_install">Installer un plugin</string>
+    <string name="pm_instance">Instance : %1$s</string>
+    <string name="pm_empty">Aucun plugin installé sur cette instance</string>
+    <string name="pm_no_backend">Connectez-vous d\'abord à la passerelle</string>
+    <string name="pm_enabled">Activé · touchez pour désactiver</string>
+    <string name="pm_disabled">Désactivé · touchez pour activer</string>
+    <string name="pm_remove_title">Désinstaller le plugin</string>
+    <string name="pm_remove_msg">Désinstaller « %1$s » ?</string>
+    <string name="pm_removed">Désinstallé</string>
+    <string name="pm_install_title">Installer un plugin</string>
+    <string name="pm_install_hint">Saisissez l\'URL directe du paquet .tar.gz</string>
+    <string name="pm_installed">Installé avec succès</string>
+    <string name="pm_url_empty">URL requise</string>
+    <string name="gd_title">Interception de code malveillant</string>
+    <string name="gd_warning">⚠️ Non recommandé pour les utilisateurs ordinaires. L\'analyse ajoute de la latence, et la correspondance de motifs peut signaler du code sûr (faux positifs) ou rater du code obfusqué (faux négatifs). C\'est un rappel, pas une frontière de sécurité — relisez toujours le code avant de l\'exécuter.</string>
+    <string name="gd_enable">Analyser le code dans les réponses IA</string>
+    <string name="gd_level">Niveau minimal à signaler</string>
+    <string name="gd_level_high">Élevé uniquement (commandes destructrices, RCE, vol d\'identifiants)</string>
+    <string name="gd_level_medium">Moyen et plus (ajoute permissions/persistance/eval dangereux)</string>
+    <string name="gd_level_low">Faible et plus (ajoute secrets codés en dur, HTTP en clair)</string>
+    <string name="gd_action">À la détection</string>
+    <string name="gd_action_warn">Avertir : ajoute un avis, conserve le contenu</string>
+    <string name="gd_action_block">Bloquer : remplace le contenu par l\'avis</string>
+    <string name="gd_cloud">Utiliser une API d\'analyse cloud</string>
+    <string name="gd_cloud_desc">Envoie le code à une API externe pour analyse. Augmente fortement la latence et envoie le code hors de l\'appareil.</string>
+    <string name="gd_cloud_url">URL de l\'API</string>
+    <string name="gd_cloud_key">Clé API</string>
+    <string name="gd_rule_count">Bibliothèque de règles locale : %1$d règles</string>
+    <string name="gd_test">Tester avec un échantillon</string>
+    <string name="gd_test_found">%1$d problème(s) détecté(s), niveau max %2$s</string>
+    <string name="gd_test_clean">Aucun problème détecté à ce niveau</string>
+    <string name="gd_saved">Réglages d\'interception enregistrés</string>
+    <string name="gd_applies_embedded">S\'applique au mode dans l\'app (réponses multi-formats).</string>
+
+    <!-- Maintien en arrière-plan -->
+    <string name="bg_title">Protection de l\'activité en arrière-plan</string>
+    <string name="bg_desc">Maintient la passerelle intégrée en vie quand l\'app passe en arrière-plan.</string>
+    <string name="bg_keepalive">Keep-alive par service au premier plan</string>
+    <string name="bg_keepalive_desc">Affiche une notification persistante de faible priorité et détient un partial wake lock pour que la passerelle continue de répondre.</string>
+    <string name="bg_embedded_only">Utile uniquement en mode dans l\'app. En mode Termux, le backend tourne dans Termux.</string>
+    <string name="bg_started">Service keep-alive démarré</string>
+    <string name="bg_stopped">Service keep-alive arrêté</string>
+    <string name="bg_battery_ok">✓ Optimisation de batterie : exempté</string>
+    <string name="bg_battery_no">⚠ Optimisation de batterie : active (peut tuer la passerelle)</string>
+    <string name="bg_battery_request">Demander l\'exemption d\'optimisation de batterie</string>
+    <string name="bg_notif_ok">✓ Notifications : activées</string>
+    <string name="bg_notif_no">⚠ Notifications : désactivées (nécessaires au service au premier plan)</string>
+    <string name="bg_notif_settings">Ouvrir les réglages de notification</string>
+    <string name="bg_svc_running">✓ Service keep-alive : en cours</string>
+    <string name="bg_svc_stopped">Service keep-alive : arrêté</string>
+    <string name="bg_app_details">Ouvrir les infos de l\'app (démarrage auto / restrictions en arrière-plan)</string>
+    <string name="bg_oem_hint">Certaines ROM constructeur (Xiaomi, Huawei, OPPO, vivo…) exigent des réglages supplémentaires : autoriser le démarrage auto, verrouiller l\'app dans les récents, désactiver les restrictions d\'arrière-plan.</string>
+    <string name="svc_channel_name">Passerelle en cours</string>
+    <string name="svc_channel_desc">Maintient la passerelle intégrée en vie en arrière-plan</string>
+    <string name="svc_title">AI Gateway est en cours d\'exécution</string>
+    <string name="svc_text">Port %1$d · %2$d canaux</string>
+
+    <!-- QR -->
+    <string name="cfg_export_qr">Exporter en code QR</string>
+    <string name="cfg_import_qr_image">Importer depuis une image QR</string>
+    <string name="cfg_import_qr_camera">Scanner un QR avec la caméra</string>
+    <string name="cfg_qr_info">%1$d canaux · %2$d caractères → %3$d octets</string>
+    <string name="cfg_qr_hint">Scannez depuis un autre appareil : Configuration et sauvegarde → Scanner un QR avec la caméra</string>
+    <string name="cfg_qr_too_large">La configuration est trop grande pour un seul code QR (%1$d octets). Utilisez l\'export par fichier.</string>
+    <string name="cfg_qr_no_image">Impossible de lire l\'image</string>
+    <string name="cfg_qr_not_found">Aucun code QR trouvé dans l\'image</string>
+    <string name="cfg_qr_bad_payload">Le contenu QR n\'est pas une configuration valide</string>
+    <string name="cfg_qr_decode_failed">Échec du décodage : %1$s</string>
+    <string name="cfg_qr_need_camera">L\'autorisation caméra est requise pour scanner</string>
+    <string name="cfg_qr_no_camera_app">Aucune application caméra disponible</string>
+
+    <!-- Enregistrement des requêtes -->
+    <string name="rec_title">Enregistrement du contenu des requêtes</string>
+    <string name="rec_enable">Enregistrer les corps de requêtes / réponses</string>
+    <string name="rec_desc">Stocke les corps complets des requêtes et réponses pour que la page Requêtes puisse les afficher. Désactivé par défaut.</string>
+    <string name="rec_server">Serveur collecteur (facultatif)</string>
+    <string name="rec_server_hint">Vide = écrire dans log/requests-&lt;instance&gt;.jsonl sur la passerelle. Indiquez une URL http(s) pour envoyer chaque enregistrement en POST.</string>
+    <string name="rec_max_chars">Caractères max par enregistrement</string>
+    <string name="rec_privacy_warn">⚠ L\'enregistrement stocke le contenu complet des conversations, y compris toute donnée sensible envoyée. Laissez désactivé sauf besoin.</string>
+    <string name="rec_saved">Réglages d\'enregistrement enregistrés (la passerelle redémarre)</string>
+    <string name="rec_bad_server">L\'adresse du serveur doit commencer par http:// ou https://</string>
+    <string name="ts_title">Résumé de la chaîne de pensée</string>
+    <string name="ts_enable">Simplifier le raisonnement avant envoi</string>
+    <string name="ts_desc">La pensée complète des modèles de raisonnement est condensée avant d\'arriver au client (conserver les N premiers caractères par segment, ou résumer chaque segment avec un modèle économique). N\'affecte pas les chats normaux.</string>
+    <string name="ts_mode">Mode de simplification</string>
+    <string name="ts_max_chars">Caractères conservés par segment (troncature)</string>
+    <string name="ts_sum_url">URL de l\'endpoint de résumé</string>
+    <string name="ts_sum_url_hint">Compatible OpenAI, ex. https://api.deepseek.com ou https://127.0.0.1:16392 (utilisez le gatewayKey de cette instance si vous pointez vers une autre passerelle)</string>
+    <string name="ts_sum_key">Clé API</string>
+    <string name="ts_sum_model">Modèle de résumé</string>
+    <string name="ts_sum_prompt">Prompt de résumé</string>
+    <string name="ts_sum_warn">Le mode résumé attend la fin de la pensée complète avant de résumer ; la phase de réflexion se met donc brièvement en pause.</string>
+
+    <!-- Trafic des instances -->
+    <string name="pt_req_count">%1$d req.</string>
+    <string name="pt_err_count">%1$d err.</string>
+    <string name="pt_no_traffic">aucun trafic</string>
+    <string name="st_hint">Instance affichée : « %1$s ». Les statistiques sont propres à chaque instance et réinitialisées au redémarrage de la passerelle — si c\'est 0, les requêtes vont peut-être vers une autre instance (voir Instances).</string>
+    <string name="termux_variant_label">Variante de Termux</string>
+    <string name="termux_variant_zero">ZeroTermux</string>
+    <string name="termux_variant_official">Termux officiel</string>
+    <!-- Cartes de clés (multi-utilisateurs) -->
+    <string name="menu_cards">Cartes de clés</string>
+    <string name="title_cards">Cartes de clés</string>
+    <string name="cd_hint">Clés multi-utilisateurs : émettre des cartes avec quota/désactivation/expiration/liste blanche de modèles. Cible = instance active</string>
+    <string name="cd_empty">Aucune carte pour l\'instant. Touchez + pour en émettre une</string>
+    <string name="cd_add">Émettre</string>
+    <string name="cd_copy">Copier</string>
+    <string name="cd_toggle">Désactiver/Activer</string>
+    <string name="cd_recharge">Recharger/Réinitialiser</string>
+    <string name="cd_copied">Clé complète copiée</string>
+    <string name="cd_unnamed">(sans nom)</string>
+    <string name="cd_state_disabled">Désactivée</string>
+    <string name="cd_state_expired">Expirée</string>
+    <string name="cd_state_usedup">Épuisée</string>
+    <string name="cd_state_active">Active</string>
+    <string name="cd_usage_fmt">Usage %1$s / %2$s (%3$d%%)</string>
+    <string name="cd_usage_unlimited">Usage %1$s (illimité)</string>
+    <string name="cd_limit_models">%1$d modèles uniquement</string>
+    <string name="cd_limit_expires">expire %1$s</string>
+    <string name="cd_new_title">Émettre une carte (instance %1$s)</string>
+    <string name="cd_need_name">Nom requis</string>
+    <string name="cd_created">Clé émise</string>
+    <string name="cd_created_msg">Clé complète (copiable depuis la liste à tout moment) :\n\n%1$s</string>
+    <string name="cd_disabled_ok">Désactivée</string>
+    <string name="cd_enabled_ok">Activée</string>
+    <string name="cd_del_title">Supprimer la carte</string>
+    <string name="cd_del_msg">Supprimer « %1$s » ? La clé cesse de fonctionner immédiatement</string>
+    <string name="cd_deleted">Supprimée</string>
+    <string name="cd_add_quota">Ajouter du quota (10 k jetons)</string>
+    <string name="cd_reset_usage">Réinitialiser les jetons utilisés à 0</string>
+    <string name="cd_recharge_title">Recharger/Réinitialiser « %1$s »</string>
+    <string name="cd_name">Nom (pour qui)</string>
+    <string name="cd_quota">Quota (10 k jetons)</string>
+    <string name="cd_quota_helper">0 ou vide = illimité ; 100 = 1 million de jetons</string>
+    <string name="cd_models">Modèles autorisés (séparés par des virgules)</string>
+    <string name="cd_models_helper">Vide = tous les modèles autorisés</string>
+    <string name="cd_expires">Expiration</string>
+    <string name="cd_expires_helper">Vide = jamais ; format 2026-12-31</string>
+    <string name="cd_note">Note (facultatif)</string>
+    <string name="fmt_yi">%1$.1fB</string>
+    <string name="fmt_wan">%1$.1fW</string>
+    <!-- Mode utilisateur -->
+    <string name="setup_user">Je suis utilisateur</string>
+    <string name="setup_user_desc">Utiliser une passerelle déployée par autrui avec une carte / un compte</string>
+    <string name="nav_u_home">Accueil</string>
+    <string name="nav_u_models">Modèles</string>
+    <string name="nav_u_credits">Crédits</string>
+    <string name="nav_u_profile">Profil</string>
+    <string name="ul_title">Connexion au serveur</string>
+    <string name="ul_server">Adresse du serveur</string>
+    <string name="ul_server_hint">http://domaine-ou-IP:port, ex. http://abc.trycloudflare.com</string>
+    <string name="ul_branch">Branche (instance, facultatif)</string>
+    <string name="ul_branch_hint">La même clé accède à différents groupes ; vide = par défaut</string>
+    <string name="ul_by_token">Carte de clé</string>
+    <string name="ul_by_account">Compte</string>
+    <string name="ul_token">Carte de clé</string>
+    <string name="ul_token_hint">Le sk-xxx fourni par votre administrateur</string>
+    <string name="ul_uid">UID</string>
+    <string name="ul_password">Mot de passe</string>
+    <string name="ul_login">Se connecter</string>
+    <string name="ul_login_ok">Connecté</string>
+    <string name="ul_login_fail">Échec de connexion : %1$s</string>
+    <string name="ul_need_server">L\'adresse du serveur est requise</string>
+    <string name="ul_need_token">La carte de clé est requise</string>
+    <string name="ul_no_keys">Ce compte n\'a pas de carte de clé. Contactez votre administrateur.</string>
+    <string name="uh_status">État du service</string>
+    <string name="uh_loading">Chargement…</string>
+    <string name="uh_offline">Injoignable : %1$s</string>
+    <string name="uh_info_fmt">Version %1$s · En marche %2$s</string>
+    <string name="uh_success_rate">Taux de réussite des canaux</string>
+    <string name="uh_probe_hint">L\'administrateur n\'a pas activé la sonde (désactivée par défaut pour économiser des jetons)</string>
+    <string name="uh_probe_row">%1$s · succès %2$s (%3$d tests)</string>
+    <string name="uh_branch">Changer de branche</string>
+    <string name="uh_branch_hint">La même clé peut accéder à différents groupes (instances) via le nom de branche</string>
+    <string name="uh_branch_name">Nom de branche (vide = par défaut)</string>
+    <string name="uh_branch_saved">Enregistré, actualisation</string>
+    <string name="uh_plugins">Plugins</string>
+    <string name="uh_plugins_loading">Chargement…</string>
+    <string name="uh_plugins_empty">Aucun plugin disponible sur ce serveur</string>
+    <string name="um_count">%1$d modèles disponibles</string>
+    <string name="um_refresh">Actualiser</string>
+    <string name="um_empty">Aucun modèle ou échec de chargement</string>
+    <string name="uc_remaining">Restant</string>
+    <string name="uc_admin">Compte administrateur</string>
+    <string name="uc_unlimited">Illimité</string>
+    <string name="uc_no_expire">N\'expire jamais</string>
+    <string name="uc_all_models">Tous les modèles disponibles</string>
+    <string name="uc_models_limited">Limité à : %1$s</string>
+    <string name="up_token_user">Utilisateur de carte</string>
+    <string name="up_branch_fmt">Branche : %1$s</string>
+    <string name="up_switch">Changer de compte / serveur</string>
+    <string name="up_admin_mode">Passer en mode admin</string>
+    <string name="disclaimer_short">⚠️ Projet expérimental. Pas pour un usage commercial réel !</string>
+    <string name="disclaimer_full">⚠️ Avertissement : ai-gateway est destiné uniquement à l\'expérimentation et à l\'apprentissage, sans garantie de service commercial. NE l\'utilisez PAS pour de vraies transactions ! Tout problème de coûts, de sécurité des données ou de stabilité relève du déployeur et des utilisateurs.</string>
+    <!-- Inscription + filtre -->
+    <string name="ul_by_register">Inscription</string>
+    <string name="ul_reg_uid">Nom d\'utilisateur (UID)</string>
+    <string name="ul_reg_uid_hint">3-32 caractères (lettre/chiffre/underscore). Une carte est émise automatiquement</string>
+    <string name="ul_reg_password2">Confirmer le mot de passe</string>
+    <string name="ul_reg_email">E-mail</string>
+    <string name="ul_reg_closed">Les inscriptions sont fermées sur ce serveur</string>
+    <string name="ul_reg_hint_fmt">Mot de passe d\'au moins %1$d caractères</string>
+    <string name="ul_reg_query_fail">Échec de la requête d\'inscription : %1$s</string>
+    <string name="ul_reg_fill_all">Remplissez tous les champs</string>
+    <string name="ul_reg_pw_mismatch">Les mots de passe ne correspondent pas</string>
+    <string name="ul_reg_ok">Inscrit ! Connexion automatique</string>
+    <string name="ul_reg_fail">Échec de l\'inscription : %1$s</string>
+    <string name="um_search">Rechercher des modèles</string>
+    <string name="um_sort">Trier</string>
+    <string name="um_sort_asc">Nom A→Z</string>
+    <string name="um_sort_desc">Nom Z→A</string>
+    <string name="cd_bind_user">Lier un utilisateur (facultatif)</string>
+    <string name="cd_bind_user_hint">Une fois liée, cette carte est visible par l\'utilisateur connecté avec son compte</string>
+    <string name="menu_panel">Panneau</string>
+    <string name="nav_settings">Réglages</string>
+    <string name="panel_loading">Chargement du panneau d\'administration…</string>
+    <string name="pv_balance">Vérifier le solde</string>
+    <string name="pv_balance_loading">Consultation du solde de %1$s…</string>
+    <string name="pv_balance_title">Solde · %1$s</string>
+    <string name="rg_captcha">Captcha</string>
+    <string name="rg_captcha_hint">Obtenez-le gratuitement sur cloudflare.com → Turnstile → Add site. La page d\'inscription de l\'app ne rend pas encore Turnstile ; si activé, inscrivez-vous via le navigateur</string>
+    <string name="rg_captcha_none">Aucun</string>
+    <string name="rg_captcha_secret">Turnstile Secret Key (secrète)</string>
+    <string name="rg_captcha_sitekey">Turnstile Site Key (publique)</string>
+    <string name="rg_captcha_turnstile">Cloudflare Turnstile (gratuit)</string>
+    <string name="rg_default_quota">Quota par défaut à l\'inscription (10 k jetons)</string>
+    <string name="rg_default_quota_helper">0 = illimité</string>
+    <string name="rg_enable">Ouvrir l\'inscription</string>
+    <string name="rg_enable_hint">À activer seulement sur les relais publics ; une carte est émise à l\'inscription</string>
+    <string name="rg_key_length">Longueur de clé (8-128)</string>
+    <string name="rg_key_length_helper">Hors préfixe sk-, 24 par défaut</string>
+    <string name="rg_min_pw">Longueur minimale du mot de passe</string>
+    <string name="sa_save_second">Enregistrer le second mot de passe</string>
+    <string name="sa_second_key">Second mot de passe</string>
+    <string name="sa_status_fmt">Mot de passe admin %1$s · Second mot de passe %2$s · TOTP %3$s</string>
+    <string name="sa_totp">Vérification dynamique TOTP</string>
+    <string name="sa_totp_disable">Désactiver</string>
+    <string name="sa_totp_enable">Activer TOTP</string>
+    <string name="sa_totp_save_warn">TOTP activé, enregistrez le secret immédiatement !</string>
+    <string name="sa_totp_secret_fmt">Secret (enregistrez-le tout de suite dans votre app d\'authentification) : %1$s</string>
+    <string name="st_about">À propos et avertissement</string>
+    <string name="st_config_sub">Chiffrement/sauvegarde/import-export</string>
+    <string name="st_conn_sub">Adresse et mot de passe de la passerelle distante</string>
+    <string name="st_panel_sub">Panneau d\'administration complet (web)</string>
+    <string name="st_reg">Inscription et cartes</string>
+    <string name="st_reg_sub">Inscription/longueur des clés/captcha</string>
+    <string name="st_secondauth">Seconde vérification</string>
+    <string name="st_secondauth_sub">La connexion admin exige un second mot de passe ou TOTP</string>
+    <string name="st_security_sub">Interception de code/protection d\'arrière-plan</string>
+    <string name="st_theme_sub">Sombre/clair/palette/langue</string>
+    <string name="st_tunnel">Tunnel public</string>
+    <string name="st_tunnel_sub">domaine temporaire gratuit cloudflared</string>
+    <string name="title_panel">Panneau complet</string>
+    <string name="tn_desc">Domaine temporaire gratuit pour accéder à cette passerelle depuis l\'extérieur. Pour déploiement mobile/réseau interne.</string>
+    <string name="tn_running">En cours</string>
+    <string name="tn_start">Démarrer le tunnel</string>
+    <string name="tn_starting">Démarrage, en attente de l\'attribution du domaine…</string>
+    <string name="tn_stop">Arrêter le tunnel</string>
+    <string name="tn_stopped">Non démarré</string>
+    <string name="tn_title">Tunnel public (cloudflared)</string>
+    <string name="tn_warn">⚠️ Tunnel actif = accessible depuis Internet ! Configurez d\'abord la gatewayKey et le mot de passe admin</string>
+    <string name="uk_main">Carte principale</string>
+    <string name="uk_new">Auto-émission</string>
+    <string name="um_group_all">Tous (%1$d)</string>
+    <string name="up_avatar">URL de l\'avatar</string>
+    <string name="up_edit_profile">Modifier le profil</string>
+    <string name="up_my_keys">Mes cartes</string>
+    <string name="up_nickname">Pseudo</string>
+    <string name="us_empty">Aucun utilisateur</string>
+    <string name="us_keys_fmt">%1$d cartes</string>
+    <string name="us_new">Ajouter un utilisateur</string>
+    <string name="us_password">Mot de passe</string>
+    <string name="us_reset_pw">Réinitialiser le mot de passe</string>
+    <string name="us_sub">Comptes de connexion par mot de passe ; liaison de cartes possible</string>
+    <string name="us_title">Gestion des utilisateurs</string>
+    <string name="us_uid">UID (vide = généré automatiquement)</string>
+    <string name="pv_balance_section">Solde du fournisseur</string>
+    <string name="pv_balance_url">URL du solde</string>
+    <string name="pv_balance_url_helper">Vide = préréglage intégré</string>
+    <string name="pv_balance_path">Chemin de la valeur</string>
+    <string name="pv_balance_unit">Unité (facultatif)</string>
+    <!-- Fenêtre flottante -->
+    <string name="st_overlay">Fenêtre flottante</string>
+    <string name="st_overlay_sub">État de la passerelle par-dessus les autres apps</string>
+    <string name="st_overlay_on">Fenêtre flottante activée</string>
+    <string name="st_overlay_off">Fenêtre flottante désactivée</string>
+    <string name="st_overlay_need_perm">Autorisation de superposition requise</string>
+    <string name="ovl_perm_title">Autorisation de superposition</string>
+    <string name="ovl_perm_msg">Autorisez « Afficher par-dessus les autres apps ». Sur MIUI / EMUI, activez aussi « Fenêtres contextuelles en arrière-plan », sinon la fenêtre n\'apparaîtra pas.</string>
+    <string name="ovl_perm_denied">Autorisation de superposition non accordée</string>
+    <string name="ovl_no_backend">Passerelle non connectée</string>
+    <string name="ovl_offline">Hors ligne</string>
+    <string name="ovl_online">En ligne</string>
+    <string name="ovl_mode">Mode</string>
+    <string name="ovl_instance">Instance</string>
+    <string name="ovl_port">Port</string>
+    <string name="ovl_requests">Requêtes</string>
+    <string name="ovl_errors">Erreurs</string>
+    <string name="ovl_uptime">Durée de fonctionnement</string>
+    <string name="ovl_open_app">Ouvrir l\'app</string>
+    <string name="ovl_start">Démarrer</string>
+    <string name="ovl_stop">Arrêter</string>
+    <string name="ovl_collapse">Réduire</string>
+    <string name="ovl_close">Fermer</string>
+    <string name="ovl_notif_title">Fenêtre flottante active</string>
+    <string name="ovl_notif_desc">État de la passerelle par-dessus les autres apps</string>
+    <string name="ovl_balance">Solde</string>
+    <string name="ovl_balance_none">Aucun solde</string>
+    <string name="ovl_look">Apparence du flottant</string>
+    <string name="ovl_look_title">Apparence du flottant</string>
+    <string name="ovl_look_sub">Taille / couleurs / lignes</string>
+    <string name="ovl_scale">Échelle</string>
+    <string name="ovl_dim_alpha">Opacité au repos</string>
+    <string name="ovl_snap">Replier au bord</string>
+    <string name="ovl_dim">Pâlir au repos</string>
+    <string name="ovl_lock">Verrouiller la position</string>
+    <string name="ovl_pin">Toujours déployé</string>
+    <string name="ovl_blur">Flou d\'arrière-plan (Android 12+)</string>
+    <string name="ovl_reset">Réinitialiser</string>
+    <string name="ovl_look_hint">Glisser pour déplacer · appui pour déployer · double appui pour replier · appui long pour actualiser</string>
+    <string name="ovl_size">Taille de la bulle</string>
+    <string name="ovl_panel_width">Largeur du panneau</string>
+    <string name="ovl_bg">Couleurs</string>
+    <string name="ovl_rows_title">Lignes visibles</string>
+    <string name="ovl_pill_title">Contenu de la bulle</string>
+    <string name="ovl_pill_icon">Icône</string>
+    <string name="ovl_pill_balance">Solde</string>
+    <string name="ovl_pill_requests">Requêtes</string>
+    <string name="ovl_bg_theme">Selon le thème</string>
+    <string name="ovl_enable">Fenêtre flottante</string>
+    <string name="ovl_shape">Forme de la bulle</string>
+    <string name="ovl_shape_circle">Cercle</string>
+    <string name="ovl_shape_pill">Capsule</string>
+    <string name="ovl_shape_square">Carré</string>
+    <string name="ovl_shape_round">Arrondi</string>
+    <string name="ovl_icon">Image perso</string>
+    <string name="ovl_icon_pick">Choisir une image</string>
+    <string name="ovl_icon_clear">Effacer</string>
+    <string name="ovl_rows_hint">↑ ↓ pour réordonner</string>
+    <string name="ovl_dim_delay">Atténuer après</string>
+    <string name="ovl_dim_level">Niveau d\'atténuation</string>
+    <string name="ovl_autoscroll">Défilement auto</string>
+    <string name="ovl_scroll_sec">Intervalle de défilement</string>
+    <string name="ovl_fail">Échec</string>
+    <string name="ovl_warn_below">Alerte solde faible</string>
+    <string name="pv_balance_warn">Seuil d\'alerte</string>
+    <string name="pv_balance_warn_helper">5, ou CNY=5, USD=1</string>
+    <string name="pv_route_force">Router la prochaine requête ici</string>
+    <string name="pv_route_clear">Annuler la route en attente</string>
+    <string name="pv_route_on_msg">Les requêtes sont épinglées sur ce canal. Annuler ?</string>
+    <string name="pv_route_off_msg">Seule la prochaine requête utilisera ce canal, puis le routage automatique reprend.</string>
+    <string name="ovl_route">Routage</string>
+    <string name="ovl_route_auto">Auto</string>
+    <string name="ovl_route_pick">Envoyer la prochaine requête à</string>
+    <string name="ovl_route_empty">Aucun canal disponible</string>
+    <string name="ovl_route_fail">Échec du routage</string>
+    <string name="ctx_title">Fenêtres de contexte</string>
+    <string name="ctx_table">Table</string>
+    <string name="ctx_bad_line">Ligne invalide : %1$s</string>
+    <string name="ovl_ctx">Contexte</string>
+    <string name="ovl_ctx_none">—</string>
+    <string name="ctx_soft">Limite souple (%)</string>
+    <string name="ctx_hard">Limite stricte (%)</string>
+    <string name="ctx_hard_hint">0 = désactivé. Au-delà, la passerelle renvoie 400 sans appeler l’amont.</string>
+    <string name="ctx_pattern">Motif de modèle</string>
+    <string name="ctx_window">Fenêtre de contexte</string>
+    <string name="ctx_cpt">Caractères par token</string>
+    <string name="ctx_cpt_hint">Estimation : CJK 1 caractère = 1 token, sinon 1 token = N caractères.</string>
+    <string name="ctx_empty">Aucune règle. Sans fenêtre connue, la limite stricte ne s\'applique pas.</string>
+    <string name="ctx_hint">De haut en bas, la première correspondance gagne. * est un joker : mettez-le en dernier. Fenêtre : 128k / 1m / 128000.</string>
+    <string name="ovl_gauge_w">Épaisseur de l\'indicateur</string>
+    <string name="ovl_gauge_c">Couleur de l\'indicateur</string>
+    <string name="ctx_add">Ajouter une règle</string>
+</resources>

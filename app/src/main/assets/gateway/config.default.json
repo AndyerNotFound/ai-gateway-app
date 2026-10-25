@@ -1,0 +1,33 @@
+{
+  "listen": { "host": "0.0.0.0", "port": 16384 },
+  "gatewayKey": "",
+  "proxies": {
+    "clash": { "type": "socks5", "host": "127.0.0.1", "port": 7890 }
+  },
+  "channels": [
+    {
+      "name": "gemini-official",
+      "type": "gemini",
+      "baseUrl": "https://generativelanguage.googleapis.com",
+      "apiKey": "在这里填入GEMINI_API_KEY",
+      "proxy": "clash",
+      "models": ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-pro"]
+    },
+    {
+      "name": "deepseek",
+      "type": "openai",
+      "baseUrl": "https://api.deepseek.com",
+      "apiKey": "在这里填入DEEPSEEK_API_KEY",
+      "models": ["deepseek-chat", "deepseek-reasoner"],
+      "default": true
+    },
+    {
+      "name": "claude-official",
+      "type": "claude",
+      "baseUrl": "https://api.anthropic.com",
+      "apiKey": "在这里填入ANTHROPIC_API_KEY",
+      "proxy": "clash",
+      "models": ["claude-sonnet-4-20250514", "claude-3-5-haiku-20241022"]
+    }
+  ]
+}

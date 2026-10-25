@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Gateway</string>
+
+    <!-- 首次設定 -->
+    <string name="setup_title">選擇執行方式</string>
+    <string name="setup_embedded">應用程式內執行</string>
+    <string name="setup_embedded_desc">內建閘道後端, 無需 Termux, 開箱即用</string>
+    <string name="setup_termux">連接 Termux 執行</string>
+    <string name="setup_termux_desc">連接在 Termux 中執行的 ai-gateway 後端(本機或區域網路)</string>
+    <string name="setup_connect_section">連接閘道 (可稍後)</string>
+    <string name="setup_quick_local">本機</string>
+    <string name="setup_quick_lan">區域網路</string>
+    <string name="setup_connect_enter">連接並進入</string>
+    <string name="setup_skip">暫不連接, 先進入</string>
+    <string name="setup_termux_section">Termux 後端</string>
+
+    <!-- 連接 -->
+    <string name="connect_title">連接到閘道</string>
+    <string name="connect_host">閘道位址</string>
+    <string name="connect_admin_key">管理密碼 (adminKey)</string>
+    <string name="connect_button">連接</string>
+    <string name="connecting">連接中…</string>
+    <string name="connect_mode">執行模式</string>
+    <string name="connect_mode_remote">連接 Termux / 遠端閘道</string>
+    <string name="connect_hint_nokey">留空 adminKey = 免密碼連接(閘道未設管理密碼時)</string>
+    <string name="connect_reselect_mode">重新選擇模式</string>
+    <string name="connect_saved">已儲存連接</string>
+    <string name="connect_ok">連接成功</string>
+    <string name="connect_failed_entered">連接失敗, 已進入(可在「連線設定」重試)</string>
+    <string name="connect_need_url">請填寫閘道位址</string>
+    <string name="connect_switched_embedded">已切換到應用程式內執行</string>
+
+    <!-- 導覽 -->
+    <string name="nav_overview">總覽</string>
+    <string name="nav_providers">供應商</string>
+    <string name="nav_routing">路由</string>
+    <string name="nav_keys">金鑰</string>
+    <string name="nav_ports">實例</string>
+    <string name="nav_replace">替換</string>
+    <string name="nav_stats">統計</string>
+    <string name="nav_requests">請求</string>
+    <string name="nav_logs">日誌</string>
+    <string name="nav_chat">聊天</string>
+
+    <!-- 標題 -->
+    <string name="title_overview">總覽</string>
+    <string name="title_providers">供應商 / 頻道</string>
+    <string name="title_routing">路由 / 模型改名</string>
+    <string name="title_keys">金鑰</string>
+    <string name="title_ports">連接埠 / 實例</string>
+    <string name="title_replace">文字替換</string>
+    <string name="title_stats">統計</string>
+    <string name="title_requests">請求記錄</string>
+    <string name="title_logs">日誌</string>
+    <string name="title_chat">聊天測試</string>
+
+    <!-- 選單 -->
+    <string name="menu_theme">顏色 / 佈景主題</string>
+    <string name="menu_connection">連線 / 模式設定</string>
+
+    <!-- 佈景主題設定 -->
+    <string name="theme_title">顏色 / 佈景主題</string>
+    <string name="theme_mode">深色模式</string>
+    <string name="theme_mode_system">跟隨系統</string>
+    <string name="theme_mode_light">淺色</string>
+    <string name="theme_mode_dark">深色</string>
+    <string name="theme_dynamic">Material You 動態取色</string>
+    <string name="theme_dynamic_desc">僅 Android 12+ 支援, 從桌布擷取配色</string>
+    <string name="theme_palette">配色方案</string>
+    <string name="theme_palette_purple">紫色 (預設)</string>
+    <string name="theme_palette_blue">藍色</string>
+    <string name="theme_palette_green">綠色</string>
+    <string name="theme_palette_orange">橙色</string>
+    <string name="theme_palette_red">紅色</string>
+    <string name="theme_language">語言</string>
+    <string name="theme_language_system">跟隨系統</string>
+    <string name="theme_language_en">English</string>
+    <string name="theme_language_zh">简体中文</string>
+    <string name="theme_language_zh_tw">繁體中文</string>
+    <string name="theme_language_ja">日本語</string>
+    <string name="theme_language_ko">한국어</string>
+    <string name="theme_language_ru">Русский</string>
+    <string name="theme_language_es">Español</string>
+    <string name="theme_language_fr">Français</string>
+    <string name="theme_language_eo">Esperanto</string>
+    <string name="theme_applied">設定已生效</string>
+
+    <!-- Termux -->
+    <string name="termux_start_backend">啟動 Termux 後端</string>
+    <string name="termux_install">安裝/部署到 Termux</string>
+    <string name="termux_not_installed">未偵測到 Termux</string>
+    <string name="termux_detected">✓ 已偵測到 Termux</string>
+    <string name="termux_not_detected">⚠ 未偵測到 Termux (可安裝後使用部署功能)</string>
+    <string name="termux_open">開啟 Termux</string>
+    <string name="termux_cmd_sent">已傳送啟動命令到 Termux</string>
+    <string name="termux_cmd_failed">失敗: 未偵測到 Termux 或未授權外部呼叫</string>
+    <string name="termux_deploy_title">安裝/部署到 Termux</string>
+    <string name="termux_deploy_msg">將把 gateway 後端檔案寫入 Download/ai-gateway-deploy/, 並喚起 Termux 執行安裝指令稿(安裝 Node.js、部署到 ~/ai-gateway、啟動)。\n\n需要 Termux 已執行過 termux-setup-storage 且允許外部呼叫。</string>
+    <string name="termux_deploy_start">開始</string>
+    <string name="termux_deploy_ok">已喚起 Termux 執行安裝</string>
+    <string name="termux_deploy_failed">部署失敗</string>
+
+    <!-- 總覽 -->
+    <string name="ov_checking">偵測中…</string>
+    <string name="ov_connected">已連接</string>
+    <string name="ov_connect_failed">連接失敗</string>
+    <string name="ov_not_connected">未連接</string>
+    <string name="ov_total_requests">總請求</string>
+    <string name="ov_errors">錯誤</string>
+    <string name="ov_uptime">執行時間</string>
+    <string name="ov_current_instance">目前實例</string>
+    <string name="ov_loading">載入中…</string>
+    <string name="ov_quick_actions">快捷操作</string>
+    <string name="ov_refresh">重新整理狀態</string>
+    <string name="ov_configure_first">請先在「連線 / 模式設定」裡設定</string>
+    <string name="ov_unreachable">無法連接到閘道, 請檢查位址/密碼或啟動後端</string>
+    <string name="ov_no_instance">無實例</string>
+    <string name="ov_load_failed">載入失敗: %1$s</string>
+    <string name="ov_mode_embedded">應用程式內執行 · 內嵌閘道</string>
+    <string name="ov_mode_remote">遠端閘道 · %1$s</string>
+    <string name="ov_mode_unset">未設定</string>
+    <string name="ov_recent_requests">最近請求</string>
+    <string name="ov_view_all">查看全部</string>
+    <string name="ov_no_requests">尚無請求記錄</string>
+    <string name="ov_stats_by_channel">按頻道統計</string>
+
+    <!-- 供應商 -->
+    <string name="pv_empty">尚無頻道\n點右下角 + 新增</string>
+    <string name="pv_add">新增頻道</string>
+    <string name="pv_edit">編輯頻道</string>
+    <string name="pv_fetch_models">取得模型</string>
+    <string name="pv_edit_btn">編輯</string>
+    <string name="pv_delete_btn">刪除</string>
+    <string name="pv_name">頻道名稱 *</string>
+    <string name="pv_type">上游格式 *</string>
+    <string name="pv_base_url">Base URL * (如 https://api.deepseek.com)</string>
+    <string name="pv_api_key">API Key (留空保持不變)</string>
+    <string name="pv_proxy">代理名 (選填)</string>
+    <string name="pv_models">模型清單 (逗號分隔)</string>
+    <string name="pv_model_map">模型改名 (每行: 對外名=上游名)</string>
+    <string name="pv_delay">請求延遲 (毫秒, 0=關)</string>
+    <string name="pv_default">設為預設頻道(後備)</string>
+    <string name="pv_use_responses">上游用 Responses API (/v1/responses, 僅 openai 類型)</string>
+    <string name="pv_insecure">略過憑證驗證 (自簽中繼站)</string>
+    <string name="pv_need_fields">名稱和 Base URL 必填</string>
+    <string name="pv_bad_type">格式必須是 openai / gemini / claude</string>
+    <string name="pv_saved">已儲存頻道</string>
+    <string name="pv_save_failed">儲存失敗: %1$s</string>
+    <string name="pv_delete_title">刪除頻道</string>
+    <string name="pv_delete_msg">確定刪除頻道「%1$s」嗎?</string>
+    <string name="pv_deleted">已刪除</string>
+    <string name="pv_fetching">正在從上游取得模型…</string>
+    <string name="pv_models_title">上游模型 (%1$d)</string>
+    <string name="pv_fill_models">填入 models 並儲存</string>
+    <string name="pv_no_models">未取得模型: %1$s</string>
+    <string name="pv_filled">已填入 %1$d 個模型</string>
+    <string name="pv_no_key">無 key</string>
+    <string name="pv_models_count">%1$d 模型</string>
+
+    <!-- 路由 -->
+    <string name="rt_hint">用戶端請求的模型名按以下規則路由: 頻道 modelMap 精確命中 &gt; models 清單 &gt; 預設頻道 &gt; 第一個頻道。改名請在「供應商」編輯頻道的 modelMap。</string>
+    <string name="rt_empty">尚無模型\n(在「供應商」為頻道新增 models / modelMap)</string>
+    <string name="rt_no_channel">(無頻道)</string>
+
+    <!-- 金鑰 -->
+    <string name="keys_gateway_title">閘道存取金鑰 (gatewayKey)</string>
+    <string name="keys_gateway_desc">用戶端呼叫 AI 介面時需攜帶此 key (Bearer / x-api-key / ?key=)。留空 = 免密碼。</string>
+    <string name="keys_admin_title">管理密碼 (adminKey)</string>
+    <string name="keys_admin_desc">管理面板 / admin API 的驗證密碼。留空 = 免密碼管理(區域網路自用)。</string>
+    <string name="keys_save">儲存金鑰</string>
+    <string name="keys_warn">⚠ 修改 adminKey 後, 本 App 的連接密碼也需同步更新(連線/模式設定)。修改後閘道會重新啟動生效。</string>
+    <string name="keys_saved">已儲存金鑰(閘道可能重新啟動)</string>
+
+    <!-- 連接埠 / 實例 -->
+    <string name="pt_new">新增實例</string>
+    <string name="pt_shutdown_all">全部停止</string>
+    <string name="pt_current">目前</string>
+    <string name="pt_running">執行中</string>
+    <string name="pt_stopped">已停止</string>
+    <string name="pt_channels">%1$d 頻道</string>
+    <string name="pt_delete_title">刪除實例</string>
+    <string name="pt_delete_msg">確定刪除實例「%1$s」嗎? 將刪除其設定檔。</string>
+    <string name="pt_shutdown_title">停止全部實例</string>
+    <string name="pt_shutdown_msg">確定停止所有執行中的閘道實例嗎?</string>
+    <string name="pt_new_title">新增實例</string>
+    <string name="pt_inst_name">實例名稱 * (字母/數字/連字符)</string>
+    <string name="pt_inst_port">連接埠 * (如 16390)</string>
+    <string name="pt_inst_key">adminKey (選填)</string>
+    <string name="pt_need_valid">請填有效名稱和連接埠</string>
+    <string name="pt_created">已建立實例「%1$s」</string>
+    <string name="pt_switched">已切換到實例「%1$s」</string>
+    <string name="pt_create_failed">建立失敗: %1$s</string>
+    <string name="pt_stopped_all">已停止全部實例</string>
+
+    <!-- 替換 -->
+    <string name="rp_hint">對經過閘道的文字做正規替換。model 欄位與 data:URL 不受影響。規則變更後閘道重新啟動生效。</string>
+    <string name="rp_out_title">傳送方向 (請求替換)</string>
+    <string name="rp_inc_title">接收方向 (回應替換)</string>
+    <string name="rp_add_out">新增傳送規則</string>
+    <string name="rp_add_inc">新增接收規則</string>
+    <string name="rp_save">儲存替換規則</string>
+    <string name="rp_regex">正規表示式 *</string>
+    <string name="rp_to">替換為 (留空=刪除符合內容)</string>
+    <string name="rp_ci">忽略大小寫 (ci)</string>
+    <string name="rp_empty_rules">(尚無%1$s規則)</string>
+    <string name="rp_delete_match">(刪除符合)</string>
+    <string name="rp_need_regex">正規表示式不能為空</string>
+    <string name="rp_bad_regex">正規無效: %1$s</string>
+    <string name="rp_saved">已儲存替換規則(閘道重新啟動生效)</string>
+    <string name="rp_dir_out">傳送</string>
+    <string name="rp_dir_inc">接收</string>
+    <string name="rp_add_rule">新增%1$s規則</string>
+    <string name="rp_edit_rule">編輯%1$s規則</string>
+
+    <!-- 統計 -->
+    <string name="st_by_channel">按頻道統計</string>
+    <string name="st_empty">尚無統計資料</string>
+    <string name="st_refresh">重新整理</string>
+    <string name="st_channel_detail">請求 %1$d · 輸入 %2$d tok · 輸出 %3$d tok</string>
+    <string name="st_channel_errors">%1$s · 錯誤 %2$d</string>
+
+    <!-- 請求記錄 -->
+    <string name="rq_empty">尚無請求記錄\n(需在閘道開啟請求記錄)</string>
+    <string name="rq_detail_title">請求詳情</string>
+    <string name="rq_no_body">(該閘道未儲存請求內文, 或記錄已過期)</string>
+    <string name="rq_section_request">━━ 請求 ━━</string>
+    <string name="rq_section_response">━━ 回應 ━━</string>
+    <string name="rq_empty_value">(空)</string>
+
+    <!-- 日誌 -->
+    <string name="lg_lines">行數</string>
+    <string name="lg_loading">載入中…</string>
+    <string name="lg_empty">(尚無日誌)</string>
+    <string name="lg_copied">已複製日誌</string>
+    <string name="lg_not_connected">後端未連接</string>
+    <string name="lg_load_failed">載入失敗: %1$s</string>
+
+    <!-- 聊天 -->
+    <string name="ch_model">模型</string>
+    <string name="ch_model_hint">選擇或輸入模型名</string>
+    <string name="ch_input_hint">輸入訊息…</string>
+    <string name="ch_empty">選擇模型, 開始對話測試閘道</string>
+    <string name="ch_need_model">請先選擇/輸入模型名</string>
+    <string name="ch_no_backend">後端未連接</string>
+    <string name="ch_you">你</string>
+    <string name="ch_ai">AI</string>
+    <string name="ch_error">[錯誤] %1$s</string>
+    <string name="ch_load_models_failed">載入模型失敗: %1$s</string>
+    <string name="ch_request_failed">請求失敗</string>
+
+    <!-- 通用 -->
+    <string name="ok">確定</string>
+    <string name="cancel">取消</string>
+    <string name="save">儲存</string>
+    <string name="delete">刪除</string>
+    <string name="close">關閉</string>
+    <string name="refresh">重新整理</string>
+    <string name="load_failed">載入失敗: %1$s</string>
+    <string name="op_failed">操作失敗: %1$s</string>
+    <string name="no_backend_hint">後端未連接, 請先在設定裡設定連接</string>
+    <string name="delete_failed">刪除失敗: %1$s</string>
+    <string name="copy">複製</string>
+    <string name="send">傳送</string>
+    <string name="start">啟動</string>
+    <string name="stop">停止</string>
+    <string name="restart">重新啟動</string>
+
+    <!-- 路由頁附加 -->
+    <string name="rt_model_sync">自動更新模型清單</string>
+    <string name="rt_model_sync_desc">定期從上游頻道拉取模型清單</string>
+    <string name="rt_sync_interval">間隔 (小時)</string>
+    <string name="rt_sync_now">立即同步</string>
+    <string name="rt_syncing">正在同步模型清單…</string>
+    <string name="rt_sync_done">同步完成</string>
+    <string name="rt_redact">隱私資料過濾</string>
+    <string name="rt_oe_enable">OpenAI 擴充端點 (Responses / Images / Embeddings…)</string>
+    <string name="rt_oe_enable_desc">對外開放 /v1/responses、/v1/images/generations、/v1/embeddings、/v1/audio/speech、/v1/completions、/v1/moderations; 並允許 OpenAI 頻道上游走 Responses API。重新啟動實例後生效。</string>
+    <string name="rt_oe_upstream">OpenAI 上游預設用 Responses API (/v1/responses)</string>
+    <string name="rt_oe_upstream_desc">全域預設; 個別頻道可在頻道設定裡用「上游用 Responses API」覆寫。不開啟時上游仍走 /v1/chat/completions。</string>
+    <string name="rt_redact_desc">轉傳前把請求裡的 API 金鑰 / token 替換為 ***(sk-、ghp_、AKIA、AIza、Bearer 等)</string>
+    <string name="rt_redact_extra">額外規則 (每行一個正規)</string>
+    <string name="rt_table_title">模型路由表</string>
+    <string name="rt_saved">已儲存 (閘道重新啟動生效)</string>
+
+    <!-- 替換頁速查表 -->
+    <string name="rp_cheat_title">正規速查表</string>
+    <string name="rp_cheat_syntax_title">語法</string>
+    <string name="rp_cheat_syntax">.        任意字元\n\\d \\w \\s   數字 / 單字字元 / 空白\n[abc]    a b c 之一\n[^abc]   非 a b c\n*  +  ?   0次以上 , 1次以上 , 0或1次\n{2,5}    2 到 5 次\n^  $      文字開頭 / 結尾\n(…)      擷取分組\na|b      a 或 b\n\\.       字面小數點 (跳脫)</string>
+    <string name="rp_cheat_replace_title">替換符號</string>
+    <string name="rp_cheat_replace">$1 $2    第 1 / 2 個分組\n$0       整個符合\n(留空)   刪除符合內容\n\\$       字面錢字號</string>
+    <string name="rp_cheat_examples_title">實用例子</string>
+    <string name="rp_cheat_examples">1. 遮罩電子郵件\n   正規: [\\w.]+@[\\w.]+\n   替換: ***\n\n2. 交換詞序\n   正規: (\\w+) (\\w+)\n   替換: $2 $1\n\n3. 去掉行尾空格\n   正規: [ \\t]+$\n   替換: (留空)\n\n4. 替換詞 (忽略大小寫請開 ci)\n   正規: chatgpt\n   替換: AI\n\n5. 合併多餘空行\n   正規: \\n{3,}\n   替換: \n\n</string>
+    <string name="rp_cheat_notes_title">注意事項</string>
+    <string name="rp_cheat_notes">• model 欄位和 data: URL 永不被替換。\n• 傳送規則作用於請求文字, 接收規則作用於回應文字。\n• 串流回應按片段比對, 跨片段的模式可能比對不到。\n• 規則變更後閘道重新啟動生效。</string>
+
+    <!-- 設定加密 -->
+    <string name="menu_config">設定與備份</string>
+    <string name="cfg_crypt_title">設定加密</string>
+    <string name="cfg_crypt_enable">加密儲存設定</string>
+    <string name="cfg_crypt_desc">用 AES-256-GCM 加密 App 內設定檔(與閘道 AGWENC1 格式相容)</string>
+    <string name="cfg_crypt_pass">加密通行碼</string>
+    <string name="cfg_crypt_pass_confirm">確認通行碼</string>
+    <string name="cfg_crypt_mismatch">兩次輸入的通行碼不一致</string>
+    <string name="cfg_crypt_need_pass">啟用加密需要填寫通行碼</string>
+    <string name="cfg_crypt_enabled">已啟用設定加密</string>
+    <string name="cfg_crypt_disabled">已關閉設定加密(明文儲存)</string>
+    <string name="cfg_crypt_embedded_only">作用於應用程式內執行模式。Termux 模式請在閘道側用 crypt.js 加密。</string>
+
+    <!-- 匯入 / 匯出 -->
+    <string name="cfg_transfer_title">匯入 / 匯出設定</string>
+    <string name="cfg_export">匯出設定</string>
+    <string name="cfg_export_desc">把目前實例設定儲存到檔案</string>
+    <string name="cfg_export_encrypt">加密匯出的檔案</string>
+    <string name="cfg_export_pass">匯出通行碼 (留空=明文)</string>
+    <string name="cfg_exported">設定已匯出</string>
+    <string name="cfg_export_failed">匯出失敗: %1$s</string>
+    <string name="cfg_import">匯入設定</string>
+    <string name="cfg_import_desc">讀取設定檔; 加密檔案需要來源通行碼</string>
+    <string name="cfg_import_pass_title">來源檔案通行碼</string>
+    <string name="cfg_import_pass_hint">通行碼 (未加密則留空)</string>
+    <string name="cfg_import_encrypted_hint">該檔案已加密 (AGWENC1), 請輸入加密時使用的通行碼。</string>
+    <string name="cfg_import_wrong_pass">通行碼錯誤或資料損壞: %1$s</string>
+    <string name="cfg_import_invalid">不是合法設定: %1$s</string>
+    <string name="cfg_import_confirm_title">確認匯入</string>
+    <string name="cfg_import_confirm_msg">匯入 %1$d 個頻道並覆蓋目前實例設定?\n\n來源: %2$s\n匯入後會用本 App 自己的通行碼重新加密。</string>
+    <string name="cfg_import_src_enc">加密檔案</string>
+    <string name="cfg_import_src_plain">明文檔案</string>
+    <string name="cfg_imported">設定已匯入 (%1$d 個頻道)</string>
+    <string name="cfg_import_failed">匯入失敗: %1$s</string>
+    <string name="cfg_reencrypted">已用本 App 通行碼重新加密</string>
+
+    <!-- Termux 附加 -->
+    <string name="termux_perm_hint">Termux 拒絕了呼叫。\n\n請到系統設定 → 應用程式 → 本應用程式 → 權限 → 其他權限, 開啟「在 Termux 環境中執行命令」。\n\n若已開啟仍失敗, 請檢查設定頁的 Termux 類型(ZeroTermux/官方)是否選對。</string>
+    <string name="termux_perm_title">需要授權</string>
+    <string name="termux_copy_cmd">複製命令</string>
+    <string name="termux_cmd_copied">命令已複製</string>
+    <string name="termux_open_anyway">開啟 Termux</string>
+
+    <!-- 實例編輯 / TLS -->
+    <string name="pt_edit_title">編輯實例</string>
+    <string name="pt_create">建立</string>
+    <string name="pt_saved">實例已儲存 (閘道重新啟動生效)</string>
+    <string name="pt_inst_host">監聽位址 (0.0.0.0 = 允許區域網路存取)</string>
+    <string name="pt_tls_enable">TLS (HTTPS) 加密</string>
+    <string name="pt_tls_desc">用憑證提供 HTTPS 服務。憑證/私鑰檔案需存在於閘道側。</string>
+    <string name="pt_tls_port">HTTPS 連接埠 (留空 = 與 HTTP 同埠, 即純 HTTPS)</string>
+    <string name="pt_tls_port_hint">填不同埠可同時提供 HTTP 與 HTTPS。</string>
+    <string name="pt_tls_cert">憑證檔案 (cert.pem)</string>
+    <string name="pt_tls_key">私鑰檔案 (key.pem)</string>
+
+    <!-- 代理 -->
+    <string name="nav_proxies">代理</string>
+    <string name="title_proxies">代理設定</string>
+    <string name="px_hint">在這裡定義具名代理, 然後在頻道的「代理名」裡引用。頻道代理留空即為直連。</string>
+    <string name="px_empty">尚無代理\n點 + 新增</string>
+    <string name="px_add">新增代理</string>
+    <string name="px_edit">編輯代理</string>
+    <string name="px_name">代理名稱 * (供頻道引用)</string>
+    <string name="px_type">類型 *</string>
+    <string name="px_host">主機 * (如 127.0.0.1)</string>
+    <string name="px_port">連接埠 * (如 7890)</string>
+    <string name="px_user">使用者名稱 (選填)</string>
+    <string name="px_pass">密碼 (選填)</string>
+    <string name="px_auth_hint">驗證為選填。SOCKS5 帶驗證時, 應用程式內引擎使用全域驗證器(可用, 但多個代理共用)。</string>
+    <string name="px_need_valid">請填寫有效的名稱、主機和連接埠</string>
+    <string name="px_bad_type">類型必須是 socks5 或 http</string>
+    <string name="px_saved">代理已儲存</string>
+    <string name="px_delete_title">刪除代理</string>
+    <string name="px_delete_msg">刪除代理「%1$s」嗎? 引用它的頻道將改為直連。</string>
+    <string name="px_has_auth">帶驗證</string>
+
+    <!-- 程式碼攔截 -->
+    <string name="menu_security">安全與背景</string>
+    <string name="title_security">安全與背景</string>
+    <string name="title_plugins">外掛管理</string>
+    <string name="pm_install">安裝外掛</string>
+    <string name="pm_instance">實例: %1$s</string>
+    <string name="pm_empty">該實例尚無已裝外掛</string>
+    <string name="pm_no_backend">請先連接閘道</string>
+    <string name="pm_enabled">已啟用 · 點按停用</string>
+    <string name="pm_disabled">已停用 · 點按啟用</string>
+    <string name="pm_remove_title">解除安裝外掛</string>
+    <string name="pm_remove_msg">確認解除安裝 \"%1$s\"?</string>
+    <string name="pm_removed">已解除安裝</string>
+    <string name="pm_install_title">安裝外掛</string>
+    <string name="pm_install_hint">輸入 .tar.gz 外掛包直鏈URL</string>
+    <string name="pm_installed">安裝成功</string>
+    <string name="pm_url_empty">請填寫URL</string>
+    <string name="gd_title">惡意程式碼攔截</string>
+    <string name="gd_warning">⚠️ 不建議一般使用者開啟。掃描會增加延遲, 正規比對可能誤報正常程式碼、也可能漏掉混淆過的程式碼。它只是輔助提醒, 不是安全邊界 —— 執行任何程式碼前請自行審查。</string>
+    <string name="gd_enable">掃描 AI 回傳內容中的程式碼</string>
+    <string name="gd_level">最低報告等級</string>
+    <string name="gd_level_high">僅高危 (破壞性命令、遠端執行、憑證外洩)</string>
+    <string name="gd_level_medium">中危及以上 (增加權限/持久化/不安全 eval)</string>
+    <string name="gd_level_low">低危及以上 (增加硬編碼金鑰、明文 HTTP)</string>
+    <string name="gd_action">命中後動作</string>
+    <string name="gd_action_warn">警告: 附加提示, 保留原內容</string>
+    <string name="gd_action_block">攔截: 用提示替換掉內容</string>
+    <string name="gd_cloud">使用雲端掃描 API</string>
+    <string name="gd_cloud_desc">把程式碼傳送到外部 API 分析。會顯著增加延遲, 且程式碼離開本機。</string>
+    <string name="gd_cloud_url">API 位址</string>
+    <string name="gd_cloud_key">API 金鑰</string>
+    <string name="gd_rule_count">本機規則庫: %1$d 條規則</string>
+    <string name="gd_test">用樣本測試</string>
+    <string name="gd_test_found">檢出 %1$d 項風險, 最高等級 %2$s</string>
+    <string name="gd_test_clean">該等級下未檢出風險</string>
+    <string name="gd_saved">攔截設定已儲存</string>
+    <string name="gd_applies_embedded">作用於應用程式內執行模式(跨格式回應)。</string>
+
+    <!-- 背景保活 -->
+    <string name="bg_title">背景活動保護</string>
+    <string name="bg_desc">讓應用程式內閘道在 App 退到背景時保持存活。</string>
+    <string name="bg_keepalive">前景服務保活</string>
+    <string name="bg_keepalive_desc">顯示一個常駐的低優先級通知並持有部分喚醒鎖, 使閘道持續回應請求。</string>
+    <string name="bg_embedded_only">僅在應用程式內執行模式下有意義。Termux 模式的後端跑在 Termux 裡。</string>
+    <string name="bg_started">保活服務已啟動</string>
+    <string name="bg_stopped">保活服務已停止</string>
+    <string name="bg_battery_ok">✓ 電池最佳化: 已豁免</string>
+    <string name="bg_battery_no">⚠ 電池最佳化: 生效中 (可能殺掉閘道)</string>
+    <string name="bg_battery_request">申請電池最佳化豁免</string>
+    <string name="bg_notif_ok">✓ 通知: 已啟用</string>
+    <string name="bg_notif_no">⚠ 通知: 已關閉 (前景服務需要通知)</string>
+    <string name="bg_notif_settings">開啟通知設定</string>
+    <string name="bg_svc_running">✓ 保活服務: 執行中</string>
+    <string name="bg_svc_stopped">保活服務: 已停止</string>
+    <string name="bg_app_details">開啟應用程式資訊 (自動啟動 / 背景限制)</string>
+    <string name="bg_oem_hint">部分廠商系統(小米、華為、OPPO、vivo 等)還需額外設定: 允許自動啟動、在最近工作裡鎖定應用程式、關閉背景限制。</string>
+    <string name="svc_channel_name">閘道執行中</string>
+    <string name="svc_channel_desc">保持應用程式內閘道在背景存活</string>
+    <string name="svc_title">AI Gateway 執行中</string>
+    <string name="svc_text">連接埠 %1$d · %2$d 個頻道</string>
+
+    <!-- 二維碼 -->
+    <string name="cfg_export_qr">匯出為 QR Code</string>
+    <string name="cfg_import_qr_image">從 QR Code 圖片匯入</string>
+    <string name="cfg_import_qr_camera">用相機掃描 QR Code</string>
+    <string name="cfg_qr_info">%1$d 個頻道 · %2$d 字元 → %3$d 位元組</string>
+    <string name="cfg_qr_hint">在另一台裝置上掃描: 設定與備份 → 用相機掃描 QR Code</string>
+    <string name="cfg_qr_too_large">設定太大, 單個 QR Code 裝不下 (%1$d 位元組)。請改用檔案匯出。</string>
+    <string name="cfg_qr_no_image">無法讀取圖片</string>
+    <string name="cfg_qr_not_found">圖片中未找到 QR Code</string>
+    <string name="cfg_qr_bad_payload">QR Code 內容不是有效的設定載荷</string>
+    <string name="cfg_qr_decode_failed">解碼失敗: %1$s</string>
+    <string name="cfg_qr_need_camera">掃描需要相機權限</string>
+ <string name="cfg_qr_no_camera_app">沒有可用的相機應用程式</string>
+
+    <!-- 請求內容收集 -->
+    <string name="rec_title">請求內容收集</string>
+    <string name="rec_enable">記錄請求 / 回應內文</string>
+    <string name="rec_desc">儲存完整的請求與回應內文, 使「請求記錄」頁能查看內容。預設關閉。</string>
+    <string name="rec_server">收集伺服器 (選填)</string>
+    <string name="rec_server_hint">留空 = 寫入閘道的 log/requests-&lt;實例&gt;.jsonl 檔案。填 http(s) 位址則把每條記錄 POST 到該位址。</string>
+    <string name="rec_max_chars">每條記錄最大字元數</string>
+    <string name="rec_privacy_warn">⚠ 收集會儲存完整對話內容, 包含你傳送的任何敏感資訊。非必要請保持關閉。</string>
+    <string name="rec_saved">收集設定已儲存 (閘道重新啟動生效)</string>
+    <string name="rec_bad_server">伺服器位址需以 http:// 或 https:// 開頭</string>
+    <string name="ts_title">思考鏈精簡</string>
+    <string name="ts_enable">傳送前精簡思考鏈</string>
+    <string name="ts_desc">推理模型的完整思考鏈會在到達用戶端前被精簡(按段擷取開頭,或用便宜模型逐段摘要),一般對話不受影響。</string>
+    <string name="ts_mode">精簡模式</string>
+    <string name="ts_max_chars">每段保留字數(截斷)</string>
+    <string name="ts_sum_url">摘要端點 URL</string>
+    <string name="ts_sum_url_hint">OpenAI 相容, 如 https://api.deepseek.com 或 https://127.0.0.1:16392(指向另一 gateway 實例時填該實例的 gatewayKey)</string>
+    <string name="ts_sum_key">API 金鑰</string>
+    <string name="ts_sum_model">摘要用的模型</string>
+    <string name="ts_sum_prompt">摘要提示詞</string>
+    <string name="ts_sum_warn">摘要模式需等完整思考結束再摘要, 思考階段會短暫暫停。</string>
+
+    <!-- 實例流量 -->
+    <string name="pt_req_count">%1$d 請求</string>
+    <string name="pt_err_count">%1$d 錯誤</string>
+    <string name="pt_no_traffic">無流量</string>
+    <string name="st_hint">目前查看實例「%1$s」。統計按實例獨立、閘道重新啟動後歸零 —— 若為 0, 請求可能打到了別的實例(見「實例」頁)。</string>
+    <string name="termux_variant_label">Termux 類型</string>
+    <string name="termux_variant_zero">ZeroTermux</string>
+    <string name="termux_variant_official">官方 Termux</string>
+    <!-- 卡密(多使用者Key) -->
+    <string name="menu_cards">卡密</string>
+    <string name="title_cards">卡密管理</string>
+    <string name="cd_hint">多使用者 Key: 發卡給他人使用, 支援限額/停用/過期/模型白名單。目標實例 = 目前選中實例</string>
+    <string name="cd_empty">尚無卡密, 點右下角發卡</string>
+    <string name="cd_add">發卡</string>
+    <string name="cd_copy">複製</string>
+    <string name="cd_toggle">停用/啟用</string>
+    <string name="cd_recharge">儲值/重置</string>
+    <string name="cd_copied">已複製完整 Key</string>
+    <string name="cd_unnamed">(無名卡)</string>
+    <string name="cd_state_disabled">已停用</string>
+    <string name="cd_state_expired">已過期</string>
+    <string name="cd_state_usedup">已用盡</string>
+    <string name="cd_state_active">啟用中</string>
+    <string name="cd_usage_fmt">用量 %1$s / %2$s (%3$d%%)</string>
+    <string name="cd_usage_unlimited">用量 %1$s (不限額)</string>
+    <string name="cd_limit_models">限 %1$d 個模型</string>
+    <string name="cd_limit_expires">%1$s 到期</string>
+    <string name="cd_new_title">發新卡 (實例 %1$s)</string>
+    <string name="cd_need_name">名稱必填</string>
+    <string name="cd_created">發卡成功</string>
+    <string name="cd_created_msg">完整 Key (隨時可在列表複製):\n\n%1$s</string>
+    <string name="cd_disabled_ok">已停用</string>
+    <string name="cd_enabled_ok">已啟用</string>
+    <string name="cd_del_title">刪除卡密</string>
+    <string name="cd_del_msg">刪除「%1$s」? 該 Key 立即失效, 不可復原</string>
+    <string name="cd_deleted">已刪除</string>
+    <string name="cd_add_quota">追加額度(萬 tokens)</string>
+    <string name="cd_reset_usage">重置已用量為 0</string>
+    <string name="cd_recharge_title">儲值/重置 「%1$s」</string>
+    <string name="cd_name">名稱(給誰用的)</string>
+    <string name="cd_quota">額度(萬 tokens)</string>
+    <string name="cd_quota_helper">0 或留空 = 不限量; 100 = 100萬 tokens</string>
+    <string name="cd_models">限定模型(逗號分隔)</string>
+    <string name="cd_models_helper">留空 = 全部模型可用</string>
+    <string name="cd_expires">有效期限</string>
+    <string name="cd_expires_helper">留空 = 永久; 格式 2026-12-31</string>
+    <string name="cd_note">備註(選填)</string>
+    <string name="fmt_yi">%1$.2f億</string>
+    <string name="fmt_wan">%1$.1f萬</string>
+    <!-- 使用者端 -->
+    <string name="setup_user">我是使用者</string>
+    <string name="setup_user_desc">用卡密/帳號使用別人部署的閘道服務</string>
+    <string name="nav_u_home">首頁</string>
+    <string name="nav_u_models">模型廣場</string>
+    <string name="nav_u_credits">額度</string>
+    <string name="nav_u_profile">個人</string>
+    <string name="ul_title">登入伺服器</string>
+    <string name="ul_server">伺服器位址</string>
+    <string name="ul_server_hint">http://網域或IP:埠, 如 http://abc.trycloudflare.com</string>
+    <string name="ul_branch">分支(實例名, 選填)</string>
+    <string name="ul_branch_hint">同一個Key可存取不同分組; 留空=default</string>
+    <string name="ul_by_token">卡密登入</string>
+    <string name="ul_by_account">帳密登入</string>
+    <string name="ul_token">卡密</string>
+    <string name="ul_token_hint">管理員發給你的 sk-xxx</string>
+    <string name="ul_uid">UID</string>
+    <string name="ul_password">密碼</string>
+    <string name="ul_login">登入</string>
+    <string name="ul_login_ok">登入成功</string>
+    <string name="ul_login_fail">登入失敗: %1$s</string>
+    <string name="ul_need_server">請填伺服器位址</string>
+    <string name="ul_need_token">請填卡密</string>
+    <string name="ul_no_keys">該帳號下沒有可用卡密, 請聯絡管理員發卡</string>
+    <string name="uh_status">服務狀態</string>
+    <string name="uh_loading">載入中…</string>
+    <string name="uh_offline">無法連接: %1$s</string>
+    <string name="uh_info_fmt">版本 %1$s · 已執行 %2$s</string>
+    <string name="uh_success_rate">頻道成功率</string>
+    <string name="uh_probe_hint">管理員未開啟成功率探測(預設關閉, 減少消耗)</string>
+    <string name="uh_probe_row">%1$s · 成功率 %2$s (%3$d 次)</string>
+    <string name="uh_branch">分支切換</string>
+    <string name="uh_branch_hint">同一 Key 可透過不同分支名存取不同分組(實例)</string>
+    <string name="uh_branch_name">分支名(留空=default)</string>
+    <string name="uh_branch_saved">已儲存, 正在重新整理</string>
+    <string name="uh_plugins">外掛</string>
+    <string name="uh_plugins_loading">載入中…</string>
+    <string name="uh_plugins_empty">該站台尚無可用外掛</string>
+    <string name="um_count">共 %1$d 個可用模型</string>
+    <string name="um_refresh">重新整理</string>
+    <string name="um_empty">尚無模型或載入失敗</string>
+    <string name="uc_remaining">剩餘額度</string>
+    <string name="uc_admin">管理員帳戶</string>
+    <string name="uc_unlimited">不限額度</string>
+    <string name="uc_no_expire">永久有效</string>
+    <string name="uc_all_models">全部模型可用</string>
+    <string name="uc_models_limited">限定模型: %1$s</string>
+    <string name="up_token_user">卡密使用者</string>
+    <string name="up_branch_fmt">目前分支: %1$s</string>
+    <string name="up_switch">切換帳號/伺服器</string>
+    <string name="up_admin_mode">切換到管理端</string>
+    <string name="disclaimer_short">⚠️ 本專案僅供實驗學習, 請勿用於真實交易業務!</string>
+    <string name="disclaimer_full">⚠️ 免責聲明: 本專案(ai-gateway)僅供實驗與學習用途, 不構成任何商業服務承諾。請勿用於真實交易業務! 使用本平台產生的任何費用、資料安全與服務穩定性問題, 由部署者與使用者自行承擔。</string>
+    <!-- 註冊+篩選 -->
+    <string name="ul_by_register">註冊</string>
+    <string name="ul_reg_uid">使用者名稱 (UID)</string>
+    <string name="ul_reg_uid_hint">3-32位 字母/數字/底線, 註冊後自動發一張卡</string>
+    <string name="ul_reg_password2">確認密碼</string>
+    <string name="ul_reg_email">電子郵件</string>
+    <string name="ul_reg_closed">該伺服器未開放註冊</string>
+    <string name="ul_reg_hint_fmt">密碼至少 %1$d 位</string>
+    <string name="ul_reg_query_fail">查詢註冊狀態失敗: %1$s</string>
+    <string name="ul_reg_fill_all">請填完整</string>
+    <string name="ul_reg_pw_mismatch">兩次密碼不一致</string>
+    <string name="ul_reg_ok">註冊成功! 已自動登入</string>
+    <string name="ul_reg_fail">註冊失敗: %1$s</string>
+    <string name="um_search">搜尋模型</string>
+    <string name="um_sort">排序</string>
+    <string name="um_sort_asc">名稱 A→Z</string>
+    <string name="um_sort_desc">名稱 Z→A</string>
+    <string name="cd_bind_user">綁定使用者(選填)</string>
+    <string name="cd_bind_user_hint">綁定後該使用者帳密登入可見此卡</string>
+    <string name="menu_panel">面板</string>
+    <string name="nav_settings">設定</string>
+    <string name="panel_loading">載入管理面板…</string>
+    <string name="pv_balance">查餘額</string>
+    <string name="pv_balance_loading">查詢 %1$s 餘額…</string>
+    <string name="pv_balance_title">餘額 · %1$s</string>
+    <string name="rg_captcha">人機驗證</string>
+    <string name="rg_captcha_hint">cloudflare.com → Turnstile → Add site 免費取得; App 註冊頁暫不支援 Turnstile 渲染, 開啟後使用者請在瀏覽器註冊</string>
+    <string name="rg_captcha_none">無</string>
+    <string name="rg_captcha_secret">Turnstile Secret Key(保密)</string>
+    <string name="rg_captcha_sitekey">Turnstile Site Key(公開)</string>
+    <string name="rg_captcha_turnstile">Cloudflare Turnstile(免費)</string>
+    <string name="rg_default_quota">註冊預設額度(萬 tokens)</string>
+    <string name="rg_default_quota_helper">0 = 不限量</string>
+    <string name="rg_enable">開放註冊</string>
+    <string name="rg_enable_hint">公網中繼站才開; 註冊自動發卡</string>
+    <string name="rg_key_length">卡密長度(8-128)</string>
+    <string name="rg_key_length_helper">不含 sk- 前綴, 預設 24</string>
+    <string name="rg_min_pw">密碼最小長度</string>
+    <string name="sa_save_second">儲存第二密碼</string>
+    <string name="sa_second_key">第二密碼</string>
+    <string name="sa_status_fmt">管理密碼 %1$s · 第二密碼 %2$s · TOTP %3$s</string>
+    <string name="sa_totp">TOTP 動態驗證</string>
+    <string name="sa_totp_disable">停用</string>
+    <string name="sa_totp_enable">啟用 TOTP</string>
+    <string name="sa_totp_save_warn">TOTP 已啟用, 請立即儲存密鑰!</string>
+    <string name="sa_totp_secret_fmt">密鑰(請立即儲存到驗證器): %1$s</string>
+    <string name="st_about">關於與免責</string>
+    <string name="st_config_sub">設定加密/備份/匯入匯出</string>
+    <string name="st_conn_sub">遠端閘道位址與密碼</string>
+    <string name="st_panel_sub">完整管理面板(網頁)</string>
+    <string name="st_reg">註冊與卡密</string>
+    <string name="st_reg_sub">開放註冊/卡密長度/人機驗證</string>
+    <string name="st_secondauth">第二驗證</string>
+    <string name="st_secondauth_sub">管理端登入需第二密碼或TOTP</string>
+    <string name="st_security_sub">程式碼攔截/背景保活</string>
+    <string name="st_theme_sub">深色/淺色/配色/語言</string>
+    <string name="st_tunnel">公網隧道</string>
+    <string name="st_tunnel_sub">cloudflared 免費臨時網域</string>
+    <string name="title_panel">完整面板</string>
+    <string name="tn_desc">免費臨時網域, 讓外部網路存取本閘道。手機/內網部署適用。</string>
+    <string name="tn_running">執行中</string>
+    <string name="tn_start">啟動隧道</string>
+    <string name="tn_starting">啟動中, 等待網域分配…</string>
+    <string name="tn_stop">停止隧道</string>
+    <string name="tn_stopped">未啟動</string>
+    <string name="tn_title">公網隧道 (cloudflared)</string>
+    <string name="tn_warn">⚠️ 隧道開啟=公網可存取! 務必先設閘道密碼和管理密碼</string>
+    <string name="uk_main">主卡</string>
+    <string name="uk_new">自助發卡</string>
+    <string name="um_group_all">全部(%1$d)</string>
+    <string name="up_avatar">頭像 URL</string>
+    <string name="up_edit_profile">編輯資料</string>
+    <string name="up_my_keys">我的卡密</string>
+    <string name="up_nickname">暱稱</string>
+    <string name="us_empty">尚無使用者</string>
+    <string name="us_keys_fmt">卡密 %1$d 張</string>
+    <string name="us_new">新增使用者</string>
+    <string name="us_password">密碼</string>
+    <string name="us_reset_pw">重設密碼</string>
+    <string name="us_sub">帳密登入帳號, 發卡可綁定</string>
+    <string name="us_title">使用者管理</string>
+    <string name="us_uid">UID(留空自動產生)</string>
+    <string name="pv_balance_section">上游餘額</string>
+    <string name="pv_balance_url">餘額介面</string>
+    <string name="pv_balance_url_helper">留空＝使用內建預設</string>
+    <string name="pv_balance_path">取值路徑</string>
+    <string name="pv_balance_unit">單位（可選）</string>
+    <!-- 懸浮窗 -->
+    <string name="st_overlay">懸浮窗</string>
+    <string name="st_overlay_sub">在其他應用上層顯示閘道狀態</string>
+    <string name="st_overlay_on">懸浮窗已開啟</string>
+    <string name="st_overlay_off">懸浮窗已關閉</string>
+    <string name="st_overlay_need_perm">需要懸浮窗權限</string>
+    <string name="ovl_perm_title">懸浮窗權限</string>
+    <string name="ovl_perm_msg">請允許「顯示在其他應用上層」。MIUI / EMUI 還需在應用權限裡開啟「背景彈出介面」, 否則懸浮窗不會出現。</string>
+    <string name="ovl_perm_denied">未取得懸浮窗權限</string>
+    <string name="ovl_no_backend">未連線閘道</string>
+    <string name="ovl_offline">離線</string>
+    <string name="ovl_online">線上</string>
+    <string name="ovl_mode">模式</string>
+    <string name="ovl_instance">實例</string>
+    <string name="ovl_port">連接埠</string>
+    <string name="ovl_requests">請求</string>
+    <string name="ovl_errors">錯誤</string>
+    <string name="ovl_uptime">執行時間</string>
+    <string name="ovl_open_app">開啟應用程式</string>
+    <string name="ovl_start">啟動</string>
+    <string name="ovl_stop">停止</string>
+    <string name="ovl_collapse">收合</string>
+    <string name="ovl_close">關閉</string>
+    <string name="ovl_notif_title">懸浮窗執行中</string>
+    <string name="ovl_notif_desc">在其他應用上層顯示閘道狀態</string>
+    <string name="ovl_balance">餘額</string>
+    <string name="ovl_balance_none">無餘額資料</string>
+    <string name="ovl_look">懸浮窗外觀</string>
+    <string name="ovl_look_title">懸浮窗外觀</string>
+    <string name="ovl_look_sub">尺寸 / 配色 / 顯示內容</string>
+    <string name="ovl_scale">整體縮放</string>
+    <string name="ovl_dim_alpha">靜止透明度</string>
+    <string name="ovl_snap">貼邊半隱藏</string>
+    <string name="ovl_dim">靜止後變淡</string>
+    <string name="ovl_lock">鎖定位置</string>
+    <string name="ovl_pin">常駐展開</string>
+    <string name="ovl_blur">背景模糊（Android 12+）</string>
+    <string name="ovl_reset">恢復預設</string>
+    <string name="ovl_look_hint">拖動移位 · 單擊展開 · 雙擊收起 · 長按重新整理</string>
+    <string name="ovl_size">氣泡尺寸</string>
+    <string name="ovl_panel_width">面板寬度</string>
+    <string name="ovl_bg">配色</string>
+    <string name="ovl_rows_title">顯示內容</string>
+    <string name="ovl_pill_title">氣泡內容</string>
+    <string name="ovl_pill_icon">圖示</string>
+    <string name="ovl_pill_balance">餘額</string>
+    <string name="ovl_pill_requests">請求數</string>
+    <string name="ovl_bg_theme">跟隨主題</string>
+    <string name="ovl_enable">啟用懸浮窗</string>
+    <string name="ovl_shape">氣泡形態</string>
+    <string name="ovl_shape_circle">圓形</string>
+    <string name="ovl_shape_pill">膠囊</string>
+    <string name="ovl_shape_square">方形</string>
+    <string name="ovl_shape_round">圓角</string>
+    <string name="ovl_icon">自訂圖案</string>
+    <string name="ovl_icon_pick">選擇圖片</string>
+    <string name="ovl_icon_clear">清除</string>
+    <string name="ovl_rows_hint">↑ ↓ 調整順序</string>
+    <string name="ovl_dim_delay">變暗延遲</string>
+    <string name="ovl_dim_level">變暗程度</string>
+    <string name="ovl_autoscroll">自動輪播</string>
+    <string name="ovl_scroll_sec">輪播間隔</string>
+    <string name="ovl_fail">失敗</string>
+    <string name="ovl_warn_below">餘額預警閾值</string>
+    <string name="pv_balance_warn">預警門檻</string>
+    <string name="pv_balance_warn_helper">5，或 CNY=5, USD=1</string>
+    <string name="pv_route_force">下一次請求走此渠道</string>
+    <string name="pv_route_clear">取消待生效的路由</string>
+    <string name="pv_route_on_msg">目前已鎖定到本渠道，確定取消？</string>
+    <string name="pv_route_off_msg">僅下一次請求走此渠道，之後恢復自動匹配。</string>
+    <string name="ovl_route">路由</string>
+    <string name="ovl_route_auto">自動</string>
+    <string name="ovl_route_pick">下一次請求走哪個渠道</string>
+    <string name="ovl_route_empty">還沒有可用渠道</string>
+    <string name="ovl_route_fail">設定失敗</string>
+    <string name="ctx_title">上下文視窗</string>
+    <string name="ctx_table">匹配表</string>
+    <string name="ctx_bad_line">無法解析：%1$s</string>
+    <string name="ovl_ctx">上下文</string>
+    <string name="ovl_ctx_none">—</string>
+    <string name="ctx_soft">軟上限（%）</string>
+    <string name="ctx_hard">硬上限（%）</string>
+    <string name="ctx_hard_hint">0 = 關閉。估算超過硬上限直接回傳 400，不再請求上游。</string>
+    <string name="ctx_pattern">模型比對</string>
+    <string name="ctx_window">上下文視窗</string>
+    <string name="ctx_cpt">每 token 字元數</string>
+    <string name="ctx_cpt_hint">僅用於估算：中日韓 1 字 = 1 token，其他 1 token = N 字元。</string>
+    <string name="ctx_empty">還沒有規則。模型視窗未知時硬上限不攔截。</string>
+    <string name="ctx_hint">自上而下，先匹配先用。* 是萬用字元，放最後當後備。視窗可寫 128k / 1m / 128000。</string>
+    <string name="ovl_gauge_w">指示環粗細</string>
+    <string name="ovl_gauge_c">指示環顏色</string>
+    <string name="ctx_add">新增規則</string>
+</resources>

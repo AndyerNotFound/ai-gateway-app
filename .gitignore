@@ -1,0 +1,12 @@
+# 构建产物
+build/
+.gradle/
+.kotlin/
+local.properties
+
+# git 之前的临时快照与日志（保留在磁盘，不进历史）
+backups/
+.bak-*
+*.bak-*
+*.log
+*.tar.gz

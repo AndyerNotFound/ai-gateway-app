@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 配色方案 overlay (浅色) —— 仅覆盖主色系, 其余继承主题 -->
+
+    <style name="ThemeOverlay.Palette.Purple" parent="">
+        <item name="colorPrimary">#6750A4</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#EADDFF</item>
+        <item name="colorOnPrimaryContainer">#21005D</item>
+        <item name="colorSecondary">#625B71</item>
+        <item name="colorSecondaryContainer">#E8DEF8</item>
+        <item name="colorOnSecondaryContainer">#1D192B</item>
+        <item name="colorTertiary">#7D5260</item>
+        <item name="colorTertiaryContainer">#FFD8E4</item>
+    </style>
+
+    <style name="ThemeOverlay.Palette.Blue" parent="">
+        <item name="colorPrimary">#0B57D0</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#D3E3FD</item>
+        <item name="colorOnPrimaryContainer">#041E49</item>
+        <item name="colorSecondary">#4A6382</item>
+        <item name="colorSecondaryContainer">#D3E3FD</item>
+        <item name="colorOnSecondaryContainer">#0B1F33</item>
+        <item name="colorTertiary">#3F6837</item>
+        <item name="colorTertiaryContainer">#C0EFB3</item>
+    </style>
+
+    <style name="ThemeOverlay.Palette.Green" parent="">
+        <item name="colorPrimary">#146C2E</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#C4EEAF</item>
+        <item name="colorOnPrimaryContainer">#002203</item>
+        <item name="colorSecondary">#52634F</item>
+        <item name="colorSecondaryContainer">#D5E8CF</item>
+        <item name="colorOnSecondaryContainer">#101F0F</item>
+        <item name="colorTertiary">#38656A</item>
+        <item name="colorTertiaryContainer">#BCEBF0</item>
+    </style>
+
+    <style name="ThemeOverlay.Palette.Orange" parent="">
+        <item name="colorPrimary">#8F4C00</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#FFDCC2</item>
+        <item name="colorOnPrimaryContainer">#2E1500</item>
+        <item name="colorSecondary">#755846</item>
+        <item name="colorSecondaryContainer">#FFDCC2</item>
+        <item name="colorOnSecondaryContainer">#2B1709</item>
+        <item name="colorTertiary">#5C6236</item>
+        <item name="colorTertiaryContainer">#E1E8B0</item>
+    </style>
+
+    <style name="ThemeOverlay.Palette.Red" parent="">
+        <item name="colorPrimary">#B3261E</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#FFDAD5</item>
+        <item name="colorOnPrimaryContainer">#410E0B</item>
+        <item name="colorSecondary">#775652</item>
+        <item name="colorSecondaryContainer">#FFDAD5</item>
+        <item name="colorOnSecondaryContainer">#2C1512</item>
+        <item name="colorTertiary">#705C2E</item>
+        <item name="colorTertiaryContainer">#FCDFA6</item>
+    </style>
+</resources>
