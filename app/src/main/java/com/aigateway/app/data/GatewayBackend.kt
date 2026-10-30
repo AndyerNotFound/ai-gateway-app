@@ -5,7 +5,7 @@ import com.google.gson.JsonObject
 /**
  * ai-gateway-AI 管理 API 抽象。
  *
- * 客户端只保留远程管理：所有方法都对应 server 端 /admin/api/* 的真实路由。
+ * 客户端只保留远程管理：所有方法都对应 server 端 /admin/api/ 下的真实路由。
  * 鉴权使用 config.webToken（请求头 x-agw-token）。
  */
 interface GatewayBackend {
