@@ -41,20 +41,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/connect_admin_key"
+            android:text="@string/admin_web_token"
             android:textAppearance="?attr/textAppearanceTitleMedium" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="8dp"
-            android:text="管理面板 / admin API 的鉴权密码。留空 = 免密管理(局域网自用)。"
+            android:text="@string/admin_web_token_desc"
             android:textAppearance="?attr/textAppearanceBodySmall"
             android:textColor="?attr/colorOnSurfaceVariant" />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="adminKey"
+            android:hint="@string/admin_web_token"
             app:endIconMode="password_toggle"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="⚠ 修改 adminKey 后, 本 App 的连接密码也需同步更新(连接/模式设置)。修改后网关会重启生效。"
+            android:text="@string/admin_web_token_warn"
             android:textAppearance="?attr/textAppearanceBodySmall"
             android:textColor="?attr/colorOnSurfaceVariant" />
     </LinearLayout>

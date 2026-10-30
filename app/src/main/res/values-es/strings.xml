@@ -609,7 +609,6 @@
     <string name="rg_min_pw">Longitud mínima de contraseña</string>
     <string name="sa_save_second">Guardar segunda contraseña</string>
     <string name="sa_second_key">Segunda contraseña</string>
-    <string name="sa_status_fmt">Contraseña de admin %1$s · Segunda contraseña %2$s · TOTP %3$s</string>
     <string name="sa_totp">Verificación dinámica TOTP</string>
     <string name="sa_totp_disable">Desactivar</string>
     <string name="sa_totp_enable">Activar TOTP</string>
@@ -635,7 +634,6 @@
     <string name="tn_stop">Detener túnel</string>
     <string name="tn_stopped">No iniciado</string>
     <string name="tn_title">Túnel público (cloudflared)</string>
-    <string name="tn_warn">⚠️ Túnel activo = ¡accesible desde Internet! Configura antes la gatewayKey y la contraseña de admin</string>
     <string name="uk_main">Tarjeta principal</string>
     <string name="uk_new">Autoemisión</string>
     <string name="um_group_all">Todos (%1$d)</string>

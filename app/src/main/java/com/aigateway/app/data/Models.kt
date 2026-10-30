@@ -45,6 +45,13 @@ data class Channel(
     val delayMs: Int = 0,
     val insecure: Boolean = false,
     val useResponses: Boolean = false,
+    val path: String? = null,
+    val probe: Boolean = false,
+    val lockAt: Long? = null,
+    val lockUntil: Long? = null,
+    val transcreet: String? = null,
+    val anthropicVersion: String? = null,
+    val addUsage: Boolean? = null,
     // 上游余额透传(查余额用): 相对地址按 baseUrl 拼; path=点路径; unit=展示单位
     // 空串 = 提交时清空该字段(后端对「未提交」才继承旧值)
     val balanceUrl: String? = null,
@@ -102,45 +109,26 @@ data class Record(
     val maxChars: Int = 200000
 )
 
-data class ThinkingSummary(
-    val enable: Boolean = false,
-    val mode: String = "truncate",        // truncate=按段截取开头(零延迟) | summarize=用便宜模型逐段总结
-    val maxCharsPerSegment: Int = 80,
-    val summarizeBaseUrl: String = "",    // OpenAI 兼容端点, 如 https://api.deepseek.com 或 http://127.0.0.1:16392
-    val summarizeApiKey: String = "",     // 对应 apiKey(指向另一 gateway 实例时填该实例 gatewayKey)
-    val summarizeModel: String = "",      // 模型名
-    val summarizePrompt: String = "用一句话中文概括以下思考片段:",
-    val maxSegments: Int = 12
-)
-
 data class ModelSync(
     val enable: Boolean = true,
-    val intervalHours: Int = 24
+    val intervalHours: Int = 24,
+    val intervalMin: Int? = null
 )
 
-/** OpenAI 扩展端点: enable=对外开放 /v1/responses 与 images/embeddings/audio 等; upstreamResponses=全局默认上游用 Responses API */
-data class OpenaiExtras(
-    val enable: Boolean = false,
-    val upstreamResponses: Boolean = false
-)
-
+/** 实例配置（与管理 API 的 config 字段对齐）。 */
 data class GatewayConfig(
     val forceChannel: String? = null,
     val name: String = "",
     val port: Int = 16384,
     val host: String = "0.0.0.0",
     val gatewayKey: String = "",
-    val adminKey: String = "",
+    val webToken: String = "",
     val tls: Tls = Tls(),
     val redact: Redact = Redact(),
     val replace: Replace = Replace(),
     val record: Record = Record(),
-    val thinkingSummary: ThinkingSummary = ThinkingSummary(),
     val modelSync: ModelSync = ModelSync(),
-    val openaiExtras: OpenaiExtras = OpenaiExtras(),
     val keyLength: Int? = null,
-    val contextWindows: List<CtxWindow>? = null,
-    val contextLimit: CtxLimit? = null,
     val registration: JsonObject? = null,
     val proxies: Map<String, Proxy> = emptyMap(),
     val channels: List<Channel> = emptyList(),
@@ -184,40 +172,6 @@ data class Ctx(
     val soft: Double = 80.0,
     /** 硬上限(百分比): 0=关闭, 超过网关直接 400 */
     val hard: Double = 0.0
-)
-
-/** 上下文软/硬上限(占窗口百分比) + 硬上限用的估算比例 */
-/** 一个最近活跃实例的上下文快照(轮播用) */
-data class ActiveInst(
-    val name: String = "",
-    val at: Long = 0,
-    val model: String = "",
-    val channel: String = "",
-    val prompt: Long = 0,
-    val window: Long = 0,
-    val percent: Double? = null,
-    val soft: Double = 80.0,
-    val hard: Double = 0.0,
-    val est: Boolean = false,
-    /** 该实例正在跑的请求数 */
-    val inflight: Int = 0
-)
-
-data class ActiveResp(
-    val current: String = "",
-    val active: List<ActiveInst> = emptyList()
-)
-
-data class CtxLimit(
-    val soft: Double = 80.0,
-    val hard: Double = 0.0,
-    val charsPerToken: Double = 4.0
-)
-
-/** 上下文窗口匹配表的一行: 模型名通配 -> 窗口大小 */
-data class CtxWindow(
-    val match: String = "",
-    val window: Long = 0
 )
 
 data class RequestEntry(

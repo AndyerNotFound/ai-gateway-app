@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="@string/pt_inst_key"
+            android:hint="@string/admin_web_token"
             app:endIconMode="password_toggle"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText

@@ -609,7 +609,6 @@
     <string name="rg_min_pw">Минимальная длина пароля</string>
     <string name="sa_save_second">Сохранить второй пароль</string>
     <string name="sa_second_key">Второй пароль</string>
-    <string name="sa_status_fmt">Пароль администратора %1$s · Второй пароль %2$s · TOTP %3$s</string>
     <string name="sa_totp">TOTP-динамическая проверка</string>
     <string name="sa_totp_disable">Отключить</string>
     <string name="sa_totp_enable">Включить TOTP</string>
@@ -635,7 +634,6 @@
     <string name="tn_stop">Остановить туннель</string>
     <string name="tn_stopped">Не запущен</string>
     <string name="tn_title">Публичный туннель (cloudflared)</string>
-    <string name="tn_warn">⚠️ Туннель включён = доступ из интернета! Сначала задайте gatewayKey и пароль администратора</string>
     <string name="uk_main">Главная карточка</string>
     <string name="uk_new">Самостоятельный выпуск</string>
     <string name="um_group_all">Все (%1$d)</string>

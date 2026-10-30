@@ -609,7 +609,6 @@
     <string name="rg_min_pw">密碼最小長度</string>
     <string name="sa_save_second">儲存第二密碼</string>
     <string name="sa_second_key">第二密碼</string>
-    <string name="sa_status_fmt">管理密碼 %1$s · 第二密碼 %2$s · TOTP %3$s</string>
     <string name="sa_totp">TOTP 動態驗證</string>
     <string name="sa_totp_disable">停用</string>
     <string name="sa_totp_enable">啟用 TOTP</string>
@@ -635,7 +634,6 @@
     <string name="tn_stop">停止隧道</string>
     <string name="tn_stopped">未啟動</string>
     <string name="tn_title">公網隧道 (cloudflared)</string>
-    <string name="tn_warn">⚠️ 隧道開啟=公網可存取! 務必先設閘道密碼和管理密碼</string>
     <string name="uk_main">主卡</string>
     <string name="uk_new">自助發卡</string>
     <string name="um_group_all">全部(%1$d)</string>

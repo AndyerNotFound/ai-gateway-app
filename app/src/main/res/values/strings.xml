@@ -323,7 +323,7 @@
     <string name="cfg_import_wrong_pass">Wrong password or corrupted data: %1$s</string>
     <string name="cfg_import_invalid">Not a valid config: %1$s</string>
     <string name="cfg_import_confirm_title">Confirm import</string>
-    <string name="cfg_import_confirm_msg">Import %1$d channels and overwrite the current instance config?\n\nSource: %2$s\nIt will be re-encrypted with this app\'s own password.</string>
+    <string name="cfg_import_confirm_msg">Import %1$d channels and overwrite the current instance config?\n\nSource: %2$s\nConnection settings (port/TLS/tokens) are kept.</string>
     <string name="cfg_import_src_enc">encrypted file</string>
     <string name="cfg_import_src_plain">plain text file</string>
     <string name="cfg_imported">Config imported (%1$d channels)</string>
@@ -612,7 +612,7 @@
     <string name="sa_totp_disable">Disable</string>
     <string name="sa_totp_secret_fmt">Secret (save to authenticator now): %1$s</string>
     <string name="sa_totp_save_warn">TOTP enabled. Save the secret now!</string>
-    <string name="sa_status_fmt">Admin key %1$s · 2nd key %2$s · TOTP %3$s</string>
+    <string name="sa_status_fmt">Web Token %1$s · 2nd key %2$s · TOTP %3$s</string>
     <!-- Tunnel -->
     <string name="tn_title">Public Tunnel (cloudflared)</string>
     <string name="tn_desc">Free temporary domain exposing this gateway. For phone/LAN deployment.</string>
@@ -621,7 +621,7 @@
     <string name="tn_running">Running</string>
     <string name="tn_starting">Starting, waiting for domain…</string>
     <string name="tn_stopped">Stopped</string>
-    <string name="tn_warn">⚠️ Tunnel = public access! Set gateway key and admin key first</string>
+    <string name="tn_warn">⚠️ Tunnel = public access! Set gateway key and Web Token first</string>
     <!-- Reg settings -->
     <string name="rg_key_length">Key card length (8-128)</string>
     <string name="rg_key_length_helper">Excluding sk- prefix, default 24</string>
@@ -793,4 +793,25 @@
     <string name="sdui_routes_hint">Routed pages, comma separated (e.g. requests,stats)</string>
     <string name="sdui_clear">Disable routing</string>
     <string name="sdui_chip_native">Native</string>
+
+    <!-- Admin-only client -->
+    <string name="admin_setup_title">Connect to ai-gateway-AI</string>
+    <string name="admin_setup_desc">This app is a management client. Run ai-gateway-AI in Termux, on this phone or on the LAN, then connect with its address and webToken. If 2FA is enabled, add the second key / TOTP secret later in Connection settings.</string>
+    <string name="admin_web_token">Web Token</string>
+    <string name="admin_web_token_hint">Set webToken in the gateway config (or panel → Config). The management API requires it for remote access.</string>
+    <string name="admin_connect">Connect</string>
+    <string name="admin_token_required">Web Token is required for remote management</string>
+    <string name="admin_bad_url">Address must start with http:// or https://</string>
+    <string name="admin_connect_failed">Connection failed. Check the address, certificate and webToken.</string>
+    <string name="admin_connected">Connected to ai-gateway-AI</string>
+
+    <string name="admin_web_token_desc">Password for the admin API (config.webToken). Empty = management API disabled for remote clients.</string>
+    <string name="admin_web_token_warn">After changing webToken, update the connection settings in this app as well. The gateway restarts immediately.</string>
+
+    <string name="admin_token_other_instance">This instance token was updated. Your current connection uses the default instance, so it was left unchanged.</string>
+
+    <string name="admin_second_key">Second key (optional, if 2FA is enabled)</string>
+    <string name="admin_totp_secret">TOTP secret (optional, base32)</string>
+
+    <string name="admin_tls_url_switched">Connection URL switched to %1$s. If the certificate is from agw-tls, install its CA as a user certificate.</string>
 </resources>

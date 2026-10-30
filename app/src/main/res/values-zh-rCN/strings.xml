@@ -612,7 +612,6 @@
     <string name="sa_totp_disable">停用</string>
     <string name="sa_totp_secret_fmt">密钥(请立即保存到验证器): %1$s</string>
     <string name="sa_totp_save_warn">TOTP 已启用, 请立即保存密钥!</string>
-    <string name="sa_status_fmt">管理密码 %1$s · 第二密码 %2$s · TOTP %3$s</string>
     <!-- 隧道 -->
     <string name="tn_title">公网隧道 (cloudflared)</string>
     <string name="tn_desc">免费临时域名, 让外网访问本网关。手机/内网部署适用。</string>
@@ -621,7 +620,6 @@
     <string name="tn_running">运行中</string>
     <string name="tn_starting">启动中, 等待域名分配…</string>
     <string name="tn_stopped">未启动</string>
-    <string name="tn_warn">⚠️ 隧道开启=公网可访问! 务必先设网关密码和管理密码</string>
     <!-- 注册设置 -->
     <string name="rg_key_length">卡密长度(8-128)</string>
     <string name="rg_key_length_helper">不含 sk- 前缀, 默认 24</string>

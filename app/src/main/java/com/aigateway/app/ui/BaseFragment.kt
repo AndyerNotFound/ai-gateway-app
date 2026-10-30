@@ -24,8 +24,11 @@ abstract class BaseFragment : Fragment() {
     private var lastDataKey: String? = null
 
     /** 当前数据标识: 实例名 + 后端连接 */
-    protected open fun dataKey(): String =
-        app.connectionStore.activeInstance + "|" + (backendOrNull()?.connectionDesc ?: "none")
+    protected open fun dataKey(): String {
+        val p = app.connectionStore.getCurrentProfile()
+        return app.connectionStore.activeInstance + "|" +
+            (p?.let { it.baseUrl + "|" + it.webToken + "|" + it.secondKey + "|" + it.totpSecret } ?: "none")
+    }
 
     /**
      * 子类覆盖以支持自动刷新(切实例/切连接后回到该页会自动重载)。

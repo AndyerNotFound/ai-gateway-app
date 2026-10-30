@@ -48,9 +48,6 @@ class RoutingFragment : BaseFragment() {
             // 隐私数据过滤
             b.switchRedact.isChecked = cfg.redact.enable
             b.editRedactExtra.setText(cfg.redact.extra?.joinToString("\n") ?: "")
-            // OpenAI 扩展端点
-            b.switchOeEnable.isChecked = cfg.openaiExtras.enable
-            b.switchOeUpstream.isChecked = cfg.openaiExtras.upstreamResponses
             // 路由表
             renderRoutes(cfg.channels)
         }
@@ -102,14 +99,12 @@ class RoutingFragment : BaseFragment() {
             add("modelSync", JsonObject().apply {
                 addProperty("enable", b.switchModelSync.isChecked)
                 addProperty("intervalHours", interval)
+                // 本页只编辑小时；显式清掉分钟级覆盖，避免“改了小时但实际仍按分钟跑”
+                add("intervalMin", com.google.gson.JsonNull.INSTANCE)
             })
             add("redact", JsonObject().apply {
                 addProperty("enable", b.switchRedact.isChecked)
                 add("extra", JsonArray().apply { extra.forEach { add(it) } })
-            })
-            add("openaiExtras", JsonObject().apply {
-                addProperty("enable", b.switchOeEnable.isChecked)
-                addProperty("upstreamResponses", b.switchOeUpstream.isChecked)
             })
         }
         run({ snack(getString(R.string.pv_save_failed, it)) }, {

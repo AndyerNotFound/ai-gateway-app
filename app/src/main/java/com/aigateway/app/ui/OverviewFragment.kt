@@ -13,9 +13,7 @@ import com.aigateway.app.MainActivity
 import com.aigateway.app.R
 import com.aigateway.app.data.ChannelStat
 import com.aigateway.app.data.RequestEntry
-import com.aigateway.app.data.RunMode
 import com.aigateway.app.databinding.FragmentOverviewBinding
-import com.aigateway.app.termux.TermuxHelper
 import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,10 +37,6 @@ class OverviewFragment : BaseFragment() {
         b.btnTheme.setOnClickListener { (activity as? MainActivity)?.showThemeDialogPublic() }
         b.btnAllStats.setOnClickListener { (activity as? MainActivity)?.showFragment("stats") }
         b.btnAllRequests.setOnClickListener { (activity as? MainActivity)?.showFragment("requests") }
-        b.btnStartTermux.setOnClickListener {
-            (activity as? MainActivity)?.startTermuxBackendPublic()
-        }
-        b.btnStartTermux.visibility = if (app.connectionStore.runMode == RunMode.TERMUX) View.VISIBLE else View.GONE
         load()
     }
 
@@ -78,20 +72,15 @@ class OverviewFragment : BaseFragment() {
     }
 
     override fun reload() {
-        if (_b != null) {
-            b.btnStartTermux.visibility = if (app.connectionStore.runMode == RunMode.TERMUX) View.VISIBLE else View.GONE
-            load()
-        }
+        if (_b != null) load()
     }
 
     private fun load() {
         val backend = backendOrNull()
-        b.textMode.text = when (app.connectionStore.runMode) {
-            RunMode.EMBEDDED -> getString(R.string.ov_mode_embedded)
-            RunMode.TERMUX -> getString(R.string.ov_mode_remote,
-                app.connectionStore.getCurrentProfile()?.baseUrl ?: getString(R.string.ov_mode_unset))
-            RunMode.USER, null -> getString(R.string.ov_mode_unset)
-        }
+        b.textMode.text = getString(
+            R.string.ov_mode_remote,
+            app.connectionStore.getCurrentProfile()?.baseUrl ?: getString(R.string.ov_mode_unset)
+        )
         if (backend == null) {
             setStatus(false, getString(R.string.ov_not_connected))
             b.textInstance.text = getString(R.string.ov_configure_first)

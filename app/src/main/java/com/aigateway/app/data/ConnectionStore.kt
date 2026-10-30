@@ -3,25 +3,25 @@ package com.aigateway.app.data
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import java.util.UUID
 
-/** 一个连接配置(远程网关) */
+/** 一个远程网关连接配置。webToken 对应 ai-gateway-AI 的 config.webToken。 */
 data class ConnectionProfile(
     val id: String = UUID.randomUUID().toString(),
     var label: String = "",
-    var baseUrl: String = "https://127.0.0.1:16384",
-    var adminKey: String = ""
+    var baseUrl: String = ConnectionStore.DEFAULT_URL,
+    var webToken: String = "",
+    /** ai-gateway-AI 第二因子：第二密码（请求头 x-admin-key2）。 */
+    var secondKey: String = "",
+    /** ai-gateway-AI 第二因子：TOTP secret（base32，用于生成 x-totp）。 */
+    var totpSecret: String = ""
 ) {
     fun displayName(): String = label.ifBlank { baseUrl }
 }
 
-/** 运行模式 */
-enum class RunMode { EMBEDDED, TERMUX, USER }
-
-/**
- * 连接/模式配置存储 —— SharedPreferences 持久化。
- */
+/** 连接配置存储 —— 只保留远程管理所需的地址与令牌。 */
 class ConnectionStore(context: Context) {
 
     private val sp: SharedPreferences =
@@ -30,56 +30,47 @@ class ConnectionStore(context: Context) {
 
     companion object {
         private const val K_SETUP_DONE = "setup_done"
-        private const val K_MODE = "run_mode"
         private const val K_PROFILES = "profiles"
         private const val K_CURRENT_ID = "current_profile_id"
         private const val K_ACTIVE_INSTANCE = "active_instance"
-        const val DEFAULT_TERMUX_URL = "https://127.0.0.1:16384"
-        const val DEFAULT_LAN_URL = "https://192.168.1.7:16384"
+        const val DEFAULT_URL = "http://127.0.0.1:16384"
     }
 
     var setupDone: Boolean
         get() = sp.getBoolean(K_SETUP_DONE, false)
         set(v) = sp.edit().putBoolean(K_SETUP_DONE, v).apply()
 
-    var runMode: RunMode?
-        get() = sp.getString(K_MODE, null)?.let {
-            runCatching { RunMode.valueOf(it) }.getOrNull()
-        }
-        set(v) = sp.edit().putString(K_MODE, v?.name).apply()
-
-    /** 当前激活实例名(管理面板里选中的实例) */
+    /** 当前激活实例名（管理页里的实例选择）。 */
     var activeInstance: String
         get() = sp.getString(K_ACTIVE_INSTANCE, "default") ?: "default"
         set(v) = sp.edit().putString(K_ACTIVE_INSTANCE, v).apply()
 
-    // ---- 连接配置列表 ----
-
+    /**
+     * 读取连接列表。兼容旧版本把管理令牌存成 adminKey 的配置：
+     * 迁移到 webToken，并补上缺失的 id。
+     */
     fun getProfiles(): MutableList<ConnectionProfile> {
         val raw = sp.getString(K_PROFILES, null) ?: return mutableListOf()
         val list = runCatching {
+            val arr = JsonParser.parseString(raw).asJsonArray
+            for (el in arr) {
+                if (!el.isJsonObject) continue
+                val o = el.asJsonObject
+                if (!o.has("id")) o.addProperty("id", UUID.randomUUID().toString())
+                if (o.get("label")?.isJsonPrimitive != true) o.addProperty("label", "")
+                if (o.get("baseUrl")?.isJsonPrimitive != true) o.addProperty("baseUrl", DEFAULT_URL)
+                if (!o.has("webToken") && o.has("adminKey")) {
+                    o.addProperty("webToken", o.get("adminKey")?.takeIf { it.isJsonPrimitive }?.asString ?: "")
+                }
+                if (o.get("webToken")?.isJsonPrimitive != true) o.addProperty("webToken", "")
+                if (o.get("secondKey")?.isJsonPrimitive != true) o.addProperty("secondKey", "")
+                if (o.get("totpSecret")?.isJsonPrimitive != true) o.addProperty("totpSecret", "")
+                o.remove("adminKey")
+            }
             val type = object : TypeToken<MutableList<ConnectionProfile>>() {}.type
-            gson.fromJson<MutableList<ConnectionProfile>>(raw, type) ?: mutableListOf()
+            gson.fromJson<MutableList<ConnectionProfile>>(arr.toString(), type) ?: mutableListOf()
         }.getOrDefault(mutableListOf())
-        // 一次性迁移: 本机/私网地址 http -> https (网关已全部改为单端口纯 HTTPS)
-        var changed = false
-        for (p in list) {
-            val u = upgradeScheme(p.baseUrl)
-            if (u != p.baseUrl) { p.baseUrl = u; changed = true }
-        }
-        if (changed) saveProfiles(list)
         return list
-    }
-
-    /** 仅对本机/私网地址把 http:// 升级为 https://, 公网地址原样保留 */
-    private fun upgradeScheme(url: String): String {
-        if (!url.startsWith("http://", ignoreCase = true)) return url
-        val host = url.substring(7).substringBefore('/').substringBefore(':')
-        val local = host == "localhost" || host == "::1" ||
-            host.startsWith("127.") || host.startsWith("192.168.") ||
-            host.startsWith("10.") ||
-            Regex("^172\\.(1[6-9]|2[0-9]|3[01])\\.").containsMatchIn(host)
-        return if (local) "https://" + url.substring(7) else url
     }
 
     private fun saveProfiles(list: List<ConnectionProfile>) {
@@ -109,13 +100,12 @@ class ConnectionStore(context: Context) {
         return getProfiles().firstOrNull { it.id == id }
     }
 
-    /** 确保至少有一个默认配置(首次进 TERMUX 模式用) */
+    /** 首次启动创建一个本机默认配置。 */
     fun ensureDefaultProfiles() {
         if (getProfiles().isEmpty()) {
-            saveProfile(ConnectionProfile(label = "本机 Termux", baseUrl = DEFAULT_TERMUX_URL))
+            saveProfile(ConnectionProfile(label = "Local gateway", baseUrl = DEFAULT_URL))
         }
     }
 
-    /** 重置全部(调试用) */
     fun clear() = sp.edit().clear().apply()
 }

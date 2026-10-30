@@ -609,7 +609,6 @@
     <string name="rg_min_pw">Longueur minimale du mot de passe</string>
     <string name="sa_save_second">Enregistrer le second mot de passe</string>
     <string name="sa_second_key">Second mot de passe</string>
-    <string name="sa_status_fmt">Mot de passe admin %1$s · Second mot de passe %2$s · TOTP %3$s</string>
     <string name="sa_totp">Vérification dynamique TOTP</string>
     <string name="sa_totp_disable">Désactiver</string>
     <string name="sa_totp_enable">Activer TOTP</string>
@@ -635,7 +634,6 @@
     <string name="tn_stop">Arrêter le tunnel</string>
     <string name="tn_stopped">Non démarré</string>
     <string name="tn_title">Tunnel public (cloudflared)</string>
-    <string name="tn_warn">⚠️ Tunnel actif = accessible depuis Internet ! Configurez d\'abord la gatewayKey et le mot de passe admin</string>
     <string name="uk_main">Carte principale</string>
     <string name="uk_new">Auto-émission</string>
     <string name="um_group_all">Tous (%1$d)</string>

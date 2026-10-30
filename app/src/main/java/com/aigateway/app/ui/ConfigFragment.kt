@@ -7,17 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import com.aigateway.app.R
 import com.aigateway.app.data.ConfigCrypto
-import com.aigateway.app.data.CtxWindow
 import com.aigateway.app.data.ConfigTransfer
-import com.aigateway.app.data.QrCodec
-import com.aigateway.app.databinding.DialogQrShowBinding
 import com.aigateway.app.data.GatewayConfig
-import com.aigateway.app.data.RunMode
+import com.aigateway.app.data.QrCodec
 import com.aigateway.app.databinding.DialogImportPassBinding
+import com.aigateway.app.databinding.DialogQrShowBinding
 import com.aigateway.app.databinding.FragmentConfigBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -26,7 +23,7 @@ import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/** 配置与备份 —— 配置加密 + 导入/导出 */
+/** 配置与备份：请求录制 + 导入/导出（文件与二维码）。 */
 class ConfigFragment : BaseFragment() {
 
     private var _b: FragmentConfigBinding? = null
@@ -34,34 +31,24 @@ class ConfigFragment : BaseFragment() {
     private lateinit var transfer: ConfigTransfer
     private val gson = Gson()
 
-    /** 导出: 创建文件 */
     private val exportLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { doExport(it) }
-        }
+        if (result.resultCode == Activity.RESULT_OK) result.data?.data?.let { doExport(it) }
     }
 
-    /** 导入: 选择文件 */
     private val importLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { doImportRead(it) }
-        }
+        if (result.resultCode == Activity.RESULT_OK) result.data?.data?.let { doImportRead(it) }
     }
 
-    /** 选图片(相册)解码二维码 */
     private val qrImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { decodeQrFromUri(it) }
-        }
+        if (result.resultCode == Activity.RESULT_OK) result.data?.data?.let { decodeQrFromUri(it) }
     }
 
-    /** 相机拍照解码二维码 */
     private val qrCameraLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -72,7 +59,6 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    /** 相机权限 */
     private val cameraPermLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
@@ -86,51 +72,22 @@ class ConfigFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         transfer = ConfigTransfer(requireContext())
-        val s = app.settings
-
-        b.switchCrypt.isChecked = s.cryptEnabled
-        b.cryptPassSection.visibility = if (s.cryptEnabled) View.VISIBLE else View.GONE
-        if (s.cryptEnabled) {
-            b.editCryptPass.setText(s.cryptPassword)
-            b.editCryptPass2.setText(s.cryptPassword)
-        }
-        b.switchCrypt.setOnCheckedChangeListener { _, on ->
-            b.cryptPassSection.visibility = if (on) View.VISIBLE else View.GONE
-        }
-        b.btnSaveCrypt.setOnClickListener { saveCrypt() }
 
         b.switchExportEncrypt.setOnCheckedChangeListener { _, on ->
             b.exportPassLayout.visibility = if (on) View.VISIBLE else View.GONE
-            if (on && b.editExportPass.text.isNullOrEmpty() && s.cryptPassword.isNotEmpty()) {
-                b.editExportPass.setText(s.cryptPassword)
-            }
         }
-        // 请求内容收集
         b.switchRecord.setOnCheckedChangeListener { _, on ->
             b.recordSection.visibility = if (on) View.VISIBLE else View.GONE
         }
         b.btnSaveRecord.setOnClickListener { saveRecord() }
-        loadRecord()
-        b.btnSaveCtx.setOnClickListener { saveCtxTable() }
-        b.btnAddCtxRule.setOnClickListener { editCtxRule(-1) }
-        loadCtxTable()
-
-        // 思考链精简
-        b.switchTs.setOnCheckedChangeListener { _, on ->
-            b.tsSection.visibility = if (on) View.VISIBLE else View.GONE
-        }
-        b.dropTsMode.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listOf("truncate", "summarize")))
-        b.btnSaveTs.setOnClickListener { saveThinkingSummary() }
-        loadThinkingSummary()
-
         b.btnExport.setOnClickListener { pickExportFile() }
         b.btnImport.setOnClickListener { pickImportFile() }
         b.btnExportQr.setOnClickListener { exportQr() }
         b.btnImportQrImage.setOnClickListener { pickQrImage() }
         b.btnImportQrCamera.setOnClickListener { requestCameraThenScan() }
-    }
 
-    // ---------- 请求内容收集 ----------
+        loadRecord()
+    }
 
     private fun loadRecord() {
         val backend = backendOrNull() ?: return
@@ -147,7 +104,6 @@ class ConfigFragment : BaseFragment() {
     private fun saveRecord() {
         val backend = backendOrNull() ?: return
         val server = b.editRecordServer.text?.toString()?.trim().orEmpty()
-        // 填了服务器地址就校验一下格式
         if (server.isNotEmpty() && !(server.startsWith("http://") || server.startsWith("https://"))) {
             snack(getString(R.string.rec_bad_server)); return
         }
@@ -166,195 +122,6 @@ class ConfigFragment : BaseFragment() {
             else snack(getString(R.string.pv_save_failed, r.error ?: ""))
         }
     }
-
-    // ---------- 上下文窗口匹配表 ----------
-
-    private val ctxRules = ArrayList<CtxWindow>()
-
-    private fun loadCtxTable() {
-        val backend = backendOrNull() ?: return
-        run({ snack(getString(R.string.load_failed, it)) }, {
-            backend.getConfig(app.connectionStore.activeInstance)
-        }) { cfg ->
-            ctxRules.clear()
-            ctxRules.addAll(cfg.contextWindows.orEmpty())
-            renderCtxRules()
-            b.editCtxSoft.setText((cfg.contextLimit?.soft ?: 80.0).toInt().toString())
-            b.editCtxHard.setText((cfg.contextLimit?.hard ?: 0.0).toInt().toString())
-            b.editCtxCpt.setText(cptText(cfg.contextLimit?.charsPerToken ?: 4.0))
-        }
-    }
-
-    private fun renderCtxRules() {
-        val box = b.ctxRuleBox
-        box.removeAllViews()
-        if (ctxRules.isEmpty()) {
-            val tv = android.widget.TextView(requireContext())
-            tv.setText(R.string.ctx_empty)
-            tv.setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodySmall)
-            tv.setTextColor(
-                com.google.android.material.color.MaterialColors.getColor(
-                    tv, com.google.android.material.R.attr.colorOnSurfaceVariant
-                )
-            )
-            tv.setPadding(0, dp(8), 0, dp(8))
-            box.addView(tv)
-            return
-        }
-        for (i in ctxRules.indices) {
-            val r = ctxRules[i]
-            val item = com.aigateway.app.databinding.ItemCtxRuleBinding
-                .inflate(layoutInflater, box, false)
-            item.ctxRuleMatch.text = r.match
-            item.ctxRuleWin.text = tokensText(r.window)
-            item.root.setOnClickListener { editCtxRule(i) }
-            item.btnDelCtxRule.setOnClickListener {
-                if (i in ctxRules.indices) {
-                    ctxRules.removeAt(i)
-                    renderCtxRules()
-                }
-            }
-            box.addView(item.root)
-        }
-    }
-
-    /** idx = -1 新增, 否则改第 idx 条 */
-    private fun editCtxRule(idx: Int) {
-        val dlg = com.aigateway.app.databinding.DialogCtxRuleBinding
-            .inflate(layoutInflater, null, false)
-        if (idx in ctxRules.indices) {
-            dlg.editCtxMatch.setText(ctxRules[idx].match)
-            dlg.editCtxWin.setText(tokensText(ctxRules[idx].window))
-        }
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.ctx_table)
-            .setView(dlg.root)
-            .setNegativeButton(R.string.cancel, null)
-            .setPositiveButton(R.string.save) { _, _ ->
-                val match = dlg.editCtxMatch.text?.toString()?.trim().orEmpty()
-                val win = parseTokens(dlg.editCtxWin.text?.toString().orEmpty())
-                if (match.isEmpty() || win <= 0L) {
-                    snack(getString(R.string.ctx_bad_line, match + " / " + dlg.editCtxWin.text))
-                    return@setPositiveButton
-                }
-                val row = CtxWindow(match, win)
-                if (idx in ctxRules.indices) ctxRules[idx] = row else ctxRules.add(row)
-                renderCtxRules()
-            }
-            .show()
-    }
-
-    private fun saveCtxTable() {
-        val backend = backendOrNull() ?: return
-        val soft = b.editCtxSoft.text?.toString()?.toIntOrNull()?.coerceIn(0, 100) ?: 80
-        val hard = b.editCtxHard.text?.toString()?.toIntOrNull()?.coerceIn(0, 100) ?: 0
-        val cpt = (b.editCtxCpt.text?.toString()?.toDoubleOrNull() ?: 4.0).coerceIn(1.0, 16.0)
-        run({ snack(getString(R.string.pv_save_failed, it)) }, {
-            backend.setContextWindows(
-                app.connectionStore.activeInstance, ctxRules.toList(), soft, hard, cpt
-            )
-        }) { r ->
-            if (r.ok) toast(getString(R.string.pv_saved))
-            else snack(getString(R.string.pv_save_failed, r.error ?: ""))
-        }
-    }
-
-    /** 128000 -> 128k, 1000000 -> 1m */
-    private fun tokensText(v: Long): String = when {
-        v >= 1_000_000L && v % 1_000_000L == 0L -> (v / 1_000_000L).toString() + "m"
-        v >= 1000L && v % 1000L == 0L -> (v / 1000L).toString() + "k"
-        else -> v.toString()
-    }
-
-    private fun cptText(v: Double): String =
-        if (v == Math.floor(v)) v.toInt().toString() else v.toString()
-
-    private fun dp(v: Int): Int = (v * resources.displayMetrics.density).toInt()
-
-    /** 128k / 1m / 128000 都认 */
-    private fun parseTokens(raw: String): Long {
-        val t = raw.trim().lowercase()
-        val mul = when {
-            t.endsWith("k") -> 1000L
-            t.endsWith("m") -> 1_000_000L
-            else -> 1L
-        }
-        val num = if (mul == 1L) t else t.dropLast(1)
-        return num.toDoubleOrNull()?.let { (it * mul).toLong() } ?: 0L
-    }
-
-    // ---------- 思考链精简 ----------
-
-    private fun loadThinkingSummary() {
-        val backend = backendOrNull() ?: return
-        run({ snack(getString(R.string.load_failed, it)) }, {
-            backend.getConfig(app.connectionStore.activeInstance)
-        }) { cfg ->
-            b.switchTs.isChecked = cfg.thinkingSummary.enable
-            b.tsSection.visibility = if (cfg.thinkingSummary.enable) View.VISIBLE else View.GONE
-            b.dropTsMode.setText(cfg.thinkingSummary.mode, false)
-            b.editTsMaxChars.setText(cfg.thinkingSummary.maxCharsPerSegment.toString())
-            b.editTsSumUrl.setText(cfg.thinkingSummary.summarizeBaseUrl)
-            b.editTsSumKey.setText(cfg.thinkingSummary.summarizeApiKey)
-            b.editTsSumModel.setText(cfg.thinkingSummary.summarizeModel)
-            b.editTsSumPrompt.setText(cfg.thinkingSummary.summarizePrompt)
-        }
-    }
-
-    private fun saveThinkingSummary() {
-        val backend = backendOrNull() ?: return
-        val mode = if (b.dropTsMode.text?.toString()?.trim() == "summarize") "summarize" else "truncate"
-        val maxChars = b.editTsMaxChars.text?.toString()?.toIntOrNull()?.coerceIn(10, 500) ?: 80
-        val prompt = b.editTsSumPrompt.text?.toString()?.trim()?.ifEmpty { "用一句话中文概括以下思考片段:" } ?: "用一句话中文概括以下思考片段:"
-        val patch = JsonObject().apply {
-            add("thinkingSummary", JsonObject().apply {
-                addProperty("enable", b.switchTs.isChecked)
-                addProperty("mode", mode)
-                addProperty("maxCharsPerSegment", maxChars)
-                addProperty("summarizeBaseUrl", b.editTsSumUrl.text?.toString()?.trim().orEmpty())
-                addProperty("summarizeApiKey", b.editTsSumKey.text?.toString()?.trim().orEmpty())
-                addProperty("summarizeModel", b.editTsSumModel.text?.toString()?.trim().orEmpty())
-                addProperty("summarizePrompt", prompt)
-                addProperty("maxSegments", 12)
-            })
-        }
-        run({ snack(getString(R.string.pv_save_failed, it)) }, {
-            backend.saveConfig(app.connectionStore.activeInstance, patch)
-        }) { r ->
-            if (r.ok) toast(getString(R.string.rec_saved))
-            else snack(getString(R.string.pv_save_failed, r.error ?: ""))
-        }
-    }
-
-    override fun reload() {
-        if (_b != null) { loadRecord(); loadThinkingSummary(); loadCtxTable() }
-    }
-
-    // ---------- 配置加密 ----------
-
-    private fun saveCrypt() {
-        val s = app.settings
-        val on = b.switchCrypt.isChecked
-        if (!on) {
-            // 关闭加密: 把内嵌配置转回明文
-            s.cryptEnabled = false
-            s.cryptPassword = ""
-            app.embeddedEngineOrNull()?.changeCryptPassword("")
-            toast(getString(R.string.cfg_crypt_disabled))
-            return
-        }
-        val p1 = b.editCryptPass.text?.toString().orEmpty()
-        val p2 = b.editCryptPass2.text?.toString().orEmpty()
-        if (p1.isEmpty()) { snack(getString(R.string.cfg_crypt_need_pass)); return }
-        if (p1 != p2) { snack(getString(R.string.cfg_crypt_mismatch)); return }
-        s.cryptEnabled = true
-        s.cryptPassword = p1
-        // 立即用新口令重写内嵌配置
-        app.embeddedEngineOrNull()?.changeCryptPassword(p1)
-        toast(getString(R.string.cfg_crypt_enabled))
-    }
-
-    // ---------- 导出 ----------
 
     private fun pickExportFile() {
         val encrypt = b.switchExportEncrypt.isChecked
@@ -381,8 +148,6 @@ class ConfigFragment : BaseFragment() {
         }) { toast(getString(R.string.cfg_exported)) }
     }
 
-    // ---------- 导入 ----------
-
     private fun pickImportFile() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
@@ -400,7 +165,6 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    /** 加密文件: 弹窗要源口令 */
     private fun askPasswordThenImport(raw: String) {
         val db = DialogImportPassBinding.inflate(layoutInflater)
         db.textHint.text = getString(R.string.cfg_import_encrypted_hint)
@@ -437,27 +201,24 @@ class ConfigFragment : BaseFragment() {
             .show()
     }
 
-    /** 应用导入: 写入当前后端(内嵌模式会用本 App 口令重新加密) */
     private fun applyImport(cfg: GatewayConfig) {
         val backend = backendOrNull() ?: run { snack(getString(R.string.no_backend_hint)); return }
-        // 组 patch: 端口/密钥/渠道/代理/替换/过滤/同步 全量覆盖
         val patch = JsonParser.parseString(gson.toJson(cfg)).asJsonObject
         patch.remove("name")
+        // 连接自身的关键字段不从备份覆盖：否则一次导入可能同时换掉 token/端口/TLS，把自己锁死
+        patch.remove("webToken")
+        patch.remove("gatewayKey")
+        patch.remove("port")
+        patch.remove("host")
+        patch.remove("tls")
+        patch.remove("panel")
         run({ snack(getString(R.string.cfg_import_failed, it)) }, {
             backend.saveConfig(app.connectionStore.activeInstance, patch)
         }) { r ->
-            if (r.ok) {
-                toast(getString(R.string.cfg_imported, cfg.channels.size))
-                // 内嵌模式 + 已启用加密 → 配置已按本 App 口令加密存储
-                if (app.connectionStore.runMode == RunMode.EMBEDDED && app.settings.cryptEnabled) {
-                    app.embeddedEngineOrNull()?.changeCryptPassword(app.settings.cryptPassword)
-                    snack(getString(R.string.cfg_reencrypted))
-                }
-            } else snack(getString(R.string.cfg_import_failed, r.error ?: ""))
+            if (r.ok) toast(getString(R.string.cfg_imported, cfg.channels.size))
+            else snack(getString(R.string.cfg_import_failed, r.error ?: ""))
         }
     }
-
-    // ---------- 二维码导出 ----------
 
     private fun exportQr() {
         val backend = backendOrNull() ?: run { snack(getString(R.string.no_backend_hint)); return }
@@ -482,8 +243,6 @@ class ConfigFragment : BaseFragment() {
                 .show()
         }
     }
-
-    // ---------- 二维码导入 ----------
 
     private fun pickQrImage() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {

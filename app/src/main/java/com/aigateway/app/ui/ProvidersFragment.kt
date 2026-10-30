@@ -198,6 +198,14 @@ class ProvidersFragment : BaseFragment() {
             label = existing?.label, proxy = proxy, models = models, modelMap = modelMap,
             default = db.switchDefault.isChecked, delayMs = delayMs, insecure = db.switchInsecure.isChecked,
             useResponses = db.switchUseResponses.isChecked,
+            // 服务端渠道端点是整条替换：未在 UI 暴露的字段必须原样带回，否则会被默认值覆盖
+            path = existing?.path,
+            probe = existing?.probe ?: false,
+            lockAt = existing?.lockAt,
+            lockUntil = existing?.lockUntil,
+            transcreet = existing?.transcreet,
+            anthropicVersion = existing?.anthropicVersion,
+            addUsage = existing?.addUsage ?: true,
             // 恒发(空串=清空); 后端只对「未提交」继承旧值 —— 否则编辑一次渠道会把余额配置抹掉
             balanceUrl = db.editBalanceUrl.text?.toString()?.trim().orEmpty(),
             balancePath = db.editBalancePath.text?.toString()?.trim().orEmpty(),

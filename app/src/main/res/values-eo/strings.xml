@@ -609,7 +609,6 @@
     <string name="rg_min_pw">Minimuma pasvortlongo</string>
     <string name="sa_save_second">Konservi duan pasvorton</string>
     <string name="sa_second_key">Dua pasvorto</string>
-    <string name="sa_status_fmt">Administra pasvorto %1$s · Dua pasvorto %2$s · TOTP %3$s</string>
     <string name="sa_totp">TOTP-dinamika kontrolo</string>
     <string name="sa_totp_disable">Malebligi</string>
     <string name="sa_totp_enable">Ebligi TOTP</string>
@@ -635,7 +634,6 @@
     <string name="tn_stop">Ĉesi tunelon</string>
     <string name="tn_stopped">Ne startita</string>
     <string name="tn_title">Publika tunelo (cloudflared)</string>
-    <string name="tn_warn">⚠️ Tunelo ŝaltita = alirebla de la reto! Unue fiksu la kluzoŝlosilon kaj administran pasvorton</string>
     <string name="uk_main">Ĉefa karto</string>
     <string name="uk_new">Memeldono</string>
     <string name="um_group_all">Ĉiuj (%1$d)</string>

@@ -108,7 +108,12 @@ class PortsFragment : BaseFragment() {
             .setPositiveButton(R.string.delete) { _, _ ->
                 val backend = backendOrNull() ?: return@setPositiveButton
                 run({ snack(getString(R.string.delete_failed, it)) }, { backend.deleteInstance(inst.name) }) { r ->
-                    if (r.ok) { toast(getString(R.string.pv_deleted)); loadAfterDelay() } else snack(getString(R.string.delete_failed, r.error ?: ""))
+                    if (r.ok) {
+                        if (app.connectionStore.activeInstance == inst.name) {
+                            app.connectionStore.activeInstance = "default"
+                        }
+                        toast(getString(R.string.pv_deleted)); loadAfterDelay()
+                    } else snack(getString(R.string.delete_failed, r.error ?: ""))
                 }
             }
             .setNegativeButton(R.string.cancel, null)
@@ -142,7 +147,7 @@ class PortsFragment : BaseFragment() {
             db.editTlsKey.setText("key.pem")
             showDialog(db, null)
         } else {
-            // 编辑: 先拉取完整配置(端口/host/TLS/adminKey)
+            // 编辑: 先拉取完整配置(端口/host/TLS/Web Token)
             db.editInstName.setText(existing.name)
             db.editInstName.isEnabled = (existing.name != "default")  // default 主实例不可改名, 其他可改
             db.editInstPort.setText(existing.port.toString())
@@ -152,7 +157,7 @@ class PortsFragment : BaseFragment() {
             }) { cfg ->
                 db.editInstPort.setText(cfg.port.toString())
                 db.editInstHost.setText(cfg.host)
-                db.editInstKey.setText(cfg.adminKey)
+                db.editInstKey.setText(cfg.webToken)
                 db.switchTls.isChecked = cfg.tls.enable
                 db.tlsSection.visibility = if (cfg.tls.enable) View.VISIBLE else View.GONE
                 db.editTlsPort.setText(cfg.tls.port?.toString() ?: "")
@@ -180,6 +185,9 @@ class PortsFragment : BaseFragment() {
         val host = db.editInstHost.text?.toString()?.trim()?.ifBlank { "0.0.0.0" } ?: "0.0.0.0"
         val key = db.editInstKey.text?.toString()?.trim().orEmpty()
         if (name.isBlank() || port <= 0 || port > 65535) { snack(getString(R.string.pt_need_valid)); return }
+        if (existing != null && existing.name == "default" && key.isBlank()) {
+            snack(getString(R.string.admin_token_required)); return
+        }
         val tlsOn = db.switchTls.isChecked
         val tlsPortTxt = db.editTlsPort.text?.toString()?.trim().orEmpty()
         val tlsPort = tlsPortTxt.toIntOrNull()
@@ -199,29 +207,53 @@ class PortsFragment : BaseFragment() {
                 backend.createInstance(name, port, key)
             }) { r ->
                 if (!r.ok) { snack(getString(R.string.pt_create_failed, r.error ?: "")); return@run }
-                if (tlsOn) {
-                    val patch = JsonObject().apply { add("tls", tlsJson); addProperty("host", host) }
-                    run({ snack(getString(R.string.pv_save_failed, it)) }, {
-                        backend.saveConfig(name, patch)
-                    }) { toast(getString(R.string.pt_created, name)); loadAfterDelay() }
-                } else {
-                    toast(getString(R.string.pt_created, name)); loadAfterDelay()
-                }
+                val patch = JsonObject().apply { add("tls", tlsJson); addProperty("host", host) }
+                run({ snack(getString(R.string.pv_save_failed, it)) }, {
+                    backend.saveConfig(name, patch)
+                }) { toast(getString(R.string.pt_created, name)); loadAfterDelay() }
             }
         } else {
             val patch = JsonObject().apply {
                 addProperty("port", port)
                 addProperty("host", host)
-                addProperty("adminKey", key)
+                addProperty("webToken", key)
                 add("tls", tlsJson)
             }
             run({ snack(getString(R.string.pv_save_failed, it)) }, {
-                // 改名: 名字变了先调 rename(热生效), 再用新名保存配置
-                if (name != existing.name) backend.renameInstance(existing.name, name)
+                // 改名: 名字变了先调 rename(热生效), 失败就不再保存
+                if (name != existing.name) {
+                    val rr = backend.renameInstance(existing.name, name)
+                    if (!rr.ok) return@run rr
+                }
                 backend.saveConfig(name, patch)
             }) { r ->
-                if (r.ok) { toast(getString(R.string.pt_saved)); loadAfterDelay() }
-                else snack(getString(R.string.pv_save_failed, r.error ?: ""))
+                if (r.ok) {
+                    if (app.connectionStore.activeInstance == existing.name && name != existing.name) {
+                        app.connectionStore.activeInstance = name
+                    }
+                    // default 是 baseUrl 承载实例，只有它的 token 才是本 App 的连接凭据
+                    if (existing.name == "default" && key.isNotBlank()) {
+                        app.connectionStore.getCurrentProfile()?.let { p ->
+                            if (p.webToken != key) {
+                                p.webToken = key
+                                app.updateRemoteProfile(p)
+                            }
+                        }
+                    }
+                    // 主实例开关 TLS 会改变同一端口的协议；不同步 scheme 会立刻连不上
+                    if (existing.name == "default" && existing.tlsOn != tlsOn) {
+                        app.connectionStore.getCurrentProfile()?.let { p ->
+                            val next = if (tlsOn) p.baseUrl.replaceFirst("http://", "https://")
+                            else p.baseUrl.replaceFirst("https://", "http://")
+                            if (next != p.baseUrl) {
+                                p.baseUrl = next
+                                app.updateRemoteProfile(p)
+                                toast(getString(R.string.admin_tls_url_switched, next))
+                            }
+                        }
+                    }
+                    toast(getString(R.string.pt_saved)); loadAfterDelay()
+                } else snack(getString(R.string.pv_save_failed, r.error ?: ""))
             }
         }
     }

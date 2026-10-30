@@ -215,15 +215,6 @@
             android:text="@string/nav_routing" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnStartTermux"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:icon="@drawable/ic_play"
-            android:text="@string/termux_start_backend" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnConnection"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
