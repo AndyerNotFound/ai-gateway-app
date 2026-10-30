@@ -812,6 +812,7 @@
 
     <string name="admin_second_key">Second key (optional, if 2FA is enabled)</string>
     <string name="admin_totp_secret">TOTP secret (optional, base32)</string>
+    <string name="admin_allow_insecure_tls">Allow self-signed / untrusted TLS certificate (insecure)</string>
 
     <string name="admin_tls_url_switched">Connection URL switched to %1$s. If the certificate is from agw-tls, install its CA as a user certificate.</string>
 </resources>

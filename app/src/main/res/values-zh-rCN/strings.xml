@@ -797,4 +797,5 @@
     <string name="sdui_routes_hint">交给 SDUI 的页面，逗号分隔（如 requests,stats）</string>
     <string name="sdui_clear">关闭路由</string>
     <string name="sdui_chip_native">原生</string>
+    <string name="admin_allow_insecure_tls">允许自签名 / 不受信任的 TLS 证书（不安全）</string>
 </resources>

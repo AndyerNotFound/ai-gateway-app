@@ -49,10 +49,14 @@ class App : Application() {
     @Synchronized
     fun remoteBackend(): RemoteBackend? {
         val profile = connectionStore.getCurrentProfile() ?: return null
-        val key = profile.baseUrl + "|" + profile.webToken + "|" + profile.secondKey + "|" + profile.totpSecret
+        val key = profile.baseUrl + "|" + profile.webToken + "|" + profile.secondKey + "|" +
+            profile.totpSecret + "|" + profile.allowInsecureTls
         if (remoteBackend != null && remoteKey == key) return remoteBackend
         remoteBackend?.close()
-        val b = RemoteBackend(profile.baseUrl, profile.webToken, profile.secondKey, profile.totpSecret)
+        val b = RemoteBackend(
+            profile.baseUrl, profile.webToken, profile.secondKey, profile.totpSecret,
+            profile.allowInsecureTls
+        )
         remoteBackend = b
         remoteKey = key
         return b

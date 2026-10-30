@@ -11,7 +11,11 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.net.URLEncoder
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
+import javax.net.ssl.X509TrustManager
 
 /**
  * ai-gateway-AI 远程管理后端。
@@ -23,22 +27,42 @@ class RemoteBackend(
     baseUrl: String,
     val webToken: String,
     private val secondKey: String = "",
-    private val totpSecret: String = ""
+    private val totpSecret: String = "",
+    private val allowInsecureTls: Boolean = false
 ) : GatewayBackend {
 
     private val base = baseUrl.trim().removeSuffix("/")
     private val gson = Gson()
     private val jsonMedia = "application/json; charset=utf-8".toMediaType()
 
-    private val client = OkHttpClient.Builder()
-        .connectTimeout(12, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
-        .build()
+    @Volatile
+    override var lastError: String? = null
+        private set
+
+    private val client = buildClient(allowInsecureTls || ConnectionStore.isLoopbackUrl(base))
 
     private val streamClient = client.newBuilder()
         .readTimeout(5, TimeUnit.MINUTES)
         .build()
+
+    private fun buildClient(trustAll: Boolean): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+            .connectTimeout(12, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+        if (trustAll) {
+            val trustManager = object : X509TrustManager {
+                override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) = Unit
+                override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) = Unit
+                override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
+            }
+            val context = SSLContext.getInstance("TLS")
+            context.init(null, arrayOf(trustManager), SecureRandom())
+            builder.sslSocketFactory(context.socketFactory, trustManager)
+            builder.hostnameVerifier { _, _ -> true }
+        }
+        return builder.build()
+    }
 
     /** 路径段编码：URLEncoder 把空格编成 +，网关按 %20 解码。 */
     private fun enc(s: String) = URLEncoder.encode(s, "UTF-8").replace("+", "%20")
@@ -93,7 +117,14 @@ class RemoteBackend(
         )
 
     override suspend fun testConnection(): Boolean = withContext(Dispatchers.IO) {
-        runCatching { getJson("/admin/api/instances"); true }.getOrDefault(false)
+        try {
+            getJson("/admin/api/instances")
+            lastError = null
+            true
+        } catch (e: Exception) {
+            lastError = e.message ?: e.javaClass.simpleName
+            false
+        }
     }
 
     override suspend fun getInstances(): InstancesResponse = withContext(Dispatchers.IO) {

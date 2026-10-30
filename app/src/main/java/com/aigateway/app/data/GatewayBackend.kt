@@ -10,6 +10,9 @@ import com.google.gson.JsonObject
  */
 interface GatewayBackend {
 
+    /** 最近一次连接测试的失败原因（SSL / HTTP / 超时等）。 */
+    val lastError: String?
+
     suspend fun testConnection(): Boolean
 
     suspend fun getInstances(): InstancesResponse

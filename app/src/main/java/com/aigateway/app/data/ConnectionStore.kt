@@ -16,7 +16,9 @@ data class ConnectionProfile(
     /** ai-gateway-AI 第二因子：第二密码（请求头 x-admin-key2）。 */
     var secondKey: String = "",
     /** ai-gateway-AI 第二因子：TOTP secret（base32，用于生成 x-totp）。 */
-    var totpSecret: String = ""
+    var totpSecret: String = "",
+    /** 允许自签名/不受信任的 TLS 证书；仅对明确开启的远程连接生效。 */
+    var allowInsecureTls: Boolean = false
 ) {
     fun displayName(): String = label.ifBlank { baseUrl }
 }
@@ -34,6 +36,14 @@ class ConnectionStore(context: Context) {
         private const val K_CURRENT_ID = "current_profile_id"
         private const val K_ACTIVE_INSTANCE = "active_instance"
         const val DEFAULT_URL = "http://127.0.0.1:16384"
+
+        /** 回环地址默认信任本机自签名证书，远程地址必须显式开启。 */
+        fun isLoopbackUrl(url: String): Boolean {
+            val host = runCatching { java.net.URI(url).host }.getOrNull()
+                ?.lowercase()?.removeSuffix(".") ?: return false
+            return host == "localhost" || host == "127.0.0.1" ||
+                host == "::1" || host == "[::1]" || host == "0:0:0:0:0:0:0:1"
+        }
     }
 
     var setupDone: Boolean
@@ -65,6 +75,7 @@ class ConnectionStore(context: Context) {
                 if (o.get("webToken")?.isJsonPrimitive != true) o.addProperty("webToken", "")
                 if (o.get("secondKey")?.isJsonPrimitive != true) o.addProperty("secondKey", "")
                 if (o.get("totpSecret")?.isJsonPrimitive != true) o.addProperty("totpSecret", "")
+                if (o.get("allowInsecureTls")?.isJsonPrimitive != true) o.addProperty("allowInsecureTls", false)
                 o.remove("adminKey")
             }
             val type = object : TypeToken<MutableList<ConnectionProfile>>() {}.type

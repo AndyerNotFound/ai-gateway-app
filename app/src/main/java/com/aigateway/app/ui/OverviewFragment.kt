@@ -93,7 +93,9 @@ class OverviewFragment : BaseFragment() {
             if (!isAdded || _b == null) return@launch
             setStatus(reachable, getString(if (reachable) R.string.ov_connected else R.string.ov_connect_failed))
             if (!reachable) {
-                b.textInstance.text = getString(R.string.ov_unreachable)
+                val detail = backend.lastError?.takeIf { it.isNotBlank() }
+                b.textInstance.text = getString(R.string.ov_unreachable) +
+                    (detail?.let { "\n$it" } ?: "")
                 b.channelStatsContainer.removeAllViews()
                 b.recentRequestsContainer.removeAllViews()
                 return@launch

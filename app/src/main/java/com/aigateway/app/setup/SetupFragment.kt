@@ -29,6 +29,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         val cur = app.connectionStore.getCurrentProfile()
         b.editUrl.setText(cur?.baseUrl ?: ConnectionStore.DEFAULT_URL)
         b.editKey.setText(cur?.webToken.orEmpty())
+        b.cbAllowInsecure.isChecked = cur?.allowInsecureTls == true ||
+            ConnectionStore.isLoopbackUrl(cur?.baseUrl ?: ConnectionStore.DEFAULT_URL)
         b.btnConnect.setOnClickListener { connectAndEnter() }
     }
 
@@ -46,6 +48,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         val profile = (existing ?: ConnectionProfile()).apply {
             baseUrl = url.removeSuffix("/")
             webToken = token
+            allowInsecureTls = b.cbAllowInsecure.isChecked
         }
         app.updateRemoteProfile(profile)
         app.connectionStore.activeInstance = "default"

@@ -367,6 +367,8 @@ class MainActivity : AppCompatActivity() {
         db.editKey.setText(cur?.webToken.orEmpty())
         db.editSecondKey.setText(cur?.secondKey.orEmpty())
         db.editTotpSecret.setText(cur?.totpSecret.orEmpty())
+        db.cbAllowInsecure.isChecked = cur?.allowInsecureTls == true ||
+            ConnectionStore.isLoopbackUrl(cur?.baseUrl ?: ConnectionStore.DEFAULT_URL)
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.menu_connection)
@@ -385,6 +387,7 @@ class MainActivity : AppCompatActivity() {
                     webToken = token
                     secondKey = db.editSecondKey.text?.toString()?.trim().orEmpty()
                     totpSecret = db.editTotpSecret.text?.toString()?.trim().orEmpty()
+                    allowInsecureTls = db.cbAllowInsecure.isChecked
                 }
                 app.updateRemoteProfile(profile)
                 app.connectionStore.activeInstance = "default"
