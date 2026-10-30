@@ -41,7 +41,6 @@
     <string name="nav_stats">Статистика</string>
     <string name="nav_requests">Запросы</string>
     <string name="nav_logs">Журнал</string>
-    <string name="nav_chat">Чат</string>
 
     <!-- Заголовки -->
     <string name="title_overview">Обзор</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">Статистика</string>
     <string name="title_requests">Журнал запросов</string>
     <string name="title_logs">Журнал</string>
-    <string name="title_chat">Тест чата</string>
 
     <!-- Меню -->
     <string name="menu_theme">Цвета / Тема</string>

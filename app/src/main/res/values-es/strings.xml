@@ -41,7 +41,6 @@
     <string name="nav_stats">Estadísticas</string>
     <string name="nav_requests">Peticiones</string>
     <string name="nav_logs">Registros</string>
-    <string name="nav_chat">Chat</string>
 
     <!-- Títulos -->
     <string name="title_overview">Resumen</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">Estadísticas</string>
     <string name="title_requests">Registros de peticiones</string>
     <string name="title_logs">Registros</string>
-    <string name="title_chat">Prueba de chat</string>
 
     <!-- Menú -->
     <string name="menu_theme">Colores / Tema</string>

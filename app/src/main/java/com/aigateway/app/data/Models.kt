@@ -143,6 +143,38 @@ data class ChannelStat(
     val outputTokens: Long = 0
 )
 
+data class ModelStat(
+    val requests: Long = 0,
+    val inputTokens: Long = 0,
+    val outputTokens: Long = 0,
+    val cached: Long = 0
+)
+
+data class StatsTotals(
+    val instances: Int = 0,
+    val requests: Long = 0,
+    val errors: Long = 0,
+    val inputTokens: Long = 0,
+    val outputTokens: Long = 0
+)
+
+data class InstanceStat(
+    val name: String = "",
+    val requests: Long = 0,
+    val errors: Long = 0,
+    val inputTokens: Long = 0,
+    val outputTokens: Long = 0,
+    val byChannel: Map<String, ChannelStat> = emptyMap(),
+    val byModel: Map<String, ModelStat> = emptyMap(),
+    val disabled: Boolean = false
+)
+
+data class StatsAll(
+    val totals: StatsTotals = StatsTotals(),
+    val byModel: Map<String, ModelStat> = emptyMap(),
+    val instances: List<InstanceStat> = emptyList()
+)
+
 data class Stats(
     val requests: Long = 0,
     /** 正在跑的上游请求数(网关内存计数) */
@@ -153,7 +185,8 @@ data class Stats(
     val errors: Long = 0,
     val uptime: Long = 0,
     val startedAt: Any? = null,
-    val byChannel: Map<String, ChannelStat> = emptyMap()
+    val byChannel: Map<String, ChannelStat> = emptyMap(),
+    val byModel: Map<String, ModelStat> = emptyMap()
 )
 
 /** 网关记录的最近一次上下文占用(取自上游 usage.prompt_tokens) */
@@ -204,11 +237,6 @@ data class RecordDetail(
 )
 
 /** 聊天消息(简化, 支持 OpenAI 格式) */
-data class ChatMessage(
-    val role: String = "user",
-    val content: String = ""
-)
-
 /** 后端通用操作结果 */
 data class ActionResult(
     val ok: Boolean = false,

@@ -247,6 +247,10 @@ class RemoteBackend(
         getObj("/admin/api/stats?instance=${enc(name)}")
     }
 
+    override suspend fun getStatsAll(): StatsAll = withContext(Dispatchers.IO) {
+        getObj("/admin/api/stats-all")
+    }
+
     override suspend fun getLogs(name: String, lines: Int): String = withContext(Dispatchers.IO) {
         exec(newRequest("/admin/api/logs/${enc(name)}?lines=$lines").get().build())
     }
@@ -266,51 +270,6 @@ class RemoteBackend(
 
     override suspend fun shutdownAll(): ActionResult =
         withContext(Dispatchers.IO) { post("/admin/api/shutdown-all").toActionResult() }
-
-    override suspend fun chat(
-        instance: String,
-        model: String,
-        messages: List<ChatMessage>,
-        onDelta: (String) -> Unit
-    ): ActionResult = withContext(Dispatchers.IO) {
-        val payload = JsonObject().apply {
-            addProperty("instance", instance)
-            addProperty("model", model)
-            add("messages", gson.toJsonTree(messages))
-            addProperty("stream", true)
-        }
-        val req = newRequest("/admin/api/chat")
-            .post(payload.toString().toRequestBody(jsonMedia))
-            .build()
-        try {
-            streamClient.newCall(req).execute().use { resp ->
-                if (!resp.isSuccessful) {
-                    val body = resp.body?.string().orEmpty()
-                    return@withContext ActionResult(ok = false, error = errMsg(body, resp.code))
-                }
-                parseSse(resp, onDelta)
-                ActionResult(ok = true)
-            }
-        } catch (e: Exception) {
-            ActionResult(ok = false, error = e.message ?: "connection failed")
-        }
-    }
-
-    private fun parseSse(resp: okhttp3.Response, onDelta: (String) -> Unit) {
-        val src = resp.body?.source() ?: return
-        while (true) {
-            val line = src.readUtf8Line() ?: break
-            if (!line.startsWith("data:")) continue
-            val data = line.substring(5).trim()
-            if (data == "[DONE]") break
-            runCatching {
-                val j = JsonParser.parseString(data).asJsonObject
-                val delta = j.getAsJsonArray("choices")?.get(0)?.asJsonObject
-                    ?.getAsJsonObject("delta")?.get("content")?.asString
-                if (!delta.isNullOrEmpty()) onDelta(delta)
-            }
-        }
-    }
 
     override fun close() {
         client.dispatcher.executorService.shutdown()

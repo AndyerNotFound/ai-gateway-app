@@ -41,7 +41,6 @@
     <string name="nav_stats">통계</string>
     <string name="nav_requests">요청</string>
     <string name="nav_logs">로그</string>
-    <string name="nav_chat">채팅</string>
 
     <!-- 제목 -->
     <string name="title_overview">개요</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">통계</string>
     <string name="title_requests">요청 기록</string>
     <string name="title_logs">로그</string>
-    <string name="title_chat">채팅 테스트</string>
 
     <!-- 메뉴 -->
     <string name="menu_theme">색상 / 테마</string>

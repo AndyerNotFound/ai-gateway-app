@@ -13,6 +13,12 @@ Holy shit I don't know How to continue so it's short
 - **Accounts removed**: user registration, password login and the user-management pages are gone from both the app and the server. API key cards stay exactly where they were.
 - **Smaller APK**: release builds now run R8 and resource shrinking.
 
+## 0.7.0
+
+- File extractor: the app is now a DocumentsProvider, so “ai-gateway” appears in the system file picker sidebar and exposes the built-in gateway's request records and runtime log.
+- Chat removed; the tab is now Statistics.
+- Statistics: per-instance usage, model ranking, per-channel usage, request counts, input/output tokens and share bars, all in one call (`/admin/api/stats-all`).
+
 ## 0.6.0
 
 - New launcher icon: the three-L mark, white on black (adaptive icon, 108dp foreground).

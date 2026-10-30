@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var b: ActivityMainBinding
     private val app get() = application as App
 
-    private val pagerTags = listOf("overview", "providers", "ports", "chat", "settings")
+    private val pagerTags = listOf("overview", "providers", "ports", "stats", "settings")
     private var secondaryTag: String? = null
     private var pendingPage: String? = null
     private var pagerReady = false
@@ -147,7 +147,6 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_keys -> openSecondary("keys")
                 R.id.nav_replace -> openSecondary("replace")
-                R.id.nav_stats -> openSecondary("stats")
                 R.id.nav_requests -> openSecondary("requests")
                 R.id.nav_logs -> openSecondary("logs")
                 R.id.nav_proxies -> openSecondary("proxies")
@@ -164,7 +163,7 @@ class MainActivity : AppCompatActivity() {
     private fun navIdFor(tag: String) = when (tag) {
         "providers" -> R.id.nav_providers
         "ports" -> R.id.nav_ports
-        "chat" -> R.id.nav_chat
+        "stats" -> R.id.nav_stats
         "settings" -> R.id.nav_settings
         else -> R.id.nav_overview
     }
@@ -173,7 +172,7 @@ class MainActivity : AppCompatActivity() {
         R.id.nav_overview -> "overview"
         R.id.nav_providers -> "providers"
         R.id.nav_ports -> "ports"
-        R.id.nav_chat -> "chat"
+        R.id.nav_stats -> "stats"
         R.id.nav_settings -> "settings"
         else -> null
     }
@@ -230,7 +229,6 @@ class MainActivity : AppCompatActivity() {
         "stats" -> StatsFragment()
         "requests" -> RequestsFragment()
         "logs" -> LogsFragment()
-        "chat" -> ChatFragment()
         "config" -> ConfigFragment()
         "cards" -> CardsFragment()
         "settings" -> SettingsHubFragment()
@@ -252,7 +250,6 @@ class MainActivity : AppCompatActivity() {
         "stats" -> R.string.title_stats
         "requests" -> R.string.title_requests
         "logs" -> R.string.title_logs
-        "chat" -> R.string.title_chat
         "config" -> R.string.menu_config
         "cards" -> R.string.title_cards
         "settings" -> R.string.nav_settings

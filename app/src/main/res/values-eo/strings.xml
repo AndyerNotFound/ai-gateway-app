@@ -41,7 +41,6 @@
     <string name="nav_stats">Statistikoj</string>
     <string name="nav_requests">Petoj</string>
     <string name="nav_logs">Protokoloj</string>
-    <string name="nav_chat">Babilo</string>
 
     <!-- Titoloj -->
     <string name="title_overview">Superrigardo</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">Statistikoj</string>
     <string name="title_requests">Peto-registroj</string>
     <string name="title_logs">Protokoloj</string>
-    <string name="title_chat">Babileja testo</string>
 
     <!-- Menuo -->
     <string name="menu_theme">Koloroj / Etoso</string>

@@ -36,6 +36,18 @@
             </intent-filter>
         </activity>
 
+        <!-- 文件提供者：DocumentsUI 侧边栏可直接浏览内置网关的请求记录 -->
+        <provider
+            android:name=".files.GatewayDocumentsProvider"
+            android:authorities="${applicationId}.documents"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+
         <!-- 独立进程：nodejs-mobile 每个进程只能启动一次 Node -->
         <service
             android:name=".embedded.EmbeddedGatewayService"

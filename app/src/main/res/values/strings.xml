@@ -41,7 +41,6 @@
     <string name="nav_stats">Stats</string>
     <string name="nav_requests">Requests</string>
     <string name="nav_logs">Logs</string>
-    <string name="nav_chat">Chat</string>
 
     <!-- Titles -->
     <string name="title_overview">Overview</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">Statistics</string>
     <string name="title_requests">Request records</string>
     <string name="title_logs">Logs</string>
-    <string name="title_chat">Chat test</string>
 
     <!-- Menu -->
     <string name="menu_theme">Colors / Theme</string>
@@ -862,7 +860,7 @@
     <!-- 文件提取器 -->
     <string name="ext_pick">Choose file</string>
     <string name="ext_no_file">No file selected</string>
-    <string name="ext_empty">Choose a JSONL or JSON request record file to inspect.</string>
+    <string name="ext_empty">Choose a JSONL or JSON record file. The built-in gateway records also show up in the system file picker under “ai-gateway”.</string>
     <string name="ext_loaded">Loaded %1$d records</string>
     <string name="ext_parse_error">Parse failed: %1$s</string>
     <string name="ext_detail">Request detail</string>
@@ -871,4 +869,16 @@
     <string name="ext_no_body">(empty)</string>
     <string name="ext_item_sub">%1$s · %2$s · %3$d ms</string>
     <string name="ext_meta">%1$s\n%2$s · %3$s · %4$s · HTTP %5$d · %6$d ms · %7$s</string>
+    <string name="st_requests">Requests</string>
+    <string name="st_input_tokens">Input tokens</string>
+    <string name="st_output_tokens">Output tokens</string>
+    <string name="st_by_instance">By instance</string>
+    <string name="st_by_model">Model ranking</string>
+    <string name="st_inst_sub">%1$s tok · %2$s req · %3$s err</string>
+    <string name="st_model_sub">%1$s tok · %2$s req</string>
+    <string name="st_totals_hint">Since gateway start · %1$d instances · usage from upstream API usage fields</string>
+    <string name="docs_root_title">ai-gateway</string>
+    <string name="docs_root_summary">Local request records and runtime logs</string>
+    <string name="docs_logs">Request records</string>
+    <string name="docs_runtime">Runtime logs</string>
 </resources>

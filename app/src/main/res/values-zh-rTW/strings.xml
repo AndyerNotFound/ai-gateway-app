@@ -41,7 +41,6 @@
     <string name="nav_stats">統計</string>
     <string name="nav_requests">請求</string>
     <string name="nav_logs">日誌</string>
-    <string name="nav_chat">聊天</string>
 
     <!-- 標題 -->
     <string name="title_overview">總覽</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">統計</string>
     <string name="title_requests">請求記錄</string>
     <string name="title_logs">日誌</string>
-    <string name="title_chat">聊天測試</string>
 
     <!-- 選單 -->
     <string name="menu_theme">顏色 / 佈景主題</string>

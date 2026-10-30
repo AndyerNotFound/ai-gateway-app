@@ -41,7 +41,6 @@
     <string name="nav_stats">统计</string>
     <string name="nav_requests">请求</string>
     <string name="nav_logs">日志</string>
-    <string name="nav_chat">聊天</string>
 
     <!-- 标题 -->
     <string name="title_overview">总览</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">统计</string>
     <string name="title_requests">请求记录</string>
     <string name="title_logs">日志</string>
-    <string name="title_chat">聊天测试</string>
 
     <!-- 菜单 -->
     <string name="menu_theme">颜色 / 主题</string>
@@ -845,7 +843,7 @@
     <!-- 文件提取器 -->
     <string name="ext_pick">选择文件</string>
     <string name="ext_no_file">未选择文件</string>
-    <string name="ext_empty">选择一个 JSONL 或 JSON 请求记录文件开始查看。</string>
+    <string name="ext_empty">选择 JSONL 或 JSON 记录文件。内置网关的记录也会出现在系统文件选择器的「ai-gateway」条目里。</string>
     <string name="ext_loaded">已载入 %1$d 条记录</string>
     <string name="ext_parse_error">解析失败：%1$s</string>
     <string name="ext_detail">请求详情</string>
@@ -854,4 +852,16 @@
     <string name="ext_no_body">（空）</string>
     <string name="ext_item_sub">%1$s · %2$s · %3$d ms</string>
     <string name="ext_meta">%1$s\n%2$s · %3$s · %4$s · HTTP %5$d · %6$d ms · %7$s</string>
+    <string name="st_requests">请求次数</string>
+    <string name="st_input_tokens">输入 Token</string>
+    <string name="st_output_tokens">输出 Token</string>
+    <string name="st_by_instance">实例使用量</string>
+    <string name="st_by_model">模型使用量排名</string>
+    <string name="st_inst_sub">%1$s tok · %2$s 次 · %3$s 错误</string>
+    <string name="st_model_sub">%1$s tok · %2$s 次</string>
+    <string name="st_totals_hint">自网关启动以来 · %1$d 个实例 · Token 取自上游 API 的 usage 字段</string>
+    <string name="docs_root_title">ai-gateway</string>
+    <string name="docs_root_summary">本机请求记录与运行日志</string>
+    <string name="docs_logs">请求记录</string>
+    <string name="docs_runtime">运行日志</string>
 </resources>

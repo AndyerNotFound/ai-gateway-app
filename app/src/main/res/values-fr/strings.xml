@@ -41,7 +41,6 @@
     <string name="nav_stats">Statistiques</string>
     <string name="nav_requests">Requêtes</string>
     <string name="nav_logs">Journaux</string>
-    <string name="nav_chat">Chat</string>
 
     <!-- Titres -->
     <string name="title_overview">Aperçu</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">Statistiques</string>
     <string name="title_requests">Journal des requêtes</string>
     <string name="title_logs">Journaux</string>
-    <string name="title_chat">Test de chat</string>
 
     <!-- Menu -->
     <string name="menu_theme">Couleurs / Thème</string>

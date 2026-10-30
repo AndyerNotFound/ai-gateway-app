@@ -41,7 +41,6 @@
     <string name="nav_stats">統計</string>
     <string name="nav_requests">リクエスト</string>
     <string name="nav_logs">ログ</string>
-    <string name="nav_chat">チャット</string>
 
     <!-- タイトル -->
     <string name="title_overview">概要</string>
@@ -53,7 +52,6 @@
     <string name="title_stats">統計</string>
     <string name="title_requests">リクエスト履歴</string>
     <string name="title_logs">ログ</string>
-    <string name="title_chat">チャットテスト</string>
 
     <!-- メニュー -->
     <string name="menu_theme">色 / テーマ</string>

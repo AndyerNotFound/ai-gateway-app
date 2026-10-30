@@ -51,18 +51,13 @@ interface GatewayBackend {
 
     // 观测 / 运维
     suspend fun getStats(name: String): Stats
+    /** 所有实例的汇总统计（服务端一次返回）。 */
+    suspend fun getStatsAll(): StatsAll
     suspend fun getLogs(name: String, lines: Int): String
     suspend fun getRequests(name: String): List<RequestEntry>
     suspend fun getRecordBody(name: String, id: String): RecordBody
     suspend fun action(name: String, cmd: String): ActionResult
     suspend fun shutdownAll(): ActionResult
-
-    suspend fun chat(
-        instance: String,
-        model: String,
-        messages: List<ChatMessage>,
-        onDelta: (String) -> Unit
-    ): ActionResult
 
     fun close()
 }
