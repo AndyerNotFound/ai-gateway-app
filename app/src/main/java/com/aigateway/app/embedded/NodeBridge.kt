@@ -26,6 +26,13 @@ object NodeBridge {
 
     fun loadFailure(): String? = loadError
 
+    /** 系统内存页大小；无需加载 libnode，16KB 设备要先于 dlopen 判断。 */
+    fun pageSize(): Int = try {
+        android.system.Os.sysconf(android.system.OsConstants._SC_PAGESIZE).toInt()
+    } catch (_: Throwable) {
+        4096
+    }
+
     external fun nativeStart(argv: Array<String>): Int
 
     external fun nativePageSize(): Int

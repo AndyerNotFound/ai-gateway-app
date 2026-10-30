@@ -76,16 +76,13 @@ class EmbeddedGatewayService : Service() {
 
     private fun launchNode() {
         if (stopping) return
+        val pageSize = NodeBridge.pageSize()
+        if (pageSize != 4096) {
+            fail(getString(R.string.emb_err_pagesize, pageSize))
+            return
+        }
         if (!NodeBridge.ensureLoaded()) {
             fail(getString(R.string.emb_err_load, NodeBridge.loadFailure().orEmpty()))
-            return
-        }
-        if (NodeBridge.nativePageSize() != 4096) {
-            fail(getString(R.string.emb_err_pagesize, NodeBridge.nativePageSize()))
-            return
-        }
-        if (!NodeBridge.loaded) {
-            fail(getString(R.string.emb_err_load, ""))
             return
         }
 

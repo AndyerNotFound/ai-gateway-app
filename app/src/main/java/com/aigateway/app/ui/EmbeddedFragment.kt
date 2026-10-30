@@ -75,7 +75,7 @@ class EmbeddedFragment : Fragment() {
     private fun refresh() {
         if (_b == null) return
         val st = EmbeddedPaths.readStatus(requireContext())
-        val pageSize = if (NodeBridge.loaded || NodeBridge.ensureLoaded()) NodeBridge.nativePageSize() else 0
+        val pageSize = NodeBridge.pageSize()
         b.embStatus.text = when (st.state) {
             "running" -> getString(R.string.emb_state_running)
             "starting" -> getString(R.string.emb_state_starting)
