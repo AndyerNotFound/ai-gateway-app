@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hello 插件</title>
+<style>body{font-family:system-ui;background:#121212;color:#eee;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0}
+button{background:#0A84FF;color:#fff;border:0;border-radius:12px;padding:12px 32px;font-size:16px;margin-top:16px}
+#out{margin-top:20px;font-family:monospace;color:#8f8}</style></head>
+<body>
+<h2>👋 Hello 插件</h2>
+<p>这是 ai-gateway 插件系统的骨架验证页</p>
+<button id="b">Ping 网关</button>
+<div id="out"></div>
+<script>
+document.getElementById('b').onclick = async () => {
+  const r = await fetch('plugins-PREFIX/hello/ping').catch(()=>null);
+  document.getElementById('out').textContent = r ? JSON.stringify(await r.json(), null, 2) : '请求失败';
+};
+</script>
+</body>
+</html>

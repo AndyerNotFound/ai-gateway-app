@@ -1,0 +1,14 @@
+{
+  "id": "signin",
+  "name": "每日签到",
+  "version": "1.0.0",
+  "author": "ai-gateway",
+  "description": "用户每日签到领额度，支持连续签到统计",
+  "hasServer": true,
+  "userPage": "pages/user.html",
+  "adminPage": "pages/admin.html",
+  "permissions": ["storage", "gateway:grantQuota"],
+  "configSchema": [
+    { "key": "rewardTokens", "label": "每次签到奖励额度 (tokens)", "type": "number", "default": 1000 }
+  ]
+}

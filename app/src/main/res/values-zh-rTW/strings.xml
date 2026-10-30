@@ -586,8 +586,6 @@
     <string name="um_sort">排序</string>
     <string name="um_sort_asc">名稱 A→Z</string>
     <string name="um_sort_desc">名稱 Z→A</string>
-    <string name="cd_bind_user">綁定使用者(選填)</string>
-    <string name="cd_bind_user_hint">綁定後該使用者帳密登入可見此卡</string>
     <string name="menu_panel">面板</string>
     <string name="nav_settings">設定</string>
     <string name="panel_loading">載入管理面板…</string>
@@ -618,8 +616,6 @@
     <string name="st_config_sub">設定加密/備份/匯入匯出</string>
     <string name="st_conn_sub">遠端閘道位址與密碼</string>
     <string name="st_panel_sub">完整管理面板(網頁)</string>
-    <string name="st_reg">註冊與卡密</string>
-    <string name="st_reg_sub">開放註冊/卡密長度/人機驗證</string>
     <string name="st_secondauth">第二驗證</string>
     <string name="st_secondauth_sub">管理端登入需第二密碼或TOTP</string>
     <string name="st_security_sub">程式碼攔截/背景保活</string>
@@ -641,14 +637,6 @@
     <string name="up_edit_profile">編輯資料</string>
     <string name="up_my_keys">我的卡密</string>
     <string name="up_nickname">暱稱</string>
-    <string name="us_empty">尚無使用者</string>
-    <string name="us_keys_fmt">卡密 %1$d 張</string>
-    <string name="us_new">新增使用者</string>
-    <string name="us_password">密碼</string>
-    <string name="us_reset_pw">重設密碼</string>
-    <string name="us_sub">帳密登入帳號, 發卡可綁定</string>
-    <string name="us_title">使用者管理</string>
-    <string name="us_uid">UID(留空自動產生)</string>
     <string name="pv_balance_section">上游餘額</string>
     <string name="pv_balance_url">餘額介面</string>
     <string name="pv_balance_url_helper">留空＝使用內建預設</string>

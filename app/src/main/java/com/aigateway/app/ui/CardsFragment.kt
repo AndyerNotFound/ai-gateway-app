@@ -149,8 +149,6 @@ class CardsFragment : BaseFragment() {
                     if (!models.isNullOrEmpty()) add("models", com.google.gson.JsonArray().apply { models.forEach { add(it) } })
                     addProperty("expiresAt", db.editCardExpires.text?.toString()?.trim().orEmpty())
                     addProperty("note", db.editCardNote.text?.toString()?.trim().orEmpty())
-                    val uid = db.editCardUid.text?.toString()?.trim().orEmpty()
-                    if (uid.isNotBlank()) addProperty("uid", uid)
                 }
                 val backend = backendOrNull() ?: return@setPositiveButton
                 run({ snack(getString(R.string.pv_save_failed, it)) }, {

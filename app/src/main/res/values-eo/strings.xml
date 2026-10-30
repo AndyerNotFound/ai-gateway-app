@@ -586,8 +586,6 @@
     <string name="um_sort">Ordigi</string>
     <string name="um_sort_asc">Nomo A→Z</string>
     <string name="um_sort_desc">Nomo Z→A</string>
-    <string name="cd_bind_user">Ligi uzanton (nedeviga)</string>
-    <string name="cd_bind_user_hint">Post ligado, tiu uzanto vidos ĉi tiun karton kiam ensalutante per sia konto</string>
     <string name="menu_panel">Panelo</string>
     <string name="nav_settings">Agordoj</string>
     <string name="panel_loading">Ŝargante administran panelon…</string>
@@ -618,8 +616,6 @@
     <string name="st_config_sub">Ĉifrado/savkopio/enporto-elportado</string>
     <string name="st_conn_sub">Adreso kaj pasvorto de fora kluzo</string>
     <string name="st_panel_sub">Kompleta administra panelo (retejo)</string>
-    <string name="st_reg">Registrado kaj kartoj</string>
-    <string name="st_reg_sub">Registrado/ŝlosillongo/kapĉo</string>
     <string name="st_secondauth">Dua kontrolo</string>
     <string name="st_secondauth_sub">Administra ensaluto bezonas duan pasvorton aŭ TOTP</string>
     <string name="st_security_sub">Kodinterkapto/fona protekto</string>
@@ -641,14 +637,6 @@
     <string name="up_edit_profile">Redakti profilon</string>
     <string name="up_my_keys">Miaj kartoj</string>
     <string name="up_nickname">Kromnomo</string>
-    <string name="us_empty">Neniuj uzantoj</string>
-    <string name="us_keys_fmt">%1$d kartoj</string>
-    <string name="us_new">Aldoni uzanton</string>
-    <string name="us_password">Pasvorto</string>
-    <string name="us_reset_pw">Restarigi pasvorton</string>
-    <string name="us_sub">Kontoj por pasvorta ensaluto; kartoligo ebla</string>
-    <string name="us_title">Uzanta administrado</string>
-    <string name="us_uid">UID (malplena = aŭtomate generita)</string>
     <string name="pv_balance_section">Saldo de la provizanto</string>
     <string name="pv_balance_url">Saldo-URL</string>
     <string name="pv_balance_url_helper">Malplena = enkonstrua antaŭagordo</string>

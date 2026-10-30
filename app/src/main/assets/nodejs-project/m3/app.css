@@ -1,0 +1,424 @@
+/* ============ Material Design 3 design tokens ============
+Material Web components natively read --md-sys-color-* / --md-sys-typescale-* / --md-sys-shape-*,
+so tokens defined here style both the components and this page's custom structure, keeping the look consistent. */
+:root{
+  /* === Material Design 3 Color Tokens (Dark) === */
+  --md-sys-color-primary:#D0BCFF; --md-sys-color-on-primary:#381E72;
+  --md-sys-color-primary-container:#4F378B; --md-sys-color-on-primary-container:#EADDFF;
+  --md-sys-color-secondary:#CCC2DC; --md-sys-color-on-secondary:#332D41;
+  --md-sys-color-secondary-container:#4A4458; --md-sys-color-on-secondary-container:#E8DEF8;
+  --md-sys-color-tertiary:#EFB8C8; --md-sys-color-on-tertiary:#492532;
+  --md-sys-color-tertiary-container:#633B48; --md-sys-color-on-tertiary-container:#FFD8E4;
+  --md-sys-color-error:#F2B8B5; --md-sys-color-on-error:#601410;
+  --md-sys-color-error-container:#8B1A1A; --md-sys-color-on-error-container:#F9DEDC;
+  --md-sys-color-background:#141218; --md-sys-color-on-background:#E6E1E5;
+  --md-sys-color-surface:#141218; --md-sys-color-on-surface:#E6E1E5;
+  --md-sys-color-surface-variant:#49454F; --md-sys-color-on-surface-variant:#CAC4D0;
+  --md-sys-color-surface-container-lowest:#0F0D13;
+  --md-sys-color-surface-container-low:#1D1B20;
+  --md-sys-color-surface-container:#211F26;
+  --md-sys-color-surface-container-high:#2B2930;
+  --md-sys-color-surface-container-highest:#36343B;
+  --md-sys-color-inverse-surface:#E6E0E9; --md-sys-color-inverse-on-surface:#322F35;
+  --md-sys-color-outline:#938F99; --md-sys-color-outline-variant:#49454F;
+  --md-sys-color-shadow:#000000; --md-sys-color-scrim:#000000;
+  --md-sys-color-surface-tint:#D0BCFF;
+  --md-sys-color-primary-fixed:#EADDFF; --md-sys-color-on-primary-fixed:#21005D;
+  --md-sys-color-primary-fixed-dim:#D0BCFF; --md-sys-color-on-primary-fixed-variant:#4F378B;
+  --md-sys-color-secondary-fixed:#E8DEF8; --md-sys-color-on-secondary-fixed:#1D192B;
+  --md-sys-color-secondary-fixed-dim:#CCC2DC; --md-sys-color-on-secondary-fixed-variant:#4A4458;
+  --md-sys-color-tertiary-fixed:#FFD8E4; --md-sys-color-on-tertiary-fixed:#31111D;
+  --md-sys-color-tertiary-fixed-dim:#EFB8C8; --md-sys-color-on-tertiary-fixed-variant:#633B48;
+  --md-sys-color-error-fixed:#F9DEDC; --md-sys-color-on-error-fixed:#410E0B;
+  --md-sys-color-error-fixed-dim:#F2B8B5; --md-sys-color-on-error-fixed-variant:#8B1A1A;
+
+  /* === Typography Tokens ===
+Note: Material Web components read the component tokens
+     (--md-sys-typescale-<role>-size / -weight / -line-height / -font),
+defining only the font shorthand is invisible to components; they fall back to built-ins (40px buttons / 14px text / Roboto),
+out of proportion with this page's 12-13px explanatory text. So both sets are defined: shorthand for this page's custom structure, components for the library. */
+  --md-ref-typeface-plain:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans SC',sans-serif;
+  --md-ref-typeface-brand:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans SC',sans-serif;
+  --md-ref-typeface-weight-regular:400;
+  --md-ref-typeface-weight-medium:500;
+  --md-ref-typeface-weight-bold:700;
+  --md-sys-typescale-display-large:700 57px/64px sans-serif;
+  --md-sys-typescale-headline-large:400 32px/40px sans-serif;
+  --md-sys-typescale-headline-medium:400 28px/36px sans-serif;
+  --md-sys-typescale-headline-small:400 24px/32px sans-serif;
+  --md-sys-typescale-title-large:400 22px/28px sans-serif;
+  --md-sys-typescale-title-medium:500 16px/24px sans-serif;
+  --md-sys-typescale-title-small:500 14px/20px sans-serif;
+  --md-sys-typescale-body-large:400 16px/24px sans-serif;
+  --md-sys-typescale-body-medium:400 14px/24px sans-serif;
+  --md-sys-typescale-body-small:400 12px/16px sans-serif;
+  --md-sys-typescale-label-large:500 14px/20px sans-serif;
+  --md-sys-typescale-label-medium:500 12px/16px sans-serif;
+  --md-sys-typescale-label-small:500 11px/16px sans-serif;
+/* Component tokens (what the components actually read) */
+  --md-sys-typescale-title-large-font:var(--md-ref-typeface-plain);      --md-sys-typescale-title-large-size:22px;      --md-sys-typescale-title-large-line-height:28px;      --md-sys-typescale-title-large-weight:400;
+  --md-sys-typescale-title-medium-font:var(--md-ref-typeface-plain);     --md-sys-typescale-title-medium-size:16px;     --md-sys-typescale-title-medium-line-height:24px;     --md-sys-typescale-title-medium-weight:500;
+  --md-sys-typescale-title-small-font:var(--md-ref-typeface-plain);      --md-sys-typescale-title-small-size:14px;      --md-sys-typescale-title-small-line-height:20px;      --md-sys-typescale-title-small-weight:500;
+  --md-sys-typescale-body-large-font:var(--md-ref-typeface-plain);       --md-sys-typescale-body-large-size:16px;       --md-sys-typescale-body-large-line-height:24px;       --md-sys-typescale-body-large-weight:400;
+  --md-sys-typescale-body-medium-font:var(--md-ref-typeface-plain);      --md-sys-typescale-body-medium-size:14px;      --md-sys-typescale-body-medium-line-height:20px;      --md-sys-typescale-body-medium-weight:400;
+  --md-sys-typescale-body-small-font:var(--md-ref-typeface-plain);       --md-sys-typescale-body-small-size:12px;       --md-sys-typescale-body-small-line-height:16px;       --md-sys-typescale-body-small-weight:400;
+  --md-sys-typescale-label-large-font:var(--md-ref-typeface-plain);      --md-sys-typescale-label-large-size:14px;      --md-sys-typescale-label-large-line-height:20px;      --md-sys-typescale-label-large-weight:500;
+  --md-sys-typescale-label-medium-font:var(--md-ref-typeface-plain);     --md-sys-typescale-label-medium-size:12px;     --md-sys-typescale-label-medium-line-height:16px;     --md-sys-typescale-label-medium-weight:500;
+  --md-sys-typescale-label-small-font:var(--md-ref-typeface-plain);      --md-sys-typescale-label-small-size:11px;      --md-sys-typescale-label-small-line-height:16px;      --md-sys-typescale-label-small-weight:500;
+/* headline-small: md-dialog title reads this (without the -font token it falls back to Roboto, making CJK title glyphs inconsistent with the rest) */
+  --md-sys-typescale-headline-small-font:var(--md-ref-typeface-brand);   --md-sys-typescale-headline-small-size:24px;   --md-sys-typescale-headline-small-line-height:32px;  --md-sys-typescale-headline-small-weight:400;
+/* md-icon: the default font family is Material Symbols Outlined (a CDN link, unreachable offline).
+switched to following the page font, icons always use emoji glyphs, zero external dependencies. */
+  --md-icon-font:'Material Symbols Outlined';
+  --md-icon-size:22px;
+
+  /* === Shape Tokens === */
+  --md-sys-shape-corner-none:0px;
+  --md-sys-shape-corner-tiny:2px;
+  --md-sys-shape-corner-small:4px;
+  --md-sys-shape-corner-medium:8px;
+  --md-sys-shape-corner-large:12px;
+  --md-sys-shape-corner-extra-large:16px;
+  --md-sys-shape-corner-full:9999px;
+
+  /* === Elevation Tokens === */
+  --md-sys-elevation-level1:0 1px 3px 1px rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.3);
+  --md-sys-elevation-level2:0 2px 6px 2px rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.3);
+  --md-sys-elevation-level3:0 4px 8px 3px rgba(0,0,0,.15),0 1px 3px rgba(0,0,0,.3);
+
+/* Dark-mode addition: surface-dim used for the body background must be defined in dark scheme,
+otherwise the whole body{background:var(--md-sys-color-surface-dim)} declaration stops working */
+  --md-sys-color-surface-dim:#141218; --md-sys-color-surface-bright:#3B383E;
+/* Deeper card radius (overrides the base value above) */
+  --md-sys-shape-corner-medium:12px; --md-sys-shape-corner-large:16px;
+
+  color-scheme:dark;
+}
+[data-theme="light"]{
+    --md-sys-color-primary:#6750A4; --md-sys-color-on-primary:#FFFFFF;
+    --md-sys-color-primary-container:#EADDFF; --md-sys-color-on-primary-container:#21005D;
+    --md-sys-color-secondary:#625B71; --md-sys-color-on-secondary:#FFFFFF;
+    --md-sys-color-secondary-container:#E8DEF8; --md-sys-color-on-secondary-container:#1D192B;
+    --md-sys-color-error:#B3261E; --md-sys-color-on-error:#FFFFFF;
+    --md-sys-color-error-container:#F9DEDC; --md-sys-color-on-error-container:#410E0B;
+    --md-sys-color-surface-dim:#DED8E1; --md-sys-color-surface:#FEF7FF;
+    --md-sys-color-surface-bright:#FEF7FF;
+    --md-sys-color-surface-container-lowest:#FFFFFF; --md-sys-color-surface-container-low:#F7F2FA;
+    --md-sys-color-surface-container:#F3EDF7; --md-sys-color-surface-container-high:#ECE6F0;
+    --md-sys-color-surface-container-highest:#E6E0E9;
+    --md-sys-color-on-surface:#1D1B20; --md-sys-color-on-surface-variant:#49454F;
+    --md-sys-color-outline:#79747E; --md-sys-color-outline-variant:#CAC4D0;
+    --md-sys-color-inverse-surface:#322F35; --md-sys-color-inverse-on-surface:#F5EFF7;
+    color-scheme: light;
+  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-tap-highlight-color:transparent}
+body{
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans SC',sans-serif;
+  background:var(--md-sys-color-surface-dim); color:var(--md-sys-color-on-surface);
+  font-size:14px; line-height:1.5; height:100dvh;
+  display:flex; position:fixed; inset:0;
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ============ Compatibility notice bar ============ */
+.compat-bar{position:fixed;top:0;left:0;right:0;z-index:9999;padding:10px 16px;font-size:13px;
+  background:var(--md-sys-color-error-container);color:var(--md-sys-color-on-error-container);display:none}
+.compat-bar.show{display:block}
+
+/* ============ Desktop sidebar ============ */
+.rail{display:none;width:264px;flex-shrink:0;flex-direction:column;gap:4px;padding:12px 8px;
+  background:var(--md-sys-color-surface-container);border-right:1px solid var(--md-sys-color-outline-variant);overflow-y:auto}
+.rail-brand{display:flex;align-items:center;gap:12px;padding:12px 16px 16px}
+.rail-brand .logo{width:40px;height:40px;border-radius:12px;background:var(--md-sys-color-primary-container);
+  color:var(--md-sys-color-on-primary-container);display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.rail-brand{cursor:pointer;border-radius:16px}
+.rail-brand:hover{background:var(--md-sys-color-surface-container-high)}
+.rail-brand .name{font-size:16px;font-weight:500}
+.rail-brand .ver{font-size:11px;color:var(--md-sys-color-on-surface-variant)}
+.rail-list{display:flex;flex-direction:column;gap:2px}
+.rail-item{display:flex;align-items:center;gap:14px;width:100%;height:48px;padding:0 18px;border:none;border-radius:999px;
+  background:transparent;color:var(--md-sys-color-on-surface-variant);cursor:pointer;font-size:14px;font-family:inherit;text-align:left;flex:none}
+.rail-item:hover{background:var(--md-sys-color-surface-container-high)}
+.rail-item .msym{font-size:22px;width:24px;text-align:center;flex:none}
+.rail-item[active]{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container);font-weight:600}
+
+/* ============ Main area ============ */
+.shell{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;
+  padding:10px 16px;background:var(--md-sys-color-surface);border-bottom:1px solid var(--md-sys-color-outline-variant);flex-shrink:0}
+.topbar h1{font-size:20px;font-weight:500;letter-spacing:.1px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar .tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+/* Compact top-bar controls: selectors lose the floating label to shrink height, chip icons get breathing room, refresh button matches height */
+#topInst{--md-outlined-field-top-space:8px;--md-outlined-field-bottom-space:8px;
+  --md-sys-typescale-body-large-size:14px;--md-sys-typescale-body-large-line-height:20px;
+  width:118px;min-width:118px;max-width:118px}
+#modeChip{--md-assist-chip-icon-label-space:6px}
+#modeChip md-icon{--md-icon-size:18px}
+#refreshBtn{--md-outlined-icon-button-container-height:36px;--md-outlined-icon-button-icon-size:20px}
+.main{flex:1;display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+.page{flex:0 0 auto}
+/* Page transition animations */
+.page.anim-in{animation:pageIn .28s cubic-bezier(.2,0,0,1)}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* Horizontal page slides: direction decided by nav order; backward = enters from the right, forward = from the left */
+.page.anim-slide-r{animation:pageSlideR .26s cubic-bezier(.2,0,0,1)}
+.page.anim-slide-l{animation:pageSlideL .26s cubic-bezier(.2,0,0,1)}
+@keyframes pageSlideR{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pageSlideL{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.page.anim-in,.page.anim-slide-r,.page.anim-slide-l{animation:none}}
+@media(min-width:840px){ .rail{display:flex} .navbar{display:none!important} .main{padding:24px 28px} }
+@media(max-width:839px){ .main{padding:16px;padding-bottom:calc(96px + env(safe-area-inset-bottom))} }
+/* Wide/large screens: cap content width and center instead of filling the monitor */
+@media(min-width:1200px){ .page{max-width:1080px;width:100%;margin:0 auto} .main{padding:28px 32px} }
+@media(min-width:1800px){ .page{max-width:1280px} }
+
+/* ============ Mobile bottom navigation ============ */
+.navbar{position:fixed;bottom:0;left:0;right:0;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+md-navigation-bar.navbar{background:var(--md-sys-color-surface-container);border-top:1px solid var(--md-sys-color-outline-variant)}
+
+/* ============ Structural parts Material Web does not provide ============ */
+/* Stat cards */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}
+.stat-box{background:var(--md-sys-color-surface-container);border-radius:var(--md-sys-shape-corner-large);
+  padding:16px;border:1px solid var(--md-sys-color-outline-variant);min-width:0}
+.stat-box .num{font-size:26px;font-weight:600;color:var(--md-sys-color-primary);min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-variant-numeric:tabular-nums}
+.stat-box .lbl{font-size:12px;color:var(--md-sys-color-on-surface-variant);margin-top:2px}
+@media(max-width:600px){ .stat-row{grid-template-columns:repeat(2,1fr)} .stat-box .num{font-size:22px} }
+
+/* Tables: Material Web has no table component; hand-written stays. Fixed widths + truncation; horizontal scrolling is impossible by design */
+.tbl-wrap{border-radius:var(--md-sys-shape-corner-medium);border:1px solid var(--md-sys-color-outline-variant);overflow:hidden}
+table.tbl{width:100%;table-layout:fixed;border-collapse:collapse;font-size:13px}
+.tbl th,.tbl td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--md-sys-color-outline-variant);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbl th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--md-sys-color-on-surface-variant);background:var(--md-sys-color-surface-container-high)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}
+.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-acts{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:600px){
+  .tbl th,.tbl td{padding:8px 10px}
+  .tbl{font-size:12px}
+  .tbl .mono{font-size:11px}
+  .row-acts{flex-direction:row;gap:6px;flex-wrap:nowrap;justify-content:flex-end}
+/* Provider table (6 cols): on phones collapse Type/Proxy/Models, keep Name/BaseURL/Actions */
+  #pv-table th:nth-child(2),#pv-table td:nth-child(2),
+  #pv-table th:nth-child(4),#pv-table td:nth-child(4),
+  #pv-table th:nth-child(5),#pv-table td:nth-child(5){display:none}
+/* !important: the th has inline width; inline styles beat normal CSS, so without this it is ignored */
+  #pv-table th:nth-child(1),#pv-table td:nth-child(1){width:44%!important}
+  #pv-table th:nth-child(3),#pv-table td:nth-child(3){width:26%!important}
+  #pv-table th:nth-child(6),#pv-table td:nth-child(6){width:30%!important}
+/* Proxy table: narrow the first three columns to leave room for actions */
+  #px-table th:nth-child(1),#px-table td:nth-child(1){width:18%!important}
+  #px-table th:nth-child(2),#px-table td:nth-child(2){width:12%!important}
+  #px-table th:nth-child(3),#px-table td:nth-child(3){width:40%!important}
+  #px-table th:nth-child(4),#px-table td:nth-child(4){width:30%!important}
+/* Compact table action buttons: the default min-width:64px overflows narrow columns and gets clipped */
+  .tbl .row-acts md-outlined-button,.tbl .row-acts md-text-button{
+    min-width:0!important;padding:0 8px!important;font-size:12px!important;
+    --md-outlined-button-container-height:32px;--md-text-button-container-height:32px;
+    --md-outlined-button-label-text-size:12px;--md-text-button-label-text-size:12px;
+    --md-outlined-button-icon-size:16px;--md-text-button-icon-size:16px;
+    --md-sys-typescale-label-large-size:12px;--md-sys-typescale-label-large-line-height:16px}
+  .tbl .row-acts{gap:4px}
+  #ov-ch-table th:nth-child(2),#ov-ch-table td:nth-child(2){display:none}
+/* Request table: hide the date on phones (time only); status code sits tight against the check/cross */
+  .rq-date{display:none}
+  #rq-table th,#rq-table td{padding:8px 6px}
+}
+
+/* Logs */
+.log-box{background:var(--md-sys-color-surface-container-lowest);border:1px solid var(--md-sys-color-outline-variant);
+  border-radius:var(--md-sys-shape-corner-large);padding:16px;font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:12px;max-height:400px;overflow-y:auto;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;
+  color:var(--md-sys-color-on-surface-variant)}
+#page-logs{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+#page-logs md-filled-card{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+#page-logs .card-head{flex-shrink:0}
+#lg-box{flex:1 1 auto;min-height:0;max-height:none;border:none;background:transparent;padding:0 4px}
+
+/* Chat */
+#page-chat{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+#page-chat md-filled-card{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+#page-chat .card-head{flex-shrink:0}
+.chat-msgs{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  display:flex;flex-direction:column;gap:14px;padding:16px 4px}
+.chat-msg{display:flex;gap:10px;align-items:flex-start;flex:0 0 auto}
+.chat-ava{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:15px;flex-shrink:0;
+  background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.chat-msg.user .chat-ava{background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.chat-body{flex:1 1 auto;min-width:0}
+.chat-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:11px;font-weight:500;
+  letter-spacing:.3px;color:var(--md-sys-color-on-surface-variant)}
+.chat-meta .who{color:var(--md-sys-color-on-surface)}
+.chat-copy{border:none;background:transparent;color:var(--md-sys-color-on-surface-variant);font-size:11px;
+  cursor:pointer;padding:2px 6px;border-radius:6px;line-height:1;opacity:.7;font-family:inherit}
+.chat-copy:hover{background:var(--md-sys-color-surface-container-highest);opacity:1}
+.chat-bubble{background:var(--md-sys-color-surface-container-high);border-radius:4px 14px 14px 14px;
+  padding:10px 14px;font-size:14px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;
+  word-break:normal;color:var(--md-sys-color-on-surface)}
+.chat-msg.user .chat-bubble{background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.chat-cursor::after{content:'▍';margin-left:1px;color:var(--md-sys-color-primary);animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.chat-jump{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);z-index:5}
+.chat-input-row{display:flex;align-items:flex-end;gap:8px;padding:12px 4px 0;flex-shrink:0}
+.chat-input-row md-outlined-text-field{flex:1 1 auto;min-width:0}
+@media(max-width:600px){ .chat-msgs{padding:12px 0} .chat-input-row{padding:10px 0 0} }
+
+/* Shared inside cards */
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;flex-wrap:wrap;margin-bottom:12px}
+.card-title{font-size:16px;font-weight:500}
+.card-sub{font-size:13px;color:var(--md-sys-color-on-surface-variant)}
+md-filled-card{background:var(--md-sys-color-surface-container);border-radius:var(--md-sys-shape-corner-large);
+  padding:16px;margin-bottom:16px;display:block}
+md-list{display:block}
+md-list-item{--md-list-container-color:transparent}
+.list-gap{display:flex;flex-direction:column;gap:8px}
+.empty{padding:40px 16px;text-align:center;color:var(--md-sys-color-on-surface-variant)}
+.tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.tag.openai{background:#10A37F;color:#fff}.tag.claude{background:#D97757;color:#fff}.tag.gemini{background:#4285F4;color:#fff}
+.tag.default{background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.pv-setdef{cursor:pointer}
+.ov-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ov-nav-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 4px;border:1px solid var(--md-sys-color-outline-variant);border-radius:16px;background:var(--md-sys-color-surface-container-low);color:var(--md-sys-color-on-surface);cursor:pointer;font-size:13px}
+.ov-nav-btn:active{background:var(--md-sys-color-surface-container-high)}
+.ov-nav-btn .msym{font-size:24px;color:var(--md-sys-color-primary)}
+.icon-act{width:32px;height:32px;min-width:32px;border:none;border-radius:50%;cursor:pointer;background:transparent;color:var(--md-sys-color-on-surface-variant);display:inline-flex;align-items:center;justify-content:center;padding:0;flex:none}
+.icon-act:hover{background:var(--md-sys-color-surface-container-high)}
+.icon-act .msym{font-size:19px}
+.icon-act.on{color:var(--md-sys-color-primary)}
+.icon-act.err{color:var(--md-sys-color-error)}
+.icon-act:disabled{opacity:.5;cursor:default}
+.pv-setdef:hover{text-decoration:underline;text-decoration-color:var(--md-sys-color-primary)}
+.rec-pre{max-height:36vh;overflow:auto;background:var(--md-sys-color-surface-container);border:1px solid var(--md-sys-color-outline-variant);padding:10px;border-radius:8px;font-size:12px;white-space:pre-wrap;word-break:break-all;margin:6px 0 12px}
+.rec-meta{font-size:12px;color:var(--md-sys-color-on-surface-variant);margin-bottom:8px}
+.rp-help summary{cursor:pointer;padding:4px 0;font-size:14px;font-weight:500}
+.rp-help table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+.rp-help td,.rp-help th{border:1px solid var(--md-sys-color-outline-variant);padding:5px 8px;text-align:left}
+.rp-help td:first-child{font-family:monospace;white-space:nowrap}
+.rp-help .ex{color:var(--md-sys-color-on-surface-variant)}
+.muted{color:var(--md-sys-color-on-surface-variant)}
+.small{font-size:12px}
+.grid-form{display:flex;gap:16px;flex-wrap:wrap}
+.grid-form > *{flex:1 1 180px;min-width:0}
+.hidden{display:none!important}
+
+/* Snackbar (Material Web v2 removed md-snackbar; keeping a native implementation) */
+#snackbar{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);
+  background:var(--md-sys-color-inverse-surface);color:var(--md-sys-color-inverse-on-surface);
+  padding:14px 24px;border-radius:8px;font-size:14px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,.4);
+  z-index:6000;opacity:0;transition:opacity .3s,transform .3s;max-width:90vw;pointer-events:none}
+#snackbar.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#snackbar.err{background:var(--md-sys-color-error-container);color:var(--md-sys-color-on-error-container)}
+/* ============ Dialog styles ============ */
+/* ============ Dialogs (plain HTML/CSS, no shadow DOM dependency) ============ */
+.dlg-overlay{position:fixed;inset:0;z-index:5000;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(2px);padding:16px;
+  animation:dlgFade .18s ease-out}
+.dlg-overlay[hidden]{display:none}
+.dlg-box{background:var(--md-sys-color-surface-container-high);border-radius:28px;
+  width:min(460px,100%);max-height:min(80dvh,600px);display:flex;flex-direction:column;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);overflow:hidden;
+  animation:dlgPop .24s cubic-bezier(.34,1.3,.5,1)}
+@keyframes dlgFade{from{opacity:0}to{opacity:1}}
+@keyframes dlgPop{from{opacity:0;transform:scale(.9) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@media(prefers-reduced-motion:reduce){.dlg-overlay,.dlg-box{animation:none}}
+.dlg-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 0;flex-shrink:0}
+.dlg-head h3{font-size:18px;font-weight:500;line-height:26px;margin:0;color:var(--md-sys-color-on-surface)}
+.dlg-x{background:none;border:none;color:var(--md-sys-color-on-surface-variant);font-size:18px;
+  width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dlg-x:hover{background:var(--md-sys-color-surface-container-highest)}
+.dlg-body{padding:16px 24px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:14px}
+.dlg-foot{display:flex;justify-content:flex-end;gap:8px;padding:12px 24px 20px;flex-shrink:0}
+/* Plain HTML buttons (used inside dialogs) */
+.pbtn{border:none;cursor:pointer;font-size:13px;font-weight:500;border-radius:20px;
+  height:34px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  transition:background .15s,box-shadow .15s;font-family:inherit}
+.pbtn-filled{background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary)}
+.pbtn-filled:hover{box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.pbtn-text{background:transparent;color:var(--md-sys-color-primary)}
+.pbtn-text:hover{background:var(--md-sys-color-surface-container-highest)}
+.pbtn[hidden]{display:none}
+/* Model rename tag editor */
+.mm-row{display:grid;grid-template-columns:1fr 1fr 48px;gap:8px;align-items:stretch}
+.mm-row md-outlined-text-field{width:100%;--md-outlined-field-top-space:12px;--md-outlined-field-bottom-space:12px;--md-sys-typescale-body-large-size:13px}
+.mm-add-btn{width:48px;border:none;border-radius:12px;cursor:pointer;background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary);display:flex;align-items:center;justify-content:center}
+.mm-add-btn .msym{font-size:22px}
+.mm-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.mm-chip{display:inline-flex;align-items:center;gap:5px;background:var(--md-sys-color-surface-container-highest);
+  border:1px solid var(--md-sys-color-outline-variant);border-radius:16px;padding:4px 5px 4px 10px;font-size:12px;
+  max-width:100%;touch-action:pan-y;transition:transform .18s cubic-bezier(.2,0,0,1),opacity .18s;user-select:none}
+.mm-chip .arrow{color:var(--md-sys-color-primary)}
+.mm-chip .nm{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mm-x{border:none;background:none;color:var(--md-sys-color-on-surface-variant);cursor:pointer;font-size:13px;
+  width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;flex-shrink:0}
+.mm-x:hover{color:var(--md-sys-color-error);background:var(--md-sys-color-error-container)}
+
+/* ============ Keep component sizing in proportion with page text ============
+Material Web buttons default to 40px tall / 14px text, while this page's tables and list bodies are 12-13px,
+so buttons look visibly oversized. This aligns everything to the MD3 "small button" tier (32px / 13px) with clear text hierarchy. */
+/* Button sizing: do not compress height (avoid text overflow); control font size + horizontal padding instead */
+md-text-button,md-outlined-button,md-filled-button,md-filled-tonal-button{min-width:64px!important;
+  border-radius:16px!important;padding:0 16px!important;
+  --md-text-button-container-shape:16px;--md-outlined-button-container-shape:16px;
+  --md-filled-button-container-shape:16px;--md-filled-tonal-button-container-shape:16px;
+  font-size:14px!important;letter-spacing:.02em;
+  --md-sys-typescale-label-large-size:14px;
+  --md-text-button-container-height:36px;--md-text-button-label-text-size:14px;--md-text-button-label-text-line-height:20px;--md-text-button-icon-size:18px;
+  --md-outlined-button-container-height:36px;--md-outlined-button-label-text-size:14px;--md-outlined-button-label-text-line-height:20px;--md-outlined-button-icon-size:18px;
+  --md-filled-button-container-height:36px;--md-filled-button-label-text-size:14px;--md-filled-button-label-text-line-height:20px;--md-filled-button-icon-size:18px;
+  --md-filled-tonal-button-container-height:36px;--md-filled-tonal-button-label-text-size:14px;--md-filled-tonal-button-label-text-line-height:20px;--md-filled-tonal-button-icon-size:18px}
+md-text-button       {--md-text-button-container-height:36px;       --md-text-button-label-text-size:14px;       --md-text-button-label-text-line-height:20px;       --md-text-button-icon-size:18px}
+md-outlined-button   {--md-outlined-button-container-height:36px;   --md-outlined-button-label-text-size:14px;   --md-outlined-button-label-text-line-height:20px;   --md-outlined-button-icon-size:18px}
+md-filled-button     {--md-filled-button-container-height:36px;     --md-filled-button-label-text-size:14px;     --md-filled-button-label-text-line-height:20px;     --md-filled-button-icon-size:18px}
+md-filled-tonal-button{--md-filled-tonal-button-container-height:36px;--md-filled-tonal-button-label-text-size:14px;--md-filled-tonal-button-label-text-line-height:20px;--md-filled-tonal-button-icon-size:18px}
+md-assist-chip       {font-size:13px!important;
+  --md-assist-chip-container-height:32px;--md-assist-chip-label-text-size:13px;--md-assist-chip-label-text-line-height:18px;--md-assist-chip-icon-size:16px}
+md-list-item         {--md-list-item-label-text-size:14px;--md-list-item-label-text-line-height:20px;
+                      --md-list-item-supporting-text-size:12px;--md-list-item-supporting-text-line-height:16px;
+                      --md-list-item-trailing-supporting-text-size:12px;--md-list-item-trailing-supporting-text-line-height:16px;
+                      --md-list-item-one-line-container-height:56px;--md-list-item-two-line-container-height:64px}
+md-navigation-bar    {--md-navigation-bar-container-height:64px;--md-navigation-bar-icon-size:22px;
+                      --md-navigation-bar-label-text-size:12px;--md-navigation-bar-label-text-line-height:16px}
+/* Emoji icons: md-icon renders via the Material Symbols font by default (external font unreachable); switch to the system font and allow colored emoji */
+/* Material Symbols Outlined: local font (/auth/vendor/), zero CDN dependency */
+@font-face{
+  font-family:'Material Symbols Outlined';
+  font-style:normal;font-weight:400;
+  src:url('/auth/vendor/material-symbols-outlined.woff2') format('woff2');
+  font-display:block}
+/* Word-form icon classes for non-md-icon cases (logo/avatar/small icons inside tags) */
+.msym{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;
+  display:inline-block;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;
+  direction:ltr;font-feature-settings:'liga';-webkit-font-smoothing:antialiased;
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;user-select:none}
+.tag .msym{font-size:11px;vertical-align:-1px;margin-right:1px}
+.msym.ok{color:var(--md-sys-color-primary);font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+.msym.err{color:var(--md-sys-color-error);font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+md-icon{font-feature-settings:'liga';letter-spacing:normal;line-height:1;
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+md-navigation-tab md-icon[slot=active-icon]{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* ============ Patches: keyboard accessibility / mobile bottom bar / in-dialog page picker ============ */
+/* Unified focus ring: custom-drawn buttons (sidebar/FAB/page grid) have no focus style of their own, so keyboard focus was invisible */
+.rail-item:focus-visible,.icon-act:focus-visible,.ov-nav-btn:focus-visible,.pbtn:focus-visible,
+.md-btn:focus-visible,.th-swatch:focus-visible{outline:2px solid var(--md-sys-color-primary);outline-offset:2px}
+/* Nine-patch grid of the "All pages" dialog (entry: 6th item of the mobile bottom bar) */
+.vs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:400px){ .vs-grid{grid-template-columns:repeat(2,1fr)} }
+/* Mobile: dialog is nearly fullscreen; the body area stays scrollable when the keyboard is up */
+@media(max-width:600px){
+  .dlg-overlay{padding:12px;align-items:flex-end}
+  .dlg-box{width:100%;max-height:92dvh;border-radius:24px}
+  .dlg-head{padding:16px 16px 0}
+  .dlg-body{padding:12px 16px}
+  .dlg-foot{padding:8px 16px 16px}
+}
+
+/* ============ Statistics charts (canvas) ============ */
+.chart-box{padding:8px 12px 4px}
+.chart-box canvas{display:block;width:100%;min-height:120px}

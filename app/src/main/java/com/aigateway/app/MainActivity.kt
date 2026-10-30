@@ -236,8 +236,8 @@ class MainActivity : AppCompatActivity() {
         "settings" -> SettingsHubFragment()
         "secondauth" -> SecondAuthFragment()
         "tunnel" -> TunnelFragment()
-        "reg" -> RegSettingsFragment()
-        "users" -> UsersFragment()
+        "embedded" -> EmbeddedFragment()
+        "extractor" -> FileExtractorFragment()
         "proxies" -> ProxiesFragment()
         "plugins" -> PluginsMgmtFragment()
         else -> OverviewFragment()
@@ -258,12 +258,19 @@ class MainActivity : AppCompatActivity() {
         "settings" -> R.string.nav_settings
         "secondauth" -> R.string.st_secondauth
         "tunnel" -> R.string.st_tunnel
-        "reg" -> R.string.st_reg
-        "users" -> R.string.us_title
+        "embedded" -> R.string.title_embedded
+        "extractor" -> R.string.title_extractor
         "proxies" -> R.string.title_proxies
         "plugins" -> R.string.title_plugins
         else -> R.string.title_overview
     })
+
+    /** 连接配置变化后重建页面（内置网关切换时使用）。 */
+    fun onProfileChanged() {
+        if (!pagerReady) { showMain(); return }
+        b.viewPager.adapter = MainPagerAdapter(this@MainActivity)
+        updateSubtitle()
+    }
 
     fun showFragment(tag: String) {
         val idx = pagerTags.indexOf(tag)

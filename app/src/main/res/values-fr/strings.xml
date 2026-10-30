@@ -586,8 +586,6 @@
     <string name="um_sort">Trier</string>
     <string name="um_sort_asc">Nom A→Z</string>
     <string name="um_sort_desc">Nom Z→A</string>
-    <string name="cd_bind_user">Lier un utilisateur (facultatif)</string>
-    <string name="cd_bind_user_hint">Une fois liée, cette carte est visible par l\'utilisateur connecté avec son compte</string>
     <string name="menu_panel">Panneau</string>
     <string name="nav_settings">Réglages</string>
     <string name="panel_loading">Chargement du panneau d\'administration…</string>
@@ -618,8 +616,6 @@
     <string name="st_config_sub">Chiffrement/sauvegarde/import-export</string>
     <string name="st_conn_sub">Adresse et mot de passe de la passerelle distante</string>
     <string name="st_panel_sub">Panneau d\'administration complet (web)</string>
-    <string name="st_reg">Inscription et cartes</string>
-    <string name="st_reg_sub">Inscription/longueur des clés/captcha</string>
     <string name="st_secondauth">Seconde vérification</string>
     <string name="st_secondauth_sub">La connexion admin exige un second mot de passe ou TOTP</string>
     <string name="st_security_sub">Interception de code/protection d\'arrière-plan</string>
@@ -641,14 +637,6 @@
     <string name="up_edit_profile">Modifier le profil</string>
     <string name="up_my_keys">Mes cartes</string>
     <string name="up_nickname">Pseudo</string>
-    <string name="us_empty">Aucun utilisateur</string>
-    <string name="us_keys_fmt">%1$d cartes</string>
-    <string name="us_new">Ajouter un utilisateur</string>
-    <string name="us_password">Mot de passe</string>
-    <string name="us_reset_pw">Réinitialiser le mot de passe</string>
-    <string name="us_sub">Comptes de connexion par mot de passe ; liaison de cartes possible</string>
-    <string name="us_title">Gestion des utilisateurs</string>
-    <string name="us_uid">UID (vide = généré automatiquement)</string>
     <string name="pv_balance_section">Solde du fournisseur</string>
     <string name="pv_balance_url">URL du solde</string>
     <string name="pv_balance_url_helper">Vide = préréglage intégré</string>

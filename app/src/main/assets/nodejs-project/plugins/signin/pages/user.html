@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>每日签到</title>
+<style>
+  :root{--bg:#121212;--card:#1e1e1e;--primary:#8ab4f8;--on:#e8eaed;--sub:#9aa0a6}
+  *{box-sizing:border-box}
+  body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--on);margin:0;padding:20px;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+  .card{background:var(--card);border-radius:20px;padding:28px 24px;width:100%;max-width:420px;margin-top:24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.4)}
+  h2{margin:0 0 4px;font-size:22px}
+  .sub{color:var(--sub);font-size:13px;margin-bottom:20px}
+  .big{font-size:44px;font-weight:700;color:var(--primary);margin:8px 0}
+  .row{display:flex;justify-content:space-around;margin:18px 0}
+  .stat{flex:1}.stat .v{font-size:24px;font-weight:600}.stat .l{font-size:12px;color:var(--sub);margin-top:2px}
+  input{width:100%;background:#2a2a2a;border:1px solid #3c4043;border-radius:12px;color:var(--on);padding:12px 14px;font-size:14px;margin-bottom:14px}
+  input:focus{outline:none;border-color:var(--primary)}
+  button{width:100%;background:var(--primary);color:#0b0b0b;border:0;border-radius:14px;padding:14px;font-size:16px;font-weight:600;cursor:pointer}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button:active{transform:scale(.98)}
+  #msg{margin-top:14px;font-size:14px;min-height:20px}
+  .ok{color:#81c995}.err{color:#f28b82}
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>📅 每日签到</h2>
+  <div class="sub">每天签到领取额度奖励</div>
+  <div class="big" id="reward">?</div>
+  <div class="sub">tokens / 次</div>
+  <div class="row">
+    <div class="stat"><div class="v" id="streak">0</div><div class="l">连续天数</div></div>
+    <div class="stat"><div class="v" id="total">0</div><div class="l">累计奖励</div></div>
+  </div>
+  <input id="token" placeholder="请输入你的卡密 (sk-...)" autocomplete="off">
+  <button id="btn">签 到</button>
+  <div id="msg"></div>
+</div>
+<script>
+//// derive the plugin API prefix (handles default without an instance prefix / /<inst>/plugins/signin with one)
+const API = location.pathname.replace(/\/pages\/.*$/, '');
+const $ = id => document.getElementById(id);
+let token = '';
+// Prefer the currently logged-in key card from the App JSBridge; otherwise fall back to localStorage
+try { if (window.AGW && AGW.getToken) token = AGW.getToken() || ''; } catch (e) {}
+if (!token) token = localStorage.getItem('signin_token') || '';
+$('token').value = token;
+
+async function refresh() {
+  if (!token) return;
+  const r = await fetch(API + '/summary?token=' + encodeURIComponent(token)).then(r => r.json()).catch(() => null);
+  if (!r || !r.ok) { $('msg').textContent = (r && r.error) || '查询失败'; $('msg').className = 'err'; return; }
+  $('reward').textContent = r.reward;
+  $('streak').textContent = r.streak;
+  $('total').textContent = r.total;
+  if (r.checkedToday) { $('btn').textContent = '✓ 今日已签到'; $('btn').disabled = true; }
+}
+$('btn').onclick = async () => {
+  token = $('token').value.trim();
+  if (!token) { $('msg').textContent = '请先输入卡密'; $('msg').className = 'err'; return; }
+  localStorage.setItem('signin_token', token);
+  $('btn').disabled = true; $('msg').textContent = '签到中…'; $('msg').className = '';
+  const r = await fetch(API + '/checkin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token }) }).then(r => r.json()).catch(() => null);
+  $('btn').disabled = false;
+  if (!r) { $('msg').textContent = '网络错误'; $('msg').className = 'err'; return; }
+  if (r.ok) { $('msg').textContent = `🎉 签到成功 +${r.reward} tokens（连续 ${r.streak} 天）`; $('msg').className = 'ok'; }
+  else { $('msg').textContent = r.msg || r.error || '签到失败'; $('msg').className = r.already ? '' : 'err'; }
+  refresh();
+};
+refresh();
+</script>
+</body>
+</html>

@@ -586,8 +586,6 @@
     <string name="um_sort">Ordenar</string>
     <string name="um_sort_asc">Nombre A→Z</string>
     <string name="um_sort_desc">Nombre Z→A</string>
-    <string name="cd_bind_user">Vincular usuario (opcional)</string>
-    <string name="cd_bind_user_hint">Tras vincular, ese usuario verá esta tarjeta al iniciar sesión con su cuenta</string>
     <string name="menu_panel">Panel</string>
     <string name="nav_settings">Ajustes</string>
     <string name="panel_loading">Cargando panel de administración…</string>
@@ -618,8 +616,6 @@
     <string name="st_config_sub">Cifrado/copia de seguridad/importación-exportación</string>
     <string name="st_conn_sub">Dirección y contraseña de la pasarela remota</string>
     <string name="st_panel_sub">Panel de administración completo (web)</string>
-    <string name="st_reg">Registro y tarjetas</string>
-    <string name="st_reg_sub">Registro/longitud de claves/captcha</string>
     <string name="st_secondauth">Segunda verificación</string>
     <string name="st_secondauth_sub">El inicio de sesión de admin requiere segunda contraseña o TOTP</string>
     <string name="st_security_sub">Intercepción de código/protección de fondo</string>
@@ -641,14 +637,6 @@
     <string name="up_edit_profile">Editar perfil</string>
     <string name="up_my_keys">Mis tarjetas</string>
     <string name="up_nickname">Apodo</string>
-    <string name="us_empty">Sin usuarios</string>
-    <string name="us_keys_fmt">%1$d tarjetas</string>
-    <string name="us_new">Añadir usuario</string>
-    <string name="us_password">Contraseña</string>
-    <string name="us_reset_pw">Restablecer contraseña</string>
-    <string name="us_sub">Cuentas de inicio con contraseña; se pueden vincular tarjetas</string>
-    <string name="us_title">Gestión de usuarios</string>
-    <string name="us_uid">UID (vacío = autogenerado)</string>
     <string name="pv_balance_section">Saldo del proveedor</string>
     <string name="pv_balance_url">URL de saldo</string>
     <string name="pv_balance_url_helper">Vacío = preset integrado</string>

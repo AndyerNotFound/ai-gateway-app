@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#141218">
+<meta name="description" content="AI Gateway 管理面板 · Material Web 版">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>AI Gateway · Material Web v2.11</title>
+<link rel="stylesheet" href="/auth/app.css">
+</head>
+<body>
+
+<div class="compat-bar" id="compatBar" role="alert"></div>
+
+<!-- ============ Desktop sidebar ============ -->
+<nav class="rail" id="rail" aria-label="主导航">
+  <div class="rail-brand" id="railBrand" title="点击修改页面名称">
+    <div class="logo" aria-hidden="true"><span class="msym">smart_toy</span></div>
+    <div style="min-width:0"><div class="name">AI Gateway</div><div class="ver">Material Web v2.11</div></div>
+    <span class="msym" style="font-size:16px;color:var(--md-sys-color-on-surface-variant);margin-left:auto;flex:none">edit</span>
+  </div>
+  <div id="railList" class="rail-list"></div>
+</nav>
+
+<!-- ============ Main area ============ -->
+<div class="shell">
+  <header class="topbar">
+    <h1 id="pageTitle">总览</h1>
+    <div class="tools">
+      <md-assist-chip id="modeChip" label="HTTP" aria-label="切换数据源"><md-icon slot="icon" id="modeChipIc">public</md-icon></md-assist-chip>
+      <md-outlined-select id="topInst" aria-label="当前实例"></md-outlined-select>
+      <md-outlined-icon-button id="refreshBtn" aria-label="刷新" title="刷新"><md-icon>refresh</md-icon></md-outlined-icon-button>
+      <md-outlined-icon-button id="keyBtn" aria-label="管理密码" title="管理密码"><md-icon>key</md-icon></md-outlined-icon-button>
+      <md-outlined-icon-button id="thBtn" aria-label="主题" title="主题"><md-icon>palette</md-icon></md-outlined-icon-button>
+    </div>
+  </header>
+
+  <main class="main" id="main">
+
+    <section id="page-overview" class="page">
+      <div class="stat-row" role="region" aria-label="统计概览">
+        <div class="stat-box"><div class="num" id="ov-instances">-</div><div class="lbl">实例数</div></div>
+        <div class="stat-box"><div class="num" id="ov-running">-</div><div class="lbl">运行中</div></div>
+        <div class="stat-box"><div class="num" id="ov-channels">-</div><div class="lbl">渠道总数</div></div>
+        <div class="stat-box"><div class="num" id="ov-requests">-</div><div class="lbl">总请求</div></div>
+        <div class="stat-box"><div class="num" id="ov-uptime">-</div><div class="lbl">运行时长</div></div>
+      </div>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">全部功能</div><div class="card-sub">底栏放不下的页面从这里进</div></div></div>
+        <div class="ov-nav">
+          <button type="button" class="ov-nav-btn" data-goto="stats"><span class="msym">bar_chart</span>统计</button>
+          <button type="button" class="ov-nav-btn" data-goto="requests"><span class="msym">monitoring</span>请求</button>
+          <button type="button" class="ov-nav-btn" data-goto="logs"><span class="msym">description</span>日志</button>
+          <button type="button" class="ov-nav-btn" data-goto="chat"><span class="msym">chat</span>聊天</button>
+        </div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">实例状态</div></div>
+          <md-text-button data-goto="ports">管理端口</md-text-button></div>
+        <div id="ov-inst-list"><md-linear-progress indeterminate></md-linear-progress></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">渠道概览</div></div>
+          <md-text-button data-goto="providers">管理提供商</md-text-button></div>
+        <div id="ov-ch-list"><div class="empty">加载中…</div></div>
+      </md-filled-card>
+    </section>
+
+    <section id="page-providers" class="page hidden" hidden>
+      <md-filled-card>
+        <div class="card-head">
+          <div><div class="card-title">AI 提供商</div><div class="card-sub">管理渠道配置</div></div>
+          <md-filled-button id="pv-add"><md-icon slot="icon">add</md-icon>添加渠道</md-filled-button>
+        </div>
+        <div class="tbl-wrap"><table class="tbl" id="pv-table" aria-label="渠道列表">
+          <thead><tr><th style="width:15%">名称</th><th style="width:9%">类型</th><th style="width:26%">Base URL</th><th style="width:11%">代理</th><th style="width:17%">模型</th><th style="width:22%"></th></tr></thead>
+          <tbody></tbody></table></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">代理服务器</div><div class="card-sub">渠道出站代理(SOCKS5 / HTTP)</div></div>
+          <md-filled-tonal-button id="px-add"><md-icon slot="icon">add</md-icon>添加代理</md-filled-tonal-button>
+        </div>
+        <div class="tbl-wrap"><table class="tbl" id="px-table" aria-label="代理列表">
+          <thead><tr><th style="width:20%">名称</th><th style="width:14%">类型</th><th style="width:42%">地址</th><th style="width:24%"></th></tr></thead>
+          <tbody></tbody></table></div>
+      </md-filled-card>
+    </section>
+
+    <section id="page-routing" class="page hidden" hidden>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">路由策略</div><div class="card-sub">模型映射与故障切换</div></div></div>
+        <div class="grid-form" style="margin-bottom:16px">
+          <md-outlined-text-field id="rt-maxRetry" label="最大重试" type="number" value="3" helper="失败后切换上限"></md-outlined-text-field>
+          <md-outlined-text-field id="rt-timeout" label="超时(秒)" type="number" value="60" helper="请求阈值"></md-outlined-text-field>
+          <md-outlined-text-field id="rt-cooldown" label="冷却(秒)" type="number" value="30" helper="渠道冷却期"></md-outlined-text-field>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;border:1px solid var(--md-sys-color-outline-variant);border-radius:12px">
+          <md-switch id="rt-redact"></md-switch>
+          <div style="min-width:0">
+            <div style="font-size:14px">隐私过滤</div>
+            <div style="font-size:12px;color:var(--md-sys-color-on-surface-variant)">转发前把请求里的密钥与敏感信息(API Key/Bearer/邮箱/手机号/身份证/银行卡/内网 IP)替换为 *** ; 保存后热重载生效</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;border:1px solid var(--md-sys-color-outline-variant);border-radius:12px">
+          <md-switch id="rt-redactRes"></md-switch>
+          <div style="min-width:0">
+            <div style="font-size:14px">响应过滤</div>
+            <div style="font-size:12px;color:var(--md-sys-color-on-surface-variant)">上游返回的正文/思考/工具参数也做同样打码(流式逐片处理, 跨片密钥不漏); 保存后热重载生效</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;padding:10px 14px;border:1px solid var(--md-sys-color-outline-variant);border-radius:12px">
+          <md-outlined-text-field id="rt-redactExtra" type="textarea" rows="3" label="自定义规则(每行一条正则, 如 工号[0-9]+)" style="width:100%"></md-outlined-text-field>
+          <div style="font-size:12px;color:var(--md-sys-color-on-surface-variant)">内置规则: API Key / Bearer / 邮箱 / 手机号 / 身份证 / 银行卡 / 内网 IP</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;border:1px solid var(--md-sys-color-outline-variant);border-radius:12px;flex-wrap:wrap">
+          <md-switch id="rt-modelSync"></md-switch>
+          <div style="min-width:0;flex:1">
+            <div style="font-size:14px">模型自动同步</div>
+            <div style="font-size:12px;color:var(--md-sys-color-on-surface-variant)">定期拉取上游模型列表, 合并进渠道(只增不减); 立即生效</div>
+          </div>
+          <md-outlined-text-field id="rt-syncInterval" label="间隔(小时)" type="number" style="width:100px" value="24"></md-outlined-text-field>
+          <md-filled-tonal-button id="rt-syncNow">立即同步</md-filled-tonal-button>
+        </div>
+        <div class="flex" style="display:flex;gap:8px;margin-bottom:16px">
+          <md-filled-button id="rt-save">保存策略</md-filled-button>
+          <md-text-button id="rt-reset">重置</md-text-button>
+        </div>
+        <div class="card-title" style="margin-bottom:8px">渠道与映射</div>
+        <div id="rt-channels" class="list-gap"><div class="empty">加载中…</div></div>
+      </md-filled-card>
+    </section>
+
+
+    <section id="page-replace" class="page hidden" hidden>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">发送替换</div><div class="card-sub">请求发给上游前, 对文本按正则规则替换 (跳过 model 字段与图片数据)</div></div></div>
+        <div class="mm-row">
+          <md-outlined-text-field id="rp-out-find" label="查找(正则)"></md-outlined-text-field>
+          <md-outlined-text-field id="rp-out-to" label="替换为(可用$1)"></md-outlined-text-field>
+          <button type="button" class="mm-add-btn" id="rp-out-add" aria-label="添加"><span class="msym">add</span></button>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin:6px 0 2px">
+          <md-checkbox id="rp-out-ci"></md-checkbox><span style="font-size:12px;color:var(--md-sys-color-on-surface-variant)">忽略大小写</span>
+          <span style="font-size:12px;color:var(--md-sys-color-on-surface-variant);margin-left:auto">改动即时保存, 实例自动重启生效</span>
+        </div>
+        <div class="mm-chips" id="rp-out-chips"></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">接收替换</div><div class="card-sub">收到响应后, 对文本按正则规则替换 (流式按行/片段处理)</div></div></div>
+        <div class="mm-row">
+          <md-outlined-text-field id="rp-inc-find" label="查找(正则)"></md-outlined-text-field>
+          <md-outlined-text-field id="rp-inc-to" label="替换为(可用$1)"></md-outlined-text-field>
+          <button type="button" class="mm-add-btn" id="rp-inc-add" aria-label="添加"><span class="msym">add</span></button>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin:6px 0 2px">
+          <md-checkbox id="rp-inc-ci"></md-checkbox><span style="font-size:12px;color:var(--md-sys-color-on-surface-variant)">忽略大小写</span>
+        </div>
+        <div class="mm-chips" id="rp-inc-chips"></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">测试</div><div class="card-sub">在本地试跑当前规则, 看转换效果</div></div></div>
+        <md-outlined-text-field id="rp-test-in" label="输入文本" type="textarea" rows="2"></md-outlined-text-field>
+        <div style="display:flex;gap:8px;margin:10px 0">
+          <md-filled-tonal-button id="rp-test-out-btn">按发送规则替换</md-filled-tonal-button>
+          <md-filled-tonal-button id="rp-test-inc-btn">按接收规则替换</md-filled-tonal-button>
+        </div>
+        <div class="mono" id="rp-test-result" style="white-space:pre-wrap;word-break:break-all;font-size:13px;min-height:38px;padding:8px;border:1px solid var(--md-sys-color-outline-variant);border-radius:8px">（结果）</div>
+      </md-filled-card>
+      <md-filled-card>
+        <details class="rp-help">
+          <summary>📖 正则表达式速查（点击展开）</summary>
+          <div class="card-sub" style="margin:6px 0">「查找」里写正则，匹配到的文本会被「替换为」的内容取代。所有匹配都会被替换（全局替换）。</div>
+          <table>
+            <tr><th>写法</th><th>含义</th><th>例子</th></tr>
+            <tr><td>.</td><td>任意一个字符（除换行）</td><td class="ex">a.c 匹配 abc、a1c</td></tr>
+            <tr><td>\d &nbsp;\w &nbsp;\s</td><td>数字 / 字母数字下划线 / 空白</td><td class="ex">\d+ 匹配 123</td></tr>
+            <tr><td>[abc] &nbsp;[^abc]</td><td>字符集合 / 排除集合</td><td class="ex">[0-9a-f] 匹配十六进制字符</td></tr>
+            <tr><td>* &nbsp;+ &nbsp;?</td><td>0次+ / 1次+ / 0或1次</td><td class="ex">colou?r 匹配 color、colour</td></tr>
+            <tr><td>{n} &nbsp;{n,m}</td><td>精确n次 / n到m次</td><td class="ex">\d{4} 匹配 2026</td></tr>
+            <tr><td>(…)</td><td>分组（捕获，可在替换里用）</td><td class="ex">见下方 $1 例子</td></tr>
+            <tr><td>|</td><td>或</td><td class="ex">猫|狗 匹配「猫」或「狗」</td></tr>
+            <tr><td>^ &nbsp;$</td><td>行首 / 行尾</td><td class="ex">\s+$ 匹配行尾空白</td></tr>
+            <tr><td>\</td><td>转义特殊字符</td><td class="ex">\. 匹配真正的点号；\( 匹配括号</td></tr>
+          </table>
+          <table>
+            <tr><th>替换为</th><th>含义</th></tr>
+            <tr><td>$1 $2…</td><td>第1/2个分组捕获的内容</td></tr>
+            <tr><td>$&amp;</td><td>整个匹配到的文本</td></tr>
+            <tr><td>留空</td><td>删除匹配到的内容</td></tr>
+          </table>
+          <div class="card-sub" style="margin:6px 0 2px">实用例子：</div>
+          <table>
+            <tr><th>查找</th><th>替换为</th><th>效果</th></tr>
+            <tr><td>第(\d+)章</td><td>第 $1 节</td><td class="ex">「第3章」→「第 3 节」</td></tr>
+            <tr><td>sk-[A-Za-z0-9]+</td><td>***</td><td class="ex">抹掉 API Key</td></tr>
+            <tr><td>(你好|您好)</td><td>[$&amp;]</td><td class="ex">「你好」→「[你好]」</td></tr>
+            <tr><td>\s+$</td><td>(留空)</td><td class="ex">删除每行行尾空白</td></tr>
+            <tr><td>(?i)openai</td><td>AI</td><td class="ex">行内忽略大小写写法；也可用「忽略大小写」开关</td></tr>
+          </table>
+          <div class="card-sub" style="margin:8px 0 2px">注意：</div>
+          <ul style="font-size:12.5px;color:var(--md-sys-color-on-surface-variant);margin:0 0 4px;padding-left:20px;line-height:1.8">
+            <li>流式响应是<b>按行/按片段</b>匹配的，跨行/跨片段的规则在流式下不生效（阻塞式正常）。</li>
+            <li>正则里的 <span class="mono">.</span> 不匹配换行符。</li>
+            <li>发送方向会跳过 model 字段和图片数据（data:URL），不会误伤路由和图片。</li>
+            <li>写错了正则会添加失败并提示，先点「测试」按钮本地试跑再加更稳妥。</li>
+          </ul>
+        </details>
+      </md-filled-card>
+    </section>
+    <section id="page-keys" class="page hidden" hidden>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">API 密钥</div><div class="card-sub">网关密码与渠道密钥</div></div></div>
+        <div class="grid-form" style="margin-bottom:16px">
+          <md-outlined-text-field id="ky-gatewayKey" label="网关密码 gatewayKey" type="password" helper="留空=不校验"></md-outlined-text-field>
+          <md-outlined-text-field id="ky-webToken" label="管理 API 令牌(webToken, 可选)" type="password" helper="面板登录不需要; 脚本/API 可选用，留空=本机 CLI 直接管理"></md-outlined-text-field>
+        </div>
+        <div id="ky-channels" class="list-gap" style="margin-bottom:16px"></div>
+        <md-filled-button id="ky-save">保存密钥</md-filled-button>
+      </md-filled-card>
+
+      <md-filled-card style="margin-top:16px">
+        <div class="card-head"><div><div class="card-title">管理端第二验证</div><div class="card-sub">开启后管理面板除管理密码外还需第二重验证(第二密码 或 TOTP 动态码)</div></div></div>
+        <div id="ka-status" style="margin-bottom:12px;color:var(--md-sys-color-on-surface-variant);font-size:14px">加载中…</div>
+        <div class="grid-form" style="margin-bottom:12px">
+          <md-outlined-text-field id="ka-secondKey" label="第二密码" type="password" helper="留空=不启用第二密码"></md-outlined-text-field>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <md-outlined-button id="ka-save-second">保存第二密码</md-outlined-button>
+          <md-outlined-button id="ka-totp-enable">启用 TOTP</md-outlined-button>
+          <md-outlined-button id="ka-totp-disable">停用 TOTP</md-outlined-button>
+        </div>
+        <div id="ka-totp-info" style="display:none;margin-top:12px">
+          <div class="card-sub">用验证器 App(Google Authenticator 等)扫码或手输密钥:</div>
+          <div class="mono" id="ka-totp-secret" style="word-break:break-all;background:var(--md-sys-color-surface-container);padding:10px;border-radius:10px;margin-top:6px;user-select:all"></div>
+          <div class="mono" id="ka-totp-url" style="word-break:break-all;font-size:11px;color:var(--md-sys-color-on-surface-variant);margin-top:4px;user-select:all"></div>
+        </div>
+      </md-filled-card>
+
+      <md-filled-card style="margin-top:16px">
+        <div class="card-head"><div><div class="card-title">管理端资料</div><div class="card-sub">头像 / 名称 / 简介 / 其他 · 用 agw admin → profile change 修改</div></div></div>
+        <div style="display:flex;gap:14px;align-items:flex-start">
+          <img id="ka-profile-avatar" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:none">
+          <div style="flex:1;min-width:0">
+            <div id="ka-profile-name" style="font-weight:600;font-size:15px">-</div>
+            <div id="ka-profile-text" style="font-size:13px;color:var(--md-sys-color-on-surface-variant);white-space:pre-wrap;word-break:break-word;margin-top:4px"></div>
+            <div id="ka-profile-other" class="card-sub" style="margin-top:4px"></div>
+            <div id="ka-profile-expire" class="card-sub" style="margin-top:4px"></div>
+          </div>
+        </div>
+      </md-filled-card>
+
+      <md-filled-card style="margin-top:16px">
+        <div class="card-head"><div><div class="card-title">卡密</div><div class="card-sub">新卡密钥长度 · 目标实例=顶栏当前选择</div></div></div>
+        <div class="grid-form">
+          <md-outlined-text-field id="rg-keyLength" label="卡密长度(8-128)" type="number" helper="默认24, 不含 sk- 前缀"></md-outlined-text-field>
+        </div>
+        <md-filled-button id="rg-save" style="margin-top:8px">保存卡密设置</md-filled-button>
+      </md-filled-card>
+    </section>
+
+    <section id="page-cards" class="page hidden" hidden>
+      <md-filled-card>
+        <div class="card-head">
+          <div class="card-title">卡密</div>
+          <md-filled-button id="cd-new"><md-icon slot="icon">add</md-icon><span id="cd-new-label">发卡</span></md-filled-button>
+        </div>
+        <div id="cd-pane-keys">
+          <div class="card-sub" style="margin-bottom:10px">API Key: 限额/禁用/过期/模型白名单 · 目标实例=顶栏当前选择</div>
+          <div id="cd-list" class="list-gap"><md-linear-progress indeterminate></md-linear-progress></div>
+        </div>
+      </md-filled-card>
+    </section>
+
+    <section id="page-ports" class="page hidden" hidden>
+      <md-filled-card style="margin-bottom:16px">
+        <div class="card-head"><div><div class="card-title">公网域名 (cloudflared 隧道)</div><div class="card-sub">免费临时域名, 让外网访问本网关 · 适合手机/内网部署; 服务器部署请用 Nginx</div></div>
+          <md-outlined-button id="tn-toggle">启动隧道</md-outlined-button></div>
+        <div id="tn-status" style="font-size:14px;color:var(--md-sys-color-on-surface-variant)">未启动</div>
+        <div id="tn-url-row" style="display:none;margin-top:8px;align-items:center;gap:8px">
+          <span class="mono" id="tn-url" style="word-break:break-all;background:var(--md-sys-color-surface-container);padding:10px;border-radius:10px;user-select:all"></span>
+          <md-icon-button id="tn-copy" title="复制"><md-icon>content_copy</md-icon></md-icon-button>
+        </div>
+        <div class="card-sub" style="margin-top:8px;color:var(--md-sys-color-error)">⚠️ 隧道开启=公网可访问! 务必设 gatewayKey 和 webToken</div>
+      </md-filled-card>
+
+      <md-filled-card>
+        <div class="card-head">
+          <div><div class="card-title">服务端口</div><div class="card-sub">多实例管理</div></div>
+          <md-filled-button id="pt-new"><md-icon slot="icon">add</md-icon>新建实例</md-filled-button>
+        </div>
+        <div id="pt-list" class="list-gap"><md-linear-progress indeterminate></md-linear-progress></div>
+      </md-filled-card>
+    </section>
+
+    <section id="page-stats" class="page hidden" hidden>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num" id="st-requests">-</div><div class="lbl">请求数</div></div>
+        <div class="stat-box"><div class="num" id="st-errors">-</div><div class="lbl">错误数</div></div>
+        <div class="stat-box"><div class="num" id="st-intok">-</div><div class="lbl">输入 Token</div></div>
+        <div class="stat-box"><div class="num" id="st-outtok">-</div><div class="lbl">输出 Token</div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num" id="st-cached">-</div><div class="lbl">缓存节省 Token</div></div>
+        <div class="stat-box"><div class="num" id="st-hitrate">-</div><div class="lbl">缓存命中率</div></div>
+        <div class="stat-box"><div class="num" id="st-uptime">-</div><div class="lbl">运行时长</div></div>
+        <div class="stat-box"><div class="num" id="st-rps">-</div><div class="lbl">平均 RPS</div></div>
+      </div>
+      <md-filled-card>
+        <div class="card-head"><div class="card-title">Token 分布 <span style="font-size:11px;opacity:.6">(估算)</span></div></div>
+        <div id="st-dist" style="padding:4px 16px 12px"></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div class="card-title">每日用量趋势 <span style="font-size:11px;opacity:.6">(最近 14 天, tokens)</span></div></div>
+        <div class="chart-box"><canvas id="st-chart-daily" height="200" role="img" aria-label="每日用量趋势图"></canvas></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div class="card-title">按模型 Token</div></div>
+        <div class="chart-box"><canvas id="st-chart-model" height="200" role="img" aria-label="按模型 Token 图"></canvas></div>
+        <div id="st-model" style="padding:4px 16px 12px"></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div class="card-title">每日用量</div></div>
+        <div class="tbl-wrap"><table class="tbl" id="st-daily" aria-label="每日用量">
+          <thead><tr><th style="width:28%">日期</th><th style="width:18%">请求</th><th style="width:18%">入Token</th><th style="width:18%">出Token</th><th style="width:18%">缓存</th></tr></thead>
+          <tbody></tbody></table></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div class="card-title">渠道统计</div></div>
+        <div class="tbl-wrap"><table class="tbl" id="st-table" aria-label="渠道统计">
+          <thead><tr><th style="width:40%">渠道</th><th style="width:20%">请求数</th><th style="width:20%">入Token</th><th style="width:20%">出Token</th></tr></thead>
+          <tbody></tbody></table></div>
+      </md-filled-card>
+    </section>
+
+    <section id="page-requests" class="page hidden" hidden>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">请求记录收集</div><div class="card-sub">记录请求结构 + 请求/响应正文 (默认关闭)</div></div>
+          <md-switch id="rq-rec-enable" aria-label="开启请求记录"></md-switch></div>
+        <div class="grid-form">
+          <md-outlined-text-field id="rq-rec-server" label="收集服务器地址 (可选)" placeholder="如 http://192.168.1.100:9000/collect" helper="留空 = 存本机 log/requests-<实例>.jsonl; 填写 = 每条 POST JSON 到该地址。保存后实例自动重启生效"></md-outlined-text-field>
+        </div>
+        <md-filled-tonal-button id="rq-rec-save">保存记录设置</md-filled-tonal-button>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div class="card-title">请求记录</div>
+          <md-text-button id="rq-refresh">刷新</md-text-button></div>
+        <div class="tbl-wrap"><table class="tbl" id="rq-table" aria-label="请求记录">
+          <thead><tr><th style="width:23%">时间</th><th style="width:22%">模型</th><th style="width:19%">渠道</th><th style="width:11%">状态</th><th style="width:13%">耗时</th><th style="width:12%">正文</th></tr></thead>
+          <tbody></tbody></table></div>
+      </md-filled-card>
+    </section>
+
+    <section id="page-logs" class="page hidden" hidden>
+      <md-filled-card>
+        <div class="card-head">
+          <div class="card-title">服务日志</div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <md-outlined-text-field id="lg-lines" label="行数" type="number" value="100" style="width:96px"></md-outlined-text-field>
+            <md-filled-tonal-button id="lg-refresh">刷新</md-filled-tonal-button>
+          </div>
+        </div>
+        <div class="log-box" id="lg-box" role="log" aria-live="polite" aria-label="日志内容">选择实例后加载日志…</div>
+      </md-filled-card>
+    </section>
+
+    <section id="page-chat" class="page hidden" hidden>
+      <md-filled-card style="position:relative">
+        <div class="card-head">
+          <div><div class="card-title">聊天测试</div><div class="card-sub">直接向网关发请求, 测试渠道是否通</div></div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1;min-width:0">
+            <md-outlined-select id="ch-model" label="模型" aria-label="模型" style="flex:1 1 150px;min-width:0;max-width:200px"></md-outlined-select>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px">
+              <md-switch id="ch-stream" selected aria-label="流式输出"></md-switch>流式</label>
+            <md-text-button id="ch-clear">清空</md-text-button>
+          </div>
+        </div>
+        <div class="chat-msgs" id="ch-messages" role="log" aria-live="polite" aria-label="聊天消息记录"></div>
+        <md-assist-chip id="ch-jump" label="回到底部" class="chat-jump hidden"><md-icon slot="icon">arrow_downward</md-icon></md-assist-chip>
+        <div class="chat-input-row">
+          <md-outlined-text-field id="ch-input" label="消息" placeholder="Enter 发送 / Shift+Enter 换行"></md-outlined-text-field>
+          <md-filled-button id="ch-send">发送</md-filled-button>
+        </div>
+      </md-filled-card>
+    </section>
+
+<!-- ============ Context windows ============ -->
+
+<!-- ============ Panel sessions ============ -->
+    <section id="page-session" class="page hidden" hidden>
+      <md-filled-card>
+        <div class="card-head">
+          <div><div class="card-title">面板会话</div><div class="card-sub">浏览器用 agw web login 的一次性链接登录后产生的会话(默认 7 天)</div></div>
+          <md-filled-tonal-button id="ss-revoke-all">注销全部</md-filled-tonal-button>
+        </div>
+        <div class="tbl-wrap"><table class="tbl" id="ss-table" aria-label="面板会话">
+          <thead><tr><th style="width:38%">会话 ID</th><th style="width:38%">到期</th><th style="width:24%"></th></tr></thead>
+          <tbody></tbody></table></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">登录链接</div><div class="card-sub">由 agw web login 直接写入运行时文件；为安全起见面板不保存 token</div></div></div>
+        <div class="tbl-wrap"><table class="tbl" id="ss-pend" aria-label="待用登录链接">
+          <thead><tr><th style="width:38%">会话 ID</th><th style="width:38%">到期</th><th style="width:24%"></th></tr></thead>
+          <tbody></tbody></table></div>
+      </md-filled-card>
+      <md-filled-card>
+        <div class="card-head"><div><div class="card-title">定时注销</div><div class="card-sub" id="ss-expire-state">未设定</div></div></div>
+        <div class="grid-form">
+          <md-outlined-text-field id="ss-expire-at" type="datetime-local" label="注销时间"></md-outlined-text-field>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <md-filled-button id="ss-expire-set">设定</md-filled-button>
+          <md-text-button id="ss-expire-clear">取消定时</md-text-button>
+        </div>
+      </md-filled-card>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ Mobile bottom navigation ============ -->
+<md-navigation-bar class="navbar" id="navbar" label="主导航"></md-navigation-bar>
+
+<!-- ============ Shared dialogs (plain HTML/CSS, no shadow DOM dependency) ============ -->
+<div id="dlgOverlay" class="dlg-overlay" hidden>
+  <div class="dlg-box" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+    <div class="dlg-head"><h3 id="dlgTitle">标题</h3><button class="dlg-x" id="dlgX" aria-label="关闭">✕</button></div>
+    <div class="dlg-body" id="dlgBody"></div>
+    <div class="dlg-foot">
+      <button class="pbtn pbtn-text" id="dlgFetch" hidden style="margin-right:auto">获取模型列表</button>
+      <button class="pbtn pbtn-text" id="dlgCancel">取消</button>
+      <button class="pbtn pbtn-filled" id="dlgOk">确定</button>
+    </div>
+  </div>
+</div>
+
+<div id="snackbar" role="status" aria-live="polite"></div>
+
+<script type="module" src="/auth/app.js"></script>
+</body>
+</html>

@@ -586,8 +586,6 @@
     <string name="um_sort">정렬</string>
     <string name="um_sort_asc">이름 A→Z</string>
     <string name="um_sort_desc">이름 Z→A</string>
-    <string name="cd_bind_user">사용자 연결(선택)</string>
-    <string name="cd_bind_user_hint">연결하면 해당 사용자가 로그인 시 이 카드를 볼 수 있음</string>
     <string name="menu_panel">패널</string>
     <string name="nav_settings">설정</string>
     <string name="panel_loading">관리 패널 불러오는 중…</string>
@@ -618,8 +616,6 @@
     <string name="st_config_sub">설정 암호화/백업/가져오기·내보내기</string>
     <string name="st_conn_sub">원격 게이트웨이 주소와 비밀번호</string>
     <string name="st_panel_sub">전체 관리 패널(웹)</string>
-    <string name="st_reg">가입 및 키 카드</string>
-    <string name="st_reg_sub">가입 허용/키 길이/캡차</string>
     <string name="st_secondauth">2차 인증</string>
     <string name="st_secondauth_sub">관리 로그인에 2차 비밀번호 또는 TOTP</string>
     <string name="st_security_sub">코드 차단/백그라운드 보호</string>
@@ -641,14 +637,6 @@
     <string name="up_edit_profile">프로필 편집</string>
     <string name="up_my_keys">내 카드</string>
     <string name="up_nickname">닉네임</string>
-    <string name="us_empty">사용자 없음</string>
-    <string name="us_keys_fmt">카드 %1$d장</string>
-    <string name="us_new">사용자 추가</string>
-    <string name="us_password">비밀번호</string>
-    <string name="us_reset_pw">비밀번호 재설정</string>
-    <string name="us_sub">비밀번호 로그인 계정, 카드 연결 가능</string>
-    <string name="us_title">사용자 관리</string>
-    <string name="us_uid">UID(비우면 자동 생성)</string>
     <string name="pv_balance_section">업스트림 잔액</string>
     <string name="pv_balance_url">잔액 API URL</string>
     <string name="pv_balance_url_helper">비우면 내장 프리셋</string>

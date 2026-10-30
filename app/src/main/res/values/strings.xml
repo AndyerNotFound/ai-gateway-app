@@ -597,8 +597,6 @@
     <string name="st_secondauth_sub">Admin login requires 2nd key or TOTP</string>
     <string name="st_tunnel">Public Tunnel</string>
     <string name="st_tunnel_sub">cloudflared free temporary domain</string>
-    <string name="st_reg">Registration &amp; Keys</string>
-    <string name="st_reg_sub">Open registration / key length / captcha</string>
     <string name="st_theme_sub">Dark/light/palette/language</string>
     <string name="st_conn_sub">Remote gateway URL &amp; key</string>
     <string name="st_security_sub">Code guard / background keepalive</string>
@@ -637,16 +635,6 @@
     <string name="rg_captcha_secret">Turnstile Secret Key (secret)</string>
     <string name="rg_captcha_hint">Get free keys at cloudflare.com → Turnstile → Add site. App register page cannot render Turnstile yet; use browser when enabled</string>
     <!-- Users -->
-    <string name="us_title">User Management</string>
-    <string name="us_empty">No users</string>
-    <string name="us_new">New User</string>
-    <string name="us_uid">UID (blank = auto)</string>
-    <string name="us_password">Password</string>
-    <string name="us_keys_fmt">%1$d key cards</string>
-    <string name="us_reset_pw">Reset Password</string>
-    <string name="cd_bind_user">Bind to user (optional)</string>
-    <string name="cd_bind_user_hint">User sees this card after account login</string>
-    <string name="us_sub">Account-login users; cards can bind to them</string>
     <string name="pv_balance">Balance</string>
     <string name="pv_balance_loading">Querying %1$s balance…</string>
     <string name="pv_balance_title">Balance · %1$s</string>
@@ -821,4 +809,64 @@
     <string name="admin_rotate_failed">Token rotation failed: %1$s</string>
 
     <string name="admin_tls_url_switched">Connection URL switched to %1$s. If the certificate is from agw-tls, install its CA as a user certificate.</string>
+
+    <!-- 内置网关 -->
+    <string name="title_embedded">Built-in Gateway</string>
+    <string name="title_extractor">File Extractor</string>
+    <string name="st_embedded">Built-in Gateway</string>
+    <string name="st_embedded_sub">Run ai-gateway-AI on this phone (Node runtime)</string>
+    <string name="st_extractor">File Extractor</string>
+    <string name="st_extractor_sub">Open JSONL/JSON request records and read the bodies</string>
+    <string name="emb_title">Local runtime</string>
+    <string name="emb_state_running">Running</string>
+    <string name="emb_state_starting">Starting…</string>
+    <string name="emb_state_error">Failed</string>
+    <string name="emb_state_stopped">Stopped</string>
+    <string name="emb_detail_url">Listen: http://127.0.0.1:%1$d</string>
+    <string name="emb_detail_pid">pid %1$d</string>
+    <string name="emb_detail_runtime">Node %1$s · app %2$s</string>
+    <string name="emb_detail_pagesize">page size %1$d</string>
+    <string name="emb_start">Start</string>
+    <string name="emb_stop">Stop</string>
+    <string name="emb_use">Manage this gateway</string>
+    <string name="emb_logs">Logs</string>
+    <string name="emb_refresh">Refresh</string>
+    <string name="emb_keepalive">Keep alive</string>
+    <string name="emb_battery_ok">Battery optimization is off for this app.</string>
+    <string name="emb_battery_limited">Battery optimization is ON: the system may freeze the gateway in the background.</string>
+    <string name="emb_battery_request">Ignore battery optimization</string>
+    <string name="emb_battery_already">Already whitelisted.</string>
+    <string name="emb_battery_failed">Cannot open the settings page: %1$s</string>
+    <string name="emb_note">The gateway runs in a foreground service so Android keeps it alive. It does not auto-start after reboot. The bundled Node runtime is 18.20.4 (end-of-life upstream) and its prebuilt library is 4 KB page aligned, so devices with 16 KB memory pages are not supported.</string>
+    <string name="emb_notif_title">Built-in gateway</string>
+    <string name="emb_notif_channel">Built-in gateway service</string>
+    <string name="emb_notif_channel_desc">Keeps the local ai-gateway-AI process alive</string>
+    <string name="emb_notif_starting">Starting…</string>
+    <string name="emb_notif_running">Running on port %1$d</string>
+    <string name="emb_err_load">Cannot load the Node runtime: %1$s</string>
+    <string name="emb_err_pagesize">This device uses %1$d-byte memory pages; the bundled Node library requires 4096.</string>
+    <string name="emb_err_assets">Cannot install the runtime assets: %1$s</string>
+    <string name="emb_err_exit">Node exited with code %1$d</string>
+    <string name="emb_err_timeout">The gateway did not start listening on port %1$d in time.</string>
+    <string name="emb_err_start">Cannot start the service: %1$s</string>
+    <string name="emb_err_crash_loop">The runtime exited right after the last start; not restarting automatically.</string>
+    <string name="emb_err_token">The local config has no webToken.</string>
+    <string name="emb_starting">Starting the local gateway…</string>
+    <string name="emb_need_running">Start the gateway first.</string>
+    <string name="emb_switched">Switched to http://127.0.0.1:%1$d</string>
+    <string name="emb_log_empty">No log yet.</string>
+    <string name="emb_stop_confirm">Stop the local gateway? The app will disconnect from it.</string>
+
+    <!-- 文件提取器 -->
+    <string name="ext_pick">Choose file</string>
+    <string name="ext_no_file">No file selected</string>
+    <string name="ext_empty">Choose a JSONL or JSON request record file to inspect.</string>
+    <string name="ext_loaded">Loaded %1$d records</string>
+    <string name="ext_parse_error">Parse failed: %1$s</string>
+    <string name="ext_detail">Request detail</string>
+    <string name="ext_request_body">Request</string>
+    <string name="ext_response_body">Response</string>
+    <string name="ext_no_body">(empty)</string>
+    <string name="ext_item_sub">%1$s · %2$s · %3$d ms</string>
+    <string name="ext_meta">%1$s\n%2$s · %3$s · %4$s · HTTP %5$d · %6$d ms · %7$s</string>
 </resources>

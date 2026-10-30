@@ -597,8 +597,6 @@
     <string name="st_secondauth_sub">管理端登录需第二密码或TOTP</string>
     <string name="st_tunnel">公网隧道</string>
     <string name="st_tunnel_sub">cloudflared 免费临时域名</string>
-    <string name="st_reg">注册与卡密</string>
-    <string name="st_reg_sub">开放注册/卡密长度/人机验证</string>
     <string name="st_theme_sub">深色/浅色/配色/语言</string>
     <string name="st_conn_sub">远程网关地址与密码</string>
     <string name="st_security_sub">代码拦截/后台保活</string>
@@ -635,16 +633,6 @@
     <string name="rg_captcha_secret">Turnstile Secret Key(保密)</string>
     <string name="rg_captcha_hint">cloudflare.com → Turnstile → Add site 免费获取; App 注册页暂不支持 Turnstile 渲染, 开启后用户请在浏览器注册</string>
     <!-- 用户管理 -->
-    <string name="us_title">用户管理</string>
-    <string name="us_empty">暂无用户</string>
-    <string name="us_new">新建用户</string>
-    <string name="us_uid">UID(留空自动生成)</string>
-    <string name="us_password">密码</string>
-    <string name="us_keys_fmt">卡密 %1$d 张</string>
-    <string name="us_reset_pw">重置密码</string>
-    <string name="cd_bind_user">绑定用户(可选)</string>
-    <string name="cd_bind_user_hint">绑定后该用户账密登录可见此卡</string>
-    <string name="us_sub">账密登录账号, 发卡可绑定</string>
     <string name="pv_balance">查余额</string>
     <string name="pv_balance_loading">查询 %1$s 余额…</string>
     <string name="pv_balance_title">余额 · %1$s</string>
@@ -804,4 +792,64 @@
     <string name="admin_rotate_token">轮换 Token</string>
     <string name="admin_rotate_ok">Web Token 已轮换并保存</string>
     <string name="admin_rotate_failed">轮换失败：%1$s</string>
+
+    <!-- 内置网关 -->
+    <string name="title_embedded">内置网关</string>
+    <string name="title_extractor">文件提取器</string>
+    <string name="st_embedded">内置网关</string>
+    <string name="st_embedded_sub">在本机运行 ai-gateway-AI（Node 运行时）</string>
+    <string name="st_extractor">文件提取器</string>
+    <string name="st_extractor_sub">打开 JSONL/JSON 请求记录并查看正文</string>
+    <string name="emb_title">本地运行时</string>
+    <string name="emb_state_running">运行中</string>
+    <string name="emb_state_starting">启动中…</string>
+    <string name="emb_state_error">启动失败</string>
+    <string name="emb_state_stopped">已停止</string>
+    <string name="emb_detail_url">监听：http://127.0.0.1:%1$d</string>
+    <string name="emb_detail_pid">进程 %1$d</string>
+    <string name="emb_detail_runtime">Node %1$s · 应用 %2$s</string>
+    <string name="emb_detail_pagesize">内存页 %1$d</string>
+    <string name="emb_start">启动</string>
+    <string name="emb_stop">停止</string>
+    <string name="emb_use">管理这个网关</string>
+    <string name="emb_logs">日志</string>
+    <string name="emb_refresh">刷新</string>
+    <string name="emb_keepalive">后台保活</string>
+    <string name="emb_battery_ok">本应用已忽略电池优化。</string>
+    <string name="emb_battery_limited">电池优化仍开启：系统可能在后台冻结网关。</string>
+    <string name="emb_battery_request">加入电池优化白名单</string>
+    <string name="emb_battery_already">已在白名单中。</string>
+    <string name="emb_battery_failed">无法打开设置页：%1$s</string>
+    <string name="emb_note">网关运行在前台服务里，Android 不会轻易回收。本应用不做开机自启。内置 Node 运行时为 18.20.4（上游已停止维护），预编译库按 4KB 内存页对齐，因此不支持 16KB 内存页的设备。</string>
+    <string name="emb_notif_title">内置网关</string>
+    <string name="emb_notif_channel">内置网关服务</string>
+    <string name="emb_notif_channel_desc">保持本机 ai-gateway-AI 进程存活</string>
+    <string name="emb_notif_starting">正在启动…</string>
+    <string name="emb_notif_running">运行中，端口 %1$d</string>
+    <string name="emb_err_load">无法加载 Node 运行时：%1$s</string>
+    <string name="emb_err_pagesize">本机内存页为 %1$d 字节，内置 Node 库要求 4096。</string>
+    <string name="emb_err_assets">无法安装运行时资源：%1$s</string>
+    <string name="emb_err_exit">Node 退出，代码 %1$d</string>
+    <string name="emb_err_timeout">网关未在预期时间内监听端口 %1$d。</string>
+    <string name="emb_err_start">无法启动服务：%1$s</string>
+    <string name="emb_err_crash_loop">上次启动后运行时立即退出，已停止自动重启。</string>
+    <string name="emb_err_token">本地配置缺少 webToken。</string>
+    <string name="emb_starting">正在启动本地网关…</string>
+    <string name="emb_need_running">请先启动网关。</string>
+    <string name="emb_switched">已切换到 http://127.0.0.1:%1$d</string>
+    <string name="emb_log_empty">暂无日志。</string>
+    <string name="emb_stop_confirm">停止本地网关？应用将断开与它的连接。</string>
+
+    <!-- 文件提取器 -->
+    <string name="ext_pick">选择文件</string>
+    <string name="ext_no_file">未选择文件</string>
+    <string name="ext_empty">选择一个 JSONL 或 JSON 请求记录文件开始查看。</string>
+    <string name="ext_loaded">已载入 %1$d 条记录</string>
+    <string name="ext_parse_error">解析失败：%1$s</string>
+    <string name="ext_detail">请求详情</string>
+    <string name="ext_request_body">请求正文</string>
+    <string name="ext_response_body">响应正文</string>
+    <string name="ext_no_body">（空）</string>
+    <string name="ext_item_sub">%1$s · %2$s · %3$d ms</string>
+    <string name="ext_meta">%1$s\n%2$s · %3$s · %4$s · HTTP %5$d · %6$d ms · %7$s</string>
 </resources>

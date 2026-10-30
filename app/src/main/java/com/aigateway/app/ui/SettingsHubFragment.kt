@@ -26,10 +26,10 @@ class SettingsHubFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val rows = listOf(
-            Row(R.drawable.ic_person_add, R.string.us_title, R.string.us_sub, "users"),
+            Row(R.drawable.ic_cloud, R.string.st_embedded, R.string.st_embedded_sub, "embedded"),
+            Row(R.drawable.ic_doc, R.string.st_extractor, R.string.st_extractor_sub, "extractor"),
             Row(R.drawable.ic_key, R.string.st_secondauth, R.string.st_secondauth_sub, "secondauth"),
             Row(R.drawable.ic_sync, R.string.st_tunnel, R.string.st_tunnel_sub, "tunnel"),
-            Row(R.drawable.ic_person_add, R.string.st_reg, R.string.st_reg_sub, "reg"),
             Row(R.drawable.ic_palette, R.string.menu_theme, R.string.st_theme_sub, "theme"),
             Row(R.drawable.ic_settings, R.string.menu_connection, R.string.st_conn_sub, "connection"),
             Row(R.drawable.ic_key, R.string.menu_config, R.string.st_config_sub, "config"),

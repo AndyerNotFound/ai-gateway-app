@@ -586,8 +586,6 @@
     <string name="um_sort">Сортировка</string>
     <string name="um_sort_asc">Имя A→Z</string>
     <string name="um_sort_desc">Имя Z→A</string>
-    <string name="cd_bind_user">Привязать пользователя (необязательно)</string>
-    <string name="cd_bind_user_hint">После привязки пользователь увидит эту карточку при входе по паролю</string>
     <string name="menu_panel">Панель</string>
     <string name="nav_settings">Настройки</string>
     <string name="panel_loading">Загрузка админ-панели…</string>
@@ -618,8 +616,6 @@
     <string name="st_config_sub">Шифрование/бэкап/импорт-экспорт</string>
     <string name="st_conn_sub">Адрес и пароль удалённого шлюза</string>
     <string name="st_panel_sub">Полная админ-панель (веб)</string>
-    <string name="st_reg">Регистрация и карточки</string>
-    <string name="st_reg_sub">Регистрация/длина ключей/капча</string>
     <string name="st_secondauth">Вторая проверка</string>
     <string name="st_secondauth_sub">Вход в админку требует второй пароль или TOTP</string>
     <string name="st_security_sub">Перехват кода/фоновая защита</string>
@@ -641,14 +637,6 @@
     <string name="up_edit_profile">Изменить профиль</string>
     <string name="up_my_keys">Мои карточки</string>
     <string name="up_nickname">Ник</string>
-    <string name="us_empty">Пользователей нет</string>
-    <string name="us_keys_fmt">Карточек: %1$d</string>
-    <string name="us_new">Добавить пользователя</string>
-    <string name="us_password">Пароль</string>
-    <string name="us_reset_pw">Сбросить пароль</string>
-    <string name="us_sub">Аккаунты для входа по паролю, можно привязывать карточки</string>
-    <string name="us_title">Управление пользователями</string>
-    <string name="us_uid">UID (пусто = сгенерировать)</string>
     <string name="pv_balance_section">Баланс провайдера</string>
     <string name="pv_balance_url">URL баланса</string>
     <string name="pv_balance_url_helper">Пусто = встроенный пресет</string>

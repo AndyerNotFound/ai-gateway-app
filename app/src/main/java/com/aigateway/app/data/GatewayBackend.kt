@@ -22,15 +22,11 @@ interface GatewayBackend {
     suspend fun deleteInstance(name: String): ActionResult
     suspend fun renameInstance(name: String, newName: String): ActionResult
 
-    // 卡密 / 用户 / 二次验证
+    // 卡密 / 二次验证
     suspend fun getKeys(inst: String): KeysResponse
     suspend fun createKey(inst: String, body: JsonObject): JsonObject
     suspend fun updateKey(inst: String, body: JsonObject): ActionResult
     suspend fun deleteKey(inst: String, key: String): ActionResult
-    suspend fun getUsers(inst: String): JsonObject
-    suspend fun createUser(inst: String, body: JsonObject): JsonObject
-    suspend fun updateUser(inst: String, body: JsonObject): JsonObject
-    suspend fun deleteUser(inst: String, uid: String): JsonObject
     suspend fun getAdminAuth(inst: String): JsonObject
     suspend fun setAdminAuth(inst: String, body: JsonObject): JsonObject
 

@@ -1,0 +1,10 @@
+{
+  "id": "hello",
+  "name": "Hello 测试插件",
+  "version": "1.0.0",
+  "author": "ai-gateway",
+  "description": "插件系统骨架验证：ping/pong + 数据持久化计数",
+  "hasServer": true,
+  "userPage": "pages/user.html",
+  "permissions": ["storage"]
+}

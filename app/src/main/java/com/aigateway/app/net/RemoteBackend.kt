@@ -174,22 +174,6 @@ class RemoteBackend(
         delete("/admin/api/keys/${enc(inst)}/${enc(key)}").toActionResult()
     }
 
-    override suspend fun getUsers(inst: String): JsonObject = withContext(Dispatchers.IO) {
-        getObj("/admin/api/users/${enc(inst)}")
-    }
-
-    override suspend fun createUser(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
-        post("/admin/api/users/${enc(inst)}", body)
-    }
-
-    override suspend fun updateUser(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
-        post("/admin/api/users-update/${enc(inst)}", body)
-    }
-
-    override suspend fun deleteUser(inst: String, uid: String): JsonObject = withContext(Dispatchers.IO) {
-        delete("/admin/api/users/${enc(inst)}/${enc(uid)}")
-    }
-
     override suspend fun getAdminAuth(inst: String): JsonObject = withContext(Dispatchers.IO) {
         getObj("/admin/api/admin-auth/${enc(inst)}")
     }
