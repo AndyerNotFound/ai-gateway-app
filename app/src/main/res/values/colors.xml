@@ -27,5 +27,5 @@
     <color name="md_outline_variant">#CAC4D0</color>
     <color name="md_surface_container">#F3EDF7</color>
     <color name="md_surface_container_high">#ECE6F0</color>
-    <color name="ic_launcher_background">#FFFFFF</color>
+    <color name="ic_launcher_background">#000000</color>
 </resources>
