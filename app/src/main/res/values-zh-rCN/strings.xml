@@ -864,4 +864,5 @@
     <string name="docs_root_summary">本机请求记录与运行日志</string>
     <string name="docs_logs">请求记录</string>
     <string name="docs_runtime">运行日志</string>
+    <string name="st_by_channel_fmt">按渠道 · %1$s</string>
 </resources>

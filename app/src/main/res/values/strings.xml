@@ -881,4 +881,5 @@
     <string name="docs_root_summary">Local request records and runtime logs</string>
     <string name="docs_logs">Request records</string>
     <string name="docs_runtime">Runtime logs</string>
+    <string name="st_by_channel_fmt">By channel · %1$s</string>
 </resources>

@@ -114,8 +114,12 @@ class StatsFragment : BaseFragment() {
 
     private fun renderChannels(instances: List<InstanceStat>) {
         val active = app.connectionStore.activeInstance
-        val inst = instances.firstOrNull { it.name == active } ?: instances.firstOrNull()
+        // 当前实例没有流量时，退回到用量最大的实例，避免整块渠道统计直接消失。
+        val inst = instances.firstOrNull { it.name == active && it.byChannel.isNotEmpty() }
+            ?: instances.filter { it.byChannel.isNotEmpty() }.maxByOrNull { it.inputTokens + it.outputTokens }
+            ?: instances.firstOrNull()
         val byChannel = inst?.byChannel.orEmpty()
+        b.channelSection.text = if (inst != null) getString(R.string.st_by_channel_fmt, inst.name) else getString(R.string.st_by_channel)
         b.channelSection.visibility = if (byChannel.isEmpty()) View.GONE else View.VISIBLE
         b.channelStatsContainer.removeAllViews()
         val totalTok = byChannel.values.sumOf { it.inputTokens + it.outputTokens }
