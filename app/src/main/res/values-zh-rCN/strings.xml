@@ -798,4 +798,10 @@
     <string name="sdui_clear">关闭路由</string>
     <string name="sdui_chip_native">原生</string>
     <string name="admin_allow_insecure_tls">允许自签名 / 不受信任的 TLS 证书（不安全）</string>
+    <string name="admin_test_connection">测试连接</string>
+    <string name="admin_test_ok">连接成功</string>
+    <string name="admin_test_failed">连接失败：%1$s</string>
+    <string name="admin_rotate_token">轮换 Token</string>
+    <string name="admin_rotate_ok">Web Token 已轮换并保存</string>
+    <string name="admin_rotate_failed">轮换失败：%1$s</string>
 </resources>

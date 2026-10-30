@@ -194,6 +194,12 @@ class RemoteBackend(
         getObj("/admin/api/admin-auth/${enc(inst)}")
     }
 
+    override suspend fun rotateWebToken(): String = withContext(Dispatchers.IO) {
+        val j = post("/admin/api/web-token/rotate")
+        j.get("webToken")?.asString?.takeIf { it.isNotBlank() }
+            ?: throw BackendException("轮换响应缺少 webToken")
+    }
+
     override suspend fun setAdminAuth(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
         post("/admin/api/admin-auth/${enc(inst)}", body)
     }

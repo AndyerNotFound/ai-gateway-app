@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -17,9 +18,13 @@ import com.aigateway.app.data.ThemeMode
 import com.aigateway.app.databinding.ActivityMainBinding
 import com.aigateway.app.databinding.DialogConnectionBinding
 import com.aigateway.app.databinding.DialogThemeBinding
+import com.aigateway.app.net.RemoteBackend
 import com.aigateway.app.setup.SetupFragment
 import com.aigateway.app.ui.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /** 管理端主界面：5 个 Tab + 二级管理页。 */
 class MainActivity : AppCompatActivity() {
@@ -369,34 +374,95 @@ class MainActivity : AppCompatActivity() {
         db.editTotpSecret.setText(cur?.totpSecret.orEmpty())
         db.cbAllowInsecure.isChecked = cur?.allowInsecureTls == true
 
-        MaterialAlertDialogBuilder(this)
+        val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.menu_connection)
             .setView(db.root)
-            .setPositiveButton(R.string.save) { _, _ ->
-                val url = db.editUrl.text?.toString()?.trim().orEmpty()
-                val token = db.editKey.text?.toString()?.trim().orEmpty()
-                if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                    toast(getString(R.string.admin_bad_url)); return@setPositiveButton
-                }
-                if (token.isBlank()) {
-                    toast(getString(R.string.admin_token_required)); return@setPositiveButton
-                }
-                val profile = (cur ?: ConnectionProfile()).apply {
-                    baseUrl = url.removeSuffix("/")
-                    webToken = token
-                    secondKey = db.editSecondKey.text?.toString()?.trim().orEmpty()
-                    totpSecret = db.editTotpSecret.text?.toString()?.trim().orEmpty()
-                    allowInsecureTls = db.cbAllowInsecure.isChecked
-                }
-                app.updateRemoteProfile(profile)
-                app.connectionStore.activeInstance = "default"
-                app.connectionStore.setupDone = true
-                toast(getString(R.string.connect_saved))
-                updateSubtitle()
-                b.viewPager.adapter = MainPagerAdapter(this@MainActivity)
-            }
+            .setPositiveButton(R.string.save, null)
             .setNegativeButton(R.string.cancel, null)
-            .show()
+            .create()
+        dialog.show()
+
+        fun setBusy(busy: Boolean) {
+            db.btnTest.isEnabled = !busy
+            db.btnRotate.isEnabled = !busy
+        }
+
+        fun formProfile(): ConnectionProfile? {
+            val url = db.editUrl.text?.toString()?.trim().orEmpty()
+            val token = db.editKey.text?.toString()?.trim().orEmpty()
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                toast(getString(R.string.admin_bad_url)); return null
+            }
+            if (token.isBlank()) {
+                toast(getString(R.string.admin_token_required)); return null
+            }
+            return (cur?.copy() ?: ConnectionProfile()).apply {
+                baseUrl = url.removeSuffix("/")
+                webToken = token
+                secondKey = db.editSecondKey.text?.toString()?.trim().orEmpty()
+                totpSecret = db.editTotpSecret.text?.toString()?.trim().orEmpty()
+                allowInsecureTls = db.cbAllowInsecure.isChecked
+            }
+        }
+
+        fun backendFor(p: ConnectionProfile) = RemoteBackend(
+            p.baseUrl, p.webToken, p.secondKey, p.totpSecret, p.allowInsecureTls
+        )
+
+        fun applyProfile(p: ConnectionProfile) {
+            app.updateRemoteProfile(p)
+            app.connectionStore.activeInstance = "default"
+            app.connectionStore.setupDone = true
+            updateSubtitle()
+            b.viewPager.adapter = MainPagerAdapter(this@MainActivity)
+        }
+
+        dialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+            val p = formProfile() ?: return@setOnClickListener
+            applyProfile(p)
+            toast(getString(R.string.connect_saved))
+            dialog.dismiss()
+        }
+
+        db.btnTest.setOnClickListener {
+            val p = formProfile() ?: return@setOnClickListener
+            setBusy(true)
+            lifecycleScope.launch {
+                val backend = backendFor(p)
+                val ok = withContext(Dispatchers.IO) { backend.testConnection() }
+                val err = backend.lastError
+                backend.close()
+                if (isFinishing || isDestroyed) return@launch
+                setBusy(false)
+                toast(
+                    if (ok) getString(R.string.admin_test_ok)
+                    else getString(R.string.admin_test_failed, err ?: "")
+                )
+            }
+        }
+
+        db.btnRotate.setOnClickListener {
+            val p = formProfile() ?: return@setOnClickListener
+            setBusy(true)
+            lifecycleScope.launch {
+                val backend = backendFor(p)
+                val result = withContext(Dispatchers.IO) {
+                    runCatching { backend.rotateWebToken() }
+                }
+                backend.close()
+                if (isFinishing || isDestroyed) return@launch
+                setBusy(false)
+                result.onSuccess { token ->
+                    p.webToken = token
+                    db.editKey.setText(token)
+                    applyProfile(p)
+                    toast(getString(R.string.admin_rotate_ok))
+                    dialog.dismiss()
+                }.onFailure {
+                    toast(getString(R.string.admin_rotate_failed, it.message ?: ""))
+                }
+            }
+        }
     }
 
     private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

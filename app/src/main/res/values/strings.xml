@@ -813,6 +813,12 @@
     <string name="admin_second_key">Second key (optional, if 2FA is enabled)</string>
     <string name="admin_totp_secret">TOTP secret (optional, base32)</string>
     <string name="admin_allow_insecure_tls">Allow self-signed / untrusted TLS certificate (insecure)</string>
+    <string name="admin_test_connection">Test</string>
+    <string name="admin_test_ok">Connection OK</string>
+    <string name="admin_test_failed">Connection failed: %1$s</string>
+    <string name="admin_rotate_token">Rotate token</string>
+    <string name="admin_rotate_ok">Web Token rotated and saved</string>
+    <string name="admin_rotate_failed">Token rotation failed: %1$s</string>
 
     <string name="admin_tls_url_switched">Connection URL switched to %1$s. If the certificate is from agw-tls, install its CA as a user certificate.</string>
 </resources>

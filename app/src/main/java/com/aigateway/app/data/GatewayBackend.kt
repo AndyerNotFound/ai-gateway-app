@@ -34,6 +34,9 @@ interface GatewayBackend {
     suspend fun getAdminAuth(inst: String): JsonObject
     suspend fun setAdminAuth(inst: String, body: JsonObject): JsonObject
 
+    /** 轮换长期 webToken；服务端保留旧 token 5 分钟宽限。 */
+    suspend fun rotateWebToken(): String
+
     // 隧道 / 余额 / 插件
     suspend fun getTunnel(): JsonObject
     suspend fun tunnelAction(action: String): JsonObject
