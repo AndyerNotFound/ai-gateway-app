@@ -13,12 +13,17 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
-
-
-
+/**
+ * ai-gateway-AI 远程管理后端。
+ *
+ * 鉴权：config.webToken -> x-agw-token（对应 server/admin.js checkAdminAuth）。
+ * 不依赖面板会话 Cookie、/admin/m3 或已删除的 active/context-windows 路由。
+ */
 class RemoteBackend(
     baseUrl: String,
-    val adminKey: String
+    val webToken: String,
+    private val secondKey: String = "",
+    private val totpSecret: String = ""
 ) : GatewayBackend {
 
     private val base = baseUrl.trim().removeSuffix("/")
@@ -31,32 +36,28 @@ class RemoteBackend(
         .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
-    
     private val streamClient = client.newBuilder()
         .readTimeout(5, TimeUnit.MINUTES)
         .build()
 
-    override val modeLabel: String = "远程网关"
-    override val connectionDesc: String = base
-
-    
-    override fun panelUrl(): String = base + "/admin/m3" + (if (adminKey.isNotBlank()) "?adminKey=" + adminKey else "")
-
-    private fun enc(s: String) = URLEncoder.encode(s, "UTF-8")
+    /** 路径段编码：URLEncoder 把空格编成 +，网关按 %20 解码。 */
+    private fun enc(s: String) = URLEncoder.encode(s, "UTF-8").replace("+", "%20")
 
     private fun newRequest(path: String): Request.Builder {
         val b = Request.Builder().url("$base$path")
-        if (adminKey.isNotBlank()) b.header("x-admin-key", adminKey)
+        if (webToken.isNotBlank()) b.header("x-agw-token", webToken)
+        if (secondKey.isNotBlank()) b.header("x-admin-key2", secondKey)
+        if (totpSecret.isNotBlank()) {
+            val code = Totp.code(totpSecret)
+            if (code.isNotEmpty()) b.header("x-totp", code)
+        }
         return b
     }
 
-    
     private fun exec(req: Request): String {
         client.newCall(req).execute().use { resp ->
             val body = resp.body?.string().orEmpty()
-            if (!resp.isSuccessful) {
-                throw BackendException(errMsg(body, resp.code), resp.code)
-            }
+            if (!resp.isSuccessful) throw BackendException(errMsg(body, resp.code), resp.code)
             return body
         }
     }
@@ -91,8 +92,6 @@ class RemoteBackend(
             error = get("error")?.asString
         )
 
-    
-
     override suspend fun testConnection(): Boolean = withContext(Dispatchers.IO) {
         runCatching { getJson("/admin/api/instances"); true }.getOrDefault(false)
     }
@@ -108,11 +107,11 @@ class RemoteBackend(
     override suspend fun saveConfig(name: String, patch: JsonObject): ActionResult =
         withContext(Dispatchers.IO) { post("/admin/api/config/${enc(name)}", patch).toActionResult() }
 
-    override suspend fun createInstance(name: String, port: Int, adminKey: String): ActionResult =
+    override suspend fun createInstance(name: String, port: Int, webToken: String): ActionResult =
         withContext(Dispatchers.IO) {
             val p = JsonObject().apply {
                 addProperty("port", port)
-                addProperty("adminKey", adminKey)
+                addProperty("webToken", webToken)
             }
             post("/admin/api/instance-create/${enc(name)}", p).toActionResult()
         }
@@ -122,11 +121,10 @@ class RemoteBackend(
 
     override suspend fun renameInstance(name: String, newName: String): ActionResult =
         withContext(Dispatchers.IO) {
-            val p = JsonObject().apply { addProperty("newName", newName) }
-            post("/admin/api/instance-rename/${enc(name)}", p).toActionResult()
+            post("/admin/api/instance-rename/${enc(name)}",
+                JsonObject().apply { addProperty("newName", newName) }).toActionResult()
         }
 
-    
     override suspend fun getKeys(inst: String): KeysResponse = withContext(Dispatchers.IO) {
         getObj("/admin/api/keys/${enc(inst)}")
     }
@@ -143,22 +141,63 @@ class RemoteBackend(
         delete("/admin/api/keys/${enc(inst)}/${enc(key)}").toActionResult()
     }
 
-    
-    override suspend fun getUsers(inst: String): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/users/${enc(inst)}") }
-    override suspend fun createUser(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/users/${enc(inst)}", body) }
-    override suspend fun updateUser(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/users-update/${enc(inst)}", body) }
-    override suspend fun deleteUser(inst: String, uid: String): JsonObject = withContext(Dispatchers.IO) { delete("/admin/api/users/${enc(inst)}/${enc(uid)}") }
-    override suspend fun getAdminAuth(inst: String): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/admin-auth/${enc(inst)}") }
-    override suspend fun setAdminAuth(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/admin-auth/${enc(inst)}", body) }
-    override suspend fun getTunnel(): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/tunnel") }
+    override suspend fun getUsers(inst: String): JsonObject = withContext(Dispatchers.IO) {
+        getObj("/admin/api/users/${enc(inst)}")
+    }
+
+    override suspend fun createUser(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
+        post("/admin/api/users/${enc(inst)}", body)
+    }
+
+    override suspend fun updateUser(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
+        post("/admin/api/users-update/${enc(inst)}", body)
+    }
+
+    override suspend fun deleteUser(inst: String, uid: String): JsonObject = withContext(Dispatchers.IO) {
+        delete("/admin/api/users/${enc(inst)}/${enc(uid)}")
+    }
+
+    override suspend fun getAdminAuth(inst: String): JsonObject = withContext(Dispatchers.IO) {
+        getObj("/admin/api/admin-auth/${enc(inst)}")
+    }
+
+    override suspend fun setAdminAuth(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
+        post("/admin/api/admin-auth/${enc(inst)}", body)
+    }
+
+    override suspend fun getTunnel(): JsonObject = withContext(Dispatchers.IO) {
+        getObj("/admin/api/tunnel")
+    }
+
     override suspend fun tunnelAction(action: String): JsonObject = withContext(Dispatchers.IO) {
         post("/admin/api/tunnel", JsonObject().apply { addProperty("action", action) })
     }
-    override suspend fun getBalance(inst: String, ch: String): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/balance/${enc(inst)}/${enc(ch)}") }
-    override suspend fun getPlugins(inst: String): JsonObject = withContext(Dispatchers.IO) { getObj("/admin/api/plugins/${enc(inst)}") }
-    override suspend fun installPlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/plugins-install/${enc(inst)}", body) }
-    override suspend fun removePlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/plugins-remove/${enc(inst)}", body) }
-    override suspend fun enablePlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) { post("/admin/api/plugins-enable/${enc(inst)}", body) }
+
+    override suspend fun getBalance(inst: String, ch: String): JsonObject = withContext(Dispatchers.IO) {
+        getObj("/admin/api/balance/${enc(inst)}/${enc(ch)}")
+    }
+
+    override suspend fun getPlugins(inst: String): JsonObject = withContext(Dispatchers.IO) {
+        getObj("/admin/api/plugins/${enc(inst)}")
+    }
+
+    override suspend fun installPlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
+        post("/admin/api/plugins-install/${enc(inst)}", body)
+    }
+
+    override suspend fun removePlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
+        post("/admin/api/plugins-remove/${enc(inst)}", body)
+    }
+
+    override suspend fun enablePlugin(inst: String, body: JsonObject): JsonObject = withContext(Dispatchers.IO) {
+        post("/admin/api/plugins-enable/${enc(inst)}", body)
+    }
+
+    override suspend fun setOnceChannel(inst: String, channel: String?): ActionResult =
+        withContext(Dispatchers.IO) {
+            val p = JsonObject().apply { if (channel != null) addProperty("channel", channel) }
+            post("/admin/api/route-once/${enc(inst)}", p).toActionResult()
+        }
 
     override suspend fun saveChannel(inst: String, channel: Channel): ActionResult =
         withContext(Dispatchers.IO) {
@@ -178,8 +217,7 @@ class RemoteBackend(
         }
 
     override suspend fun syncModels(inst: String): ActionResult = withContext(Dispatchers.IO) {
-        val p = JsonObject().apply { addProperty("instance", inst) }
-        post("/admin/api/sync-models", p).toActionResult()
+        post("/admin/api/sync-models", JsonObject().apply { addProperty("instance", inst) }).toActionResult()
     }
 
     override suspend fun getStats(name: String): Stats = withContext(Dispatchers.IO) {
@@ -196,10 +234,9 @@ class RemoteBackend(
         arr?.map { gson.fromJson(it, RequestEntry::class.java) } ?: emptyList()
     }
 
-    override suspend fun getRecordBody(name: String, id: String): RecordBody =
-        withContext(Dispatchers.IO) {
-            getObj("/admin/api/record-body/${enc(name)}?id=${enc(id)}")
-        }
+    override suspend fun getRecordBody(name: String, id: String): RecordBody = withContext(Dispatchers.IO) {
+        getObj("/admin/api/record-body/${enc(name)}?id=${enc(id)}")
+    }
 
     override suspend fun action(name: String, cmd: String): ActionResult =
         withContext(Dispatchers.IO) { post("/admin/api/action/${enc(name)}/${enc(cmd)}").toActionResult() }
@@ -225,18 +262,17 @@ class RemoteBackend(
         try {
             streamClient.newCall(req).execute().use { resp ->
                 if (!resp.isSuccessful) {
-                    val b = resp.body?.string().orEmpty()
-                    return@withContext ActionResult(ok = false, error = errMsg(b, resp.code))
+                    val body = resp.body?.string().orEmpty()
+                    return@withContext ActionResult(ok = false, error = errMsg(body, resp.code))
                 }
                 parseSse(resp, onDelta)
                 ActionResult(ok = true)
             }
         } catch (e: Exception) {
-            ActionResult(ok = false, error = e.message ?: "连接失败")
+            ActionResult(ok = false, error = e.message ?: "connection failed")
         }
     }
 
-    
     private fun parseSse(resp: okhttp3.Response, onDelta: (String) -> Unit) {
         val src = resp.body?.source() ?: return
         while (true) {

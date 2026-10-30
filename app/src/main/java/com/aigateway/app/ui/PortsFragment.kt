@@ -58,7 +58,7 @@ class PortsFragment : BaseFragment() {
         }
     }
 
-    
+    /** 并发拉取各实例统计, 用于卡片上显示请求数(帮助定位哪个实例在被使用) */
     private fun loadStats(instances: List<Instance>) {
         val backend = backendOrNull() ?: return
         viewLifecycleOwner.lifecycleScope.launch {
@@ -108,7 +108,12 @@ class PortsFragment : BaseFragment() {
             .setPositiveButton(R.string.delete) { _, _ ->
                 val backend = backendOrNull() ?: return@setPositiveButton
                 run({ snack(getString(R.string.delete_failed, it)) }, { backend.deleteInstance(inst.name) }) { r ->
-                    if (r.ok) { toast(getString(R.string.pv_deleted)); loadAfterDelay() } else snack(getString(R.string.delete_failed, r.error ?: ""))
+                    if (r.ok) {
+                        if (app.connectionStore.activeInstance == inst.name) {
+                            app.connectionStore.activeInstance = "default"
+                        }
+                        toast(getString(R.string.pv_deleted)); loadAfterDelay()
+                    } else snack(getString(R.string.delete_failed, r.error ?: ""))
                 }
             }
             .setNegativeButton(R.string.cancel, null)
@@ -130,7 +135,7 @@ class PortsFragment : BaseFragment() {
             .show()
     }
 
-    
+    /** 新建/编辑实例。existing=null 为新建 */
     private fun showInstanceDialog(existing: Instance?) {
         val db = DialogInstanceBinding.inflate(layoutInflater)
         db.switchTls.setOnCheckedChangeListener { _, on ->
@@ -142,9 +147,9 @@ class PortsFragment : BaseFragment() {
             db.editTlsKey.setText("key.pem")
             showDialog(db, null)
         } else {
-            
+            // 编辑: 先拉取完整配置(端口/host/TLS/Web Token)
             db.editInstName.setText(existing.name)
-            db.editInstName.isEnabled = (existing.name != "default")  
+            db.editInstName.isEnabled = (existing.name != "default")  // default 主实例不可改名, 其他可改
             db.editInstPort.setText(existing.port.toString())
             val backend = backendOrNull() ?: return
             run({ snack(getString(R.string.load_failed, it)) }, {
@@ -152,7 +157,7 @@ class PortsFragment : BaseFragment() {
             }) { cfg ->
                 db.editInstPort.setText(cfg.port.toString())
                 db.editInstHost.setText(cfg.host)
-                db.editInstKey.setText(cfg.adminKey)
+                db.editInstKey.setText(cfg.webToken)
                 db.switchTls.isChecked = cfg.tls.enable
                 db.tlsSection.visibility = if (cfg.tls.enable) View.VISIBLE else View.GONE
                 db.editTlsPort.setText(cfg.tls.port?.toString() ?: "")
@@ -180,6 +185,9 @@ class PortsFragment : BaseFragment() {
         val host = db.editInstHost.text?.toString()?.trim()?.ifBlank { "0.0.0.0" } ?: "0.0.0.0"
         val key = db.editInstKey.text?.toString()?.trim().orEmpty()
         if (name.isBlank() || port <= 0 || port > 65535) { snack(getString(R.string.pt_need_valid)); return }
+        if (existing != null && existing.name == "default" && key.isBlank()) {
+            snack(getString(R.string.admin_token_required)); return
+        }
         val tlsOn = db.switchTls.isChecked
         val tlsPortTxt = db.editTlsPort.text?.toString()?.trim().orEmpty()
         val tlsPort = tlsPortTxt.toIntOrNull()
@@ -194,39 +202,63 @@ class PortsFragment : BaseFragment() {
         }
         val backend = backendOrNull() ?: return
         if (existing == null) {
-            
+            // 新建: 先创建, 再补 TLS 配置
             run({ snack(getString(R.string.pt_create_failed, it)) }, {
                 backend.createInstance(name, port, key)
             }) { r ->
                 if (!r.ok) { snack(getString(R.string.pt_create_failed, r.error ?: "")); return@run }
-                if (tlsOn) {
-                    val patch = JsonObject().apply { add("tls", tlsJson); addProperty("host", host) }
-                    run({ snack(getString(R.string.pv_save_failed, it)) }, {
-                        backend.saveConfig(name, patch)
-                    }) { toast(getString(R.string.pt_created, name)); loadAfterDelay() }
-                } else {
-                    toast(getString(R.string.pt_created, name)); loadAfterDelay()
-                }
+                val patch = JsonObject().apply { add("tls", tlsJson); addProperty("host", host) }
+                run({ snack(getString(R.string.pv_save_failed, it)) }, {
+                    backend.saveConfig(name, patch)
+                }) { toast(getString(R.string.pt_created, name)); loadAfterDelay() }
             }
         } else {
             val patch = JsonObject().apply {
                 addProperty("port", port)
                 addProperty("host", host)
-                addProperty("adminKey", key)
+                addProperty("webToken", key)
                 add("tls", tlsJson)
             }
             run({ snack(getString(R.string.pv_save_failed, it)) }, {
-                
-                if (name != existing.name) backend.renameInstance(existing.name, name)
+                // 改名: 名字变了先调 rename(热生效), 失败就不再保存
+                if (name != existing.name) {
+                    val rr = backend.renameInstance(existing.name, name)
+                    if (!rr.ok) return@run rr
+                }
                 backend.saveConfig(name, patch)
             }) { r ->
-                if (r.ok) { toast(getString(R.string.pt_saved)); loadAfterDelay() }
-                else snack(getString(R.string.pv_save_failed, r.error ?: ""))
+                if (r.ok) {
+                    if (app.connectionStore.activeInstance == existing.name && name != existing.name) {
+                        app.connectionStore.activeInstance = name
+                    }
+                    // default 是 baseUrl 承载实例，只有它的 token 才是本 App 的连接凭据
+                    if (existing.name == "default" && key.isNotBlank()) {
+                        app.connectionStore.getCurrentProfile()?.let { p ->
+                            if (p.webToken != key) {
+                                p.webToken = key
+                                app.updateRemoteProfile(p)
+                            }
+                        }
+                    }
+                    // 主实例开关 TLS 会改变同一端口的协议；不同步 scheme 会立刻连不上
+                    if (existing.name == "default" && existing.tlsOn != tlsOn) {
+                        app.connectionStore.getCurrentProfile()?.let { p ->
+                            val next = if (tlsOn) p.baseUrl.replaceFirst("http://", "https://")
+                            else p.baseUrl.replaceFirst("https://", "http://")
+                            if (next != p.baseUrl) {
+                                p.baseUrl = next
+                                app.updateRemoteProfile(p)
+                                toast(getString(R.string.admin_tls_url_switched, next))
+                            }
+                        }
+                    }
+                    toast(getString(R.string.pt_saved)); loadAfterDelay()
+                } else snack(getString(R.string.pv_save_failed, r.error ?: ""))
             }
         }
     }
 
-    
+    // ---------- Adapter ----------
 
     inner class InstanceAdapter : RecyclerView.Adapter<InstanceAdapter.VH>() {
         var current: String = ""
@@ -235,7 +267,7 @@ class PortsFragment : BaseFragment() {
         var onSelect: ((Instance) -> Unit)? = null
         var onEdit: ((Instance) -> Unit)? = null
         private val items = mutableListOf<Instance>()
-        
+        /** 实例名 → (请求数, 错误数) */
         private val stats = HashMap<String, Pair<Long, Long>>()
 
         fun setStats(m: Map<String, Pair<Long, Long>>) {
@@ -265,7 +297,7 @@ class PortsFragment : BaseFragment() {
 
         override fun onBindViewHolder(h: VH, position: Int) {
             val inst = items[position]
-            
+            // 主题切换后可能存在残留旧配色的回收视图: 每次绑定按当前主题完整重着色
             val cPrimary = resolveColor(com.google.android.material.R.attr.colorPrimary)
             val cOnSurface = resolveColor(com.google.android.material.R.attr.colorOnSurface)
             val cOnSurfaceVariant = resolveColor(com.google.android.material.R.attr.colorOnSurfaceVariant)
@@ -293,7 +325,7 @@ class PortsFragment : BaseFragment() {
             h.meta.text = ":${inst.port} · ${getString(R.string.pt_channels, inst.chCount)}" +
                     (if (inst.tlsOn) " · TLS" else "") +
                     (if (!inst.pathPrefix.isNullOrBlank()) " · ${inst.pathPrefix}/v1" else "") + reqPart
-            
+            // 有流量的实例名用主色强调, 方便一眼定位
             val hasTraffic = (st?.first ?: 0L) > 0L
             h.name.setTextColor(if (hasTraffic) cPrimary else cOnSurface)
             val dotColor = ContextCompat.getColor(requireContext(),
@@ -319,7 +351,7 @@ class PortsFragment : BaseFragment() {
         }
     }
 
-    
+    /** 基类在实例/连接变化时调用 */
     override fun reload() {
         if (_b != null) load()
     }

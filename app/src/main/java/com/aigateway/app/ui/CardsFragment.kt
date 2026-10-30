@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
+/** 卡密管理 —— 多用户Key: 发卡/限额/禁用/过期/模型白名单 (远程模式) */
 class CardsFragment : BaseFragment() {
 
     private var _b: FragmentCardsBinding? = null
@@ -131,7 +131,7 @@ class CardsFragment : BaseFragment() {
         return v
     }
 
-    
+    // ---- 发卡 ----
     private fun showCardDialog() {
         val db = DialogCardBinding.inflate(layoutInflater)
         db.editCardQuota.setText("100")
@@ -180,7 +180,7 @@ class CardsFragment : BaseFragment() {
             .show()
     }
 
-    
+    // ---- 操作 ----
     private fun toggleKey(k: ApiKeyEntry) {
         val backend = backendOrNull() ?: return
         val body = JsonObject().apply { addProperty("key", k.key); addProperty("enable", !k.enable) }

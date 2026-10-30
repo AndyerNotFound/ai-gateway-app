@@ -13,7 +13,7 @@ import com.aigateway.app.databinding.ItemPluginMgmtBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 
-
+/** 管理端插件管理页: 列出已装插件, 启用/禁用/卸载, 安装新插件(URL+SHA256) */
 class PluginsMgmtFragment : BaseFragment() {
     private var _b: FragmentPluginsMgmtBinding? = null
     private val b get() = _b!!
@@ -51,7 +51,7 @@ class PluginsMgmtFragment : BaseFragment() {
         for (p in arr) {
             val o = p.asJsonObject
             val id = o.get("id")?.asString ?: continue
-            val enabled = o.get("enabled")?.asBoolean ?: false
+            val enabled = o.get("enable")?.asBoolean ?: o.get("enabled")?.asBoolean ?: false
             val ib = ItemPluginMgmtBinding.inflate(LayoutInflater.from(requireContext()), b.pmList, false)
             ib.pmName.text = o.get("name")?.asString ?: id
             ib.pmVer.text = o.get("version")?.asString?.let { "v$it" } ?: ""

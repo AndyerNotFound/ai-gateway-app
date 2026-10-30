@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Gateway</string>
+
+    <!-- 初回セットアップ -->
+    <string name="setup_title">実行方法を選択</string>
+    <string name="setup_embedded">アプリ内で実行</string>
+    <string name="setup_embedded_desc">内蔵ゲートウェイバックエンド、Termux 不要ですぐ使える</string>
+    <string name="setup_termux">Termux に接続して実行</string>
+    <string name="setup_termux_desc">Termux で動作中の ai-gateway バックエンドに接続(ローカルまたは LAN)</string>
+    <string name="setup_connect_section">ゲートウェイに接続(任意)</string>
+    <string name="setup_quick_local">ローカル</string>
+    <string name="setup_quick_lan">LAN</string>
+    <string name="setup_connect_enter">接続して開く</string>
+    <string name="setup_skip">今はスキップ</string>
+    <string name="setup_termux_section">Termux バックエンド</string>
+
+    <!-- 接続 -->
+    <string name="connect_title">ゲートウェイに接続</string>
+    <string name="connect_host">ゲートウェイアドレス</string>
+    <string name="connect_admin_key">管理パスワード (adminKey)</string>
+    <string name="connect_button">接続</string>
+    <string name="connecting">接続中…</string>
+    <string name="connect_mode">実行モード</string>
+    <string name="connect_mode_remote">Termux / リモートゲートウェイに接続</string>
+    <string name="connect_hint_nokey">adminKey 空 = パスワードなし接続(ゲートウェイに管理パスワード未設定の場合)</string>
+    <string name="connect_reselect_mode">モードを再選択</string>
+    <string name="connect_saved">接続を保存しました</string>
+    <string name="connect_ok">接続しました</string>
+    <string name="connect_failed_entered">接続失敗。そのまま開きました(接続設定で再試行できます)</string>
+    <string name="connect_need_url">ゲートウェイアドレスを入力してください</string>
+    <string name="connect_switched_embedded">アプリ内モードに切替しました</string>
+
+    <!-- ナビゲーション -->
+    <string name="nav_overview">概要</string>
+    <string name="nav_providers">プロバイダ</string>
+    <string name="nav_routing">ルーティング</string>
+    <string name="nav_keys">キー</string>
+    <string name="nav_ports">インスタンス</string>
+    <string name="nav_replace">置換</string>
+    <string name="nav_stats">統計</string>
+    <string name="nav_requests">リクエスト</string>
+    <string name="nav_logs">ログ</string>
+    <string name="nav_chat">チャット</string>
+
+    <!-- タイトル -->
+    <string name="title_overview">概要</string>
+    <string name="title_providers">プロバイダ / チャネル</string>
+    <string name="title_routing">ルーティング / モデルマッピング</string>
+    <string name="title_keys">キー</string>
+    <string name="title_ports">ポート / インスタンス</string>
+    <string name="title_replace">テキスト置換</string>
+    <string name="title_stats">統計</string>
+    <string name="title_requests">リクエスト履歴</string>
+    <string name="title_logs">ログ</string>
+    <string name="title_chat">チャットテスト</string>
+
+    <!-- メニュー -->
+    <string name="menu_theme">色 / テーマ</string>
+    <string name="menu_connection">接続 / モード設定</string>
+
+    <!-- テーマ設定 -->
+    <string name="theme_title">色 / テーマ</string>
+    <string name="theme_mode">ダークモード</string>
+    <string name="theme_mode_system">システムに従う</string>
+    <string name="theme_mode_light">ライト</string>
+    <string name="theme_mode_dark">ダーク</string>
+    <string name="theme_dynamic">Material You ダイナミックカラー</string>
+    <string name="theme_dynamic_desc">Android 12+ のみ、壁紙から配色を抽出</string>
+    <string name="theme_palette">カラーパレット</string>
+    <string name="theme_palette_purple">紫(既定)</string>
+    <string name="theme_palette_blue">青</string>
+    <string name="theme_palette_green">緑</string>
+    <string name="theme_palette_orange">オレンジ</string>
+    <string name="theme_palette_red">赤</string>
+    <string name="theme_language">言語</string>
+    <string name="theme_language_system">システムに従う</string>
+    <string name="theme_language_en">English</string>
+    <string name="theme_language_zh">简体中文</string>
+    <string name="theme_language_zh_tw">繁體中文</string>
+    <string name="theme_language_ja">日本語</string>
+    <string name="theme_language_ko">한국어</string>
+    <string name="theme_language_ru">Русский</string>
+    <string name="theme_language_es">Español</string>
+    <string name="theme_language_fr">Français</string>
+    <string name="theme_language_eo">Esperanto</string>
+    <string name="theme_applied">設定を適用しました</string>
+
+    <!-- Termux -->
+    <string name="termux_start_backend">Termux バックエンドを起動</string>
+    <string name="termux_install">Termux へインストール/デプロイ</string>
+    <string name="termux_not_installed">Termux が検出されません</string>
+    <string name="termux_detected">✓ Termux を検出</string>
+    <string name="termux_not_detected">⚠ Termux が未検出(インストールすればデプロイ可)</string>
+    <string name="termux_open">Termux を開く</string>
+    <string name="termux_cmd_sent">起動コマンドを Termux に送信しました</string>
+    <string name="termux_cmd_failed">失敗: Termux 未検出または外部呼び出し未許可</string>
+    <string name="termux_deploy_title">Termux へインストール/デプロイ</string>
+    <string name="termux_deploy_msg">ゲートウェイのバックエンドファイルを Download/ai-gateway-deploy/ に書き込み、Termux でインストールスクリプトを実行します(Node.js 導入、~/ai-gateway へ配置、起動)。\n\ntermux-setup-storage の実行と allow-external-apps=true が必要です。</string>
+    <string name="termux_deploy_start">開始</string>
+    <string name="termux_deploy_ok">Termux を起動してインストールを実行しました</string>
+    <string name="termux_deploy_failed">デプロイ失敗</string>
+
+    <!-- 概要 -->
+    <string name="ov_checking">確認中…</string>
+    <string name="ov_connected">接続済み</string>
+    <string name="ov_connect_failed">接続失敗</string>
+    <string name="ov_not_connected">未接続</string>
+    <string name="ov_total_requests">総リクエスト</string>
+    <string name="ov_errors">エラー</string>
+    <string name="ov_uptime">稼働時間</string>
+    <string name="ov_current_instance">現在のインスタンス</string>
+    <string name="ov_loading">読み込み中…</string>
+    <string name="ov_quick_actions">クイック操作</string>
+    <string name="ov_refresh">状態を更新</string>
+    <string name="ov_configure_first">先に「接続 / モード設定」で設定してください</string>
+    <string name="ov_unreachable">ゲートウェイに到達できません。アドレス/パスワードを確認するかバックエンドを起動してください</string>
+    <string name="ov_no_instance">インスタンスなし</string>
+    <string name="ov_load_failed">読み込み失敗: %1$s</string>
+    <string name="ov_mode_embedded">アプリ内モード · 内蔵ゲートウェイ</string>
+    <string name="ov_mode_remote">リモートゲートウェイ · %1$s</string>
+    <string name="ov_mode_unset">未設定</string>
+    <string name="ov_recent_requests">最近のリクエスト</string>
+    <string name="ov_view_all">すべて表示</string>
+    <string name="ov_no_requests">リクエスト履歴はまだありません</string>
+    <string name="ov_stats_by_channel">チャネル別</string>
+
+    <!-- プロバイダ -->
+    <string name="pv_empty">チャネルがありません\n右下の + で追加</string>
+    <string name="pv_add">チャネル追加</string>
+    <string name="pv_edit">チャネル編集</string>
+    <string name="pv_fetch_models">モデル取得</string>
+    <string name="pv_edit_btn">編集</string>
+    <string name="pv_delete_btn">削除</string>
+    <string name="pv_name">チャネル名 *</string>
+    <string name="pv_type">上流フォーマット *</string>
+    <string name="pv_base_url">Base URL * (例: https://api.deepseek.com)</string>
+    <string name="pv_api_key">API Key (空で変更なし)</string>
+    <string name="pv_proxy">プロキシ名(任意)</string>
+    <string name="pv_models">モデルリスト(カンマ区切り)</string>
+    <string name="pv_model_map">モデルマッピング(1行ごと: 公開名=上流名)</string>
+    <string name="pv_delay">リクエスト遅延 (ms, 0=オフ)</string>
+    <string name="pv_default">既定チャネルに設定(フォールバック)</string>
+    <string name="pv_use_responses">上流は Responses API を使用 (/v1/responses, openai のみ)</string>
+    <string name="pv_insecure">証明書検証をスキップ(自己署名)</string>
+    <string name="pv_need_fields">名前と Base URL は必須です</string>
+    <string name="pv_bad_type">フォーマットは openai / gemini / claude のいずれか</string>
+    <string name="pv_saved">チャネルを保存しました</string>
+    <string name="pv_save_failed">保存失敗: %1$s</string>
+    <string name="pv_delete_title">チャネル削除</string>
+    <string name="pv_delete_msg">チャネル「%1$s」を削除しますか?</string>
+    <string name="pv_deleted">削除しました</string>
+    <string name="pv_fetching">上流からモデルを取得中…</string>
+    <string name="pv_models_title">上流モデル (%1$d)</string>
+    <string name="pv_fill_models">models に入れて保存</string>
+    <string name="pv_no_models">モデルが返されませんでした: %1$s</string>
+    <string name="pv_filled">%1$d 個のモデルを入力しました</string>
+    <string name="pv_no_key">キーなし</string>
+    <string name="pv_models_count">%1$d モデル</string>
+
+    <!-- ルーティング -->
+    <string name="rt_hint">要求されたモデル名は次の順でルーティングされます: チャネル modelMap &gt; models リスト &gt; 既定チャネル &gt; 先頭チャネル。マッピングは「プロバイダ」で編集してください。</string>
+    <string name="rt_empty">モデルがありません\n(「プロバイダ」でチャネルに models / modelMap を追加)</string>
+    <string name="rt_no_channel">(チャネルなし)</string>
+
+    <!-- キー -->
+    <string name="keys_gateway_title">ゲートウェイアクセスキー (gatewayKey)</string>
+    <string name="keys_gateway_desc">AI エンドポイント呼び出し時にこのキーが必要です (Bearer / x-api-key / ?key=)。空 = 認証なし。</string>
+    <string name="keys_admin_title">管理パスワード (adminKey)</string>
+    <string name="keys_admin_desc">管理パネル / admin API の認証。空 = パスワードなし管理(LAN 個人利用向け)。</string>
+    <string name="keys_save">キーを保存</string>
+    <string name="keys_warn">⚠ adminKey 変更後、本アプリの接続パスワードも更新してください(接続/モード設定)。ゲートウェイは再起動して反映されます。</string>
+    <string name="keys_saved">キーを保存しました(ゲートウェイが再起動する場合あり)</string>
+
+    <!-- ポート / インスタンス -->
+    <string name="pt_new">新規インスタンス</string>
+    <string name="pt_shutdown_all">すべて停止</string>
+    <string name="pt_current">現在</string>
+    <string name="pt_running">実行中</string>
+    <string name="pt_stopped">停止中</string>
+    <string name="pt_channels">%1$d チャネル</string>
+    <string name="pt_delete_title">インスタンス削除</string>
+    <string name="pt_delete_msg">インスタンス「%1$s」を削除しますか? 設定ファイルも削除されます。</string>
+    <string name="pt_shutdown_title">全インスタンス停止</string>
+    <string name="pt_shutdown_msg">実行中のすべてのゲートウェイインスタンスを停止しますか?</string>
+    <string name="pt_new_title">新規インスタンス</string>
+    <string name="pt_inst_name">インスタンス名 * (英数字/ハイフン)</string>
+    <string name="pt_inst_port">ポート * (例: 16390)</string>
+    <string name="pt_inst_key">adminKey(任意)</string>
+    <string name="pt_need_valid">有効な名前とポートを入力してください</string>
+    <string name="pt_created">インスタンス「%1$s」を作成しました</string>
+    <string name="pt_switched">インスタンス「%1$s」に切替しました</string>
+    <string name="pt_create_failed">作成失敗: %1$s</string>
+    <string name="pt_stopped_all">全インスタンスを停止しました</string>
+
+    <!-- 置換 -->
+    <string name="rp_hint">ゲートウェイを通過するテキストに正規表現置換を適用します。model フィールドと data: URL は対象外。反映にはゲートウェイ再起動が必要です。</string>
+    <string name="rp_out_title">送信方向(リクエスト置換)</string>
+    <string name="rp_inc_title">受信方向(レスポンス置換)</string>
+    <string name="rp_add_out">送信ルール追加</string>
+    <string name="rp_add_inc">受信ルール追加</string>
+    <string name="rp_save">置換ルールを保存</string>
+    <string name="rp_regex">正規表現 *</string>
+    <string name="rp_to">置換後(空=マッチ部分を削除)</string>
+    <string name="rp_ci">大文字小文字を無視 (ci)</string>
+    <string name="rp_empty_rules">(%1$sルールなし)</string>
+    <string name="rp_delete_match">(マッチを削除)</string>
+    <string name="rp_need_regex">正規表現は空にできません</string>
+    <string name="rp_bad_regex">無効な正規表現: %1$s</string>
+    <string name="rp_saved">置換ルールを保存しました(再起動で反映)</string>
+    <string name="rp_dir_out">送信</string>
+    <string name="rp_dir_inc">受信</string>
+    <string name="rp_add_rule">%1$sルール追加</string>
+    <string name="rp_edit_rule">%1$sルール編集</string>
+
+    <!-- 統計 -->
+    <string name="st_by_channel">チャネル別</string>
+    <string name="st_empty">統計データはまだありません</string>
+    <string name="st_refresh">更新</string>
+    <string name="st_channel_detail">リクエスト %1$d · 入力 %2$d tok · 出力 %3$d tok</string>
+    <string name="st_channel_errors">%1$s · エラー %2$d</string>
+
+    <!-- リクエスト履歴 -->
+    <string name="rq_empty">リクエスト履歴なし\n(ゲートウェイ側で記録を有効化してください)</string>
+    <string name="rq_detail_title">リクエスト詳細</string>
+    <string name="rq_no_body">(このゲートウェイはリクエスト本文を保存していないか、記録が期限切れです)</string>
+    <string name="rq_section_request">━━ リクエスト ━━</string>
+    <string name="rq_section_response">━━ レスポンス ━━</string>
+    <string name="rq_empty_value">(空)</string>
+
+    <!-- ログ -->
+    <string name="lg_lines">行数</string>
+    <string name="lg_loading">読み込み中…</string>
+    <string name="lg_empty">(ログなし)</string>
+    <string name="lg_copied">ログをコピーしました</string>
+    <string name="lg_not_connected">バックエンド未接続</string>
+    <string name="lg_load_failed">読み込み失敗: %1$s</string>
+
+    <!-- チャット -->
+    <string name="ch_model">モデル</string>
+    <string name="ch_model_hint">モデル名を選択または入力</string>
+    <string name="ch_input_hint">メッセージを入力…</string>
+    <string name="ch_empty">モデルを選んでゲートウェイのテストを始めましょう</string>
+    <string name="ch_need_model">先にモデル名を選択/入力してください</string>
+    <string name="ch_no_backend">バックエンド未接続</string>
+    <string name="ch_you">あなた</string>
+    <string name="ch_ai">AI</string>
+    <string name="ch_error">[エラー] %1$s</string>
+    <string name="ch_load_models_failed">モデル読み込み失敗: %1$s</string>
+    <string name="ch_request_failed">リクエスト失敗</string>
+
+    <!-- 共通 -->
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+    <string name="save">保存</string>
+    <string name="delete">削除</string>
+    <string name="close">閉じる</string>
+    <string name="refresh">更新</string>
+    <string name="load_failed">読み込み失敗: %1$s</string>
+    <string name="op_failed">操作失敗: %1$s</string>
+    <string name="no_backend_hint">バックエンド未接続。先に接続設定をしてください</string>
+    <string name="delete_failed">削除失敗: %1$s</string>
+    <string name="copy">コピー</string>
+    <string name="send">送信</string>
+    <string name="start">開始</string>
+    <string name="stop">停止</string>
+    <string name="restart">再起動</string>
+
+    <!-- ルーティング追加 -->
+    <string name="rt_model_sync">モデルリスト自動更新</string>
+    <string name="rt_model_sync_desc">上流チャネルから定期的にモデルリストを取得</string>
+    <string name="rt_sync_interval">間隔(時間)</string>
+    <string name="rt_sync_now">今すぐ同期</string>
+    <string name="rt_syncing">モデルリストを同期中…</string>
+    <string name="rt_sync_done">同期完了</string>
+    <string name="rt_redact">プライバシーデータフィルタ</string>
+    <string name="rt_oe_enable">OpenAI 拡張エンドポイント (Responses / Images / Embeddings…)</string>
+    <string name="rt_oe_enable_desc">/v1/responses、/v1/images/generations、/v1/embeddings、/v1/audio/speech、/v1/completions、/v1/moderations を公開。OpenAI チャネルの上流での Responses API 使用も許可。反映にはインスタンス再起動。</string>
+    <string name="rt_oe_upstream">OpenAI 上流は既定で Responses API を使用 (/v1/responses)</string>
+    <string name="rt_oe_upstream_desc">グローバル既定。チャネルごとの「上流は Responses API を使用」で上書き可。オフの際は上流は /v1/chat/completions のまま。</string>
+    <string name="rt_redact_desc">転送前にリクエスト内の API キー / token を *** に置換(sk-、ghp_、AKIA、AIza、Bearer など)</string>
+    <string name="rt_redact_extra">追加パターン(1行に1正規表現)</string>
+    <string name="rt_table_title">モデルルーティング表</string>
+    <string name="rt_saved">保存しました(ゲートウェイ再起動で反映)</string>
+
+    <!-- 置換チートシート -->
+    <string name="rp_cheat_title">正規表現チートシート</string>
+    <string name="rp_cheat_syntax_title">構文</string>
+    <string name="rp_cheat_syntax">.        任意の1文字\n\\d \\w \\s   数字 / 単語文字 / 空白\n[abc]    a b c のいずれか\n[^abc]   a b c 以外\n*  +  ?   0回以上 , 1回以上 , 0または1回\n{2,5}    2〜5回\n^  $      先頭 / 末尾\n(…)      キャプチャグループ\na|b      a または b\n\\.       リテラルのドット(エスケープ)</string>
+    <string name="rp_cheat_replace_title">置換記号</string>
+    <string name="rp_cheat_replace">$1 $2    グループ 1 / 2\n$0       マッチ全体\n(空)     マッチを削除\n\\$       リテラルのドル記号</string>
+    <string name="rp_cheat_examples_title">実用例</string>
+    <string name="rp_cheat_examples">1. メールをマスク\n   正規表現: [\\w.]+@[\\w.]+\n   置換後: ***\n\n2. 語順を入替\n   正規表現: (\\w+) (\\w+)\n   置換後: $2 $1\n\n3. 行末の空白を除去\n   正規表現: [ \\t]+$\n   置換後: (空)\n\n4. 単語を置換(大文字小文字無視は ci をオン)\n   正規表現: chatgpt\n   置換後: AI\n\n5. 空行を圧縮\n   正規表現: \\n{3,}\n   置換後: \n\n</string>
+    <string name="rp_cheat_notes_title">注意事項</string>
+    <string name="rp_cheat_notes">• model フィールドと data: URL は決して置換されません。\n• 送信ルールはリクエストテキスト、受信ルールはレスポンステキストに適用。\n• ストリーミングレスポンスはチャンク単位でマッチするため、チャンクをまたぐパターンはマッチしないことがあります。\n• ルールはゲートウェイ再起動後に有効になります。</string>
+
+    <!-- 設定暗号化 -->
+    <string name="menu_config">設定とバックアップ</string>
+    <string name="cfg_crypt_title">設定の暗号化</string>
+    <string name="cfg_crypt_enable">保存設定を暗号化</string>
+    <string name="cfg_crypt_desc">アプリ内の設定ファイルを AES-256-GCM で暗号化(ゲートウェイの AGWENC1 形式と互換)</string>
+    <string name="cfg_crypt_pass">暗号化パスワード</string>
+    <string name="cfg_crypt_pass_confirm">パスワード確認</string>
+    <string name="cfg_crypt_mismatch">パスワードが一致しません</string>
+    <string name="cfg_crypt_need_pass">暗号化の有効化にはパスワードが必要です</string>
+    <string name="cfg_crypt_enabled">設定の暗号化を有効にしました</string>
+    <string name="cfg_crypt_disabled">設定の暗号化を無効にしました(平文保存)</string>
+    <string name="cfg_crypt_embedded_only">アプリ内モードに適用。Termux モードではゲートウェイ側の crypt.js を使用してください。</string>
+
+    <!-- インポート / エクスポート -->
+    <string name="cfg_transfer_title">設定のインポート / エクスポート</string>
+    <string name="cfg_export">設定をエクスポート</string>
+    <string name="cfg_export_desc">現在のインスタンス設定をファイルに保存</string>
+    <string name="cfg_export_encrypt">エクスポートファイルを暗号化</string>
+    <string name="cfg_export_pass">エクスポートパスワード(空=平文)</string>
+    <string name="cfg_exported">設定をエクスポートしました</string>
+    <string name="cfg_export_failed">エクスポート失敗: %1$s</string>
+    <string name="cfg_import">設定をインポート</string>
+    <string name="cfg_import_desc">設定ファイルを読み込み。暗号化ファイルには元のパスワードが必要</string>
+    <string name="cfg_import_pass_title">ソースファイルのパスワード</string>
+    <string name="cfg_import_pass_hint">パスワード(未暗号化なら空)</string>
+    <string name="cfg_import_encrypted_hint">このファイルは暗号化されています(AGWENC1)。暗号化に使ったパスワードを入力してください。</string>
+    <string name="cfg_import_wrong_pass">パスワード誤りまたはデータ破損: %1$s</string>
+    <string name="cfg_import_invalid">有効な設定ではありません: %1$s</string>
+    <string name="cfg_import_confirm_title">インポート確認</string>
+    <string name="cfg_import_confirm_msg">%1$d 個のチャネルをインポートし、現在のインスタンス設定を上書きしますか?\n\nソース: %2$s\n本アプリのパスワードで再暗号化されます。</string>
+    <string name="cfg_import_src_enc">暗号化ファイル</string>
+    <string name="cfg_import_src_plain">平文ファイル</string>
+    <string name="cfg_imported">設定をインポートしました(%1$d チャネル)</string>
+    <string name="cfg_import_failed">インポート失敗: %1$s</string>
+    <string name="cfg_reencrypted">本アプリのパスワードで再暗号化しました</string>
+
+    <!-- Termux 追加 -->
+    <string name="termux_perm_hint">Termux が呼び出しを拒否しました。\n\nシステム設定 → アプリ → 本アプリ → 権限 → その他の権限で「Termux 環境でコマンドを実行」を有効にしてください。\n\n有効にしても失敗する場合は、設定ページの Termux 種別(ZeroTermux/公式)を確認してください。</string>
+    <string name="termux_perm_title">許可が必要です</string>
+    <string name="termux_copy_cmd">コマンドをコピー</string>
+    <string name="termux_cmd_copied">コマンドをコピーしました</string>
+    <string name="termux_open_anyway">Termux を開く</string>
+
+    <!-- インスタンス編集 / TLS -->
+    <string name="pt_edit_title">インスタンス編集</string>
+    <string name="pt_create">作成</string>
+    <string name="pt_saved">インスタンスを保存しました(ゲートウェイ再起動)</string>
+    <string name="pt_inst_host">リッスンアドレス (0.0.0.0 = LAN からアクセス可)</string>
+    <string name="pt_tls_enable">TLS (HTTPS) 暗号化</string>
+    <string name="pt_tls_desc">証明書で HTTPS を提供。証明書/秘密鍵ファイルはゲートウェイ側に必要です。</string>
+    <string name="pt_tls_port">HTTPS ポート(空 = HTTP と同じ、HTTPS のみ)</string>
+    <string name="pt_tls_port_hint">別ポートを設定すると HTTP と HTTPS を同時に提供できます。</string>
+    <string name="pt_tls_cert">証明書ファイル (cert.pem)</string>
+    <string name="pt_tls_key">秘密鍵ファイル (key.pem)</string>
+
+    <!-- プロキシ -->
+    <string name="nav_proxies">プロキシ</string>
+    <string name="title_proxies">プロキシ設定</string>
+    <string name="px_hint">ここで名前付きプロキシを定義し、チャネルの「プロキシ名」で参照します。チャネルのプロキシを空にすると直接接続になります。</string>
+    <string name="px_empty">プロキシがありません\n+ で追加</string>
+    <string name="px_add">プロキシ追加</string>
+    <string name="px_edit">プロキシ編集</string>
+    <string name="px_name">プロキシ名 * (チャネルから参照)</string>
+    <string name="px_type">タイプ *</string>
+    <string name="px_host">ホスト * (例: 127.0.0.1)</string>
+    <string name="px_port">ポート * (例: 7890)</string>
+    <string name="px_user">ユーザー名(任意)</string>
+    <string name="px_pass">パスワード(任意)</string>
+    <string name="px_auth_hint">認証は任意です。認証付き SOCKS5 の場合、アプリ内エンジンはグローバル認証子を使用します(動作しますが複数プロキシで共有)。</string>
+    <string name="px_need_valid">有効な名前、ホスト、ポートを入力してください</string>
+    <string name="px_bad_type">タイプは socks5 または http</string>
+    <string name="px_saved">プロキシを保存しました</string>
+    <string name="px_delete_title">プロキシ削除</string>
+    <string name="px_delete_msg">プロキシ「%1$s」を削除しますか? 参照するチャネルは直接接続に戻ります。</string>
+    <string name="px_has_auth">認証あり</string>
+
+    <!-- コード検知 -->
+    <string name="menu_security">セキュリティとバックグラウンド</string>
+    <string name="title_security">セキュリティとバックグラウンド</string>
+    <string name="title_plugins">プラグイン管理</string>
+    <string name="pm_install">プラグインをインストール</string>
+    <string name="pm_instance">インスタンス: %1$s</string>
+    <string name="pm_empty">このインスタンスにインストール済みプラグインはありません</string>
+    <string name="pm_no_backend">先にゲートウェイに接続してください</string>
+    <string name="pm_enabled">有効 · タップで無効化</string>
+    <string name="pm_disabled">無効 · タップで有効化</string>
+    <string name="pm_remove_title">プラグインをアンインストール</string>
+    <string name="pm_remove_msg">「%1$s」をアンインストールしますか?</string>
+    <string name="pm_removed">アンインストールしました</string>
+    <string name="pm_install_title">プラグインをインストール</string>
+    <string name="pm_install_hint">.tar.gz プラグインパッケージの直 URL を入力</string>
+    <string name="pm_installed">インストール成功</string>
+    <string name="pm_url_empty">URL は必須です</string>
+    <string name="gd_title">悪意あるコードの検知</string>
+    <string name="gd_warning">⚠️ 一般ユーザーには推奨しません。スキャンは遅延を増やし、パターンマッチは安全なコードを誤検知したり、難読化されたコードを見逃したりする可能性があります。これはリマインダでありセキュリティ境界ではありません — 実行前に必ずコードを確認してください。</string>
+    <string name="gd_enable">AI レスポンス内のコードをスキャン</string>
+    <string name="gd_level">報告の最低レベル</string>
+    <string name="gd_level_high">高のみ(破壊的コマンド、RCE、認証情報流出)</string>
+    <string name="gd_level_medium">中以上(権限/永続化/危険な eval を追加)</string>
+    <string name="gd_level_low">低以上(ハードコードされた秘密、平文 HTTP を追加)</string>
+    <string name="gd_action">検知時の動作</string>
+    <string name="gd_action_warn">警告: 通知を追記し内容は保持</string>
+    <string name="gd_action_block">ブロック: 内容を通知で置換</string>
+    <string name="gd_cloud">クラウドスキャン API を使用</string>
+    <string name="gd_cloud_desc">コードを外部 API に送って解析します。遅延が大幅に増加し、コードが端末外に送られます。</string>
+    <string name="gd_cloud_url">API URL</string>
+    <string name="gd_cloud_key">API キー</string>
+    <string name="gd_rule_count">ローカルルールライブラリ: %1$d ルール</string>
+    <string name="gd_test">サンプルでテスト</string>
+    <string name="gd_test_found">%1$d 件の問題を検出、最大レベル %2$s</string>
+    <string name="gd_test_clean">このレベルでは問題は見つかりませんでした</string>
+    <string name="gd_saved">検知設定を保存しました</string>
+    <string name="gd_applies_embedded">アプリ内モードに適用(クロスフォーマットレスポンス)。</string>
+
+    <!-- バックグラウンド keep-alive -->
+    <string name="bg_title">バックグラウンド動作保護</string>
+    <string name="bg_desc">アプリがバックグラウンドでも内蔵ゲートウェイを存続させます。</string>
+    <string name="bg_keepalive">フォアグラウンドサービス keep-alive</string>
+    <string name="bg_keepalive_desc">常駐の低優先度通知を表示し Partial Wake Lock を保持して、ゲートウェイがリクエストに応答し続けるようにします。</string>
+    <string name="bg_embedded_only">アプリ内モードでのみ有効。Termux モードのバックエンドは Termux 内で動作します。</string>
+    <string name="bg_started">keep-alive サービスを開始しました</string>
+    <string name="bg_stopped">keep-alive サービスを停止しました</string>
+    <string name="bg_battery_ok">✓ 電池最適化: 除外済み</string>
+    <string name="bg_battery_no">⚠ 電池最適化: 有効(ゲートウェイが終了される可能性)</string>
+    <string name="bg_battery_request">電池最適化の除外を申請</string>
+    <string name="bg_notif_ok">✓ 通知: 有効</string>
+    <string name="bg_notif_no">⚠ 通知: 無効(フォアグラウンドサービスに必要)</string>
+    <string name="bg_notif_settings">通知設定を開く</string>
+    <string name="bg_svc_running">✓ keep-alive サービス: 実行中</string>
+    <string name="bg_svc_stopped">keep-alive サービス: 停止中</string>
+    <string name="bg_app_details">アプリ情報を開く(自動起動/バックグラウンド制限)</string>
+    <string name="bg_oem_hint">一部のベンダー ROM(Xiaomi、Huawei、OPPO、vivo など)では追加設定が必要です: 自動起動を許可、最近のタスクでアプリをロック、バックグラウンド制限を解除。</string>
+    <string name="svc_channel_name">ゲートウェイ実行中</string>
+    <string name="svc_channel_desc">アプリ内ゲートウェイをバックグラウンドで存続させます</string>
+    <string name="svc_title">AI Gateway が実行中</string>
+    <string name="svc_text">ポート %1$d · %2$d チャネル</string>
+
+    <!-- QR -->
+    <string name="cfg_export_qr">QR コードでエクスポート</string>
+    <string name="cfg_import_qr_image">QR 画像からインポート</string>
+    <string name="cfg_import_qr_camera">カメラで QR をスキャン</string>
+    <string name="cfg_qr_info">%1$d チャネル · %2$d 文字 → %3$d バイト</string>
+    <string name="cfg_qr_hint">別の端末でスキャン: 設定とバックアップ → カメラで QR をスキャン</string>
+    <string name="cfg_qr_too_large">設定が大きすぎて 1 枚の QR コードに収まりません(%1$d バイト)。ファイルエクスポートをご利用ください。</string>
+    <string name="cfg_qr_no_image">画像を読み取れませんでした</string>
+    <string name="cfg_qr_not_found">画像に QR コードが見つかりません</string>
+    <string name="cfg_qr_bad_payload">QR の内容は有効な設定ペイロードではありません</string>
+    <string name="cfg_qr_decode_failed">デコード失敗: %1$s</string>
+    <string name="cfg_qr_need_camera">スキャンにはカメラ権限が必要です</string>
+    <string name="cfg_qr_no_camera_app">利用可能なカメラアプリがありません</string>
+
+    <!-- リクエスト記録 -->
+    <string name="rec_title">リクエスト内容の記録</string>
+    <string name="rec_enable">リクエスト / レスポンス本文を記録</string>
+    <string name="rec_desc">リクエストとレスポンスの本文を完全に保存し、リクエスト履歴ページで表示できるようにします。既定はオフ。</string>
+    <string name="rec_server">収集サーバー(任意)</string>
+    <string name="rec_server_hint">空 = ゲートウェイの log/requests-&lt;instance&gt;.jsonl に書き込み。http(s) URL を設定すると各レコードをそこへ POST。</string>
+    <string name="rec_max_chars">レコードあたりの最大文字数</string>
+    <string name="rec_privacy_warn">⚠ 記録には送信した機密情報を含む会話全体が保存されます。必要なければオフのままにしてください。</string>
+    <string name="rec_saved">記録設定を保存しました(ゲートウェイ再起動で反映)</string>
+    <string name="rec_bad_server">サーバーアドレスは http:// または https:// で始まる必要があります</string>
+    <string name="ts_title">思考チェーン要約</string>
+    <string name="ts_enable">送信前に推論を簡略化</string>
+    <string name="ts_desc">推論モデルの完全な思考はクライアントに届く前に簡略化されます(セグメントごとに先頭 N 文字を保持、または安価なモデルで各セグメントを要約)。通常のチャットには影響しません。</string>
+    <string name="ts_mode">簡略化モード</string>
+    <string name="ts_max_chars">セグメントあたりの保持文字数(切り詰め)</string>
+    <string name="ts_sum_url">要約エンドポイント URL</string>
+    <string name="ts_sum_url_hint">OpenAI 互換。例: https://api.deepseek.com または https://127.0.0.1:16392(別のゲートウェイを指す場合はそのインスタンスの gatewayKey を使用)</string>
+    <string name="ts_sum_key">API キー</string>
+    <string name="ts_sum_model">要約モデル</string>
+    <string name="ts_sum_prompt">要約プロンプト</string>
+    <string name="ts_sum_warn">要約モードは思考の完了を待ってから要約するため、思考段階が一時停止します。</string>
+
+    <!-- インスタンストラフィック -->
+    <string name="pt_req_count">%1$d リクエスト</string>
+    <string name="pt_err_count">%1$d エラー</string>
+    <string name="pt_no_traffic">トラフィックなし</string>
+    <string name="st_hint">インスタンス「%1$s」を表示中。統計はインスタンスごとに独立し、ゲートウェイ再起動でリセットされます — 0 の場合、リクエストが別のインスタンスに向いている可能性があります(「インスタンス」を参照)。</string>
+    <string name="termux_variant_label">Termux の種類</string>
+    <string name="termux_variant_zero">ZeroTermux</string>
+    <string name="termux_variant_official">公式 Termux</string>
+    <!-- キーカード(マルチユーザー) -->
+    <string name="menu_cards">キーカード</string>
+    <string name="title_cards">キーカード</string>
+    <string name="cd_hint">マルチユーザーキー: クォータ/無効化/有効期限/モデル許可リスト付きカードを発行。対象 = アクティブなインスタンス</string>
+    <string name="cd_empty">キーカードがありません。+ で発行</string>
+    <string name="cd_add">発行</string>
+    <string name="cd_copy">コピー</string>
+    <string name="cd_toggle">無効化/有効化</string>
+    <string name="cd_recharge">チャージ/リセット</string>
+    <string name="cd_copied">フルキーをコピーしました</string>
+    <string name="cd_unnamed">(名前なし)</string>
+    <string name="cd_state_disabled">無効</string>
+    <string name="cd_state_expired">期限切れ</string>
+    <string name="cd_state_usedup">使い切り</string>
+    <string name="cd_state_active">有効</string>
+    <string name="cd_usage_fmt">使用量 %1$s / %2$s (%3$d%%)</string>
+    <string name="cd_usage_unlimited">使用量 %1$s(無制限)</string>
+    <string name="cd_limit_models">%1$d モデルのみ</string>
+    <string name="cd_limit_expires">%1$s に期限切れ</string>
+    <string name="cd_new_title">キーカード発行(インスタンス %1$s)</string>
+    <string name="cd_need_name">名前は必須です</string>
+    <string name="cd_created">発行しました</string>
+    <string name="cd_created_msg">フルキー(いつでもリストからコピー可):\n\n%1$s</string>
+    <string name="cd_disabled_ok">無効化しました</string>
+    <string name="cd_enabled_ok">有効化しました</string>
+    <string name="cd_del_title">キーカード削除</string>
+    <string name="cd_del_msg">「%1$s」を削除しますか? キーは直ちに無効になります</string>
+    <string name="cd_deleted">削除しました</string>
+    <string name="cd_add_quota">クォータ追加(万トークン)</string>
+    <string name="cd_reset_usage">使用トークンを 0 にリセット</string>
+    <string name="cd_recharge_title">チャージ/リセット「%1$s」</string>
+    <string name="cd_name">名前(誰のためのものか)</string>
+    <string name="cd_quota">クォータ(万トークン)</string>
+    <string name="cd_quota_helper">0 または空 = 無制限; 100 = 100万トークン</string>
+    <string name="cd_models">許可モデル(カンマ区切り)</string>
+    <string name="cd_models_helper">空 = すべてのモデルを許可</string>
+    <string name="cd_expires">有効期限</string>
+    <string name="cd_expires_helper">空 = 無期限; 形式 2026-12-31</string>
+    <string name="cd_note">メモ(任意)</string>
+    <string name="fmt_yi">%1$.1fB</string>
+    <string name="fmt_wan">%1$.1f万</string>
+    <!-- ユーザーモード -->
+    <string name="setup_user">ユーザーとして利用</string>
+    <string name="setup_user_desc">他の人がデプロイしたゲートウェイをキーカード/アカウントで利用</string>
+    <string name="nav_u_home">ホーム</string>
+    <string name="nav_u_models">モデル</string>
+    <string name="nav_u_credits">残高</string>
+    <string name="nav_u_profile">プロフィール</string>
+    <string name="ul_title">サーバーにログイン</string>
+    <string name="ul_server">サーバーアドレス</string>
+    <string name="ul_server_hint">http://ドメインまたはIP:ポート、例: http://abc.trycloudflare.com</string>
+    <string name="ul_branch">ブランチ(インスタンス、任意)</string>
+    <string name="ul_branch_hint">同じキーで異なるグループにアクセス; 空 = 既定</string>
+    <string name="ul_by_token">キーカード</string>
+    <string name="ul_by_account">アカウント</string>
+    <string name="ul_token">キーカード</string>
+    <string name="ul_token_hint">管理者から渡された sk-xxx</string>
+    <string name="ul_uid">UID</string>
+    <string name="ul_password">パスワード</string>
+    <string name="ul_login">ログイン</string>
+    <string name="ul_login_ok">ログインしました</string>
+    <string name="ul_login_fail">ログイン失敗: %1$s</string>
+    <string name="ul_need_server">サーバーアドレスは必須です</string>
+    <string name="ul_need_token">キーカードは必須です</string>
+    <string name="ul_no_keys">このアカウントにキーカードがありません。管理者に問い合わせてください。</string>
+    <string name="uh_status">サービス状態</string>
+    <string name="uh_loading">読み込み中…</string>
+    <string name="uh_offline">到達できません: %1$s</string>
+    <string name="uh_info_fmt">バージョン %1$s · 稼働 %2$s</string>
+    <string name="uh_success_rate">チャネル成功率</string>
+    <string name="uh_probe_hint">管理者がプローブを有効化していません(トークン節約のため既定オフ)</string>
+    <string name="uh_probe_row">%1$s · 成功 %2$s (%3$d 回)</string>
+    <string name="uh_branch">ブランチ切替</string>
+    <string name="uh_branch_hint">同じキーでブランチ名により異なるグループ(インスタンス)へアクセス</string>
+    <string name="uh_branch_name">ブランチ名(空 = 既定)</string>
+    <string name="uh_branch_saved">保存しました、更新中</string>
+    <string name="uh_plugins">プラグイン</string>
+    <string name="uh_plugins_loading">読み込み中…</string>
+    <string name="uh_plugins_empty">このサーバーには利用可能なプラグインがありません</string>
+    <string name="um_count">%1$d 個のモデルが利用可能</string>
+    <string name="um_refresh">更新</string>
+    <string name="um_empty">モデルなしまたは読み込み失敗</string>
+    <string name="uc_remaining">残り</string>
+    <string name="uc_admin">管理者アカウント</string>
+    <string name="uc_unlimited">無制限</string>
+    <string name="uc_no_expire">無期限</string>
+    <string name="uc_all_models">全モデル利用可</string>
+    <string name="uc_models_limited">制限: %1$s</string>
+    <string name="up_token_user">キーカードユーザー</string>
+    <string name="up_branch_fmt">ブランチ: %1$s</string>
+    <string name="up_switch">アカウント / サーバーを切替</string>
+    <string name="up_admin_mode">管理モードへ切替</string>
+    <string name="disclaimer_short">⚠️ 実験的プロジェクト。実商用には使用しないでください!</string>
+    <string name="disclaimer_full">⚠️ 免責事項: ai-gateway は実験と学習のみを目的としており、商用サービスの保証はありません。実際の取引には使用しないでください! コスト、データセキュリティ、サービス安定性に関する問題はデプロイ者とユーザーの責任です。</string>
+    <!-- 登録+フィルタ -->
+    <string name="ul_by_register">登録</string>
+    <string name="ul_reg_uid">ユーザー名 (UID)</string>
+    <string name="ul_reg_uid_hint">3〜32文字(英数字/アンダースコア)。キーカードが自動発行されます</string>
+    <string name="ul_reg_password2">パスワード確認</string>
+    <string name="ul_reg_email">メールアドレス</string>
+    <string name="ul_reg_closed">このサーバーは登録を停止しています</string>
+    <string name="ul_reg_hint_fmt">パスワードは %1$d 文字以上</string>
+    <string name="ul_reg_query_fail">登録状態の取得に失敗: %1$s</string>
+    <string name="ul_reg_fill_all">すべての項目を入力してください</string>
+    <string name="ul_reg_pw_mismatch">パスワードが一致しません</string>
+    <string name="ul_reg_ok">登録完了! 自動ログインしました</string>
+    <string name="ul_reg_fail">登録失敗: %1$s</string>
+    <string name="um_search">モデルを検索</string>
+    <string name="um_sort">並べ替え</string>
+    <string name="um_sort_asc">名前 A→Z</string>
+    <string name="um_sort_desc">名前 Z→A</string>
+    <string name="cd_bind_user">ユーザーを紐付け(任意)</string>
+    <string name="cd_bind_user_hint">紐付けるとそのユーザーがログイン時にこのカードを利用可能</string>
+    <string name="menu_panel">パネル</string>
+    <string name="nav_settings">設定</string>
+    <string name="panel_loading">管理パネルを読み込み中…</string>
+    <string name="pv_balance">残高照会</string>
+    <string name="pv_balance_loading">%1$s の残高を照会中…</string>
+    <string name="pv_balance_title">残高 · %1$s</string>
+    <string name="rg_captcha">CAPTCHA</string>
+    <string name="rg_captcha_hint">cloudflare.com → Turnstile → Add site で無料取得。アプリの登録ページは Turnstile の描画に未対応のため、有効時はブラウザで登録してください</string>
+    <string name="rg_captcha_none">なし</string>
+    <string name="rg_captcha_secret">Turnstile Secret Key(秘密)</string>
+    <string name="rg_captcha_sitekey">Turnstile Site Key(公開)</string>
+    <string name="rg_captcha_turnstile">Cloudflare Turnstile(無料)</string>
+    <string name="rg_default_quota">登録時の既定クォータ(万トークン)</string>
+    <string name="rg_default_quota_helper">0 = 無制限</string>
+    <string name="rg_enable">登録を許可</string>
+    <string name="rg_enable_hint">公開リレーでのみ有効化; 登録でカードを自動発行</string>
+    <string name="rg_key_length">キー長(8-128)</string>
+    <string name="rg_key_length_helper">sk- 接頭辞を除く、既定 24</string>
+    <string name="rg_min_pw">パスワード最小長</string>
+    <string name="sa_save_second">第二パスワードを保存</string>
+    <string name="sa_second_key">第二パスワード</string>
+    <string name="sa_totp">TOTP 動的認証</string>
+    <string name="sa_totp_disable">無効化</string>
+    <string name="sa_totp_enable">TOTP を有効化</string>
+    <string name="sa_totp_save_warn">TOTP が有効になりました。今すぐシークレットを保存してください!</string>
+    <string name="sa_totp_secret_fmt">シークレット(認証アプリに今すぐ保存): %1$s</string>
+    <string name="st_about">このアプリについて</string>
+    <string name="st_config_sub">設定の暗号化/バックアップ/入出力</string>
+    <string name="st_conn_sub">リモートゲートウェイのアドレスとパスワード</string>
+    <string name="st_panel_sub">完全な管理パネル(ウェブ)</string>
+    <string name="st_reg">登録とキーカード</string>
+    <string name="st_reg_sub">登録許可/キー長/CAPTCHA</string>
+    <string name="st_secondauth">第二認証</string>
+    <string name="st_secondauth_sub">管理ログインに第二パスワードまたは TOTP</string>
+    <string name="st_security_sub">コード検知/バックグラウンド保護</string>
+    <string name="st_theme_sub">ダーク/ライト/パレット/言語</string>
+    <string name="st_tunnel">公開トンネル</string>
+    <string name="st_tunnel_sub">cloudflared の無料一時ドメイン</string>
+    <string name="title_panel">完全パネル</string>
+    <string name="tn_desc">無料の一時ドメインで外部からゲートウェイへアクセス。スマホ/内部ネットワーク向け。</string>
+    <string name="tn_running">実行中</string>
+    <string name="tn_start">トンネルを開始</string>
+    <string name="tn_starting">開始中、ドメイン割当を待機…</string>
+    <string name="tn_stop">トンネルを停止</string>
+    <string name="tn_stopped">未起動</string>
+    <string name="tn_title">公開トンネル (cloudflared)</string>
+    <string name="uk_main">メインカード</string>
+    <string name="uk_new">セルフ発行</string>
+    <string name="um_group_all">すべて(%1$d)</string>
+    <string name="up_avatar">アバター URL</string>
+    <string name="up_edit_profile">プロフィール編集</string>
+    <string name="up_my_keys">マイカード</string>
+    <string name="up_nickname">ニックネーム</string>
+    <string name="us_empty">ユーザーなし</string>
+    <string name="us_keys_fmt">カード %1$d 枚</string>
+    <string name="us_new">ユーザー追加</string>
+    <string name="us_password">パスワード</string>
+    <string name="us_reset_pw">パスワード再設定</string>
+    <string name="us_sub">パスワードログイン用アカウント。カードの紐付け可</string>
+    <string name="us_title">ユーザー管理</string>
+    <string name="us_uid">UID(空で自動生成)</string>
+    <string name="pv_balance_section">上流の残高</string>
+    <string name="pv_balance_url">残高API URL</string>
+    <string name="pv_balance_url_helper">空欄＝内蔵プリセット</string>
+    <string name="pv_balance_path">取得パス</string>
+    <string name="pv_balance_unit">単位（任意）</string>
+    <!-- フローティングウィンドウ -->
+    <string name="st_overlay">フローティングウィンドウ</string>
+    <string name="st_overlay_sub">他アプリの上にゲートウェイ状態を表示</string>
+    <string name="st_overlay_on">フローティングウィンドウ: オン</string>
+    <string name="st_overlay_off">フローティングウィンドウ: オフ</string>
+    <string name="st_overlay_need_perm">オーバーレイ権限が必要です</string>
+    <string name="ovl_perm_title">オーバーレイ権限</string>
+    <string name="ovl_perm_msg">「他のアプリの上に重ねて表示」を許可してください。MIUI / EMUI では「バックグラウンドでポップアップ」も有効にしてください。許可しない場合、ウィンドウは表示されません。</string>
+    <string name="ovl_perm_denied">オーバーレイ権限がありません</string>
+    <string name="ovl_no_backend">ゲートウェイ未接続</string>
+    <string name="ovl_offline">オフライン</string>
+    <string name="ovl_online">オンライン</string>
+    <string name="ovl_mode">モード</string>
+    <string name="ovl_instance">インスタンス</string>
+    <string name="ovl_port">ポート</string>
+    <string name="ovl_requests">リクエスト</string>
+    <string name="ovl_errors">エラー</string>
+    <string name="ovl_uptime">稼働時間</string>
+    <string name="ovl_open_app">アプリを開く</string>
+    <string name="ovl_start">開始</string>
+    <string name="ovl_stop">停止</string>
+    <string name="ovl_collapse">折りたたむ</string>
+    <string name="ovl_close">閉じる</string>
+    <string name="ovl_notif_title">フローティングウィンドウ実行中</string>
+    <string name="ovl_notif_desc">他アプリの上にゲートウェイ状態を表示</string>
+    <string name="ovl_balance">残高</string>
+    <string name="ovl_balance_none">残高なし</string>
+    <string name="ovl_look">フローティング表示</string>
+    <string name="ovl_look_title">フローティング表示</string>
+    <string name="ovl_look_sub">サイズ / 配色 / 表示項目</string>
+    <string name="ovl_scale">拡大縮小</string>
+    <string name="ovl_dim_alpha">待機時の透明度</string>
+    <string name="ovl_snap">端に寄せる</string>
+    <string name="ovl_dim">待機時に薄くする</string>
+    <string name="ovl_lock">位置を固定</string>
+    <string name="ovl_pin">常に展開</string>
+    <string name="ovl_blur">背景ぼかし（Android 12+）</string>
+    <string name="ovl_reset">初期化</string>
+    <string name="ovl_look_hint">ドラッグで移動 · タップで展開 · ダブルタップで収納 · 長押しで更新</string>
+    <string name="ovl_size">バブルのサイズ</string>
+    <string name="ovl_panel_width">パネル幅</string>
+    <string name="ovl_bg">配色</string>
+    <string name="ovl_rows_title">表示項目</string>
+    <string name="ovl_pill_title">バブルの内容</string>
+    <string name="ovl_pill_icon">アイコン</string>
+    <string name="ovl_pill_balance">残高</string>
+    <string name="ovl_pill_requests">リクエスト数</string>
+    <string name="ovl_bg_theme">テーマに従う</string>
+    <string name="ovl_enable">フローティング表示</string>
+    <string name="ovl_shape">バブルの形</string>
+    <string name="ovl_shape_circle">円形</string>
+    <string name="ovl_shape_pill">カプセル</string>
+    <string name="ovl_shape_square">四角</string>
+    <string name="ovl_shape_round">角丸</string>
+    <string name="ovl_icon">カスタム画像</string>
+    <string name="ovl_icon_pick">画像を選択</string>
+    <string name="ovl_icon_clear">クリア</string>
+    <string name="ovl_rows_hint">↑ ↓ で並べ替え</string>
+    <string name="ovl_dim_delay">減光まで</string>
+    <string name="ovl_dim_level">減光の強さ</string>
+    <string name="ovl_autoscroll">自動切り替え</string>
+    <string name="ovl_scroll_sec">切り替え間隔</string>
+    <string name="ovl_fail">失敗</string>
+    <string name="ovl_warn_below">残高アラート</string>
+    <string name="pv_balance_warn">警告しきい値</string>
+    <string name="pv_balance_warn_helper">5、または CNY=5, USD=1</string>
+    <string name="pv_route_force">次のリクエストをこのチャネルへ</string>
+    <string name="pv_route_clear">保留中のルートを解除</string>
+    <string name="pv_route_on_msg">現在このチャネルに固定されています。解除しますか？</string>
+    <string name="pv_route_off_msg">次のリクエストだけこのチャネルを使い、その後は自動選択に戻ります。</string>
+    <string name="ovl_route">ルート</string>
+    <string name="ovl_route_auto">自動</string>
+    <string name="ovl_route_pick">次のリクエストの送信先</string>
+    <string name="ovl_route_empty">利用できるチャネルがありません</string>
+    <string name="ovl_route_fail">設定に失敗</string>
+    <string name="ctx_title">コンテキスト長</string>
+    <string name="ctx_table">対応表</string>
+    <string name="ctx_bad_line">解析できません：%1$s</string>
+    <string name="ovl_ctx">コンテキスト</string>
+    <string name="ovl_ctx_none">—</string>
+    <string name="ctx_soft">ソフト上限（%）</string>
+    <string name="ctx_hard">ハード上限（%）</string>
+    <string name="ctx_hard_hint">0 = 無効。推定値が上限を超えると上流に送らず 400 を返します。</string>
+    <string name="ctx_pattern">モデルパターン</string>
+    <string name="ctx_window">コンテキスト窓</string>
+    <string name="ctx_cpt">1トークンあたり文字数</string>
+    <string name="ctx_cpt_hint">推定用：CJK は 1 文字 = 1 トークン、他は 1 トークン = N 文字。</string>
+    <string name="ctx_empty">ルールがありません。窓が不明なモデルではハード上限は効きません。</string>
+    <string name="ctx_hint">上から順に最初の一致を採用。* はワイルドカードで最後に置く。窓は 128k / 1m / 128000。</string>
+    <string name="ovl_gauge_w">インジケーターの太さ</string>
+    <string name="ovl_gauge_c">インジケーターの色</string>
+    <string name="ctx_add">ルールを追加</string>
+</resources>

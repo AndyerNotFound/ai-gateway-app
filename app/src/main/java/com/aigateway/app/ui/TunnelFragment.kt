@@ -13,7 +13,7 @@ import com.aigateway.app.R
 import com.aigateway.app.databinding.FragmentTunnelBinding
 import com.google.gson.JsonObject
 
-
+/** 管理端 · 公网隧道(cloudflared) */
 class TunnelFragment : BaseFragment() {
 
     private var _b: FragmentTunnelBinding? = null
@@ -46,7 +46,7 @@ class TunnelFragment : BaseFragment() {
         val backend = backendOrNull() ?: return
         run({ b.tnStatus.text = getString(R.string.load_failed, it) }, { backend.getTunnel() }) { j ->
             render(j.get("running")?.asBoolean == true, j.get("url")?.asString ?: "")
-            
+            // 启动中未拿到 URL: 轮询
             if (j.get("running")?.asBoolean == true && j.get("url")?.asString.isNullOrBlank() && !polling) {
                 polling = true
                 handler.postDelayed({ polling = false; if (_b != null) load() }, 2500)

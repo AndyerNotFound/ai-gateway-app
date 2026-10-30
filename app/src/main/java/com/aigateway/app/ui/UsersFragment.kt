@@ -11,7 +11,7 @@ import com.aigateway.app.databinding.FragmentUsersBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 
-
+/** 管理端 · 用户管理(账密登录体系): 列表/新建/编辑/重置密码/删除 */
 class UsersFragment : BaseFragment() {
 
     private var _b: FragmentUsersBinding? = null

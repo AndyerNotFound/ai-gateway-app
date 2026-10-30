@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Gateway</string>
+
+    <!-- Unua agordo -->
+    <string name="setup_title">Elektu kiel ruli</string>
+    <string name="setup_embedded">Ruli en la apo</string>
+    <string name="setup_embedded_desc">Enkonstruita kluzo-backend, Termux ne bezonata</string>
+    <string name="setup_termux">Konekti al Termux</string>
+    <string name="setup_termux_desc">Konekti al ai-gateway-backend en Termux (loka aŭ LAN)</string>
+    <string name="setup_connect_section">Konekti al la kluzo (nedeviga)</string>
+    <string name="setup_quick_local">Loka</string>
+    <string name="setup_quick_lan">LAN</string>
+    <string name="setup_connect_enter">Konekti kaj eniri</string>
+    <string name="setup_skip">Preterlasi nun</string>
+    <string name="setup_termux_section">Termux-backend</string>
+
+    <!-- Konekto -->
+    <string name="connect_title">Konekti al la kluzo</string>
+    <string name="connect_host">Kluzo-adreso</string>
+    <string name="connect_admin_key">Administra pasvorto (adminKey)</string>
+    <string name="connect_button">Konekti</string>
+    <string name="connecting">Konektante…</string>
+    <string name="connect_mode">Rula reĝimo</string>
+    <string name="connect_mode_remote">Konekti Termux / foran kluzon</string>
+    <string name="connect_hint_nokey">Malplena adminKey = sen pasvorto (kiam la kluzo ne havas administran pasvorton)</string>
+    <string name="connect_reselect_mode">Reelekti reĝimon</string>
+    <string name="connect_saved">Konekto konservita</string>
+    <string name="connect_ok">Konektita</string>
+    <string name="connect_failed_entered">Konekto malsukcesis. Tamen enirita (reeksperimentu en Konekt-agordoj)</string>
+    <string name="connect_need_url">Bonvolu enigi la kluzo-adreson</string>
+    <string name="connect_switched_embedded">Ŝanĝita al en-apo-reĝimo</string>
+
+    <!-- Navigado -->
+    <string name="nav_overview">Superrigardo</string>
+    <string name="nav_providers">Provizantoj</string>
+    <string name="nav_routing">Rutado</string>
+    <string name="nav_keys">Ŝlosiloj</string>
+    <string name="nav_ports">Kazoj</string>
+    <string name="nav_replace">Anstataŭigo</string>
+    <string name="nav_stats">Statistikoj</string>
+    <string name="nav_requests">Petoj</string>
+    <string name="nav_logs">Protokoloj</string>
+    <string name="nav_chat">Babilo</string>
+
+    <!-- Titoloj -->
+    <string name="title_overview">Superrigardo</string>
+    <string name="title_providers">Provizantoj / Kanaloj</string>
+    <string name="title_routing">Rutado / Modelmapado</string>
+    <string name="title_keys">Ŝlosiloj</string>
+    <string name="title_ports">Pordoj / Kazoj</string>
+    <string name="title_replace">Tekstanstataŭigo</string>
+    <string name="title_stats">Statistikoj</string>
+    <string name="title_requests">Peto-registroj</string>
+    <string name="title_logs">Protokoloj</string>
+    <string name="title_chat">Babileja testo</string>
+
+    <!-- Menuo -->
+    <string name="menu_theme">Koloroj / Etoso</string>
+    <string name="menu_connection">Konekto / Reĝimo</string>
+
+    <!-- Etosa dialogo -->
+    <string name="theme_title">Koloroj / Etoso</string>
+    <string name="theme_mode">Malhela reĝimo</string>
+    <string name="theme_mode_system">Sekvi la sistemon</string>
+    <string name="theme_mode_light">Hela</string>
+    <string name="theme_mode_dark">Malhela</string>
+    <string name="theme_dynamic">Material You dinamikaj koloroj</string>
+    <string name="theme_dynamic_desc">Nur Android 12+, koloroj el la ekranfono</string>
+    <string name="theme_palette">Kolora paletro</string>
+    <string name="theme_palette_purple">Purpura (apriora)</string>
+    <string name="theme_palette_blue">Blua</string>
+    <string name="theme_palette_green">Verda</string>
+    <string name="theme_palette_orange">Oranĝa</string>
+    <string name="theme_palette_red">Ruĝa</string>
+    <string name="theme_language">Lingvo</string>
+    <string name="theme_language_system">Sekvi la sistemon</string>
+    <string name="theme_language_en">English</string>
+    <string name="theme_language_zh">简体中文</string>
+    <string name="theme_language_zh_tw">繁體中文</string>
+    <string name="theme_language_ja">日本語</string>
+    <string name="theme_language_ko">한국어</string>
+    <string name="theme_language_ru">Русский</string>
+    <string name="theme_language_es">Español</string>
+    <string name="theme_language_fr">Français</string>
+    <string name="theme_language_eo">Esperanto</string>
+    <string name="theme_applied">Agordoj aplikitaj</string>
+
+    <!-- Termux -->
+    <string name="termux_start_backend">Starti Termux-backendon</string>
+    <string name="termux_install">Instali / desploji al Termux</string>
+    <string name="termux_not_installed">Termux ne detektita</string>
+    <string name="termux_detected">✓ Termux detektita</string>
+    <string name="termux_not_detected">⚠ Termux ne detektita (instalu ĝin por uzi desplonon)</string>
+    <string name="termux_open">Malfermi Termux</string>
+    <string name="termux_cmd_sent">Starta komando sendita al Termux</string>
+    <string name="termux_cmd_failed">Malsukceso: Termux ne trovita aŭ eksteraj vokoj ne permesataj</string>
+    <string name="termux_deploy_title">Instali / desploji al Termux</string>
+    <string name="termux_deploy_msg">La dosieroj de la kluzo-backend estos skribitaj al Download/ai-gateway-deploy/, kaj Termux rulos la instalskripton (instalas Node.js, desplonas al ~/ai-gateway, startas).\n\nBezonas termux-setup-storage kaj allow-external-apps=true.</string>
+    <string name="termux_deploy_start">Starti</string>
+    <string name="termux_deploy_ok">Termux startigita por ruli la instalilon</string>
+    <string name="termux_deploy_failed">Desplono malsukcesis</string>
+
+    <!-- Superrigardo -->
+    <string name="ov_checking">Kontrolante…</string>
+    <string name="ov_connected">Konektita</string>
+    <string name="ov_connect_failed">Konekto malsukcesis</string>
+    <string name="ov_not_connected">Ne konektita</string>
+    <string name="ov_total_requests">Sumo da petoj</string>
+    <string name="ov_errors">Eraroj</string>
+    <string name="ov_uptime">Tempo de funkcio</string>
+    <string name="ov_current_instance">Nuna kazo</string>
+    <string name="ov_loading">Ŝargante…</string>
+    <string name="ov_quick_actions"> Rapidaj agoj</string>
+    <string name="ov_refresh">Ĝisdatigi staton</string>
+    <string name="ov_configure_first">Unue agordu konekton en Konekto / Reĝimo</string>
+    <string name="ov_unreachable">Ne atingas la kluzon. Kontrolu adreson/pasvorton aŭ startu la backendon</string>
+    <string name="ov_no_instance">Neniu kazo</string>
+    <string name="ov_load_failed">Ŝargado malsukcesis: %1$s</string>
+    <string name="ov_mode_embedded">En-apo-reĝimo · enkonstruita kluzo</string>
+    <string name="ov_mode_remote">Fora kluzo · %1$s</string>
+    <string name="ov_mode_unset">Ne agordita</string>
+    <string name="ov_recent_requests">Lastatempaj petoj</string>
+    <string name="ov_view_all">Vidi ĉiujn</string>
+    <string name="ov_no_requests">Neniuj peto-registroj ankoraŭ</string>
+    <string name="ov_stats_by_channel">Laŭ kanalo</string>
+
+    <!-- Provizantoj -->
+    <string name="pv_empty">Neniuj kanaloj\nAlklaku + por aldoni</string>
+    <string name="pv_add">Aldoni kanalon</string>
+    <string name="pv_edit">Redakti kanalon</string>
+    <string name="pv_fetch_models">Preni modelojn</string>
+    <string name="pv_edit_btn">Redakti</string>
+    <string name="pv_delete_btn">Forigi</string>
+    <string name="pv_name">Kanala nomo *</string>
+    <string name="pv_type">Alflua formato *</string>
+    <string name="pv_base_url">Base URL * (ekz. https://api.deepseek.com)</string>
+    <string name="pv_api_key">API Key (malplena = konservi)</string>
+    <string name="pv_proxy">Prokurila nomo (nedeviga)</string>
+    <string name="pv_models">Modela listo (per komoj)</string>
+    <string name="pv_model_map">Modelmapado (unue po linio: publika=alfluo)</string>
+    <string name="pv_delay">Peto-malfacilaĵo (ms, 0 = malŝaltita)</string>
+    <string name="pv_default">Fiksi kiel apriora kanalo (rezerva)</string>
+    <string name="pv_use_responses">Alfluo uzas Responses API (/v1/responses, nur openai)</string>
+    <string name="pv_insecure">Salti atestilan kontrolon (memsubskribita)</string>
+    <string name="pv_need_fields">Nomo kaj Base URL devigaj</string>
+    <string name="pv_bad_type">Formato devas esti openai / gemini / claude</string>
+    <string name="pv_saved">Kanalo konservita</string>
+    <string name="pv_save_failed">Konservado malsukcesis: %1$s</string>
+    <string name="pv_delete_title">Forigi kanalon</string>
+    <string name="pv_delete_msg">Forigi kanalon «%1$s»?</string>
+    <string name="pv_deleted">Forigita</string>
+    <string name="pv_fetching">Prenante modelojn de la alfluo…</string>
+    <string name="pv_models_title">Alfluaj modeloj (%1$d)</string>
+    <string name="pv_fill_models">Enmeti en models kaj konservi</string>
+    <string name="pv_no_models">Neniuj modeloj ricevitaj: %1$s</string>
+    <string name="pv_filled">Enmetitaj modeloj: %1$d</string>
+    <string name="pv_no_key">sen ŝlosilo</string>
+    <string name="pv_models_count">%1$d modeloj</string>
+
+    <!-- Rutado -->
+    <string name="rt_hint">Petitaj modeloj estas rutataj laŭ: modelMap de kanalo &gt; listo models &gt; apriora kanalo &gt; unua kanalo. Redaktu mapadojn en Provizantoj.</string>
+    <string name="rt_empty">Neniuj modeloj\n(aldonu models / modelMap al kanalo en Provizantoj)</string>
+    <string name="rt_no_channel">(neniu kanalo)</string>
+
+    <!-- Ŝlosiloj -->
+    <string name="keys_gateway_title">Kluzo-aliroŝlosilo (gatewayKey)</string>
+    <string name="keys_gateway_desc">Klientoj devas sendi ĉi tiun ŝlosilon kiam ili vokas AI-punktojn (Bearer / x-api-key / ?key=). Malplena = sen aŭtentikigo.</string>
+    <string name="keys_admin_title">Administra pasvorto (adminKey)</string>
+    <string name="keys_admin_desc">Aŭtentikigo por la administra panelo / admin API. Malplena = senpasvorta administrado (LAN-privata uzo).</string>
+    <string name="keys_save">Konservi ŝlosilojn</string>
+    <string name="keys_warn">⚠ Post ŝanĝo de adminKey, ĝisdatigu ankaŭ la konektpasvorton de ĉi tiu apo (Konekto / Reĝimo). La kluzo restartiĝas por apliki.</string>
+    <string name="keys_saved">Ŝlosiloj konservitaj (la kluzo eble restartiĝos)</string>
+
+    <!-- Pordoj / kazoj -->
+    <string name="pt_new">Nova kazo</string>
+    <string name="pt_shutdown_all">Ĉesi ĉiujn</string>
+    <string name="pt_current">nuna</string>
+    <string name="pt_running">rulanta</string>
+    <string name="pt_stopped">ĉesigita</string>
+    <string name="pt_channels">%1$d kanaloj</string>
+    <string name="pt_delete_title">Forigi kazoon</string>
+    <string name="pt_delete_msg">Forigi kazoon «%1$s»? Ĝia agordodosiero estos forigita.</string>
+    <string name="pt_shutdown_title">Ĉesi ĉiujn kazojn</string>
+    <string name="pt_shutdown_msg">Ĉesi ĉiujn rulantajn kluzokazojn?</string>
+    <string name="pt_new_title">Nova kazo</string>
+    <string name="pt_inst_name">Kaznomo * (literoj/ciferoj/streko)</string>
+    <string name="pt_inst_port">Pordo * (ekz. 16390)</string>
+    <string name="pt_inst_key">adminKey (nedeviga)</string>
+    <string name="pt_need_valid">Enigu validan nomon kaj pordon</string>
+    <string name="pt_created">Kazo «%1$s» kreita</string>
+    <string name="pt_switched">Ŝanĝita al kazo «%1$s»</string>
+    <string name="pt_create_failed">Kreado malsukcesis: %1$s</string>
+    <string name="pt_stopped_all">Ĉiuj kazoj ĉesigitaj</string>
+
+    <!-- Anstataŭigo -->
+    <string name="rp_hint">Aplikas regulespriman anstataŭigon al teksto pasanta tra la kluzo. La kampo model kaj data: URL netuŝataj. Restartigu la kluzon por apliki.</string>
+    <string name="rp_out_title">Elira (peto)</string>
+    <string name="rp_inc_title">Enira (respondo)</string>
+    <string name="rp_add_out">Aldoni eliran regulon</string>
+    <string name="rp_add_inc">Aldoni eniran regulon</string>
+    <string name="rp_save">Konservi anstataŭigregulojn</string>
+    <string name="rp_regex">Regulesprimo *</string>
+    <string name="rp_to">Anstataŭigi per (malplena = forigi la trovon)</string>
+    <string name="rp_ci">Ignori usklecon (ci)</string>
+    <string name="rp_empty_rules">(neniuj %1$s reguloj)</string>
+    <string name="rp_delete_match">(forigi la trovon)</string>
+    <string name="rp_need_regex">La regulesprimo ne povas esti malplena</string>
+    <string name="rp_bad_regex">Nevalida regulesprimo: %1$s</string>
+    <string name="rp_saved">Reguloj konservitaj (restarto por apliki)</string>
+    <string name="rp_dir_out">eliraj</string>
+    <string name="rp_dir_inc">eniraj</string>
+    <string name="rp_add_rule">Aldoni %1$s regulon</string>
+    <string name="rp_edit_rule">Redakti %1$s regulon</string>
+
+    <!-- Statistikoj -->
+    <string name="st_by_channel">Laŭ kanalo</string>
+    <string name="st_empty">Neniuj statistikoj ankoraŭ</string>
+    <string name="st_refresh">Ĝisdatigi</string>
+    <string name="st_channel_detail">petoj %1$d · eniro %2$d tok · eliro %3$d tok</string>
+    <string name="st_channel_errors">%1$s · eraroj %2$d</string>
+
+    <!-- Petoj -->
+    <string name="rq_empty">Neniuj peto-registroj\n(ebligu petan registradon ĉe la kluzo)</string>
+    <string name="rq_detail_title">Peto-detaloj</string>
+    <string name="rq_no_body">(ĉi tiu kluzo ne konservis petokorpojn, aŭ la registro eksvalidiĝis)</string>
+    <string name="rq_section_request">━━ Peto ━━</string>
+    <string name="rq_section_response">━━ Respondo ━━</string>
+    <string name="rq_empty_value">(malplena)</string>
+
+    <!-- Protokoloj -->
+    <string name="lg_lines">Linioj</string>
+    <string name="lg_loading">Ŝargante…</string>
+    <string name="lg_empty">(neniuj protokoloj)</string>
+    <string name="lg_copied">Protokoloj kopiitaj</string>
+    <string name="lg_not_connected">Backend ne konektita</string>
+    <string name="lg_load_failed">Ŝargado malsukcesis: %1$s</string>
+
+    <!-- Babilo -->
+    <string name="ch_model">Modelo</string>
+    <string name="ch_model_hint">Elektu aŭ tajpu modelon</string>
+    <string name="ch_input_hint">Tajpu mesaĝon…</string>
+    <string name="ch_empty">Elektu modelon kaj komencu testi la kluzon</string>
+    <string name="ch_need_model">Unue elektu aŭ tajpu modelon</string>
+    <string name="ch_no_backend">Backend ne konektita</string>
+    <string name="ch_you">Vi</string>
+    <string name="ch_ai">AI</string>
+    <string name="ch_error">[Eraro] %1$s</string>
+    <string name="ch_load_models_failed">Ŝargado de modeloj malsukcesis: %1$s</string>
+    <string name="ch_request_failed">Peto malsukcesis</string>
+
+    <!-- Komunaj -->
+    <string name="ok">Bone</string>
+    <string name="cancel">Nuligi</string>
+    <string name="save">Konservi</string>
+    <string name="delete">Forigi</string>
+    <string name="close">Fermi</string>
+    <string name="refresh">Ĝisdatigi</string>
+    <string name="load_failed">Ŝargado malsukcesis: %1$s</string>
+    <string name="op_failed">Operacio malsukcesis: %1$s</string>
+    <string name="no_backend_hint">Backend ne konektita. Unue agordu konekton</string>
+    <string name="delete_failed">Forigado malsukcesis: %1$s</string>
+    <string name="copy">Kopii</string>
+    <string name="send">Sendi</string>
+    <string name="start">Starti</string>
+    <string name="stop">Ĉesi</string>
+    <string name="restart">Restartigi</string>
+
+    <!-- Rutado, aldonaj -->
+    <string name="rt_model_sync">Aŭtomate ĝisdatigi modelajn listojn</string>
+    <string name="rt_model_sync_desc">Periodaje preni modelajn listojn de alfluaj kanaloj</string>
+    <string name="rt_sync_interval">Intertempo (horoj)</string>
+    <string name="rt_sync_now">Sinkronigi nun</string>
+    <string name="rt_syncing">Sinkronigante modelajn listojn…</string>
+    <string name="rt_sync_done">Sinkronigo finita</string>
+    <string name="rt_redact">Privata-datuma filtrilo</string>
+    <string name="rt_oe_enable">Etenditaj OpenAI-punktoj (Responses / Images / Embeddings…)</string>
+    <string name="rt_oe_enable_desc">Malfermas /v1/responses, /v1/images/generations, /v1/embeddings, /v1/audio/speech, /v1/completions, /v1/moderations; ankaŭ permesas al OpenAI-kanaloj uzi Responses API ĉe la alfluo. Restartigu la kazoon por apliki.</string>
+    <string name="rt_oe_upstream">OpenAI-alfluo apriore uzas Responses API (/v1/responses)</string>
+    <string name="rt_oe_upstream_desc">Ĝenerala apriora; kanalnivela «Alfluo uzas Responses API» superregas. Kiam malŝaltita, la alfluo daŭre uzas /v1/chat/completions.</string>
+    <string name="rt_redact_desc">Antaŭ plusendo, anstataŭigas API-ŝlosilojn / ĵetonojn en petoj per *** (sk-, ghp_, AKIA, AIza, Bearer …)</string>
+    <string name="rt_redact_extra">Aldonaj ŝablonoj (po unu regulesprimo en linio)</string>
+    <string name="rt_table_title">Modela rutotabelo</string>
+    <string name="rt_saved">Konservita (la kluzo restartiĝas por apliki)</string>
+
+    <!-- Regulesprima helpfolio -->
+    <string name="rp_cheat_title">Regulesprima helpfolio</string>
+    <string name="rp_cheat_syntax_title">Sintakso</string>
+    <string name="rp_cheat_syntax">.        ajna signo\n\\d \\w \\s   cifero / vortsigno / spaco\n[abc]    unu el a b c\n[^abc]   ne a b c\n*  +  ?   0+ , 1+ , 0 aŭ 1\n{2,5}    2 ĝis 5 fojojn\n^  $      komenco / fino de la teksto\n(…)      kapta grupo\na|b      a aŭ b\n\\.       laŭvorta punkto (eskapita)</string>
+    <string name="rp_cheat_replace_title">Anstataŭigo</string>
+    <string name="rp_cheat_replace">$1 $2    grupo 1 / 2\n$0       la tuta trovo\n(malplena) forigi la trovon\n\\$       laŭvorta dolaro-signo</string>
+    <string name="rp_cheat_examples_title">Ekzemploj</string>
+    <string name="rp_cheat_examples">1. Kaŝi retpoŝtojn\n   regulesprimo: [\\w.]+@[\\w.]+\n   per:    ***\n\n2. Interŝanĝi vortojn\n   regulesprimo: (\\w+) (\\w+)\n   per:    $2 $1\n\n3. Forigi linifinajn spacojn\n   regulesprimo: [ \\t]+$\n   per:    (malplena)\n\n4. Anstataŭigi vorton (ignori usklecon: ŝaltu ci)\n   regulesprimo: chatgpt\n   per:    AI\n\n5. Kunpremi malplenajn liniojn\n   regulesprimo: \\n{3,}\n   per:    \n\n</string>
+    <string name="rp_cheat_notes_title">Notu</string>
+    <string name="rp_cheat_notes">• La kampo model kaj data: URL neniam estas tuŝataj.\n• Eliraj reguloj aplikas al petoteksto, eniraj al respondateksto.\n• Elfluantaj respondoj kongruas po fragmento, do ŝablonoj trans fragmentoj eble ne kongruas.\n• Reguloj efikiĝas post restarto de la kluzo.</string>
+
+    <!-- Agordĉifrado -->
+    <string name="menu_config">Agordo kaj savkopio</string>
+    <string name="cfg_crypt_title">Agordĉifrado</string>
+    <string name="cfg_crypt_enable">Ĉifri konservitan agordon</string>
+    <string name="cfg_crypt_desc">Ĉifras la agordodosieron en la apo per AES-256-GCM (kun Wouldn-compatible kun la AGWENC1-formato de la kluzo)</string>
+    <string name="cfg_crypt_pass">Ĉifra pasvorto</string>
+    <string name="cfg_crypt_pass_confirm">Konfirmi pasvorton</string>
+    <string name="cfg_crypt_mismatch">La pasvortoj ne kongruas</string>
+    <string name="cfg_crypt_need_pass">Enigu pasvorton por ebligi ĉifradon</string>
+    <string name="cfg_crypt_enabled">Agordĉifrado ebligita</string>
+    <string name="cfg_crypt_disabled">Agordĉifrado malŝaltita (konservita en klarteksto)</string>
+    <string name="cfg_crypt_embedded_only">Aplikas al en-apo-reĝimo. Por Termux uzu crypt.js ĉe la kluzo.</string>
+
+    <!-- Enporti / elporti -->
+    <string name="cfg_transfer_title">Enporti / elporti agordon</string>
+    <string name="cfg_export">Elporti agordon</string>
+    <string name="cfg_export_desc">Konservi la agordon de la nuna kazoo al dosiero</string>
+    <string name="cfg_export_encrypt">Ĉifri la elportitan dosieron</string>
+    <string name="cfg_export_pass">Elporta pasvorto (malplena = klarteksto)</string>
+    <string name="cfg_exported">Agordo elportita</string>
+    <string name="cfg_export_failed">Elportado malsukcesis: %1$s</string>
+    <string name="cfg_import">Enporti agordon</string>
+    <string name="cfg_import_desc">Legi agordodosieron; ĉifritaj dosieroj bezonas la fontan pasvorton</string>
+    <string name="cfg_import_pass_title">Pasvorto de la fontodosiero</string>
+    <string name="cfg_import_pass_hint">Pasvorto (malplena se ne ĉifrita)</string>
+    <string name="cfg_import_encrypted_hint">Ĉi tiu dosiero estas ĉifrita (AGWENC1). Enigu la pasvorton uzitan por ĝia ĉifrado.</string>
+    <string name="cfg_import_wrong_pass">Malĝusta pasvorto aŭ difektitaj datumoj: %1$s</string>
+    <string name="cfg_import_invalid">Ne valida agordo: %1$s</string>
+    <string name="cfg_import_confirm_title">Konfirmi enporton</string>
+    <string name="cfg_import_confirm_msg">Enporti %1$d kanalojn kaj anstataŭigi la agordon de la nuna kazoo?\n\nFonto: %2$s\nĜi estos reĉifrita per la propra pasvorto de ĉi tiu apo.</string>
+    <string name="cfg_import_src_enc">ĉifrita dosiero</string>
+    <string name="cfg_import_src_plain">klarteksta dosiero</string>
+    <string name="cfg_imported">Agordo enportita (%1$d kanaloj)</string>
+    <string name="cfg_import_failed">Enportado malsukcesis: %1$s</string>
+    <string name="cfg_reencrypted">Reĉifrita per la pasvorto de ĉi tiu apo</string>
+
+    <!-- Termux, aldonaj -->
+    <string name="termux_perm_hint">Termux malakceptis la vokon.\n\nBonvolu doni la permeson en sistemaj agordoj: Agordoj → Apoj → ĉi tiu apo → Permesoj → Kromaj permesoj → ebligu «Ruli komandojn en la Termux-ĉirkaŭaĵo».\n\nSe jam donita sed ankoraŭ malsukcesas, kontrolu la Termux-variancon (ZeroTermux / Oficiala) ĉe la agorda paĝo.</string>
+    <string name="termux_perm_title">Bezonas rajtigon</string>
+    <string name="termux_copy_cmd">Kopii komandon</string>
+    <string name="termux_cmd_copied">Komando kopiita</string>
+    <string name="termux_open_anyway">Malfermi Termux</string>
+
+    <!-- Kazredaktado / TLS -->
+    <string name="pt_edit_title">Redakti kazoon</string>
+    <string name="pt_create">Krei</string>
+    <string name="pt_saved">Kazoo konservita (la kluzo restartiĝas)</string>
+    <string name="pt_inst_host">Aŭskulta adreso (0.0.0.0 = alirebla de LAN)</string>
+    <string name="pt_tls_enable">TLS (HTTPS) ĉifrado</string>
+    <string name="pt_tls_desc">Servi HTTPS kun atestilo. La dosieroj cert/key devas ekzisti ĉe la kluzo.</string>
+    <string name="pt_tls_port">HTTPS-pordo (malplena = sama kiel HTTP, do nur HTTPS)</string>
+    <string name="pt_tls_port_hint">Fiksu alian pordon por samtempe servi HTTP kaj HTTPS.</string>
+    <string name="pt_tls_cert">Atestila dosiero (cert.pem)</string>
+    <string name="pt_tls_key">Privataŝlosila dosiero (key.pem)</string>
+
+    <!-- Prokuriloj -->
+    <string name="nav_proxies">Prokuriloj</string>
+    <string name="title_proxies">Prokurila agordo</string>
+    <string name="px_hint">Difinu nomitajn prokurilojn ĉi tie, kaj referencu ilin per nomo en la kampo Proxy de kanalo. Lasu la prokurilon de kanalo malplena por rekta konekto.</string>
+    <string name="px_empty">Neniuj prokuriloj\nAlklaku + por aldoni</string>
+    <string name="px_add">Aldoni prokurilon</string>
+    <string name="px_edit">Redakti prokurilon</string>
+    <string name="px_name">Prokurila nomo * (referencata de kanaloj)</string>
+    <string name="px_type">Tipo *</string>
+    <string name="px_host">Gastiganto * (ekz. 127.0.0.1)</string>
+    <string name="px_port">Pordo * (ekz. 7890)</string>
+    <string name="px_user">Uzantnomo (nedeviga)</string>
+    <string name="px_pass">Pasvorto (nedeviga)</string>
+    <string name="px_auth_hint">Aŭtentikigo nedeviga. Por SOCKS5 kun aŭtentikigo, la en-apo-motoro uzas tutmondan aŭtentikigilon (funkcias, sed komuna inter prokuriloj).</string>
+    <string name="px_need_valid">Enigu validan nomon, gastiganton kaj pordon</string>
+    <string name="px_bad_type">Tipo devas esti socks5 aŭ http</string>
+    <string name="px_saved">Prokurilo konservita</string>
+    <string name="px_delete_title">Forigi prokurilon</string>
+    <string name="px_delete_msg">Forigi prokurilon «%1$s»? Kanaloj referencantaj ĝin falos reen al rekta konekto.</string>
+    <string name="px_has_auth">kun aŭtentikigo</string>
+
+    <!-- Interkapto de kodokodigo -->
+    <string name="menu_security">Sekureco kaj fono</string>
+    <string name="title_security">Sekureco kaj fono</string>
+    <string name="title_plugins">Kromprograma administrado</string>
+    <string name="pm_install">Instali kromprogramon</string>
+    <string name="pm_instance">Kazoo: %1$s</string>
+    <string name="pm_empty">Neniuj instalitaj kromprogramoj sur ĉi tiu kazoo</string>
+    <string name="pm_no_backend">Unue konektu al la kluzo</string>
+    <string name="pm_enabled">Ebligita · klaku por malŝalti</string>
+    <string name="pm_disabled">Malŝaltita · klaku por ŝalti</string>
+    <string name="pm_remove_title">Malinstali kromprogramon</string>
+    <string name="pm_remove_msg">Malinstali «%1$s»?</string>
+    <string name="pm_removed">Malinstalita</string>
+    <string name="pm_install_title">Instali kromprogramon</string>
+    <string name="pm_install_hint">Enigu la rektan URL-on de la pakaĵo .tar.gz</string>
+    <string name="pm_installed">Sukcese instalita</string>
+    <string name="pm_url_empty">URL bezonata</string>
+    <string name="gd_title">Interkapto de malica kodo</string>
+    <string name="gd_warning">⚠️ Ne rekomendata por ordinaraj uzantoj. Skanado aldonas latenton, kaj ŝablonkongruo povas marki sekuran kodon (falsaj pozitivoj) aŭ pretervidi obfuskitan kodon (falsaj negativoj). Ĝi estas rememorigo, ne sekureca limo — ĉiam zorge kontrolu kodon antaŭ ol ruli ĝin.</string>
+    <string name="gd_enable">Skanadi kodon en AI-respondoj</string>
+    <string name="gd_level">Minimuma nivelo por raporti</string>
+    <string name="gd_level_high">Nur alta (detruaj komandoj, RCE, ŝtelo de salutdatumoj)</string>
+    <string name="gd_level_medium">Meza kaj pli (aldonas permesojn/persiston/nedanĝeran eval)</string>
+    <string name="gd_level_low">Malalta kaj pli (aldonas fikskoditajn sekretojn, klaran HTTP)</string>
+    <string name="gd_action">Je detekto</string>
+    <string name="gd_action_warn">Averti: aldoni avizon, konservi la enhavon</string>
+    <string name="gd_action_block">Bloki: anstataŭigi la enhavon per la avizo</string>
+    <string name="gd_cloud">Uzi nuban skanan API</string>
+    <string name="gd_cloud_desc">Sendas kodon al ekstera API por analizo. Aldonas signifan latenton kaj sendas kodon ekster la aparato.</string>
+    <string name="gd_cloud_url">API-URL</string>
+    <string name="gd_cloud_key">API-ŝlosilo</string>
+    <string name="gd_rule_count">Loka regula biblioteko: %1$d reguloj</string>
+    <string name="gd_test">Testi per specimeno</string>
+    <string name="gd_test_found">Detektitaj problemoj: %1$d, maksimuma nivelo %2$s</string>
+    <string name="gd_test_clean">Neniuj problemoj trovitaj je ĉi tiu nivelo</string>
+    <string name="gd_saved">Interkaptaj agordoj konservitaj</string>
+    <string name="gd_applies_embedded">Aplikas al en-apo-reĝimo (transformataj respondoj).</string>
+
+    <!-- Fona tenado -->
+    <string name="bg_title">Protektado de fona agado</string>
+    <string name="bg_desc">Konservigas la en-apo-kluzon vivanta kiam la apo estas en la fono.</string>
+    <string name="bg_keepalive">Fronta servo keep-alive</string>
+    <string name="bg_keepalive_desc">Montras persistan malalt-prioritatan sciigon kaj tenas partan vekŝlosilon por ke la kluzo daŭre servu petojn.</string>
+    <string name="bg_embedded_only">Nur utila en en-apo-reĝimo. En Termux-reĝimo la backend rulas ene de Termux.</string>
+    <string name="bg_started">Servo keep-alive startita</string>
+    <string name="bg_stopped">Servo keep-alive ĉesigita</string>
+    <string name="bg_battery_ok">✓ Bateria optimumigo: eksentita</string>
+    <string name="bg_battery_no">⚠ Bateria optimumigo: aktiva (povas mortigi la kluzon)</string>
+    <string name="bg_battery_request">Peti eksentiĝon de bateria optimumigo</string>
+    <string name="bg_notif_ok">✓ Sciigoj: ebligitaj</string>
+    <string name="bg_notif_no">⚠ Sciigoj: malŝalitaj (la fronta servo bezonas ilin)</string>
+    <string name="bg_notif_settings">Malfermi sciigajn agordojn</string>
+    <string name="bg_svc_running">✓ Servo keep-alive: rulanta</string>
+    <string name="bg_svc_stopped">Servo keep-alive: ĉesigita</string>
+    <string name="bg_app_details">Malfermi apodetalojn (aŭtomata starto / fonaj limigoj)</string>
+    <string name="bg_oem_hint">Kelkaj vendistaj ROM-oj (Xiaomi, Huawei, OPPO, vivo…) bezonas kromajn agordojn: permesi aŭtomatan starton, ŝlosi laapon en lastatempaĵoj, malŝalti fonajn limigojn.</string>
+    <string name="svc_channel_name">Kluzo rulanta</string>
+    <string name="svc_channel_desc">Konservigas la en-apo-kluzon vivanta en la fono</string>
+    <string name="svc_title">AI Gateway rulas</string>
+    <string name="svc_text">Pordo %1$d · %2$d kanaloj</string>
+
+    <!-- QR -->
+    <string name="cfg_export_qr">Elporti kiel QR-kodon</string>
+    <string name="cfg_import_qr_image">Enporti el QR-bildo</string>
+    <string name="cfg_import_qr_camera">Skanadi QR per fotilo</string>
+    <string name="cfg_qr_info">%1$d kanaloj · %2$d signoj → %3$d bitokoj</string>
+    <string name="cfg_qr_hint">Skanu ĉi tiun de alia aparato: Agordo kaj savkopio → Skanadi QR per fotilo</string>
+    <string name="cfg_qr_too_large">La agordo estas tro granda por unu QR-kodo (%1$d bitokoj). Uzu dosieran elporton anstataŭe.</string>
+    <string name="cfg_qr_no_image">Ne povis legi la bildon</string>
+    <string name="cfg_qr_not_found">Neniu QR-kodo trovita en la bildo</string>
+    <string name="cfg_qr_bad_payload">La QR-enhavo ne estas valida agorda ŝarĝo</string>
+    <string name="cfg_qr_decode_failed">Malkodado malsukcesis: %1$s</string>
+    <string name="cfg_qr_need_camera">Fotila permeso bezonata por skanado</string>
+    <string name="cfg_qr_no_camera_app">Neniu fotila apo disponebla</string>
+
+    <!-- Peta registrado -->
+    <string name="rec_title">Registrado de pet-enhavo</string>
+    <string name="rec_enable">Registri petajn / respondajn korpojn</string>
+    <string name="rec_desc">Konservas tutajn petajn kaj respondajn korpojn por ke la paĝo Petoj povu montri ilin. Apriore malŝaltita.</string>
+    <string name="rec_server">Kolekta servilo (nedeviga)</string>
+    <string name="rec_server_hint">Malplena = skribi al log/requests-&lt;instance&gt;.jsonl ĉe la kluzo. Fiksu http(s) URL por anstataŭe POST-i ĉiun registron tien.</string>
+    <string name="rec_max_chars">Maksimumaj signoj por registro</string>
+    <string name="rec_privacy_warn">⚠ Registrado konservas la tutan konversacian enhavon, inkluzive ajnan sentivan informon, kiun vi sendas. Tenu ĝin malŝaltita se ne bezonata.</string>
+    <string name="rec_saved">Registradaj agordoj konservitaj (la kluzo restartiĝas)</string>
+    <string name="rec_bad_server">La servila adreso devas komenciĝi per http:// aŭ https://</string>
+    <string name="ts_title">Rezumado de penadĉeno</string>
+    <string name="ts_enable">Simpligi rezonadon antaŭ ol sendi</string>
+    <string name="ts_desc">La kompleta penado de rezonadaj modeloj estas kunpremita antaŭ atingi la klienton (konservi la unuajn N signojn po segmento, aŭ rezumi ĉiun segmenton per malmultekosta modelo). Ne efikas al normalaj babiloj.</string>
+    <string name="ts_mode">Simpliga reĝimo</string>
+    <string name="ts_max_chars">Signoj konservataj po segmento (tranĉado)</string>
+    <string name="ts_sum_url">Rezuma punkto-URL</string>
+    <string name="ts_sum_url_hint">OpenAI-kongrua, ekz. https://api.deepseek.com aŭ https://127.0.0.1:16392 (uzu la gatewayKey de tiu kazoo kiam vi celas alian kluzon)</string>
+    <string name="ts_sum_key">API-ŝlosilo</string>
+    <string name="ts_sum_model">Rezuma modelo</string>
+    <string name="ts_sum_prompt">Rezuma prompto</string>
+    <string name="ts_sum_warn">Rezuma reĝimo atendas la finon de la kompleta penado antaŭ rezumi, do la penada etapo mallonge paŭzas.</string>
+
+    <!-- Kaztrafiko -->
+    <string name="pt_req_count">%1$d petoj</string>
+    <string name="pt_err_count">%1$d eraroj</string>
+    <string name="pt_no_traffic">neniu trafiko</string>
+    <string name="st_hint">Montrante la kazoon «%1$s». Statistikoj estas laŭ kazoj kaj nuliĝas kiam la kluzo restartiĝas — se ĉi tio estas 0, petoj eble iras al alia kazoo (vidu Kazoj).</string>
+    <string name="termux_variant_label">Termux-varianco</string>
+    <string name="termux_variant_zero">ZeroTermux</string>
+    <string name="termux_variant_official">Oficiala Termux</string>
+    <!-- Ŝlosilkartoj (pluruza) -->
+    <string name="menu_cards">Ŝlosilkartoj</string>
+    <string name="title_cards">Ŝlosilkartoj</string>
+    <string name="cd_hint">Pluruzaj ŝlosiloj: eldonu kartojn kun kvoto/malebligo/eksvalidiĝo/modela blanka listo. Celo = aktiva kazoo</string>
+    <string name="cd_empty">Ankoraŭ neniuj kartoj. Alklaku + por eldoni unu</string>
+    <string name="cd_add">Eldoni</string>
+    <string name="cd_copy">Kopii</string>
+    <string name="cd_toggle">Malebligi/Ebligi</string>
+    <string name="cd_recharge">Reŝargi/Restarigi</string>
+    <string name="cd_copied">Plena ŝlosilo kopiita</string>
+    <string name="cd_unnamed">(sennoma)</string>
+    <string name="cd_state_disabled">Malebligita</string>
+    <string name="cd_state_expired">Eksvalidiĝinta</string>
+    <string name="cd_state_usedup">Eluzita</string>
+    <string name="cd_state_active">Aktiva</string>
+    <string name="cd_usage_fmt">Uzo %1$s / %2$s (%3$d%%)</string>
+    <string name="cd_usage_unlimited">Uzo %1$s (senlima)</string>
+    <string name="cd_limit_models">nur %1$d modeloj</string>
+    <string name="cd_limit_expires">eksvalidiĝas %1$s</string>
+    <string name="cd_new_title">Eldoni ŝlosilkarton (kazoo %1$s)</string>
+    <string name="cd_need_name">Nomo bezonata</string>
+    <string name="cd_created">Ŝlosilo eldonita</string>
+    <string name="cd_created_msg">Plena ŝlosilo (kopiebla el la listo iam ajn):\n\n%1$s</string>
+    <string name="cd_disabled_ok">Malebligita</string>
+    <string name="cd_enabled_ok">Ebligita</string>
+    <string name="cd_del_title">Forigi ŝlosilkarton</string>
+    <string name="cd_del_msg">Forigi «%1$s»? La ŝlosilo tuj ĉesas funkcii</string>
+    <string name="cd_deleted">Forigita</string>
+    <string name="cd_add_quota">Aldoni kvoton (10 mil ĵetonoj)</string>
+    <string name="cd_reset_usage">Restarigi uzitajn ĵetonojn al 0</string>
+    <string name="cd_recharge_title">Reŝargi/Restarigi «%1$s»</string>
+    <string name="cd_name">Nomo (por kiu)</string>
+    <string name="cd_quota">Kvoto (10 mil ĵetonoj)</string>
+    <string name="cd_quota_helper">0 aŭ malplena = senlima; 100 = 1 miliono da ĵetonoj</string>
+    <string name="cd_models">Permesataj modeloj (per komoj)</string>
+    <string name="cd_models_helper">Malplena = ĉiuj modeloj permesataj</string>
+    <string name="cd_expires">Eksvalidiĝo</string>
+    <string name="cd_expires_helper">Malplena = neniam; formato 2026-12-31</string>
+    <string name="cd_note">Noteto (nedeviga)</string>
+    <string name="fmt_yi">%1$.1fB</string>
+    <string name="fmt_wan">%1$.1fW</string>
+    <!-- Uza reĝimo -->
+    <string name="setup_user">Mi estas uzanto</string>
+    <string name="setup_user_desc">Uzi kluzon desplonitan de alia persono per ŝlosilkarto / konto</string>
+    <string name="nav_u_home">Hejmo</string>
+    <string name="nav_u_models">Modeloj</string>
+    <string name="nav_u_credits">Kreditoj</string>
+    <string name="nav_u_profile">Profilo</string>
+    <string name="ul_title">Ensaluti al servilo</string>
+    <string name="ul_server">Servila adreso</string>
+    <string name="ul_server_hint">http://domajno-aŭ-IP:pordo, ekz. http://abc.trycloudflare.com</string>
+    <string name="ul_branch">Branĉo (kazoo, nedeviga)</string>
+    <string name="ul_branch_hint">Sama ŝlosilo aliras diversajn grupojn; malplena = apriora</string>
+    <string name="ul_by_token">Ŝlosilkarto</string>
+    <string name="ul_by_account">Konto</string>
+    <string name="ul_token">Ŝlosilkarto</string>
+    <string name="ul_token_hint">La sk-xxx donita de via administranto</string>
+    <string name="ul_uid">UID</string>
+    <string name="ul_password">Pasvorto</string>
+    <string name="ul_login">Ensaluti</string>
+    <string name="ul_login_ok">Ensalutita</string>
+    <string name="ul_login_fail">Ensaluto malsukcesis: %1$s</string>
+    <string name="ul_need_server">Servila adreso bezonata</string>
+    <string name="ul_need_token">Ŝlosilkarto bezonata</string>
+    <string name="ul_no_keys">Neniuj ŝlosilkartoj sub ĉi tiu konto. Demandu vian administranton.</string>
+    <string name="uh_status">Servila stato</string>
+    <string name="uh_loading">Ŝargante…</string>
+    <string name="uh_offline">Neatingebla: %1$s</string>
+    <string name="uh_info_fmt">Versio %1$s · Funkcianta %2$s</string>
+    <string name="uh_success_rate">Kanala sukcesa procento</string>
+    <string name="uh_probe_hint">La administranto ne ebligis sondadon (apriore malŝaltita por ŝpari ĵetonojn)</string>
+    <string name="uh_probe_row">%1$s · sukceso %2$s (%3$d sondoj)</string>
+    <string name="uh_branch">Ŝanĝi branĉon</string>
+    <string name="uh_branch_hint">Sama ŝlosilo povas aliri diversajn grupojn (kazoj) per branĉnomo</string>
+    <string name="uh_branch_name">Branĉnomo (malplena = apriora)</string>
+    <string name="uh_branch_saved">Konservita, ĝisdatigante</string>
+    <string name="uh_plugins">Kromprogramoj</string>
+    <string name="uh_plugins_loading">Ŝargante…</string>
+    <string name="uh_plugins_empty">Neniuj disponeblaj kromprogramoj sur ĉi tiu servilo</string>
+    <string name="um_count">%1$d modeloj disponeblaj</string>
+    <string name="um_refresh">Ĝisdatigi</string>
+    <string name="um_empty">Neniuj modeloj aŭ ŝargado malsukcesis</string>
+    <string name="uc_remaining">Restanta</string>
+    <string name="uc_admin">Administranta konto</string>
+    <string name="uc_unlimited">Senlima</string>
+    <string name="uc_no_expire">Neniam eksvalidiĝas</string>
+    <string name="uc_all_models">Ĉiuj modeloj disponeblaj</string>
+    <string name="uc_models_limited">Limigita al: %1$s</string>
+    <string name="up_token_user">Kart-uzanto</string>
+    <string name="up_branch_fmt">Branĉo: %1$s</string>
+    <string name="up_switch">Ŝanĝi konton / servilon</string>
+    <string name="up_admin_mode">Ŝanĝi al administra reĝimo</string>
+    <string name="disclaimer_short">⚠️ Eksperimenta projekto. Ne por vera komerca uzo!</string>
+    <string name="disclaimer_full">⚠️ Malkondamno: ai-gateway estas nur por eksperimentado kaj lernado, sen komercaj servaj garantioj. NE uzu por veraj transakcioj! Ajnaj kostoj, datuma sekureco aŭ servila stabileco estas la respondeco de la desploninto kaj uzantoj.</string>
+    # Registrado + filtrilo
+    <string name="ul_by_register">Registrado</string>
+    <string name="ul_reg_uid">Uzantnomo (UID)</string>
+    <string name="ul_reg_uid_hint">3-32 signoj (litero/cifero/substreketo). Ŝlosilkarto estas aŭtomate eldonita</string>
+    <string name="ul_reg_password2">Konfirmi pasvorton</string>
+    <string name="ul_reg_email">Retpoŝto</string>
+    <string name="ul_reg_closed">Registrado estas fermita ĉe ĉi tiu servilo</string>
+    <string name="ul_reg_hint_fmt">Pasvorto almenaŭ %1$d signoj</string>
+    <string name="ul_reg_query_fail">Malsukcesis peti registradon: %1$s</string>
+    <string name="ul_reg_fill_all">Plenigu ĉiujn kampojn</string>
+    <string name="ul_reg_pw_mismatch">La pasvortoj ne kongruas</string>
+    <string name="ul_reg_ok">Registrita! Aŭtomate ensalutita</string>
+    <string name="ul_reg_fail">Registrado malsukcesis: %1$s</string>
+    <string name="um_search">Serĉi modelojn</string>
+    <string name="um_sort">Ordigi</string>
+    <string name="um_sort_asc">Nomo A→Z</string>
+    <string name="um_sort_desc">Nomo Z→A</string>
+    <string name="cd_bind_user">Ligi uzanton (nedeviga)</string>
+    <string name="cd_bind_user_hint">Post ligado, tiu uzanto vidos ĉi tiun karton kiam ensalutante per sia konto</string>
+    <string name="menu_panel">Panelo</string>
+    <string name="nav_settings">Agordoj</string>
+    <string name="panel_loading">Ŝargante administran panelon…</string>
+    <string name="pv_balance">Kontroli saldon</string>
+    <string name="pv_balance_loading">Kontrolante saldon de %1$s…</string>
+    <string name="pv_balance_title">Saldo · %1$s</string>
+    <string name="rg_captcha">Kapĉo</string>
+    <string name="rg_captcha_hint">Akiru senpage ĉe cloudflare.com → Turnstile → Add site. La registra paĝo de la apo ankoraŭ ne bildigas Turnstile; se ŝaltita, registriĝu per retumilo</string>
+    <string name="rg_captcha_none">Neniu</string>
+    <string name="rg_captcha_secret">Turnstile Secret Key (sekreta)</string>
+    <string name="rg_captcha_sitekey">Turnstile Site Key (publika)</string>
+    <string name="rg_captcha_turnstile">Cloudflare Turnstile (senpaga)</string>
+    <string name="rg_default_quota">Apriora kvoto je registrado (10 mil ĵetonoj)</string>
+    <string name="rg_default_quota_helper">0 = senlima</string>
+    <string name="rg_enable">Malfermi registradon</string>
+    <string name="rg_enable_hint">Ŝaltu nur ĉe publikaj transdonoj; registrado aŭtomate eldonas karton</string>
+    <string name="rg_key_length">Ŝlosillongo (8-128)</string>
+    <string name="rg_key_length_helper">Sen la prefikso sk-, apriore 24</string>
+    <string name="rg_min_pw">Minimuma pasvortlongo</string>
+    <string name="sa_save_second">Konservi duan pasvorton</string>
+    <string name="sa_second_key">Dua pasvorto</string>
+    <string name="sa_totp">TOTP-dinamika kontrolo</string>
+    <string name="sa_totp_disable">Malebligi</string>
+    <string name="sa_totp_enable">Ebligi TOTP</string>
+    <string name="sa_totp_save_warn">TOTP ebligita, tuj konservu la sekreton!</string>
+    <string name="sa_totp_secret_fmt">Sekreto (tuj konservu ĝin en via aŭtentikiga apo): %1$s</string>
+    <string name="st_about">Pri kaj malgarantio</string>
+    <string name="st_config_sub">Ĉifrado/savkopio/enporto-elportado</string>
+    <string name="st_conn_sub">Adreso kaj pasvorto de fora kluzo</string>
+    <string name="st_panel_sub">Kompleta administra panelo (retejo)</string>
+    <string name="st_reg">Registrado kaj kartoj</string>
+    <string name="st_reg_sub">Registrado/ŝlosillongo/kapĉo</string>
+    <string name="st_secondauth">Dua kontrolo</string>
+    <string name="st_secondauth_sub">Administra ensaluto bezonas duan pasvorton aŭ TOTP</string>
+    <string name="st_security_sub">Kodinterkapto/fona protekto</string>
+    <string name="st_theme_sub">Malhela/hela/paletro/lingvo</string>
+    <string name="st_tunnel">Publika tunelo</string>
+    <string name="st_tunnel_sub">senpaga portempa domajno de cloudflared</string>
+    <string name="title_panel">Kompleta panelo</string>
+    <string name="tn_desc">Senpaga portempa domajno por ekstera aliro al ĉi tiu kluzo. Por telefono/enreta desplono.</string>
+    <string name="tn_running">Rulanta</string>
+    <string name="tn_start">Starti tunelon</string>
+    <string name="tn_starting">Startante, atendante domajnan asignon…</string>
+    <string name="tn_stop">Ĉesi tunelon</string>
+    <string name="tn_stopped">Ne startita</string>
+    <string name="tn_title">Publika tunelo (cloudflared)</string>
+    <string name="uk_main">Ĉefa karto</string>
+    <string name="uk_new">Memeldono</string>
+    <string name="um_group_all">Ĉiuj (%1$d)</string>
+    <string name="up_avatar">URL de avataro</string>
+    <string name="up_edit_profile">Redakti profilon</string>
+    <string name="up_my_keys">Miaj kartoj</string>
+    <string name="up_nickname">Kromnomo</string>
+    <string name="us_empty">Neniuj uzantoj</string>
+    <string name="us_keys_fmt">%1$d kartoj</string>
+    <string name="us_new">Aldoni uzanton</string>
+    <string name="us_password">Pasvorto</string>
+    <string name="us_reset_pw">Restarigi pasvorton</string>
+    <string name="us_sub">Kontoj por pasvorta ensaluto; kartoligo ebla</string>
+    <string name="us_title">Uzanta administrado</string>
+    <string name="us_uid">UID (malplena = aŭtomate generita)</string>
+    <string name="pv_balance_section">Saldo de la provizanto</string>
+    <string name="pv_balance_url">Saldo-URL</string>
+    <string name="pv_balance_url_helper">Malplena = enkonstrua antaŭagordo</string>
+    <string name="pv_balance_path">Valora vojo</string>
+    <string name="pv_balance_unit">Unuo (laŭvola)</string>
+    <!-- Flosanta fenestro -->
+    <string name="st_overlay">Flosanta fenestro</string>
+    <string name="st_overlay_sub">Stato de la pordego super aliaj aplikaĵoj</string>
+    <string name="st_overlay_on">Flosanta fenestro ŝaltita</string>
+    <string name="st_overlay_off">Flosanta fenestro malŝaltita</string>
+    <string name="st_overlay_need_perm">Bezona permeso por supermeto</string>
+    <string name="ovl_perm_title">Permeso por supermeto</string>
+    <string name="ovl_perm_msg">Permesu «Montri super aliaj aplikaĵoj». Ĉe MIUI / EMUI ankaŭ ŝaltu «Fonajn ŝprucajn fenestrojn», alie la fenestro ne aperos.</string>
+    <string name="ovl_perm_denied">Permeso por supermeto ne donita</string>
+    <string name="ovl_no_backend">Pordego ne konektita</string>
+    <string name="ovl_offline">Neinterkonektita</string>
+    <string name="ovl_online">Interkonektita</string>
+    <string name="ovl_mode">Reĝimo</string>
+    <string name="ovl_instance">Instanco</string>
+    <string name="ovl_port">Pordo</string>
+    <string name="ovl_requests">Petoj</string>
+    <string name="ovl_errors">Eraroj</string>
+    <string name="ovl_uptime">Daŭro de funkciado</string>
+    <string name="ovl_open_app">Malfermi aplikaĵon</string>
+    <string name="ovl_start">Starti</string>
+    <string name="ovl_stop">Halti</string>
+    <string name="ovl_collapse">Faldi</string>
+    <string name="ovl_close">Fermi</string>
+    <string name="ovl_notif_title">Flosanta fenestro aktiva</string>
+    <string name="ovl_notif_desc">Stato de la pordego super aliaj aplikaĵoj</string>
+    <string name="ovl_balance">Saldo</string>
+    <string name="ovl_balance_none">Neniu saldo</string>
+    <string name="ovl_look">Aspekto de la ŝveba fenestro</string>
+    <string name="ovl_look_title">Aspekto de la ŝveba fenestro</string>
+    <string name="ovl_look_sub">Grando / koloroj / videblaj linioj</string>
+    <string name="ovl_scale">Skalo</string>
+    <string name="ovl_dim_alpha">Travidebleco ripoze</string>
+    <string name="ovl_snap">Kaŝi ĉe rando</string>
+    <string name="ovl_dim">Malhelpiĝi ripoze</string>
+    <string name="ovl_lock">Ŝlosi pozicion</string>
+    <string name="ovl_pin">Ĉiam malvolvita</string>
+    <string name="ovl_blur">Fona malklarigo (Android 12+)</string>
+    <string name="ovl_reset">Restarigi</string>
+    <string name="ovl_look_hint">Treni por movi · tuŝu por malvolvi · duoble tuŝu por volvi · longe tuŝu por refreŝigi</string>
+    <string name="ovl_size">Grando de la veziko</string>
+    <string name="ovl_panel_width">Larĝo de la panelo</string>
+    <string name="ovl_bg">Koloroj</string>
+    <string name="ovl_rows_title">Videblaj linioj</string>
+    <string name="ovl_pill_title">Enhavo de la veziko</string>
+    <string name="ovl_pill_icon">Piktogramo</string>
+    <string name="ovl_pill_balance">Saldo</string>
+    <string name="ovl_pill_requests">Petoj</string>
+    <string name="ovl_bg_theme">Laŭ la etoso</string>
+    <string name="ovl_enable">Ŝveba fenestro</string>
+    <string name="ovl_shape">Formo de veziko</string>
+    <string name="ovl_shape_circle">Rondo</string>
+    <string name="ovl_shape_pill">Kapsulo</string>
+    <string name="ovl_shape_square">Kvadrato</string>
+    <string name="ovl_shape_round">Rondigita</string>
+    <string name="ovl_icon">Propra bildo</string>
+    <string name="ovl_icon_pick">Elekti bildon</string>
+    <string name="ovl_icon_clear">Forigi</string>
+    <string name="ovl_rows_hint">↑ ↓ por reordigi</string>
+    <string name="ovl_dim_delay">Malheliĝo post</string>
+    <string name="ovl_dim_level">Nivelo de malheliĝo</string>
+    <string name="ovl_autoscroll">Aŭtomata rotacio</string>
+    <string name="ovl_scroll_sec">Intervalo de rotacio</string>
+    <string name="ovl_fail">Malsukcesis</string>
+    <string name="ovl_warn_below">Averto pri malalta saldo</string>
+    <string name="pv_balance_warn">Averta sojlo</string>
+    <string name="pv_balance_warn_helper">5, aŭ CNY=5, USD=1</string>
+    <string name="pv_route_force">Sendi la sekvan peton ĉi tien</string>
+    <string name="pv_route_clear">Forigi atendan itineron</string>
+    <string name="pv_route_on_msg">Petoj estas fiksitaj al ĉi tiu kanalo. Malfari?</string>
+    <string name="pv_route_off_msg">Nur la sekva peto uzos ĉi tiun kanalon, poste denove aŭtomate.</string>
+    <string name="ovl_route">Itinero</string>
+    <string name="ovl_route_auto">Aŭto</string>
+    <string name="ovl_route_pick">Kien sendi la sekvan peton</string>
+    <string name="ovl_route_empty">Neniu kanalo disponebla</string>
+    <string name="ovl_route_fail">Itinero malsukcesis</string>
+    <string name="ctx_title">Kuntekstaj fenestroj</string>
+    <string name="ctx_table">Tabelo</string>
+    <string name="ctx_bad_line">Ne eblas analizi: %1$s</string>
+    <string name="ovl_ctx">Kunteksto</string>
+    <string name="ovl_ctx_none">—</string>
+    <string name="ctx_soft">Mola limo (%)</string>
+    <string name="ctx_hard">Malfacila limo (%)</string>
+    <string name="ctx_hard_hint">0 = malŝaltita. Supere → 400 sen peti la devenon.</string>
+    <string name="ctx_pattern">Ŝablono de modelo</string>
+    <string name="ctx_window">Kunteksta fenestro</string>
+    <string name="ctx_cpt">Signoj po ĵetono</string>
+    <string name="ctx_cpt_hint">Nur takso: CJK 1 signo = 1 ĵetono, alie 1 ĵetono = N signoj.</string>
+    <string name="ctx_empty">Neniu regulo. Sen konata fenestro la malmola limo ne aplikiĝas.</string>
+    <string name="ctx_hint">De supre malsupren, unua kongruo. * estas ĵokero: metu ĝin laste. Fenestro: 128k / 1m / 128000.</string>
+    <string name="ovl_gauge_w">Dikeco de indikilo</string>
+    <string name="ovl_gauge_c">Koloro de indikilo</string>
+    <string name="ctx_add">Aldoni regulon</string>
+</resources>

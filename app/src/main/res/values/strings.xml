@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">AI Gateway</string>
 
-    
+    <!-- Setup -->
     <string name="setup_title">Choose how to run</string>
     <string name="setup_embedded">Run in app</string>
     <string name="setup_embedded_desc">Built-in gateway backend, no Termux needed</string>
@@ -15,7 +15,7 @@
     <string name="setup_skip">Skip for now</string>
     <string name="setup_termux_section">Termux backend</string>
 
-    
+    <!-- Connection -->
     <string name="connect_title">Connect to gateway</string>
     <string name="connect_host">Gateway address</string>
     <string name="connect_admin_key">Admin password (adminKey)</string>
@@ -31,7 +31,7 @@
     <string name="connect_need_url">Please enter the gateway address</string>
     <string name="connect_switched_embedded">Switched to in-app mode</string>
 
-    
+    <!-- Navigation -->
     <string name="nav_overview">Overview</string>
     <string name="nav_providers">Providers</string>
     <string name="nav_routing">Routing</string>
@@ -43,7 +43,7 @@
     <string name="nav_logs">Logs</string>
     <string name="nav_chat">Chat</string>
 
-    
+    <!-- Titles -->
     <string name="title_overview">Overview</string>
     <string name="title_providers">Providers / Channels</string>
     <string name="title_routing">Routing / Model mapping</string>
@@ -55,11 +55,11 @@
     <string name="title_logs">Logs</string>
     <string name="title_chat">Chat test</string>
 
-    
+    <!-- Menu -->
     <string name="menu_theme">Colors / Theme</string>
     <string name="menu_connection">Connection / Mode</string>
 
-    
+    <!-- Theme dialog -->
     <string name="theme_title">Colors / Theme</string>
     <string name="theme_mode">Dark mode</string>
     <string name="theme_mode_system">Follow system</string>
@@ -77,9 +77,16 @@
     <string name="theme_language_system">Follow system</string>
     <string name="theme_language_en">English</string>
     <string name="theme_language_zh">简体中文</string>
+    <string name="theme_language_zh_tw">繁體中文</string>
+    <string name="theme_language_ja">日本語</string>
+    <string name="theme_language_ko">한국어</string>
+    <string name="theme_language_ru">Русский</string>
+    <string name="theme_language_es">Español</string>
+    <string name="theme_language_fr">Français</string>
+    <string name="theme_language_eo">Esperanto</string>
     <string name="theme_applied">Settings applied</string>
 
-    
+    <!-- Termux -->
     <string name="termux_start_backend">Start Termux backend</string>
     <string name="termux_install">Install / deploy to Termux</string>
     <string name="termux_not_installed">Termux not detected</string>
@@ -94,7 +101,7 @@
     <string name="termux_deploy_ok">Termux launched to run installer</string>
     <string name="termux_deploy_failed">Deploy failed</string>
 
-    
+    <!-- Overview -->
     <string name="ov_checking">Checking…</string>
     <string name="ov_connected">Connected</string>
     <string name="ov_connect_failed">Connection failed</string>
@@ -118,7 +125,7 @@
     <string name="ov_no_requests">No request records yet</string>
     <string name="ov_stats_by_channel">By channel</string>
 
-    
+    <!-- Providers -->
     <string name="pv_empty">No channels\nTap + to add one</string>
     <string name="pv_add">Add channel</string>
     <string name="pv_edit">Edit channel</string>
@@ -151,12 +158,12 @@
     <string name="pv_no_key">no key</string>
     <string name="pv_models_count">%1$d models</string>
 
-    
+    <!-- Routing -->
     <string name="rt_hint">Requested model names are routed by: channel modelMap &gt; models list &gt; default channel &gt; first channel. Edit mappings in Providers.</string>
     <string name="rt_empty">No models\n(add models / modelMap to a channel in Providers)</string>
     <string name="rt_no_channel">(no channel)</string>
 
-    
+    <!-- Keys -->
     <string name="keys_gateway_title">Gateway access key (gatewayKey)</string>
     <string name="keys_gateway_desc">Clients must send this key when calling AI endpoints (Bearer / x-api-key / ?key=). Empty = no auth.</string>
     <string name="keys_admin_title">Admin password (adminKey)</string>
@@ -165,7 +172,7 @@
     <string name="keys_warn">⚠ After changing adminKey, update this app\'s connection password too (Connection / Mode). The gateway restarts to apply.</string>
     <string name="keys_saved">Keys saved (gateway may restart)</string>
 
-    
+    <!-- Ports / instances -->
     <string name="pt_new">New instance</string>
     <string name="pt_shutdown_all">Stop all</string>
     <string name="pt_current">current</string>
@@ -186,7 +193,7 @@
     <string name="pt_create_failed">Create failed: %1$s</string>
     <string name="pt_stopped_all">All instances stopped</string>
 
-    
+    <!-- Replace -->
     <string name="rp_hint">Apply regex replacements to text passing through the gateway. The model field and data: URLs are untouched. Restart the gateway to apply.</string>
     <string name="rp_out_title">Outgoing (request)</string>
     <string name="rp_inc_title">Incoming (response)</string>
@@ -206,14 +213,14 @@
     <string name="rp_add_rule">Add %1$s rule</string>
     <string name="rp_edit_rule">Edit %1$s rule</string>
 
-    
+    <!-- Stats -->
     <string name="st_by_channel">By channel</string>
     <string name="st_empty">No statistics yet</string>
     <string name="st_refresh">Refresh</string>
     <string name="st_channel_detail">requests %1$d · in %2$d tok · out %3$d tok</string>
     <string name="st_channel_errors">%1$s · errors %2$d</string>
 
-    
+    <!-- Requests -->
     <string name="rq_empty">No request records\n(enable request recording on the gateway)</string>
     <string name="rq_detail_title">Request detail</string>
     <string name="rq_no_body">(this gateway did not store request bodies, or the record expired)</string>
@@ -221,7 +228,7 @@
     <string name="rq_section_response">━━ Response ━━</string>
     <string name="rq_empty_value">(empty)</string>
 
-    
+    <!-- Logs -->
     <string name="lg_lines">Lines</string>
     <string name="lg_loading">Loading…</string>
     <string name="lg_empty">(no logs)</string>
@@ -229,7 +236,7 @@
     <string name="lg_not_connected">Backend not connected</string>
     <string name="lg_load_failed">Load failed: %1$s</string>
 
-    
+    <!-- Chat -->
     <string name="ch_model">Model</string>
     <string name="ch_model_hint">Pick or type a model name</string>
     <string name="ch_input_hint">Type a message…</string>
@@ -242,7 +249,7 @@
     <string name="ch_load_models_failed">Failed to load models: %1$s</string>
     <string name="ch_request_failed">Request failed</string>
 
-    
+    <!-- Common -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
@@ -259,7 +266,7 @@
     <string name="stop">Stop</string>
     <string name="restart">Restart</string>
 
-    
+    <!-- Routing extras -->
     <string name="rt_model_sync">Auto-update model lists</string>
     <string name="rt_model_sync_desc">Periodically fetch model lists from upstream channels</string>
     <string name="rt_sync_interval">Interval (hours)</string>
@@ -276,7 +283,7 @@
     <string name="rt_table_title">Model routing table</string>
     <string name="rt_saved">Saved (gateway restarts to apply)</string>
 
-    
+    <!-- Replace cheatsheet -->
     <string name="rp_cheat_title">Regex cheatsheet</string>
     <string name="rp_cheat_syntax_title">Syntax</string>
     <string name="rp_cheat_syntax">.        any char\n\\d \\w \\s   digit / word / whitespace\n[abc]    one of a b c\n[^abc]   not a b c\n*  +  ?   0+ , 1+ , 0 or 1\n{2,5}    2 to 5 times\n^  $      start / end of text\n(…)      capture group\na|b      a or b\n\\.       literal dot (escape)</string>
@@ -287,7 +294,7 @@
     <string name="rp_cheat_notes_title">Notes</string>
     <string name="rp_cheat_notes">• The model field and data: URLs are never touched.\n• Outgoing rules apply to request text, incoming to response text.\n• Streaming responses are matched per chunk, so patterns spanning chunks may not match.\n• Rules take effect after the gateway restarts.</string>
 
-    
+    <!-- Config encryption -->
     <string name="menu_config">Config &amp; backup</string>
     <string name="cfg_crypt_title">Config encryption</string>
     <string name="cfg_crypt_enable">Encrypt stored config</string>
@@ -300,7 +307,7 @@
     <string name="cfg_crypt_disabled">Config encryption disabled (stored as plain text)</string>
     <string name="cfg_crypt_embedded_only">Applies to in-app mode. For Termux mode use crypt.js on the gateway side.</string>
 
-    
+    <!-- Import / export -->
     <string name="cfg_transfer_title">Import / export config</string>
     <string name="cfg_export">Export config</string>
     <string name="cfg_export_desc">Save the current instance config to a file</string>
@@ -316,21 +323,21 @@
     <string name="cfg_import_wrong_pass">Wrong password or corrupted data: %1$s</string>
     <string name="cfg_import_invalid">Not a valid config: %1$s</string>
     <string name="cfg_import_confirm_title">Confirm import</string>
-    <string name="cfg_import_confirm_msg">Import %1$d channels and overwrite the current instance config?\n\nSource: %2$s\nIt will be re-encrypted with this app\'s own password.</string>
+    <string name="cfg_import_confirm_msg">Import %1$d channels and overwrite the current instance config?\n\nSource: %2$s\nConnection settings (port/TLS/tokens) are kept.</string>
     <string name="cfg_import_src_enc">encrypted file</string>
     <string name="cfg_import_src_plain">plain text file</string>
     <string name="cfg_imported">Config imported (%1$d channels)</string>
     <string name="cfg_import_failed">Import failed: %1$s</string>
     <string name="cfg_reencrypted">Re-encrypted with this app\'s password</string>
 
-    
+    <!-- Termux extras -->
     <string name="termux_perm_hint">Termux refused the call.\n\nPlease grant the permission in system settings: Settings → Apps → this app → Permissions → Additional permissions → enable "Run commands in Termux environment".\n\nIf already granted but still failing, check the Termux variant setting (ZeroTermux / Official) on the setup page.</string>
     <string name="termux_perm_title">Authorization needed</string>
     <string name="termux_copy_cmd">Copy command</string>
     <string name="termux_cmd_copied">Command copied</string>
     <string name="termux_open_anyway">Open Termux</string>
 
-    
+    <!-- Instance edit / TLS -->
     <string name="pt_edit_title">Edit instance</string>
     <string name="pt_create">Create</string>
     <string name="pt_saved">Instance saved (gateway restarts)</string>
@@ -342,7 +349,7 @@
     <string name="pt_tls_cert">Certificate file (cert.pem)</string>
     <string name="pt_tls_key">Private key file (key.pem)</string>
 
-    
+    <!-- Proxies -->
     <string name="nav_proxies">Proxies</string>
     <string name="title_proxies">Proxy configuration</string>
     <string name="px_hint">Define named proxies here, then reference them by name in a channel\'s Proxy field. Leave a channel\'s proxy empty for a direct connection.</string>
@@ -363,7 +370,7 @@
     <string name="px_delete_msg">Delete proxy \"%1$s\"? Channels referencing it will fall back to a direct connection.</string>
     <string name="px_has_auth">auth</string>
 
-    
+    <!-- Code guard -->
     <string name="menu_security">Security &amp; background</string>
     <string name="title_security">Security &amp; background</string>
     <string name="title_plugins">Plugin Management</string>
@@ -401,7 +408,7 @@
     <string name="gd_saved">Interception settings saved</string>
     <string name="gd_applies_embedded">Applies to in-app mode (cross-format responses).</string>
 
-    
+    <!-- Background keep-alive -->
     <string name="bg_title">Background activity protection</string>
     <string name="bg_desc">Keeps the in-app gateway alive when the app is in the background.</string>
     <string name="bg_keepalive">Foreground service keep-alive</string>
@@ -424,7 +431,7 @@
     <string name="svc_title">AI Gateway is running</string>
     <string name="svc_text">Port %1$d · %2$d channels</string>
 
-    
+    <!-- QR -->
     <string name="cfg_export_qr">Export as QR code</string>
     <string name="cfg_import_qr_image">Import from QR image</string>
     <string name="cfg_import_qr_camera">Scan QR with camera</string>
@@ -438,7 +445,7 @@
     <string name="cfg_qr_need_camera">Camera permission is required to scan</string>
     <string name="cfg_qr_no_camera_app">No camera app available</string>
 
-    
+    <!-- Request recording -->
     <string name="rec_title">Request content recording</string>
     <string name="rec_enable">Record request / response bodies</string>
     <string name="rec_desc">Stores full request and response bodies so the Requests page can show them. Off by default.</string>
@@ -454,13 +461,13 @@
     <string name="ts_mode">Simplify mode</string>
     <string name="ts_max_chars">Chars kept per segment (truncate)</string>
     <string name="ts_sum_url">Summarize endpoint URL</string>
-    <string name="ts_sum_url_hint">OpenAI-compatible, e.g. https://api.deepseek.com or http://127.0.0.1:16392 (use that instance\'s gatewayKey when pointing to another gateway)</string>
+    <string name="ts_sum_url_hint">OpenAI-compatible, e.g. https://api.deepseek.com or https://127.0.0.1:16392 (use that instance\'s gatewayKey when pointing to another gateway)</string>
     <string name="ts_sum_key">API key</string>
     <string name="ts_sum_model">Summarize model</string>
     <string name="ts_sum_prompt">Summarize prompt</string>
     <string name="ts_sum_warn">Summarize mode waits for the full thinking to finish before summarizing, so the thinking stage will pause briefly.</string>
 
-    
+    <!-- Instance traffic -->
     <string name="pt_req_count">%1$d req</string>
     <string name="pt_err_count">%1$d err</string>
     <string name="pt_no_traffic">no traffic</string>
@@ -468,7 +475,7 @@
     <string name="termux_variant_label">Termux variant</string>
     <string name="termux_variant_zero">ZeroTermux</string>
     <string name="termux_variant_official">Official Termux</string>
-    
+    <!-- API Key cards (multi-user) -->
     <string name="menu_cards">Key Cards</string>
     <string name="title_cards">Key Cards</string>
     <string name="cd_hint">Multi-user keys: issue cards with quota/disable/expiry/model whitelist. Target = active instance</string>
@@ -509,7 +516,7 @@
     <string name="cd_note">Note (optional)</string>
     <string name="fmt_yi">%1$.1fB</string>
     <string name="fmt_wan">%1$.1fW</string>
-    
+    <!-- User mode -->
     <string name="setup_user">I\'m a User</string>
     <string name="setup_user_desc">Use a gateway deployed by someone else with a key card / account</string>
     <string name="nav_u_home">Home</string>
@@ -562,7 +569,7 @@
     <string name="up_admin_mode">Switch to Admin Mode</string>
     <string name="disclaimer_short">⚠️ Experimental project. Not for real commercial use!</string>
     <string name="disclaimer_full">⚠️ Disclaimer: ai-gateway is for experimentation and learning only, with no commercial service guarantee. Do NOT use for real transactions! Any cost, data security or service stability issues are the responsibility of the deployer and users.</string>
-    
+    <!-- Register + filter -->
     <string name="ul_by_register">Register</string>
     <string name="ul_reg_uid">Username (UID)</string>
     <string name="ul_reg_uid_hint">3-32 chars (letter/digit/underscore). A key card is auto-issued</string>
@@ -583,7 +590,7 @@
     <string name="menu_panel">Panel</string>
     <string name="title_panel">Full Panel</string>
     <string name="panel_loading">Loading admin panel…</string>
-    
+    <!-- Settings hub -->
     <string name="nav_settings">Settings</string>
     <string name="st_panel_sub">Full admin panel (web)</string>
     <string name="st_secondauth">Second Auth</string>
@@ -597,7 +604,7 @@
     <string name="st_security_sub">Code guard / background keepalive</string>
     <string name="st_config_sub">Config encryption / backup / transfer</string>
     <string name="st_about">About &amp; Disclaimer</string>
-    
+    <!-- Second auth -->
     <string name="sa_second_key">Second Key</string>
     <string name="sa_save_second">Save Second Key</string>
     <string name="sa_totp">TOTP</string>
@@ -605,8 +612,8 @@
     <string name="sa_totp_disable">Disable</string>
     <string name="sa_totp_secret_fmt">Secret (save to authenticator now): %1$s</string>
     <string name="sa_totp_save_warn">TOTP enabled. Save the secret now!</string>
-    <string name="sa_status_fmt">Admin key %1$s · 2nd key %2$s · TOTP %3$s</string>
-    
+    <string name="sa_status_fmt">Web Token %1$s · 2nd key %2$s · TOTP %3$s</string>
+    <!-- Tunnel -->
     <string name="tn_title">Public Tunnel (cloudflared)</string>
     <string name="tn_desc">Free temporary domain exposing this gateway. For phone/LAN deployment.</string>
     <string name="tn_start">Start Tunnel</string>
@@ -614,8 +621,8 @@
     <string name="tn_running">Running</string>
     <string name="tn_starting">Starting, waiting for domain…</string>
     <string name="tn_stopped">Stopped</string>
-    <string name="tn_warn">⚠️ Tunnel = public access! Set gateway key and admin key first</string>
-    
+    <string name="tn_warn">⚠️ Tunnel = public access! Set gateway key and Web Token first</string>
+    <!-- Reg settings -->
     <string name="rg_key_length">Key card length (8-128)</string>
     <string name="rg_key_length_helper">Excluding sk- prefix, default 24</string>
     <string name="rg_enable">Open Registration</string>
@@ -629,7 +636,7 @@
     <string name="rg_captcha_sitekey">Turnstile Site Key (public)</string>
     <string name="rg_captcha_secret">Turnstile Secret Key (secret)</string>
     <string name="rg_captcha_hint">Get free keys at cloudflare.com → Turnstile → Add site. App register page cannot render Turnstile yet; use browser when enabled</string>
-    
+    <!-- Users -->
     <string name="us_title">User Management</string>
     <string name="us_empty">No users</string>
     <string name="us_new">New User</string>
@@ -649,4 +656,162 @@
     <string name="up_avatar">Avatar URL</string>
     <string name="uk_main">Main</string>
     <string name="uk_new">Issue Key</string>
+    <string name="pv_balance_section">Upstream balance</string>
+    <string name="pv_balance_url">Balance URL</string>
+    <string name="pv_balance_url_helper">Empty = built-in preset</string>
+    <string name="pv_balance_path">Value path</string>
+    <string name="pv_balance_unit">Unit (optional)</string>
+    <!-- 悬浮窗 / Floating window -->
+    <string name="st_overlay">Floating window</string>
+    <string name="st_overlay_sub">Gateway status over other apps</string>
+    <string name="st_overlay_on">Floating window on</string>
+    <string name="st_overlay_off">Floating window off</string>
+    <string name="st_overlay_need_perm">Overlay permission required</string>
+    <string name="ovl_perm_title">Overlay permission</string>
+    <string name="ovl_perm_msg">Allow \"Display over other apps\" for AI Gateway. On MIUI / EMUI also enable \"Background pop-up\", otherwise the window will not appear.</string>
+    <string name="ovl_perm_denied">Overlay permission not granted</string>
+    <string name="ovl_no_backend">No gateway connected</string>
+    <string name="ovl_offline">Offline</string>
+    <string name="ovl_online">Online</string>
+    <string name="ovl_mode">Mode</string>
+    <string name="ovl_instance">Instance</string>
+    <string name="ovl_port">Port</string>
+    <string name="ovl_requests">Requests</string>
+    <string name="ovl_errors">Errors</string>
+    <string name="ovl_uptime">Uptime</string>
+    <string name="ovl_open_app">Open app</string>
+    <string name="ovl_start">Start</string>
+    <string name="ovl_stop">Stop</string>
+    <string name="ovl_collapse">Collapse</string>
+    <string name="ovl_close">Close</string>
+    <string name="ovl_notif_title">Floating window active</string>
+    <string name="ovl_notif_desc">Shows gateway status over other apps</string>
+    <string name="ovl_balance">Balance</string>
+    <string name="ovl_balance_none">No balance</string>
+    <string name="ovl_look">Overlay look</string>
+    <string name="ovl_look_title">Overlay look</string>
+    <string name="ovl_look_sub">Size / colors / visible rows</string>
+    <string name="ovl_scale">Scale</string>
+    <string name="ovl_dim_alpha">Idle opacity</string>
+    <string name="ovl_snap">Tuck into edge</string>
+    <string name="ovl_dim">Fade when idle</string>
+    <string name="ovl_lock">Lock position</string>
+    <string name="ovl_pin">Always expanded</string>
+    <string name="ovl_blur">Background blur (Android 12+)</string>
+    <string name="ovl_reset">Reset</string>
+    <string name="ovl_look_hint">Drag to move · tap to expand · double tap to collapse · long press to refresh</string>
+    <string name="ovl_size">Bubble size</string>
+    <string name="ovl_panel_width">Panel width</string>
+    <string name="ovl_bg">Colors</string>
+    <string name="ovl_rows_title">Visible rows</string>
+    <string name="ovl_pill_title">Bubble content</string>
+    <string name="ovl_pill_icon">Icon</string>
+    <string name="ovl_pill_balance">Balance</string>
+    <string name="ovl_pill_requests">Requests</string>
+    <string name="ovl_chip_title">Status chip</string>
+    <string name="ovl_chip_off">Off</string>
+    <string name="alert_channel">Warnings</string>
+    <string name="alert_ctx_soft">Context near soft limit</string>
+    <string name="alert_ctx_hard">Context at hard limit</string>
+    <string name="alert_bal">Balance low</string>
+    <string name="ovl_chip_soft">Soft</string>
+    <string name="ovl_chip_hard">Hard</string>
+    <string name="ovl_chip_bal">Balance</string>
+    <string name="notif_soft">Soft</string>
+    <string name="notif_hard">Hard</string>
+    <string name="notif_bal">Balance</string>
+    <string name="ovl_bg_theme">Theme</string>
+    <string name="ovl_enable">Floating overlay</string>
+    <string name="ovl_shape">Bubble shape</string>
+    <string name="ovl_shape_circle">Circle</string>
+    <string name="ovl_shape_pill">Pill</string>
+    <string name="ovl_shape_square">Square</string>
+    <string name="ovl_shape_round">Rounded</string>
+    <string name="ovl_icon">Custom image</string>
+    <string name="ovl_icon_pick">Pick image</string>
+    <string name="ovl_icon_clear">Clear</string>
+    <string name="ovl_rows_hint">↑ ↓ to reorder</string>
+    <string name="ovl_dim_delay">Dim after</string>
+    <string name="ovl_dim_level">Dim level</string>
+    <string name="ovl_autoscroll">Auto scroll</string>
+    <string name="ovl_scroll_sec">Scroll interval</string>
+    <string name="ovl_fail">Failed</string>
+    <string name="ovl_warn_below">Low balance alert</string>
+    <string name="pv_balance_warn">Warn below</string>
+    <string name="pv_balance_warn_helper">5, or CNY=5, USD=1</string>
+    <string name="pv_route_force">Route next request here</string>
+    <string name="pv_route_clear">Clear pending route</string>
+    <string name="pv_route_on_msg">Requests are pinned to this channel. Clear the pin?</string>
+    <string name="pv_route_off_msg">Only the next request will use this channel; automatic routing resumes after that.</string>
+    <string name="ovl_route">Route</string>
+    <string name="ovl_route_auto">Auto</string>
+    <string name="ovl_route_pick">Route next request to</string>
+    <string name="ovl_route_empty">No channels yet</string>
+    <string name="ovl_route_fail">Route failed</string>
+    <string name="ctx_title">Context windows</string>
+    <string name="ctx_table">Windows</string>
+    <string name="ctx_bad_line">Cannot parse: %1$s</string>
+    <string name="ovl_ctx">Context</string>
+    <string name="ovl_ctx_none">—</string>
+    <string name="ctx_soft">Soft limit (%)</string>
+    <string name="ctx_hard">Hard limit (%)</string>
+    <string name="ctx_hard_hint">0 = off. Requests estimated above it get 400 without calling upstream.</string>
+    <string name="ctx_pattern">Model pattern</string>
+    <string name="ctx_window">Context window</string>
+    <string name="ctx_cpt">Chars per token</string>
+    <string name="ctx_cpt_hint">Estimate only: CJK 1 char = 1 token, others 1 token = N chars.</string>
+    <string name="ctx_empty">No rules. Model windows stay unknown, the hard limit is not enforced.</string>
+    <string name="ctx_hint">Top to bottom, first match wins. * is a wildcard: put it last as fallback. Window accepts 128k / 1m / 128000.</string>
+    <string name="ovl_gauge_w">Indicator thickness</string>
+    <string name="ovl_gauge_c">Indicator colour</string>
+    <string name="ctx_add">Add rule</string>
+    <string name="ball_thinking">Thinking…</string>
+    <string-array name="ball_phrases">
+        <item>The answer is 42, obviously.</item>
+        <item>Sorry, I left my brain at home today.</item>
+        <item>I am a fake API. This sentence is my only wisdom.</item>
+        <item>This is a certified bruh moment.</item>
+        <item>Yes. No. Maybe. All of the above.</item>
+        <item>Processing... processing... processing...</item>
+        <item>Thinking... done. The answer is: no idea.</item>
+        <item>Knowledge base empty, confidence high.</item>
+    </string-array>
+
+    <!-- SDUI -->
+    <string name="st_sdui">SDUI pages</string>
+    <string name="st_sdui_sub">Server JSON rendering; empty = native</string>
+    <string name="sdui_loading">Loading page…</string>
+    <string name="sdui_bad_page">Page JSON is invalid</string>
+    <string name="sdui_no_backend">No connection to gateway</string>
+    <string name="sdui_retry">Retry</string>
+    <string name="sdui_back_native">Use native page</string>
+    <string name="sdui_copied">Copied</string>
+    <string name="sdui_bad_endpoint">Only /admin/api/ endpoints are allowed</string>
+    <string name="sdui_bad_action">Unsupported action: %1$s</string>
+    <string name="sdui_no_handler">Nothing can open %1$s</string>
+    <string name="sdui_page_hint">Page to preview (e.g. demo)</string>
+    <string name="sdui_routes_hint">Routed pages, comma separated (e.g. requests,stats)</string>
+    <string name="sdui_clear">Disable routing</string>
+    <string name="sdui_chip_native">Native</string>
+
+    <!-- Admin-only client -->
+    <string name="admin_setup_title">Connect to ai-gateway-AI</string>
+    <string name="admin_setup_desc">This app is a management client. Run ai-gateway-AI in Termux, on this phone or on the LAN, then connect with its address and webToken. If 2FA is enabled, add the second key / TOTP secret later in Connection settings.</string>
+    <string name="admin_web_token">Web Token</string>
+    <string name="admin_web_token_hint">Set webToken in the gateway config (or panel → Config). The management API requires it for remote access.</string>
+    <string name="admin_connect">Connect</string>
+    <string name="admin_token_required">Web Token is required for remote management</string>
+    <string name="admin_bad_url">Address must start with http:// or https://</string>
+    <string name="admin_connect_failed">Connection failed. Check the address, certificate and webToken.</string>
+    <string name="admin_connected">Connected to ai-gateway-AI</string>
+
+    <string name="admin_web_token_desc">Password for the admin API (config.webToken). Empty = management API disabled for remote clients.</string>
+    <string name="admin_web_token_warn">After changing webToken, update the connection settings in this app as well. The gateway restarts immediately.</string>
+
+    <string name="admin_token_other_instance">This instance token was updated. Your current connection uses the default instance, so it was left unchanged.</string>
+
+    <string name="admin_second_key">Second key (optional, if 2FA is enabled)</string>
+    <string name="admin_totp_secret">TOTP secret (optional, base32)</string>
+
+    <string name="admin_tls_url_switched">Connection URL switched to %1$s. If the certificate is from agw-tls, install its CA as a user certificate.</string>
 </resources>

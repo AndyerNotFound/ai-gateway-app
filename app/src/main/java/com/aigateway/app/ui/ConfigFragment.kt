@@ -7,16 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import com.aigateway.app.R
 import com.aigateway.app.data.ConfigCrypto
 import com.aigateway.app.data.ConfigTransfer
-import com.aigateway.app.data.QrCodec
-import com.aigateway.app.databinding.DialogQrShowBinding
 import com.aigateway.app.data.GatewayConfig
-import com.aigateway.app.data.RunMode
+import com.aigateway.app.data.QrCodec
 import com.aigateway.app.databinding.DialogImportPassBinding
+import com.aigateway.app.databinding.DialogQrShowBinding
 import com.aigateway.app.databinding.FragmentConfigBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -25,7 +23,7 @@ import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-
+/** 配置与备份：请求录制 + 导入/导出（文件与二维码）。 */
 class ConfigFragment : BaseFragment() {
 
     private var _b: FragmentConfigBinding? = null
@@ -33,34 +31,24 @@ class ConfigFragment : BaseFragment() {
     private lateinit var transfer: ConfigTransfer
     private val gson = Gson()
 
-    
     private val exportLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { doExport(it) }
-        }
+        if (result.resultCode == Activity.RESULT_OK) result.data?.data?.let { doExport(it) }
     }
 
-    
     private val importLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { doImportRead(it) }
-        }
+        if (result.resultCode == Activity.RESULT_OK) result.data?.data?.let { doImportRead(it) }
     }
 
-    
     private val qrImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { decodeQrFromUri(it) }
-        }
+        if (result.resultCode == Activity.RESULT_OK) result.data?.data?.let { decodeQrFromUri(it) }
     }
 
-    
     private val qrCameraLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -71,7 +59,6 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    
     private val cameraPermLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
@@ -85,48 +72,22 @@ class ConfigFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         transfer = ConfigTransfer(requireContext())
-        val s = app.settings
-
-        b.switchCrypt.isChecked = s.cryptEnabled
-        b.cryptPassSection.visibility = if (s.cryptEnabled) View.VISIBLE else View.GONE
-        if (s.cryptEnabled) {
-            b.editCryptPass.setText(s.cryptPassword)
-            b.editCryptPass2.setText(s.cryptPassword)
-        }
-        b.switchCrypt.setOnCheckedChangeListener { _, on ->
-            b.cryptPassSection.visibility = if (on) View.VISIBLE else View.GONE
-        }
-        b.btnSaveCrypt.setOnClickListener { saveCrypt() }
 
         b.switchExportEncrypt.setOnCheckedChangeListener { _, on ->
             b.exportPassLayout.visibility = if (on) View.VISIBLE else View.GONE
-            if (on && b.editExportPass.text.isNullOrEmpty() && s.cryptPassword.isNotEmpty()) {
-                b.editExportPass.setText(s.cryptPassword)
-            }
         }
-        
         b.switchRecord.setOnCheckedChangeListener { _, on ->
             b.recordSection.visibility = if (on) View.VISIBLE else View.GONE
         }
         b.btnSaveRecord.setOnClickListener { saveRecord() }
-        loadRecord()
-
-        
-        b.switchTs.setOnCheckedChangeListener { _, on ->
-            b.tsSection.visibility = if (on) View.VISIBLE else View.GONE
-        }
-        b.dropTsMode.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listOf("truncate", "summarize")))
-        b.btnSaveTs.setOnClickListener { saveThinkingSummary() }
-        loadThinkingSummary()
-
         b.btnExport.setOnClickListener { pickExportFile() }
         b.btnImport.setOnClickListener { pickImportFile() }
         b.btnExportQr.setOnClickListener { exportQr() }
         b.btnImportQrImage.setOnClickListener { pickQrImage() }
         b.btnImportQrCamera.setOnClickListener { requestCameraThenScan() }
-    }
 
-    
+        loadRecord()
+    }
 
     private fun loadRecord() {
         val backend = backendOrNull() ?: return
@@ -143,7 +104,6 @@ class ConfigFragment : BaseFragment() {
     private fun saveRecord() {
         val backend = backendOrNull() ?: return
         val server = b.editRecordServer.text?.toString()?.trim().orEmpty()
-        
         if (server.isNotEmpty() && !(server.startsWith("http://") || server.startsWith("https://"))) {
             snack(getString(R.string.rec_bad_server)); return
         }
@@ -162,79 +122,6 @@ class ConfigFragment : BaseFragment() {
             else snack(getString(R.string.pv_save_failed, r.error ?: ""))
         }
     }
-
-    
-
-    private fun loadThinkingSummary() {
-        val backend = backendOrNull() ?: return
-        run({ snack(getString(R.string.load_failed, it)) }, {
-            backend.getConfig(app.connectionStore.activeInstance)
-        }) { cfg ->
-            b.switchTs.isChecked = cfg.thinkingSummary.enable
-            b.tsSection.visibility = if (cfg.thinkingSummary.enable) View.VISIBLE else View.GONE
-            b.dropTsMode.setText(cfg.thinkingSummary.mode, false)
-            b.editTsMaxChars.setText(cfg.thinkingSummary.maxCharsPerSegment.toString())
-            b.editTsSumUrl.setText(cfg.thinkingSummary.summarizeBaseUrl)
-            b.editTsSumKey.setText(cfg.thinkingSummary.summarizeApiKey)
-            b.editTsSumModel.setText(cfg.thinkingSummary.summarizeModel)
-            b.editTsSumPrompt.setText(cfg.thinkingSummary.summarizePrompt)
-        }
-    }
-
-    private fun saveThinkingSummary() {
-        val backend = backendOrNull() ?: return
-        val mode = if (b.dropTsMode.text?.toString()?.trim() == "summarize") "summarize" else "truncate"
-        val maxChars = b.editTsMaxChars.text?.toString()?.toIntOrNull()?.coerceIn(10, 500) ?: 80
-        val prompt = b.editTsSumPrompt.text?.toString()?.trim()?.ifEmpty { "用一句话中文概括以下思考片段:" } ?: "用一句话中文概括以下思考片段:"
-        val patch = JsonObject().apply {
-            add("thinkingSummary", JsonObject().apply {
-                addProperty("enable", b.switchTs.isChecked)
-                addProperty("mode", mode)
-                addProperty("maxCharsPerSegment", maxChars)
-                addProperty("summarizeBaseUrl", b.editTsSumUrl.text?.toString()?.trim().orEmpty())
-                addProperty("summarizeApiKey", b.editTsSumKey.text?.toString()?.trim().orEmpty())
-                addProperty("summarizeModel", b.editTsSumModel.text?.toString()?.trim().orEmpty())
-                addProperty("summarizePrompt", prompt)
-                addProperty("maxSegments", 12)
-            })
-        }
-        run({ snack(getString(R.string.pv_save_failed, it)) }, {
-            backend.saveConfig(app.connectionStore.activeInstance, patch)
-        }) { r ->
-            if (r.ok) toast(getString(R.string.rec_saved))
-            else snack(getString(R.string.pv_save_failed, r.error ?: ""))
-        }
-    }
-
-    override fun reload() {
-        if (_b != null) { loadRecord(); loadThinkingSummary() }
-    }
-
-    
-
-    private fun saveCrypt() {
-        val s = app.settings
-        val on = b.switchCrypt.isChecked
-        if (!on) {
-            
-            s.cryptEnabled = false
-            s.cryptPassword = ""
-            app.embeddedEngineOrNull()?.changeCryptPassword("")
-            toast(getString(R.string.cfg_crypt_disabled))
-            return
-        }
-        val p1 = b.editCryptPass.text?.toString().orEmpty()
-        val p2 = b.editCryptPass2.text?.toString().orEmpty()
-        if (p1.isEmpty()) { snack(getString(R.string.cfg_crypt_need_pass)); return }
-        if (p1 != p2) { snack(getString(R.string.cfg_crypt_mismatch)); return }
-        s.cryptEnabled = true
-        s.cryptPassword = p1
-        
-        app.embeddedEngineOrNull()?.changeCryptPassword(p1)
-        toast(getString(R.string.cfg_crypt_enabled))
-    }
-
-    
 
     private fun pickExportFile() {
         val encrypt = b.switchExportEncrypt.isChecked
@@ -261,8 +148,6 @@ class ConfigFragment : BaseFragment() {
         }) { toast(getString(R.string.cfg_exported)) }
     }
 
-    
-
     private fun pickImportFile() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
@@ -280,7 +165,6 @@ class ConfigFragment : BaseFragment() {
         }
     }
 
-    
     private fun askPasswordThenImport(raw: String) {
         val db = DialogImportPassBinding.inflate(layoutInflater)
         db.textHint.text = getString(R.string.cfg_import_encrypted_hint)
@@ -317,27 +201,24 @@ class ConfigFragment : BaseFragment() {
             .show()
     }
 
-    
     private fun applyImport(cfg: GatewayConfig) {
         val backend = backendOrNull() ?: run { snack(getString(R.string.no_backend_hint)); return }
-        
         val patch = JsonParser.parseString(gson.toJson(cfg)).asJsonObject
         patch.remove("name")
+        // 连接自身的关键字段不从备份覆盖：否则一次导入可能同时换掉 token/端口/TLS，把自己锁死
+        patch.remove("webToken")
+        patch.remove("gatewayKey")
+        patch.remove("port")
+        patch.remove("host")
+        patch.remove("tls")
+        patch.remove("panel")
         run({ snack(getString(R.string.cfg_import_failed, it)) }, {
             backend.saveConfig(app.connectionStore.activeInstance, patch)
         }) { r ->
-            if (r.ok) {
-                toast(getString(R.string.cfg_imported, cfg.channels.size))
-                
-                if (app.connectionStore.runMode == RunMode.EMBEDDED && app.settings.cryptEnabled) {
-                    app.embeddedEngineOrNull()?.changeCryptPassword(app.settings.cryptPassword)
-                    snack(getString(R.string.cfg_reencrypted))
-                }
-            } else snack(getString(R.string.cfg_import_failed, r.error ?: ""))
+            if (r.ok) toast(getString(R.string.cfg_imported, cfg.channels.size))
+            else snack(getString(R.string.cfg_import_failed, r.error ?: ""))
         }
     }
-
-    
 
     private fun exportQr() {
         val backend = backendOrNull() ?: run { snack(getString(R.string.no_backend_hint)); return }
@@ -362,8 +243,6 @@ class ConfigFragment : BaseFragment() {
                 .show()
         }
     }
-
-    
 
     private fun pickQrImage() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {

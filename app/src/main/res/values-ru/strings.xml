@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Gateway</string>
+
+    <!-- Первый запуск -->
+    <string name="setup_title">Выберите способ запуска</string>
+    <string name="setup_embedded">Внутри приложения</string>
+    <string name="setup_embedded_desc">Встроенный бэкенд шлюза, Termux не нужен, готово сразу</string>
+    <string name="setup_termux">Подключить Termux</string>
+    <string name="setup_termux_desc">Подключение к бэкенду ai-gateway в Termux (локально или по LAN)</string>
+    <string name="setup_connect_section">Подключение к шлюзу (необязательно)</string>
+    <string name="setup_quick_local">Локально</string>
+    <string name="setup_quick_lan">LAN</string>
+    <string name="setup_connect_enter">Подключиться и войти</string>
+    <string name="setup_skip">Пока пропустить</string>
+    <string name="setup_termux_section">Бэкенд Termux</string>
+
+    <!-- Подключение -->
+    <string name="connect_title">Подключение к шлюзу</string>
+    <string name="connect_host">Адрес шлюза</string>
+    <string name="connect_admin_key">Пароль администратора (adminKey)</string>
+    <string name="connect_button">Подключиться</string>
+    <string name="connecting">Подключение…</string>
+    <string name="connect_mode">Режим работы</string>
+    <string name="connect_mode_remote">Подключить Termux / удалённый шлюз</string>
+    <string name="connect_hint_nokey">Пустой adminKey = без пароля (если у шлюза нет пароля администратора)</string>
+    <string name="connect_reselect_mode">Выбрать режим заново</string>
+    <string name="connect_saved">Подключение сохранено</string>
+    <string name="connect_ok">Подключено</string>
+    <string name="connect_failed_entered">Ошибка подключения. Вошли всё равно (повторите в настройках подключения)</string>
+    <string name="connect_need_url">Введите адрес шлюза</string>
+    <string name="connect_switched_embedded">Переключено на режим внутри приложения</string>
+
+    <!-- Навигация -->
+    <string name="nav_overview">Обзор</string>
+    <string name="nav_providers">Провайдеры</string>
+    <string name="nav_routing">Маршрутизация</string>
+    <string name="nav_keys">Ключи</string>
+    <string name="nav_ports">Инстансы</string>
+    <string name="nav_replace">Замены</string>
+    <string name="nav_stats">Статистика</string>
+    <string name="nav_requests">Запросы</string>
+    <string name="nav_logs">Журнал</string>
+    <string name="nav_chat">Чат</string>
+
+    <!-- Заголовки -->
+    <string name="title_overview">Обзор</string>
+    <string name="title_providers">Провайдеры / Каналы</string>
+    <string name="title_routing">Маршрутизация / Сопоставление моделей</string>
+    <string name="title_keys">Ключи</string>
+    <string name="title_ports">Порты / Инстансы</string>
+    <string name="title_replace">Замена текста</string>
+    <string name="title_stats">Статистика</string>
+    <string name="title_requests">Журнал запросов</string>
+    <string name="title_logs">Журнал</string>
+    <string name="title_chat">Тест чата</string>
+
+    <!-- Меню -->
+    <string name="menu_theme">Цвета / Тема</string>
+    <string name="menu_connection">Подключение / Режим</string>
+
+    <!-- Диалог темы -->
+    <string name="theme_title">Цвета / Тема</string>
+    <string name="theme_mode">Тёмная тема</string>
+    <string name="theme_mode_system">Как в системе</string>
+    <string name="theme_mode_light">Светлая</string>
+    <string name="theme_mode_dark">Тёмная</string>
+    <string name="theme_dynamic">Material You динамические цвета</string>
+    <string name="theme_dynamic_desc">Только Android 12+, цвета из обоев</string>
+    <string name="theme_palette">Палитра</string>
+    <string name="theme_palette_purple">Фиолетовая (по умолчанию)</string>
+    <string name="theme_palette_blue">Синяя</string>
+    <string name="theme_palette_green">Зелёная</string>
+    <string name="theme_palette_orange">Оранжевая</string>
+    <string name="theme_palette_red">Красная</string>
+    <string name="theme_language">Язык</string>
+    <string name="theme_language_system">Как в системе</string>
+    <string name="theme_language_en">English</string>
+    <string name="theme_language_zh">简体中文</string>
+    <string name="theme_language_zh_tw">繁體中文</string>
+    <string name="theme_language_ja">日本語</string>
+    <string name="theme_language_ko">한국어</string>
+    <string name="theme_language_ru">Русский</string>
+    <string name="theme_language_es">Español</string>
+    <string name="theme_language_fr">Français</string>
+    <string name="theme_language_eo">Esperanto</string>
+    <string name="theme_applied">Настройки применены</string>
+
+    <!-- Termux -->
+    <string name="termux_start_backend">Запустить бэкенд Termux</string>
+    <string name="termux_install">Установить / развернуть в Termux</string>
+    <string name="termux_not_installed">Termux не обнаружен</string>
+    <string name="termux_detected">✓ Termux обнаружен</string>
+    <string name="termux_not_detected">⚠ Termux не обнаружен (установите для развёртывания)</string>
+    <string name="termux_open">Открыть Termux</string>
+    <string name="termux_cmd_sent">Команда запуска отправлена в Termux</string>
+    <string name="termux_cmd_failed">Ошибка: Termux не найден или внешние вызовы запрещены</string>
+    <string name="termux_deploy_title">Установить / развернуть в Termux</string>
+    <string name="termux_deploy_msg">Файлы бэкенда шлюза будут записаны в Download/ai-gateway-deploy/, затем Termux выполнит скрипт установки (установит Node.js, развернёт в ~/ai-gateway и запустит).\n\nТребуются termux-setup-storage и allow-external-apps=true.</string>
+    <string name="termux_deploy_start">Начать</string>
+    <string name="termux_deploy_ok">Termux запущен для установки</string>
+    <string name="termux_deploy_failed">Ошибка развёртывания</string>
+
+    <!-- Обзор -->
+    <string name="ov_checking">Проверка…</string>
+    <string name="ov_connected">Подключено</string>
+    <string name="ov_connect_failed">Ошибка подключения</string>
+    <string name="ov_not_connected">Нет подключения</string>
+    <string name="ov_total_requests">Всего запросов</string>
+    <string name="ov_errors">Ошибки</string>
+    <string name="ov_uptime">Время работы</string>
+    <string name="ov_current_instance">Текущий инстанс</string>
+    <string name="ov_loading">Загрузка…</string>
+    <string name="ov_quick_actions">Быстрые действия</string>
+    <string name="ov_refresh">Обновить статус</string>
+    <string name="ov_configure_first">Сначала настройте подключение в «Подключение / Режим»</string>
+    <string name="ov_unreachable">Шлюз недоступен. Проверьте адрес/пароль или запустите бэкенд</string>
+    <string name="ov_no_instance">Нет инстанса</string>
+    <string name="ov_load_failed">Ошибка загрузки: %1$s</string>
+    <string name="ov_mode_embedded">Режим в приложении · встроенный шлюз</string>
+    <string name="ov_mode_remote">Удалённый шлюз · %1$s</string>
+    <string name="ov_mode_unset">Не настроено</string>
+    <string name="ov_recent_requests">Недавние запросы</string>
+    <string name="ov_view_all">Показать все</string>
+    <string name="ov_no_requests">Записей запросов пока нет</string>
+    <string name="ov_stats_by_channel">По каналам</string>
+
+    <!-- Провайдеры -->
+    <string name="pv_empty">Нет каналов\nНажмите +, чтобы добавить</string>
+    <string name="pv_add">Добавить канал</string>
+    <string name="pv_edit">Изменить канал</string>
+    <string name="pv_fetch_models">Получить модели</string>
+    <string name="pv_edit_btn">Изменить</string>
+    <string name="pv_delete_btn">Удалить</string>
+    <string name="pv_name">Название канала *</string>
+    <string name="pv_type">Формат апстрима *</string>
+    <string name="pv_base_url">Base URL * (напр. https://api.deepseek.com)</string>
+    <string name="pv_api_key">API Key (пусто = оставить)</string>
+    <string name="pv_proxy">Имя прокси (необязательно)</string>
+    <string name="pv_models">Список моделей (через запятую)</string>
+    <string name="pv_model_map">Сопоставление моделей (строка: публичное=апстрим)</string>
+    <string name="pv_delay">Задержка запроса (мс, 0 = выкл)</string>
+    <string name="pv_default">Сделать каналом по умолчанию (fallback)</string>
+    <string name="pv_use_responses">Апстрим использует Responses API (/v1/responses, только openai)</string>
+    <string name="pv_insecure">Пропустить проверку сертификата (самоподписанный)</string>
+    <string name="pv_need_fields">Название и Base URL обязательны</string>
+    <string name="pv_bad_type">Формат должен быть openai / gemini / claude</string>
+    <string name="pv_saved">Канал сохранён</string>
+    <string name="pv_save_failed">Ошибка сохранения: %1$s</string>
+    <string name="pv_delete_title">Удалить канал</string>
+    <string name="pv_delete_msg">Удалить канал «%1$s»?</string>
+    <string name="pv_deleted">Удалено</string>
+    <string name="pv_fetching">Получение моделей с апстрима…</string>
+    <string name="pv_models_title">Модели апстрима (%1$d)</string>
+    <string name="pv_fill_models">Вставить в models и сохранить</string>
+    <string name="pv_no_models">Модели не получены: %1$s</string>
+    <string name="pv_filled">Вставлено моделей: %1$d</string>
+    <string name="pv_no_key">нет ключа</string>
+    <string name="pv_models_count">%1$d моделей</string>
+
+    <!-- Маршрутизация -->
+    <string name="rt_hint">Запрошенные модели маршрутизируются по порядку: modelMap канала &gt; список models &gt; канал по умолчанию &gt; первый канал. Сопоставления редактируются в «Провайдеры».</string>
+    <string name="rt_empty">Нет моделей\n(добавьте models / modelMap каналу в «Провайдеры»)</string>
+    <string name="rt_no_channel">(нет канала)</string>
+
+    <!-- Ключи -->
+    <string name="keys_gateway_title">Ключ доступа шлюза (gatewayKey)</string>
+    <string name="keys_gateway_desc">Клиенты должны передавать этот ключ при вызове AI-эндпоинтов (Bearer / x-api-key / ?key=). Пусто = без аутентификации.</string>
+    <string name="keys_admin_title">Пароль администратора (adminKey)</string>
+    <string name="keys_admin_desc">Аутентификация админ-панели / admin API. Пусто = управление без пароля (личное использование в LAN).</string>
+    <string name="keys_save">Сохранить ключи</string>
+    <string name="keys_warn">⚠ После смены adminKey обновите и пароль подключения этого приложения (Подключение / Режим). Шлюз перезапустится для применения.</string>
+    <string name="keys_saved">Ключи сохранены (шлюз может перезапуститься)</string>
+
+    <!-- Порты / инстансы -->
+    <string name="pt_new">Новый инстанс</string>
+    <string name="pt_shutdown_all">Остановить все</string>
+    <string name="pt_current">текущий</string>
+    <string name="pt_running">работает</string>
+    <string name="pt_stopped">остановлен</string>
+    <string name="pt_channels">%1$d каналов</string>
+    <string name="pt_delete_title">Удалить инстанс</string>
+    <string name="pt_delete_msg">Удалить инстанс «%1$s»? Его файл конфигурации будет удалён.</string>
+    <string name="pt_shutdown_title">Остановить все инстансы</string>
+    <string name="pt_shutdown_msg">Остановить все запущенные инстансы шлюза?</string>
+    <string name="pt_new_title">Новый инстанс</string>
+    <string name="pt_inst_name">Имя инстанса * (буквы/цифры/дефис)</string>
+    <string name="pt_inst_port">Порт * (напр. 16390)</string>
+    <string name="pt_inst_key">adminKey (необязательно)</string>
+    <string name="pt_need_valid">Введите корректные имя и порт</string>
+    <string name="pt_created">Инстанс «%1$s» создан</string>
+    <string name="pt_switched">Переключено на инстанс «%1$s»</string>
+    <string name="pt_create_failed">Ошибка создания: %1$s</string>
+    <string name="pt_stopped_all">Все инстансы остановлены</string>
+
+    <!-- Замены -->
+    <string name="rp_hint">Применяет замены по регулярным выражениям к тексту, проходящему через шлюз. Поле model и data: URL не затрагиваются. Для применения перезапустите шлюз.</string>
+    <string name="rp_out_title">Исходящие (запрос)</string>
+    <string name="rp_inc_title">Входящие (ответ)</string>
+    <string name="rp_add_out">Добавить правило исходящих</string>
+    <string name="rp_add_inc">Добавить правило входящих</string>
+    <string name="rp_save">Сохранить правила замен</string>
+    <string name="rp_regex">Регулярное выражение *</string>
+    <string name="rp_to">Заменить на (пусто = удалить совпадение)</string>
+    <string name="rp_ci">Игнорировать регистр (ci)</string>
+    <string name="rp_empty_rules">(нет правил %1$s)</string>
+    <string name="rp_delete_match">(удалить совпадение)</string>
+    <string name="rp_need_regex">Регулярное выражение не может быть пустым</string>
+    <string name="rp_bad_regex">Недопустимый regex: %1$s</string>
+    <string name="rp_saved">Правила замен сохранены (перезапуск для применения)</string>
+    <string name="rp_dir_out">исходящих</string>
+    <string name="rp_dir_inc">входящих</string>
+    <string name="rp_add_rule">Добавить правило %1$s</string>
+    <string name="rp_edit_rule">Изменить правило %1$s</string>
+
+    <!-- Статистика -->
+    <string name="st_by_channel">По каналам</string>
+    <string name="st_empty">Статистики пока нет</string>
+    <string name="st_refresh">Обновить</string>
+    <string name="st_channel_detail">запросов %1$d · вход %2$d tok · выход %3$d tok</string>
+    <string name="st_channel_errors">%1$s · ошибок %2$d</string>
+
+    <!-- Запросы -->
+    <string name="rq_empty">Нет записей запросов\n(включите запись запросов на шлюзе)</string>
+    <string name="rq_detail_title">Детали запроса</string>
+    <string name="rq_no_body">(этот шлюз не сохранял тела запросов, либо запись истекла)</string>
+    <string name="rq_section_request">━━ Запрос ━━</string>
+    <string name="rq_section_response">━━ Ответ ━━</string>
+    <string name="rq_empty_value">(пусто)</string>
+
+    <!-- Журнал -->
+    <string name="lg_lines">Строк</string>
+    <string name="lg_loading">Загрузка…</string>
+    <string name="lg_empty">(нет журналов)</string>
+    <string name="lg_copied">Журнал скопирован</string>
+    <string name="lg_not_connected">Бэкенд не подключён</string>
+    <string name="lg_load_failed">Ошибка загрузки: %1$s</string>
+
+    <!-- Чат -->
+    <string name="ch_model">Модель</string>
+    <string name="ch_model_hint">Выберите или введите модель</string>
+    <string name="ch_input_hint">Введите сообщение…</string>
+    <string name="ch_empty">Выберите модель и начните тестирование шлюза</string>
+    <string name="ch_need_model">Сначала выберите или введите модель</string>
+    <string name="ch_no_backend">Бэкенд не подключён</string>
+    <string name="ch_you">Вы</string>
+    <string name="ch_ai">AI</string>
+    <string name="ch_error">[Ошибка] %1$s</string>
+    <string name="ch_load_models_failed">Не удалось загрузить модели: %1$s</string>
+    <string name="ch_request_failed">Ошибка запроса</string>
+
+    <!-- Общее -->
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    <string name="close">Закрыть</string>
+    <string name="refresh">Обновить</string>
+    <string name="load_failed">Ошибка загрузки: %1$s</string>
+    <string name="op_failed">Ошибка операции: %1$s</string>
+    <string name="no_backend_hint">Бэкенд не подключён. Сначала настройте подключение</string>
+    <string name="delete_failed">Ошибка удаления: %1$s</string>
+    <string name="copy">Копировать</string>
+    <string name="send">Отправить</string>
+    <string name="start">Запустить</string>
+    <string name="stop">Остановить</string>
+    <string name="restart">Перезапустить</string>
+
+    <!-- Маршрутизация, доп. -->
+    <string name="rt_model_sync">Автообновление списков моделей</string>
+    <string name="rt_model_sync_desc">Периодически получать списки моделей с каналов апстрима</string>
+    <string name="rt_sync_interval">Интервал (часы)</string>
+    <string name="rt_sync_now">Синхронизировать сейчас</string>
+    <string name="rt_syncing">Синхронизация списков моделей…</string>
+    <string name="rt_sync_done">Синхронизация завершена</string>
+    <string name="rt_redact">Фильтр приватных данных</string>
+    <string name="rt_oe_enable">Расширенные эндпоинты OpenAI (Responses / Images / Embeddings…)</string>
+    <string name="rt_oe_enable_desc">Открывает /v1/responses, /v1/images/generations, /v1/embeddings, /v1/audio/speech, /v1/completions, /v1/moderations; также разрешает OpenAI-каналам использовать Responses API на апстриме. Нужен перезапуск инстанса.</string>
+    <string name="rt_oe_upstream">Апстрим OpenAI по умолчанию использует Responses API (/v1/responses)</string>
+    <string name="rt_oe_upstream_desc">Глобальное значение по умолчанию; переопределяется настройкой канала «Апстрим использует Responses API». Когда выключено, апстрим продолжает использовать /v1/chat/completions.</string>
+    <string name="rt_redact_desc">Перед пересылкой заменяет API-ключи / токены в запросах на *** (sk-, ghp_, AKIA, AIza, Bearer …)</string>
+    <string name="rt_redact_extra">Дополнительные шаблоны (по одному regex на строку)</string>
+    <string name="rt_table_title">Таблица маршрутизации моделей</string>
+    <string name="rt_saved">Сохранено (шлюз перезапустится для применения)</string>
+
+    <!-- Шпаргалка по заменам -->
+    <string name="rp_cheat_title">Шпаргалка по regex</string>
+    <string name="rp_cheat_syntax_title">Синтаксис</string>
+    <string name="rp_cheat_syntax">.        любой символ\n\\d \\w \\s   цифра / буква / пробел\n[abc]    один из a b c\n[^abc]   кроме a b c\n*  +  ?   0+ , 1+ , 0 или 1\n{2,5}    от 2 до 5 раз\n^  $      начало / конец текста\n(…)      группа захвата\na|b      a или b\n\\.       буквальная точка (экранирование)</string>
+    <string name="rp_cheat_replace_title">Замена</string>
+    <string name="rp_cheat_replace">$1 $2    группа 1 / 2\n$0       всё совпадение\n(пусто)  удалить совпадение\n\\$       буквальный знак доллара</string>
+    <string name="rp_cheat_examples_title">Примеры</string>
+    <string name="rp_cheat_examples">1. Замаскировать email\n   regex: [\\w.]+@[\\w.]+\n   на:    ***\n\n2. Поменять слова местами\n   regex: (\\w+) (\\w+)\n   на:    $2 $1\n\n3. Убрать пробелы в конце строк\n   regex: [ \\t]+$\n   на:    (пусто)\n\n4. Заменить слово (без регистра — включите ci)\n   regex: chatgpt\n   на:    AI\n\n5. Сжать пустые строки\n   regex: \\n{3,}\n   на:    \n\n</string>
+    <string name="rp_cheat_notes_title">Примечания</string>
+    <string name="rp_cheat_notes">• Поле model и data: URL никогда не затрагиваются.\n• Правила исходящих применяются к тексту запроса, входящих — к тексту ответа.\n• Стриминговые ответы сопоставляются по частям (чанкам), шаблоны через границы чанков могут не сработать.\n• Правила применяются после перезапуска шлюза.</string>
+
+    <!-- Шифрование конфигурации -->
+    <string name="menu_config">Конфигурация и бэкап</string>
+    <string name="cfg_crypt_title">Шифрование конфигурации</string>
+    <string name="cfg_crypt_enable">Шифровать сохранённую конфигурацию</string>
+    <string name="cfg_crypt_desc">Шифрует файл конфигурации в приложении по AES-256-GCM (совместимо с форматом AGWENC1 шлюза)</string>
+    <string name="cfg_crypt_pass">Пароль шифрования</string>
+    <string name="cfg_crypt_pass_confirm">Подтвердите пароль</string>
+    <string name="cfg_crypt_mismatch">Пароли не совпадают</string>
+    <string name="cfg_crypt_need_pass">Введите пароль для включения шифрования</string>
+    <string name="cfg_crypt_enabled">Шифрование конфигурации включено</string>
+    <string name="cfg_crypt_disabled">Шифрование конфигурации выключено (хранится открытым текстом)</string>
+    <string name="cfg_crypt_embedded_only">Действует в режиме внутри приложения. Для Termux используйте crypt.js на стороне шлюза.</string>
+
+    <!-- Импорт / экспорт -->
+    <string name="cfg_transfer_title">Импорт / экспорт конфигурации</string>
+    <string name="cfg_export">Экспорт конфигурации</string>
+    <string name="cfg_export_desc">Сохранить конфигурацию текущего инстанса в файл</string>
+    <string name="cfg_export_encrypt">Зашифровать экспортируемый файл</string>
+    <string name="cfg_export_pass">Пароль экспорта (пусто = открытый текст)</string>
+    <string name="cfg_exported">Конфигурация экспортирована</string>
+    <string name="cfg_export_failed">Ошибка экспорта: %1$s</string>
+    <string name="cfg_import">Импорт конфигурации</string>
+    <string name="cfg_import_desc">Чтение файла конфигурации; для зашифрованных нужен исходный пароль</string>
+    <string name="cfg_import_pass_title">Пароль исходного файла</string>
+    <string name="cfg_import_pass_hint">Пароль (пусто, если не зашифрован)</string>
+    <string name="cfg_import_encrypted_hint">Файл зашифрован (AGWENC1). Введите пароль, использованный при шифровании.</string>
+    <string name="cfg_import_wrong_pass">Неверный пароль или данные повреждены: %1$s</string>
+    <string name="cfg_import_invalid">Недопустимая конфигурация: %1$s</string>
+    <string name="cfg_import_confirm_title">Подтвердите импорт</string>
+    <string name="cfg_import_confirm_msg">Импортировать %1$d каналов и перезаписать конфигурацию текущего инстанса?\n\nИсточник: %2$s\nБудет повторно зашифровано паролем этого приложения.</string>
+    <string name="cfg_import_src_enc">зашифрованный файл</string>
+    <string name="cfg_import_src_plain">текстовый файл</string>
+    <string name="cfg_imported">Конфигурация импортирована (%1$d каналов)</string>
+    <string name="cfg_import_failed">Ошибка импорта: %1$s</string>
+    <string name="cfg_reencrypted">Повторно зашифровано паролем этого приложения</string>
+
+    <!-- Termux, доп. -->
+    <string name="termux_perm_hint">Termux отклонил вызов.\n\nВыдайте разрешение в настройках системы: Настройки → Приложения → это приложение → Разрешения → Дополнительные разрешения → включите «Выполнять команды в среде Termux».\n\nЕсли разрешение выдано, но не работает, проверьте выбранный вариант Termux (ZeroTermux / Official) на странице настройки.</string>
+    <string name="termux_perm_title">Требуется авторизация</string>
+    <string name="termux_copy_cmd">Копировать команду</string>
+    <string name="termux_cmd_copied">Команда скопирована</string>
+    <string name="termux_open_anyway">Открыть Termux</string>
+
+    <!-- Редактирование инстанса / TLS -->
+    <string name="pt_edit_title">Изменить инстанс</string>
+    <string name="pt_create">Создать</string>
+    <string name="pt_saved">Инстанс сохранён (шлюз перезапустится)</string>
+    <string name="pt_inst_host">Адрес прослушивания (0.0.0.0 = доступ по LAN)</string>
+    <string name="pt_tls_enable">Шифрование TLS (HTTPS)</string>
+    <string name="pt_tls_desc">HTTPS с сертификатом. Файлы cert/key должны существовать на стороне шлюза.</string>
+    <string name="pt_tls_port">HTTPS-порт (пусто = как HTTP, т.е. только HTTPS)</string>
+    <string name="pt_tls_port_hint">Укажите другой порт, чтобы одновременно работать по HTTP и HTTPS.</string>
+    <string name="pt_tls_cert">Файл сертификата (cert.pem)</string>
+    <string name="pt_tls_key">Файл приватного ключа (key.pem)</string>
+
+    <!-- Прокси -->
+    <string name="nav_proxies">Прокси</string>
+    <string name="title_proxies">Настройка прокси</string>
+    <string name="px_hint">Здесь задаются именованные прокси, на которые ссылаются в поле «Прокси» канала. Пустое поле = прямое соединение.</string>
+    <string name="px_empty">Нет прокси\nНажмите +, чтобы добавить</string>
+    <string name="px_add">Добавить прокси</string>
+    <string name="px_edit">Изменить прокси</string>
+    <string name="px_name">Имя прокси * (для ссылок из каналов)</string>
+    <string name="px_type">Тип *</string>
+    <string name="px_host">Хост * (напр. 127.0.0.1)</string>
+    <string name="px_port">Порт * (напр. 7890)</string>
+    <string name="px_user">Имя пользователя (необязательно)</string>
+    <string name="px_pass">Пароль (необязательно)</string>
+    <string name="px_auth_hint">Аутентификация необязательна. Для SOCKS5 с аутентификацией встроенный движок использует глобальный аутентификатор (работает, но общий для всех прокси).</string>
+    <string name="px_need_valid">Введите корректные имя, хост и порт</string>
+    <string name="px_bad_type">Тип должен быть socks5 или http</string>
+    <string name="px_saved">Прокси сохранён</string>
+    <string name="px_delete_title">Удалить прокси</string>
+    <string name="px_delete_msg">Удалить прокси «%1$s»? Ссылающиеся каналы перейдут на прямое соединение.</string>
+    <string name="px_has_auth">с аутентификацией</string>
+
+    <!-- Перехват кода -->
+    <string name="menu_security">Безопасность и фон</string>
+    <string name="title_security">Безопасность и фон</string>
+    <string name="title_plugins">Управление плагинами</string>
+    <string name="pm_install">Установить плагин</string>
+    <string name="pm_instance">Инстанс: %1$s</string>
+    <string name="pm_empty">На этом инстансе нет установленных плагинов</string>
+    <string name="pm_no_backend">Сначала подключитесь к шлюзу</string>
+    <string name="pm_enabled">Включён · нажмите, чтобы отключить</string>
+    <string name="pm_disabled">Отключён · нажмите, чтобы включить</string>
+    <string name="pm_remove_title">Удалить плагин</string>
+    <string name="pm_remove_msg">Удалить «%1$s»?</string>
+    <string name="pm_removed">Удалено</string>
+    <string name="pm_install_title">Установить плагин</string>
+    <string name="pm_install_hint">Введите прямой URL пакета .tar.gz</string>
+    <string name="pm_installed">Установлено успешно</string>
+    <string name="pm_url_empty">URL обязателен</string>
+    <string name="gd_title">Перехват вредоносного кода</string>
+    <string name="gd_warning">⚠️ Не рекомендуется обычным пользователям. Сканирование добавляет задержку, а сопоставление шаблонов может помечать безопасный код (ложные срабатывания) или пропускать обфусцированный код (пропуски). Это напоминание, а не граница безопасности — всегда проверяйте код перед запуском.</string>
+    <string name="gd_enable">Сканировать код в ответах AI</string>
+    <string name="gd_level">Минимальный уровень для отчёта</string>
+    <string name="gd_level_high">Только высокий (деструктивные команды, RCE, кража учётных данных)</string>
+    <string name="gd_level_medium">Средний и выше (плюс разрешения/персистентность/опасный eval)</string>
+    <string name="gd_level_low">Низкий и выше (плюс жёстко прописанные секреты, открытый HTTP)</string>
+    <string name="gd_action">Действие при обнаружении</string>
+    <string name="gd_action_warn">Предупредить: добавить примечание, сохранить содержимое</string>
+    <string name="gd_action_block">Блокировать: заменить содержимое примечанием</string>
+    <string name="gd_cloud">Использовать облачный API сканирования</string>
+    <string name="gd_cloud_desc">Отправляет код во внешний API для анализа. Сильно увеличивает задержку и отправляет код за пределы устройства.</string>
+    <string name="gd_cloud_url">URL API</string>
+    <string name="gd_cloud_key">Ключ API</string>
+    <string name="gd_rule_count">Локальная библиотека правил: %1$d правил</string>
+    <string name="gd_test">Проверить на образце</string>
+    <string name="gd_test_found">Обнаружено проблем: %1$d, максимальный уровень %2$s</string>
+    <string name="gd_test_clean">На этом уровне проблем не найдено</string>
+    <string name="gd_saved">Настройки перехвата сохранены</string>
+    <string name="gd_applies_embedded">Действует в режиме внутри приложения (ответы в разных форматах).</string>
+
+    <!-- Фоновая защита -->
+    <string name="bg_title">Защита фоновой активности</string>
+    <string name="bg_desc">Поддерживает встроенный шлюз, когда приложение в фоне.</string>
+    <string name="bg_keepalive">Keep-alive через foreground-сервис</string>
+    <string name="bg_keepalive_desc">Показывает постоянное уведомление низкого приоритета и держит partial wake lock, чтобы шлюз продолжал отвечать на запросы.</string>
+    <string name="bg_embedded_only">Имеет смысл только в режиме внутри приложения. В режиме Termux бэкенд работает внутри Termux.</string>
+    <string name="bg_started">Служба keep-alive запущена</string>
+    <string name="bg_stopped">Служба keep-alive остановлена</string>
+    <string name="bg_battery_ok">✓ Оптимизация батареи: исключено</string>
+    <string name="bg_battery_no">⚠ Оптимизация батареи: активна (может убить шлюз)</string>
+    <string name="bg_battery_request">Запросить исключение из оптимизации батареи</string>
+    <string name="bg_notif_ok">✓ Уведомления: включены</string>
+    <string name="bg_notif_no">⚠ Уведомления: выключены (нужны для foreground-сервиса)</string>
+    <string name="bg_notif_settings">Открыть настройки уведомлений</string>
+    <string name="bg_svc_running">✓ Служба keep-alive: работает</string>
+    <string name="bg_svc_stopped">Служба keep-alive: остановлена</string>
+    <string name="bg_app_details">Открыть сведения о приложении (автозапуск / фоновые ограничения)</string>
+    <string name="bg_oem_hint">Некоторым прошивкам (Xiaomi, Huawei, OPPO, vivo…) нужны доп. настройки: разрешить автозапуск, закрепить приложение в недавних, снять фоновые ограничения.</string>
+    <string name="svc_channel_name">Шлюз работает</string>
+    <string name="svc_channel_desc">Поддерживает встроенный шлюз в фоне</string>
+    <string name="svc_title">AI Gateway работает</string>
+    <string name="svc_text">Порт %1$d · %2$d каналов</string>
+
+    <!-- QR -->
+    <string name="cfg_export_qr">Экспорт как QR-код</string>
+    <string name="cfg_import_qr_image">Импорт из QR-изображения</string>
+    <string name="cfg_import_qr_camera">Сканировать QR камерой</string>
+    <string name="cfg_qr_info">%1$d каналов · %2$d символов → %3$d байт</string>
+    <string name="cfg_qr_hint">Отсканируйте с другого устройства: Конфигурация и бэкап → Сканировать QR камерой</string>
+    <string name="cfg_qr_too_large">Конфигурация слишком велика для одного QR-кода (%1$d байт). Используйте экспорт в файл.</string>
+    <string name="cfg_qr_no_image">Не удалось прочитать изображение</string>
+    <string name="cfg_qr_not_found">QR-код на изображении не найден</string>
+    <string name="cfg_qr_bad_payload">Содержимое QR — не корректная конфигурация</string>
+    <string name="cfg_qr_decode_failed">Ошибка декодирования: %1$s</string>
+    <string name="cfg_qr_need_camera">Для сканирования нужно разрешение на камеру</string>
+    <string name="cfg_qr_no_camera_app">Нет доступного приложения камеры</string>
+
+    <!-- Запись запросов -->
+    <string name="rec_title">Запись содержимого запросов</string>
+    <string name="rec_enable">Записывать тела запросов / ответов</string>
+    <string name="rec_desc">Сохраняет полные тела запросов и ответов, чтобы страница «Запросы» могла их показать. По умолчанию выключено.</string>
+    <string name="rec_server">Сервер-коллектор (необязательно)</string>
+    <string name="rec_server_hint">Пусто = писать в log/requests-&lt;instance&gt;.jsonl на шлюзе. Укажите http(s) URL, чтобы POST-ить каждую запись туда.</string>
+    <string name="rec_max_chars">Максимум символов на запись</string>
+    <string name="rec_privacy_warn">⚠ Запись сохраняет полное содержимое разговоров, включая всё чувствительное, что вы отправляете. Держите выключенным без необходимости.</string>
+    <string name="rec_saved">Настройки записи сохранены (шлюз перезапустится)</string>
+    <string name="rec_bad_server">Адрес сервера должен начинаться с http:// или https://</string>
+    <string name="ts_title">Сжатие цепочки размышлений</string>
+    <string name="ts_enable">Упрощать рассуждения перед отправкой</string>
+    <string name="ts_desc">Полное рассуждение reasoning-моделей сжимается до клиента (сохранять первые N символов сегмента или суммировать каждый сегмент дешёвой моделью). Обычные чаты не затрагиваются.</string>
+    <string name="ts_mode">Режим упрощения</string>
+    <string name="ts_max_chars">Символов на сегмент (обрезка)</string>
+    <string name="ts_sum_url">URL эндпоинта суммирования</string>
+    <string name="ts_sum_url_hint">Совместимый с OpenAI, напр. https://api.deepseek.com или https://127.0.0.1:16392 (при указании на другой шлюз используйте его gatewayKey)</string>
+    <string name="ts_sum_key">Ключ API</string>
+    <string name="ts_sum_model">Модель суммирования</string>
+    <string name="ts_sum_prompt">Промпт суммирования</string>
+    <string name="ts_sum_warn">Режим суммирования ждёт завершения полного рассуждения, поэтому этап размышления ненадолго приостанавливается.</string>
+
+    <!-- Трафик инстансов -->
+    <string name="pt_req_count">%1$d зап.</string>
+    <string name="pt_err_count">%1$d ош.</string>
+    <string name="pt_no_traffic">нет трафика</string>
+    <string name="st_hint">Показан инстанс «%1$s». Статистика ведётся по инстансам и сбрасывается при перезапуске шлюза — если тут 0, запросы могут идти на другой инстанс (см. «Инстансы»).</string>
+    <string name="termux_variant_label">Вариант Termux</string>
+    <string name="termux_variant_zero">ZeroTermux</string>
+    <string name="termux_variant_official">Официальный Termux</string>
+    <!-- Ключевые карточки (мультипользователь) -->
+    <string name="menu_cards">Ключевые карточки</string>
+    <string name="title_cards">Ключевые карточки</string>
+    <string name="cd_hint">Мультипользовательские ключи: выпуск карточек с квотой/отключением/сроком/белым списком моделей. Цель = активный инстанс</string>
+    <string name="cd_empty">Карточек ещё нет. Нажмите +, чтобы выпустить</string>
+    <string name="cd_add">Выпустить</string>
+    <string name="cd_copy">Копировать</string>
+    <string name="cd_toggle">Отключить/Включить</string>
+    <string name="cd_recharge">Пополнить/Сбросить</string>
+    <string name="cd_copied">Полный ключ скопирован</string>
+    <string name="cd_unnamed">(без имени)</string>
+    <string name="cd_state_disabled">Отключена</string>
+    <string name="cd_state_expired">Истекла</string>
+    <string name="cd_state_usedup">Исчерпана</string>
+    <string name="cd_state_active">Активна</string>
+    <string name="cd_usage_fmt">Использовано %1$s / %2$s (%3$d%%)</string>
+    <string name="cd_usage_unlimited">Использовано %1$s (безлимит)</string>
+    <string name="cd_limit_models">только %1$d моделей</string>
+    <string name="cd_limit_expires">истекает %1$s</string>
+    <string name="cd_new_title">Выпуск карточки (инстанс %1$s)</string>
+    <string name="cd_need_name">Имя обязательно</string>
+    <string name="cd_created">Ключ выпущен</string>
+    <string name="cd_created_msg">Полный ключ (можно скопировать из списка в любой момент):\n\n%1$s</string>
+    <string name="cd_disabled_ok">Отключено</string>
+    <string name="cd_enabled_ok">Включено</string>
+    <string name="cd_del_title">Удалить карточку</string>
+    <string name="cd_del_msg">Удалить «%1$s»? Ключ перестанет работать немедленно</string>
+    <string name="cd_deleted">Удалено</string>
+    <string name="cd_add_quota">Добавить квоту (10 тыс. токенов)</string>
+    <string name="cd_reset_usage">Сбросить использованные токены в 0</string>
+    <string name="cd_recharge_title">Пополнить/Сбросить «%1$s»</string>
+    <string name="cd_name">Имя (для кого)</string>
+    <string name="cd_quota">Квота (10 тыс. токенов)</string>
+    <string name="cd_quota_helper">0 или пусто = безлимит; 100 = 1 млн токенов</string>
+    <string name="cd_models">Разрешённые модели (через запятую)</string>
+    <string name="cd_models_helper">Пусто = все модели</string>
+    <string name="cd_expires">Срок действия</string>
+    <string name="cd_expires_helper">Пусто = бессрочно; формат 2026-12-31</string>
+    <string name="cd_note">Заметка (необязательно)</string>
+    <string name="fmt_yi">%1$.1fB</string>
+    <string name="fmt_wan">%1$.1fW</string>
+    <!-- Режим пользователя -->
+    <string name="setup_user">Я пользователь</string>
+    <string name="setup_user_desc">Использовать чужой шлюз по карточке / учётной записи</string>
+    <string name="nav_u_home">Главная</string>
+    <string name="nav_u_models">Модели</string>
+    <string name="nav_u_credits">Баланс</string>
+    <string name="nav_u_profile">Профиль</string>
+    <string name="ul_title">Вход на сервер</string>
+    <string name="ul_server">Адрес сервера</string>
+    <string name="ul_server_hint">http://домен-или-IP:порт, напр. http://abc.trycloudflare.com</string>
+    <string name="ul_branch">Ветка (инстанс, необязательно)</string>
+    <string name="ul_branch_hint">Один ключ — разные группы; пусто = default</string>
+    <string name="ul_by_token">Карточка</string>
+    <string name="ul_by_account">Аккаунт</string>
+    <string name="ul_token">Карточка</string>
+    <string name="ul_token_hint">sk-xxx, выданный администратором</string>
+    <string name="ul_uid">UID</string>
+    <string name="ul_password">Пароль</string>
+    <string name="ul_login">Войти</string>
+    <string name="ul_login_ok">Вход выполнен</string>
+    <string name="ul_login_fail">Ошибка входа: %1$s</string>
+    <string name="ul_need_server">Адрес сервера обязателен</string>
+    <string name="ul_need_token">Карточка обязательна</string>
+    <string name="ul_no_keys">У этого аккаунта нет карточек. Обратитесь к администратору.</string>
+    <string name="uh_status">Состояние сервиса</string>
+    <string name="uh_loading">Загрузка…</string>
+    <string name="uh_offline">Недоступен: %1$s</string>
+    <string name="uh_info_fmt">Версия %1$s · Работает %2$s</string>
+    <string name="uh_success_rate">Успешность каналов</string>
+    <string name="uh_probe_hint">Администратор не включил зондирование (по умолчанию выкл. для экономии токенов)</string>
+    <string name="uh_probe_row">%1$s · успех %2$s (%3$d проверок)</string>
+    <string name="uh_branch">Сменить ветку</string>
+    <string name="uh_branch_hint">Один ключ может обращаться к разным группам (инстансам) по имени ветки</string>
+    <string name="uh_branch_name">Имя ветки (пусто = default)</string>
+    <string name="uh_branch_saved">Сохранено, обновление</string>
+    <string name="uh_plugins">Плагины</string>
+    <string name="uh_plugins_loading">Загрузка…</string>
+    <string name="uh_plugins_empty">На этом сервере нет доступных плагинов</string>
+    <string name="um_count">Доступно моделей: %1$d</string>
+    <string name="um_refresh">Обновить</string>
+    <string name="um_empty">Нет моделей или ошибка загрузки</string>
+    <string name="uc_remaining">Остаток</string>
+    <string name="uc_admin">Аккаунт администратора</string>
+    <string name="uc_unlimited">Безлимит</string>
+    <string name="uc_no_expire">Бессрочно</string>
+    <string name="uc_all_models">Все модели доступны</string>
+    <string name="uc_models_limited">Ограничено: %1$s</string>
+    <string name="up_token_user">Пользователь карточки</string>
+    <string name="up_branch_fmt">Ветка: %1$s</string>
+    <string name="up_switch">Сменить аккаунт / сервер</string>
+    <string name="up_admin_mode">Переключиться в режим администратора</string>
+    <string name="disclaimer_short">⚠️ Экспериментальный проект. Не для реального коммерческого использования!</string>
+    <string name="disclaimer_full">⚠️ Отказ от ответственности: ai-gateway предназначен только для экспериментов и обучения, без гарантий коммерческого сервиса. НЕ используйте для реальных сделок! Любые вопросы затрат, безопасности данных и стабильности — ответственность развёртывающего и пользователей.</string>
+    <!-- Регистрация + фильтр -->
+    <string name="ul_by_register">Регистрация</string>
+    <string name="ul_reg_uid">Имя пользователя (UID)</string>
+    <string name="ul_reg_uid_hint">3-32 символа (буквы/цифры/подчёркивание). Карточка выдаётся автоматически</string>
+    <string name="ul_reg_password2">Подтвердите пароль</string>
+    <string name="ul_reg_email">Email</string>
+    <string name="ul_reg_closed">Регистрация на этом сервере закрыта</string>
+    <string name="ul_reg_hint_fmt">Пароль минимум %1$d символов</string>
+    <string name="ul_reg_query_fail">Не удалось запросить регистрацию: %1$s</string>
+    <string name="ul_reg_fill_all">Заполните все поля</string>
+    <string name="ul_reg_pw_mismatch">Пароли не совпадают</string>
+    <string name="ul_reg_ok">Регистрация завершена! Выполнен автоматический вход</string>
+    <string name="ul_reg_fail">Ошибка регистрации: %1$s</string>
+    <string name="um_search">Поиск моделей</string>
+    <string name="um_sort">Сортировка</string>
+    <string name="um_sort_asc">Имя A→Z</string>
+    <string name="um_sort_desc">Имя Z→A</string>
+    <string name="cd_bind_user">Привязать пользователя (необязательно)</string>
+    <string name="cd_bind_user_hint">После привязки пользователь увидит эту карточку при входе по паролю</string>
+    <string name="menu_panel">Панель</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="panel_loading">Загрузка админ-панели…</string>
+    <string name="pv_balance">Проверить баланс</string>
+    <string name="pv_balance_loading">Запрос баланса %1$s…</string>
+    <string name="pv_balance_title">Баланс · %1$s</string>
+    <string name="rg_captcha">Капча</string>
+    <string name="rg_captcha_hint">Бесплатно: cloudflare.com → Turnstile → Add site. Страница регистрации в приложении пока не рендерит Turnstile — при включении регистрируйтесь через браузер</string>
+    <string name="rg_captcha_none">Нет</string>
+    <string name="rg_captcha_secret">Turnstile Secret Key (секретный)</string>
+    <string name="rg_captcha_sitekey">Turnstile Site Key (публичный)</string>
+    <string name="rg_captcha_turnstile">Cloudflare Turnstile (бесплатно)</string>
+    <string name="rg_default_quota">Квота по умолчанию при регистрации (10 тыс. токенов)</string>
+    <string name="rg_default_quota_helper">0 = безлимит</string>
+    <string name="rg_enable">Открыть регистрацию</string>
+    <string name="rg_enable_hint">Включайте только на публичных релеях; карточка выдаётся при регистрации</string>
+    <string name="rg_key_length">Длина ключа (8-128)</string>
+    <string name="rg_key_length_helper">Без префикса sk-, по умолчанию 24</string>
+    <string name="rg_min_pw">Минимальная длина пароля</string>
+    <string name="sa_save_second">Сохранить второй пароль</string>
+    <string name="sa_second_key">Второй пароль</string>
+    <string name="sa_totp">TOTP-динамическая проверка</string>
+    <string name="sa_totp_disable">Отключить</string>
+    <string name="sa_totp_enable">Включить TOTP</string>
+    <string name="sa_totp_save_warn">TOTP включён, немедленно сохраните секрет!</string>
+    <string name="sa_totp_secret_fmt">Секрет (немедленно сохраните в приложение-аутентификатор): %1$s</string>
+    <string name="st_about">О программе и дисклеймер</string>
+    <string name="st_config_sub">Шифрование/бэкап/импорт-экспорт</string>
+    <string name="st_conn_sub">Адрес и пароль удалённого шлюза</string>
+    <string name="st_panel_sub">Полная админ-панель (веб)</string>
+    <string name="st_reg">Регистрация и карточки</string>
+    <string name="st_reg_sub">Регистрация/длина ключей/капча</string>
+    <string name="st_secondauth">Вторая проверка</string>
+    <string name="st_secondauth_sub">Вход в админку требует второй пароль или TOTP</string>
+    <string name="st_security_sub">Перехват кода/фоновая защита</string>
+    <string name="st_theme_sub">Тёмная/светлая/палитра/язык</string>
+    <string name="st_tunnel">Публичный туннель</string>
+    <string name="st_tunnel_sub">бесплатный временный домен cloudflared</string>
+    <string name="title_panel">Полная панель</string>
+    <string name="tn_desc">Бесплатный временный домен для доступа к шлюзу извне. Для телефона/локальной сети.</string>
+    <string name="tn_running">Работает</string>
+    <string name="tn_start">Запустить туннель</string>
+    <string name="tn_starting">Запуск, ожидание выделения домена…</string>
+    <string name="tn_stop">Остановить туннель</string>
+    <string name="tn_stopped">Не запущен</string>
+    <string name="tn_title">Публичный туннель (cloudflared)</string>
+    <string name="uk_main">Главная карточка</string>
+    <string name="uk_new">Самостоятельный выпуск</string>
+    <string name="um_group_all">Все (%1$d)</string>
+    <string name="up_avatar">URL аватара</string>
+    <string name="up_edit_profile">Изменить профиль</string>
+    <string name="up_my_keys">Мои карточки</string>
+    <string name="up_nickname">Ник</string>
+    <string name="us_empty">Пользователей нет</string>
+    <string name="us_keys_fmt">Карточек: %1$d</string>
+    <string name="us_new">Добавить пользователя</string>
+    <string name="us_password">Пароль</string>
+    <string name="us_reset_pw">Сбросить пароль</string>
+    <string name="us_sub">Аккаунты для входа по паролю, можно привязывать карточки</string>
+    <string name="us_title">Управление пользователями</string>
+    <string name="us_uid">UID (пусто = сгенерировать)</string>
+    <string name="pv_balance_section">Баланс провайдера</string>
+    <string name="pv_balance_url">URL баланса</string>
+    <string name="pv_balance_url_helper">Пусто = встроенный пресет</string>
+    <string name="pv_balance_path">Путь к значению</string>
+    <string name="pv_balance_unit">Единица (необязательно)</string>
+    <!-- Плавающее окно -->
+    <string name="st_overlay">Плавающее окно</string>
+    <string name="st_overlay_sub">Статус шлюза поверх других приложений</string>
+    <string name="st_overlay_on">Плавающее окно включено</string>
+    <string name="st_overlay_off">Плавающее окно выключено</string>
+    <string name="st_overlay_need_perm">Нужно разрешение на наложение</string>
+    <string name="ovl_perm_title">Разрешение на наложение</string>
+    <string name="ovl_perm_msg">Разрешите «Поверх других приложений». На MIUI / EMUI также включите «Всплывающие окна в фоне», иначе окно не появится.</string>
+    <string name="ovl_perm_denied">Разрешение на наложение не выдано</string>
+    <string name="ovl_no_backend">Шлюз не подключён</string>
+    <string name="ovl_offline">Не в сети</string>
+    <string name="ovl_online">В сети</string>
+    <string name="ovl_mode">Режим</string>
+    <string name="ovl_instance">Инстанс</string>
+    <string name="ovl_port">Порт</string>
+    <string name="ovl_requests">Запросы</string>
+    <string name="ovl_errors">Ошибки</string>
+    <string name="ovl_uptime">Время работы</string>
+    <string name="ovl_open_app">Открыть приложение</string>
+    <string name="ovl_start">Запустить</string>
+    <string name="ovl_stop">Остановить</string>
+    <string name="ovl_collapse">Свернуть</string>
+    <string name="ovl_close">Закрыть</string>
+    <string name="ovl_notif_title">Плавающее окно активно</string>
+    <string name="ovl_notif_desc">Статус шлюза поверх других приложений</string>
+    <string name="ovl_balance">Баланс</string>
+    <string name="ovl_balance_none">Нет данных</string>
+    <string name="ovl_look">Вид плавающего окна</string>
+    <string name="ovl_look_title">Вид плавающего окна</string>
+    <string name="ovl_look_sub">Размер / цвета / строки</string>
+    <string name="ovl_scale">Масштаб</string>
+    <string name="ovl_dim_alpha">Прозрачность в покое</string>
+    <string name="ovl_snap">Скрывать за краем</string>
+    <string name="ovl_dim">Бледнеть в покое</string>
+    <string name="ovl_lock">Фиксировать позицию</string>
+    <string name="ovl_pin">Всегда развёрнуто</string>
+    <string name="ovl_blur">Размытие фона (Android 12+)</string>
+    <string name="ovl_reset">Сброс</string>
+    <string name="ovl_look_hint">Перетаскивание · нажатие — развернуть · двойное — свернуть · долгое — обновить</string>
+    <string name="ovl_size">Размер пузыря</string>
+    <string name="ovl_panel_width">Ширина панели</string>
+    <string name="ovl_bg">Цвета</string>
+    <string name="ovl_rows_title">Видимые строки</string>
+    <string name="ovl_pill_title">Содержимое пузыря</string>
+    <string name="ovl_pill_icon">Значок</string>
+    <string name="ovl_pill_balance">Баланс</string>
+    <string name="ovl_pill_requests">Запросы</string>
+    <string name="ovl_bg_theme">Как в теме</string>
+    <string name="ovl_enable">Плавающее окно</string>
+    <string name="ovl_shape">Форма пузыря</string>
+    <string name="ovl_shape_circle">Круг</string>
+    <string name="ovl_shape_pill">Капсула</string>
+    <string name="ovl_shape_square">Квадрат</string>
+    <string name="ovl_shape_round">Скруглённый</string>
+    <string name="ovl_icon">Своя картинка</string>
+    <string name="ovl_icon_pick">Выбрать изображение</string>
+    <string name="ovl_icon_clear">Очистить</string>
+    <string name="ovl_rows_hint">↑ ↓ — порядок</string>
+    <string name="ovl_dim_delay">Затемнение через</string>
+    <string name="ovl_dim_level">Степень затемнения</string>
+    <string name="ovl_autoscroll">Автопрокрутка</string>
+    <string name="ovl_scroll_sec">Интервал прокрутки</string>
+    <string name="ovl_fail">Ошибка</string>
+    <string name="ovl_warn_below">Оповещение о низком балансе</string>
+    <string name="pv_balance_warn">Порог предупреждения</string>
+    <string name="pv_balance_warn_helper">5 или CNY=5, USD=1</string>
+    <string name="pv_route_force">Отправить следующий запрос сюда</string>
+    <string name="pv_route_clear">Снять ожидающий маршрут</string>
+    <string name="pv_route_on_msg">Запросы привязаны к этому каналу. Снять?</string>
+    <string name="pv_route_off_msg">Только следующий запрос пойдёт в этот канал, затем снова авто-выбор.</string>
+    <string name="ovl_route">Маршрут</string>
+    <string name="ovl_route_auto">Авто</string>
+    <string name="ovl_route_pick">Куда отправить следующий запрос</string>
+    <string name="ovl_route_empty">Нет доступных каналов</string>
+    <string name="ovl_route_fail">Не удалось задать маршрут</string>
+    <string name="ctx_title">Окна контекста</string>
+    <string name="ctx_table">Таблица</string>
+    <string name="ctx_bad_line">Не удалось разобрать: %1$s</string>
+    <string name="ovl_ctx">Контекст</string>
+    <string name="ovl_ctx_none">—</string>
+    <string name="ctx_soft">Мягкий предел (%)</string>
+    <string name="ctx_hard">Жёсткий предел (%)</string>
+    <string name="ctx_hard_hint">0 = выключено. Выше предела шлюз вернёт 400, не обращаясь к провайдеру.</string>
+    <string name="ctx_pattern">Шаблон модели</string>
+    <string name="ctx_window">Окно контекста</string>
+    <string name="ctx_cpt">Символов на токен</string>
+    <string name="ctx_cpt_hint">Только оценка: CJK 1 символ = 1 токен, иначе 1 токен = N символов.</string>
+    <string name="ctx_empty">Правил нет. Без известного окна жёсткий лимит не применяется.</string>
+    <string name="ctx_hint">Сверху вниз, первое совпадение. * — шаблон, ставьте последним. Окно: 128k / 1m / 128000.</string>
+    <string name="ovl_gauge_w">Толщина индикатора</string>
+    <string name="ovl_gauge_c">Цвет индикатора</string>
+    <string name="ctx_add">Добавить правило</string>
+</resources>

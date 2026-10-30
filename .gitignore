@@ -1,24 +1,12 @@
-# Android / Gradle
-.gradle/
+# 构建产物
 build/
-app/build/
+.gradle/
+.kotlin/
 local.properties
-captures/
-.cxx/
 
-# IDE
-.idea/
-*.iml
-
-# 日志
-log/
-*.log
-
-# 备份
+# git 之前的临时快照与日志（保留在磁盘，不进历史）
 backups/
-*.bak
+.bak-*
 *.bak-*
-
-# 系统文件
-.DS_Store
-Thumbs.db
+*.log
+*.tar.gz

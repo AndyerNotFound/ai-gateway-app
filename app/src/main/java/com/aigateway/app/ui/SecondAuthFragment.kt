@@ -8,7 +8,7 @@ import com.aigateway.app.R
 import com.aigateway.app.databinding.FragmentSecondauthBinding
 import com.google.gson.JsonObject
 
-
+/** 管理端 · 第二验证设置(第二密码 + TOTP) */
 class SecondAuthFragment : BaseFragment() {
 
     private var _b: FragmentSecondauthBinding? = null
@@ -33,7 +33,7 @@ class SecondAuthFragment : BaseFragment() {
         run({ b.saStatus.text = getString(R.string.load_failed, it) }, {
             backend.getAdminAuth(app.connectionStore.activeInstance)
         }) { j ->
-            val hasMain = j.get("hasAdminKey")?.asBoolean == true
+            val hasMain = (j.get("hasWebToken") ?: j.get("hasAdminKey"))?.asBoolean == true
             val second = j.get("secondKeySet")?.asBoolean == true
             val totp = j.get("totpEnabled")?.asBoolean == true
             b.saStatus.text = getString(
@@ -48,10 +48,24 @@ class SecondAuthFragment : BaseFragment() {
 
     private fun saveSecondKey() {
         val backend = backendOrNull() ?: return
-        val body = JsonObject().apply { addProperty("secondKey", b.saSecondKey.text?.toString().orEmpty()) }
+        val secondValue = b.saSecondKey.text?.toString().orEmpty()
+        val body = JsonObject().apply { addProperty("secondKey", secondValue) }
         run({ snack(getString(R.string.pv_save_failed, it)) }, {
             backend.setAdminAuth(app.connectionStore.activeInstance, body)
-        }) { snack(getString(R.string.pt_saved)); load() }
+        }) {
+            syncProfile(second = secondValue)
+            snack(getString(R.string.pt_saved)); load()
+        }
+    }
+
+    /** default 是 baseUrl 承载实例；只有它的第二因子会影响当前连接。 */
+    private fun syncProfile(second: String? = null, totp: String? = null) {
+        if (app.connectionStore.activeInstance != "default") return
+        val p = app.connectionStore.getCurrentProfile() ?: return
+        var changed = false
+        if (second != null && p.secondKey != second) { p.secondKey = second; changed = true }
+        if (totp != null && p.totpSecret != totp) { p.totpSecret = totp; changed = true }
+        if (changed) app.updateRemoteProfile(p)
     }
 
     private fun totp(action: String) {
@@ -61,9 +75,13 @@ class SecondAuthFragment : BaseFragment() {
             backend.setAdminAuth(app.connectionStore.activeInstance, body)
         }) { j ->
             if (action == "enable" && j.has("totpSecret")) {
+                val secret = j.get("totpSecret").asString
                 b.saTotpInfo.visibility = View.VISIBLE
-                b.saTotpInfo.text = getString(R.string.sa_totp_secret_fmt, j.get("totpSecret").asString)
+                b.saTotpInfo.text = getString(R.string.sa_totp_secret_fmt, secret)
+                syncProfile(totp = secret)
                 snack(getString(R.string.sa_totp_save_warn))
+            } else if (action == "disable") {
+                syncProfile(totp = "")
             }
             load()
         }

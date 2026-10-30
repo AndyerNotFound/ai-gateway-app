@@ -13,8 +13,8 @@ android {
         applicationId = "com.aigateway.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 7
-        versionName = "0.2.1"
+        versionCode = 10
+        versionName = "0.4.0"
     }
 
     buildTypes {
@@ -45,7 +45,7 @@ android {
     }
 }
 
-
+// AGP 9.2 内置 Kotlin: 统一 jvmTarget
 tasks.withType<KotlinCompile> {
     compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
 }

@@ -8,7 +8,7 @@ import com.aigateway.app.R
 import com.aigateway.app.databinding.FragmentRegSettingsBinding
 import com.google.gson.JsonObject
 
-
+/** 管理端 · 注册与卡密长度设置 */
 class RegSettingsFragment : BaseFragment() {
 
     private var _b: FragmentRegSettingsBinding? = null

@@ -16,12 +16,22 @@ import com.google.android.material.card.MaterialCardView
 class ChannelAdapter(
     private val onEdit: (Channel) -> Unit,
     private val onDelete: (Channel) -> Unit,
-    private val onFetchModels: (Channel) -> Unit
+    private val onFetchModels: (Channel) -> Unit,
+    private val onLongPress: (Channel) -> Unit
 ) : RecyclerView.Adapter<ChannelAdapter.VH>() {
 
     private val items = mutableListOf<Channel>()
 
-    
+    /** 渠道名 -> (余额文本, 预警级别 0/1/2) */
+    private val balances = HashMap<String, Pair<String, Int>>()
+
+    fun setBalance(channel: String, text: String, level: Int) {
+        balances[channel] = text to level
+        val i = items.indexOfFirst { it.name == channel }
+        if (i >= 0) notifyItemChanged(i)
+    }
+
+    /** 当前主题的上下文(由 Fragment 赋值), 绑定时用它取色, 保证陈旧视图也能刷新为当前主题 */
     var themeContext: Context? = null
 
     fun submit(list: List<Channel>) {
@@ -35,6 +45,7 @@ class ChannelAdapter(
         val type: TextView = v.findViewById(R.id.channelType)
         val url: TextView = v.findViewById(R.id.channelUrl)
         val meta: TextView = v.findViewById(R.id.channelMeta)
+        val balance: TextView = v.findViewById(R.id.channelBalance)
         val star: ImageView = v.findViewById(R.id.defaultStar)
         val btnEdit: MaterialButton = v.findViewById(R.id.btnEdit)
         val btnDelete: MaterialButton = v.findViewById(R.id.btnDelete)
@@ -49,7 +60,7 @@ class ChannelAdapter(
     override fun onBindViewHolder(h: VH, position: Int) {
         val ch = items[position]
         val ctx = themeContext ?: h.itemView.context
-        
+        // 主题切换后可能存在残留旧配色的回收视图: 每次绑定按当前主题完整重着色
         val cPrimary = resolveColor(ctx, com.google.android.material.R.attr.colorPrimary)
         val cOnSurface = resolveColor(ctx, com.google.android.material.R.attr.colorOnSurface)
         val cOnSurfaceVariant = resolveColor(ctx, com.google.android.material.R.attr.colorOnSurfaceVariant)
@@ -78,7 +89,23 @@ class ChannelAdapter(
         h.meta.text = parts.joinToString(" · ")
         h.star.visibility = if (ch.default) View.VISIBLE else View.GONE
 
+        val bal = balances[ch.name]
+        if (bal == null || bal.first.isBlank()) {
+            h.balance.visibility = View.GONE
+        } else {
+            h.balance.visibility = View.VISIBLE
+            h.balance.text = bal.first
+            h.balance.setTextColor(
+                when (bal.second) {
+                    2 -> cError
+                    1 -> 0xFFFFB300.toInt()
+                    else -> cPrimary
+                }
+            )
+        }
+
         h.itemView.setOnClickListener { onEdit(ch) }
+        h.itemView.setOnLongClickListener { onLongPress(ch); true }
         h.btnEdit.setOnClickListener { onEdit(ch) }
         h.btnDelete.setOnClickListener { onDelete(ch) }
         h.btnFetch.setOnClickListener { onFetchModels(ch) }

@@ -14,7 +14,7 @@ import com.google.gson.JsonObject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
+/** 路由 —— 自动更新模型列表 + 隐私数据过滤 + 模型路由表 */
 class RoutingFragment : BaseFragment() {
 
     private var _b: FragmentRoutingBinding? = null
@@ -42,16 +42,13 @@ class RoutingFragment : BaseFragment() {
         run({ snack(getString(R.string.load_failed, it)); showEmpty(true) }, {
             backend.getConfig(app.connectionStore.activeInstance)
         }) { cfg ->
-            
+            // 自动更新模型列表
             b.switchModelSync.isChecked = cfg.modelSync.enable
             b.editSyncInterval.setText(cfg.modelSync.intervalHours.toString())
-            
+            // 隐私数据过滤
             b.switchRedact.isChecked = cfg.redact.enable
             b.editRedactExtra.setText(cfg.redact.extra?.joinToString("\n") ?: "")
-            
-            b.switchOeEnable.isChecked = cfg.openaiExtras.enable
-            b.switchOeUpstream.isChecked = cfg.openaiExtras.upstreamResponses
-            
+            // 路由表
             renderRoutes(cfg.channels)
         }
     }
@@ -77,7 +74,7 @@ class RoutingFragment : BaseFragment() {
         }
     }
 
-    
+    /** 模拟 pickChannels 第一候选: modelMap > models > default > 第一个渠道 */
     private fun resolveRoute(model: String, channels: List<Channel>): Triple<String, String, String>? {
         for (ch in channels) ch.modelMap?.get(model)?.let { return Triple(ch.name, it, "modelMap") }
         for (ch in channels) if (ch.models?.contains(model) == true) return Triple(ch.name, model, "models")
@@ -92,7 +89,7 @@ class RoutingFragment : BaseFragment() {
         val interval = b.editSyncInterval.text?.toString()?.toIntOrNull()?.coerceAtLeast(1) ?: 24
         val extra = b.editRedactExtra.text?.toString()?.lines()
             ?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
-        
+        // 校验自定义正则
         for (p in extra) {
             try { Regex(p) } catch (e: Exception) {
                 snack(getString(R.string.rp_bad_regex, "$p: ${e.message}")); return
@@ -102,14 +99,12 @@ class RoutingFragment : BaseFragment() {
             add("modelSync", JsonObject().apply {
                 addProperty("enable", b.switchModelSync.isChecked)
                 addProperty("intervalHours", interval)
+                // 本页只编辑小时；显式清掉分钟级覆盖，避免“改了小时但实际仍按分钟跑”
+                add("intervalMin", com.google.gson.JsonNull.INSTANCE)
             })
             add("redact", JsonObject().apply {
                 addProperty("enable", b.switchRedact.isChecked)
                 add("extra", JsonArray().apply { extra.forEach { add(it) } })
-            })
-            add("openaiExtras", JsonObject().apply {
-                addProperty("enable", b.switchOeEnable.isChecked)
-                addProperty("upstreamResponses", b.switchOeUpstream.isChecked)
             })
         }
         run({ snack(getString(R.string.pv_save_failed, it)) }, {

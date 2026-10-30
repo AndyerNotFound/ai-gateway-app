@@ -8,12 +8,15 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aigateway.app.R
+import com.aigateway.app.data.BalanceUtil
 import com.aigateway.app.data.Channel
 import com.aigateway.app.databinding.DialogChannelBinding
 import com.aigateway.app.databinding.FragmentProvidersBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProvidersFragment : BaseFragment() {
 
@@ -30,7 +33,8 @@ class ProvidersFragment : BaseFragment() {
         adapter = ChannelAdapter(
             onEdit = { showChannelDialog(it) },
             onDelete = { confirmDelete(it) },
-            onFetchModels = { fetchModels(it) }
+            onFetchModels = { fetchModels(it) },
+            onLongPress = { showRouteDialog(it) }
         ).also { it.themeContext = requireContext() }
         b.channelList.layoutManager = LinearLayoutManager(requireContext())
         b.channelList.adapter = adapter
@@ -38,7 +42,7 @@ class ProvidersFragment : BaseFragment() {
         load()
     }
 
-    
+    /** 基类在实例/连接变化时调用 */
     override fun reload() {
         if (_b != null) load()
     }
@@ -50,14 +54,59 @@ class ProvidersFragment : BaseFragment() {
         }) { cfg ->
             adapter.submit(cfg.channels)
             showEmpty(cfg.channels.isEmpty())
+            loadBalances(cfg.channels)
         }
     }
 
     private fun loadAfterDelay() {
         viewLifecycleOwner.lifecycleScope.launch {
-            
+            // 网关 self-restart 约 3 秒(scheduleRestart 300ms + stop + start), 太短会读到重启前的旧进程
             delay(3500)
             if (isAdded) load()
+        }
+    }
+
+    /** 长按渠道卡片: 一次性路由(只作用于下一次请求) */
+    private fun showRouteDialog(ch: Channel) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(ch.name)
+            .setMessage(getString(R.string.pv_route_off_msg))
+            .setPositiveButton(R.string.pv_route_force) { _, _ -> pushRoute(ch.name) }
+            .setNeutralButton(R.string.pv_route_clear) { _, _ -> pushRoute(null) }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun pushRoute(name: String?) {
+        val backend = backendOrNull() ?: return
+        run({ snack(getString(R.string.pv_save_failed, it)) }, {
+            backend.setOnceChannel(app.connectionStore.activeInstance, name)
+        }) { r ->
+            if (r.ok) toast(getString(R.string.pv_saved))
+            else snack(getString(R.string.pv_save_failed, r.error ?: ""))
+        }
+    }
+
+    /** 渠道卡片上逐条补余额; 失败就不显示, 不打扰 */
+    private fun loadBalances(list: List<Channel>) {
+        val backend = backendOrNull() ?: return
+        val inst = app.connectionStore.activeInstance
+        val warn = app.settings.balanceWarnBelow
+        viewLifecycleOwner.lifecycleScope.launch {
+            for (ch in list) {
+                if (!isAdded) return@launch
+                val j = runCatching {
+                    withContext(Dispatchers.IO) { backend.getBalance(inst, ch.name) }
+                }.getOrNull()
+                val items = j?.let { BalanceUtil.parse(it) }.orEmpty()
+                if (items.isEmpty()) {
+                    adapter.setBalance(ch.name, "", 0)
+                    continue
+                }
+                val text = items.joinToString(" · ") { it.text }
+                val lvl = items.maxOf { BalanceUtil.level(it.value, it.unit, ch.warnBelow, warn) }
+                adapter.setBalance(ch.name, text, lvl)
+            }
         }
     }
 
@@ -66,7 +115,7 @@ class ProvidersFragment : BaseFragment() {
         b.channelList.visibility = if (empty) View.GONE else View.VISIBLE
     }
 
-    
+    // ---------- 新增/编辑 ----------
 
     private fun queryBalance(chName: String) {
         val backend = backendOrNull() ?: return
@@ -74,9 +123,22 @@ class ProvidersFragment : BaseFragment() {
         run({ snack(getString(R.string.load_failed, it)) }, {
             backend.getBalance(app.connectionStore.activeInstance, chName)
         }) { j ->
+            val err = j.get("error")?.takeIf { !it.isJsonNull }?.asString
+            if (!err.isNullOrBlank()) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.pv_balance_title, chName))
+                    .setMessage(err)
+                    .setPositiveButton(R.string.ok, null)
+                    .show()
+                return@run
+            }
+            val balance = j.get("balance")?.takeIf { !it.isJsonNull }?.asString ?: "-"
+            val unit = j.get("unit")?.takeIf { !it.isJsonNull }?.asString.orEmpty()
+            val url = j.get("url")?.takeIf { !it.isJsonNull }?.asString.orEmpty()
+            val msg = if (url.isBlank()) "$balance $unit" else "$balance $unit\n$url"
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(getString(R.string.pv_balance_title, chName))
-                .setMessage(j.get("balance")?.asString + " " + (j.get("unit")?.asString ?: ""))
+                .setMessage(msg)
                 .setPositiveButton(R.string.ok, null)
                 .show()
         }
@@ -89,7 +151,7 @@ class ProvidersFragment : BaseFragment() {
 
         if (existing != null) {
             db.editName.setText(existing.name)
-            
+            // 渠道名可编辑: 改名时后端按 oldName 原子替换(不丢 apiKey)
             db.editType.setText(existing.type, false)
             db.editBaseUrl.setText(existing.baseUrl)
             db.editApiKey.setText(existing.apiKey)
@@ -97,6 +159,10 @@ class ProvidersFragment : BaseFragment() {
             db.editModels.setText(existing.models?.joinToString(", ") ?: "")
             db.editModelMap.setText(existing.modelMap?.entries?.joinToString("\n") { "${it.key}=${it.value}" } ?: "")
             db.editDelayMs.setText(existing.delayMs.toString())
+            db.editBalanceUrl.setText(existing.balanceUrl.orEmpty())
+            db.editBalancePath.setText(existing.balancePath.orEmpty())
+            db.editBalanceUnit.setText(existing.balanceUnit.orEmpty())
+            db.editWarnBelow.setText(existing.warnBelow.orEmpty())
             db.switchDefault.isChecked = existing.default
             db.switchUseResponses.isChecked = existing.useResponses
             db.switchInsecure.isChecked = existing.insecure
@@ -132,6 +198,19 @@ class ProvidersFragment : BaseFragment() {
             label = existing?.label, proxy = proxy, models = models, modelMap = modelMap,
             default = db.switchDefault.isChecked, delayMs = delayMs, insecure = db.switchInsecure.isChecked,
             useResponses = db.switchUseResponses.isChecked,
+            // 服务端渠道端点是整条替换：未在 UI 暴露的字段必须原样带回，否则会被默认值覆盖
+            path = existing?.path,
+            probe = existing?.probe ?: false,
+            lockAt = existing?.lockAt,
+            lockUntil = existing?.lockUntil,
+            transcreet = existing?.transcreet,
+            anthropicVersion = existing?.anthropicVersion,
+            addUsage = existing?.addUsage ?: true,
+            // 恒发(空串=清空); 后端只对「未提交」继承旧值 —— 否则编辑一次渠道会把余额配置抹掉
+            balanceUrl = db.editBalanceUrl.text?.toString()?.trim().orEmpty(),
+            balancePath = db.editBalancePath.text?.toString()?.trim().orEmpty(),
+            balanceUnit = db.editBalanceUnit.text?.toString()?.trim().orEmpty(),
+            warnBelow = db.editWarnBelow.text?.toString()?.trim().orEmpty(),
             oldName = if (existing != null && existing.name != name) existing.name else null
         )
         val backend = backendOrNull() ?: return
@@ -154,7 +233,7 @@ class ProvidersFragment : BaseFragment() {
         return map.ifEmpty { null }
     }
 
-    
+    // ---------- 删除 ----------
 
     private fun confirmDelete(ch: Channel) {
         MaterialAlertDialogBuilder(requireContext())
@@ -173,7 +252,7 @@ class ProvidersFragment : BaseFragment() {
             .show()
     }
 
-    
+    // ---------- 获取模型 ----------
 
     private fun fetchModels(ch: Channel) {
         val backend = backendOrNull() ?: return
