@@ -159,12 +159,12 @@ class EmbeddedFragment : Fragment() {
 
     private fun showLogs() {
         val f = EmbeddedPaths.logFile(requireContext())
-        val text = if (!f.exists()) getString(R.string.emb_log_empty) else {
+        val content = if (!f.exists()) getString(R.string.emb_log_empty) else {
             val all = f.readText()
             if (all.length > 60_000) all.takeLast(60_000) else all
         }
         val tv = TextView(requireContext()).apply {
-            text = text
+            text = content
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 11f
             setTextIsSelectable(true)
