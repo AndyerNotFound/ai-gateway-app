@@ -608,8 +608,9 @@
     <string name="sa_totp">TOTP</string>
     <string name="sa_totp_enable">Enable TOTP</string>
     <string name="sa_totp_disable">Disable</string>
-    <string name="sa_totp_secret_fmt">Secret (save to authenticator now): %1$s</string>
-    <string name="sa_totp_save_warn">TOTP enabled. Save the secret now!</string>
+    <string name="sa_totp_secret_fmt">Secret (tap to copy, save it now): %1$s</string>
+    <string name="sa_totp_url_fmt">otpauth: %1$s</string>
+    <string name="sa_totp_save_warn">TOTP enabled. Tap the secret to copy it — save it now!</string>
     <string name="sa_status_fmt">Web Token %1$s · 2nd key %2$s · TOTP %3$s</string>
     <!-- Tunnel -->
     <string name="tn_title">Public Tunnel (cloudflared)</string>

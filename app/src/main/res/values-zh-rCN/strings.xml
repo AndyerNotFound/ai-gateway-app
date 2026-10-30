@@ -608,8 +608,9 @@
     <string name="sa_totp">TOTP 动态验证</string>
     <string name="sa_totp_enable">启用 TOTP</string>
     <string name="sa_totp_disable">停用</string>
-    <string name="sa_totp_secret_fmt">密钥(请立即保存到验证器): %1$s</string>
-    <string name="sa_totp_save_warn">TOTP 已启用, 请立即保存密钥!</string>
+    <string name="sa_totp_secret_fmt">密钥（点按可复制，请立即保存）: %1$s</string>
+    <string name="sa_totp_url_fmt">otpauth 链接: %1$s</string>
+    <string name="sa_totp_save_warn">TOTP 已启用。点按密钥可复制，请立即保存！</string>
     <!-- 隧道 -->
     <string name="tn_title">公网隧道 (cloudflared)</string>
     <string name="tn_desc">免费临时域名, 让外网访问本网关。手机/内网部署适用。</string>

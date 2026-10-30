@@ -13,6 +13,10 @@ Holy shit I don't know How to continue so it's short
 - **Accounts removed**: user registration, password login and the user-management pages are gone from both the app and the server. API key cards stay exactly where they were.
 - **Smaller APK**: release builds now run R8 and resource shrinking.
 
+## 0.5.3
+
+- Second factor: the TOTP secret no longer disappears right after "Enable TOTP". It stays on screen (tap to copy), the otpauth link is shown too, and the copy stored in the connection profile is shown when you come back to the page.
+
 ## 0.5.2
 
 - Built-in gateway: repeated start, stop→start, and system restarts can no longer call the Node runtime twice, leave the UI stuck at "starting", or bring a stopped gateway back to life.

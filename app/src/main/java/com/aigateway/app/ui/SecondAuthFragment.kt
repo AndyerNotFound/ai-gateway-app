@@ -1,5 +1,7 @@
 package com.aigateway.app.ui
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,10 @@ class SecondAuthFragment : BaseFragment() {
     private var _b: FragmentSecondauthBinding? = null
     private val b get() = _b!!
 
+    /** 刚启用/本机已保存的 TOTP 密钥。服务端只在 enable 那一次返回，必须留在界面上。 */
+    private var shownSecret: String? = null
+    private var shownUrl: String? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _b = FragmentSecondauthBinding.inflate(inflater, container, false)
         return b.root
@@ -23,6 +29,7 @@ class SecondAuthFragment : BaseFragment() {
         b.saSaveSecond.setOnClickListener { saveSecondKey() }
         b.saTotpEnable.setOnClickListener { totp("enable") }
         b.saTotpDisable.setOnClickListener { totp("disable") }
+        b.saTotpInfo.setOnClickListener { copySecret() }
         load()
     }
 
@@ -42,8 +49,42 @@ class SecondAuthFragment : BaseFragment() {
                 if (second) "✓" else "✗",
                 if (totp) "✓" else "✗"
             )
-            b.saTotpInfo.visibility = View.GONE
+            if (!totp) {
+                shownSecret = null
+                shownUrl = null
+            } else if (shownSecret.isNullOrBlank() && app.connectionStore.activeInstance == "default") {
+                // The server never returns the secret again; the copy saved in the profile is the only
+                // way to show it after leaving this page.
+                val stored = app.connectionStore.getCurrentProfile()?.totpSecret.orEmpty()
+                if (stored.isNotBlank()) shownSecret = stored
+            }
+            renderTotp()
         }
+    }
+
+    /** 不要把刚显示的密钥再藏起来：load() 每次成功都会走到这里。 */
+    private fun renderTotp() {
+        val secret = shownSecret
+        if (secret.isNullOrBlank()) {
+            b.saTotpInfo.visibility = View.GONE
+            return
+        }
+        b.saTotpInfo.visibility = View.VISIBLE
+        b.saTotpInfo.text = buildString {
+            append(getString(R.string.sa_totp_secret_fmt, secret))
+            val url = shownUrl
+            if (!url.isNullOrBlank()) {
+                append("\n")
+                append(getString(R.string.sa_totp_url_fmt, url))
+            }
+        }
+    }
+
+    private fun copySecret() {
+        val secret = shownSecret ?: return
+        val cm = requireContext().getSystemService(ClipboardManager::class.java) ?: return
+        cm.setPrimaryClip(ClipData.newPlainText("TOTP", secret))
+        toast(getString(R.string.sdui_copied))
     }
 
     private fun saveSecondKey() {
@@ -76,12 +117,17 @@ class SecondAuthFragment : BaseFragment() {
         }) { j ->
             if (action == "enable" && j.has("totpSecret")) {
                 val secret = j.get("totpSecret").asString
-                b.saTotpInfo.visibility = View.VISIBLE
-                b.saTotpInfo.text = getString(R.string.sa_totp_secret_fmt, secret)
+                shownSecret = secret
+                shownUrl = j.get("otpauthUrl")?.asString
+                    ?: "otpauth://totp/ai-gateway-${app.connectionStore.activeInstance}?secret=$secret&issuer=ai-gateway"
                 syncProfile(totp = secret)
+                renderTotp()
                 snack(getString(R.string.sa_totp_save_warn))
             } else if (action == "disable") {
+                shownSecret = null
+                shownUrl = null
                 syncProfile(totp = "")
+                renderTotp()
             }
             load()
         }
