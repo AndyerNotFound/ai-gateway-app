@@ -44,6 +44,14 @@ class EmbeddedGatewayService : Service() {
 
         /** nodejs-mobile 一个进程只能启动一次 Node；本标志在进程内生效。 */
         private val nodeStarted = java.util.concurrent.atomic.AtomicBoolean(false)
+
+        /**
+         * stopSelf() 之后必须给 AMS 一点时间落账再杀进程：立刻自杀会被当成崩溃，
+         * START_STICKY 会把服务重新拉起来，"停止"就失效了。
+         * 这个任务可被下一次 START 取消（用户快速 停止→启动 时网关继续跑）。
+         */
+        private val killHandler = Handler(Looper.getMainLooper())
+        private val killTask = Runnable { android.os.Process.killProcess(android.os.Process.myPid()) }
     }
 
     private val main = Handler(Looper.getMainLooper())
@@ -54,6 +62,8 @@ class EmbeddedGatewayService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        // A pending kill from the previous instance must not murder this one.
+        Companion.killHandler.removeCallbacks(Companion.killTask)
         stopping = false
         createChannel()
         startInForeground(getString(R.string.emb_notif_starting))
@@ -65,11 +75,15 @@ class EmbeddedGatewayService : Service() {
                 stopping = true
                 EmbeddedPaths.writeStatus(this, "stopped", EmbeddedPaths.portOf(this))
                 stopSelf()
-                // Immediate: a delayed kill would murder a service restarted moments later.
-                android.os.Process.killProcess(android.os.Process.myPid())
+                Companion.killHandler.removeCallbacks(Companion.killTask)
+                Companion.killHandler.postDelayed(Companion.killTask, 150)
                 return START_NOT_STICKY
             }
         }
+        // Any real START cancels a stop that has not killed the process yet: the Node thread is
+        // still alive and simply keeps serving.
+        Companion.killHandler.removeCallbacks(Companion.killTask)
+        stopping = false
         if (intent == null && recentCrash()) {
             EmbeddedPaths.writeStatus(this, "error", EmbeddedPaths.portOf(this), getString(R.string.emb_err_crash_loop))
             stopSelf()
@@ -217,10 +231,14 @@ class EmbeddedGatewayService : Service() {
             EmbeddedPaths.writeStatus(this, "stopped", EmbeddedPaths.portOf(this))
         }
         super.onDestroy()
-        // The service owns a dedicated process, so this kills only Node -- never the UI process.
-        // No delay: a queued kill would murder a service the user restarts moments later.
         main.removeCallbacksAndMessages(null)
-        android.os.Process.killProcess(android.os.Process.myPid())
+        // An explicit STOP already scheduled the kill (and stopSelf has been reported); killing here
+        // would race a service the user restarts moments later. A system-initiated destroy has no
+        // pending task, so the Node process must not be left running without a foreground service.
+        if (!stopping) {
+            Companion.killHandler.removeCallbacks(Companion.killTask)
+            android.os.Process.killProcess(android.os.Process.myPid())
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder? = null

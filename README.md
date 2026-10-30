@@ -13,8 +13,8 @@ Holy shit I don't know How to continue so it's short
 - **Accounts removed**: user registration, password login and the user-management pages are gone from both the app and the server. API key cards stay exactly where they were.
 - **Smaller APK**: release builds now run R8 and resource shrinking.
 
-## 0.5.1
+## 0.5.2
 
-- Built-in gateway: repeated start or a stop→start sequence can no longer call the Node runtime twice or leave the UI stuck at "starting".
+- Built-in gateway: repeated start, stop→start, and system restarts can no longer call the Node runtime twice, leave the UI stuck at "starting", or bring a stopped gateway back to life.
 - Built-in gateway: a dedicated "Local gateway" profile is created instead of overwriting the remote server address.
 - Web Token rotation: only the current token may rotate. The 5-minute old-token grace is gone — a revoked token stops working immediately.
