@@ -57,6 +57,9 @@ function applyDefaults(cfg) {
   // self-registration settings so they are never written back to disk.
   delete cfg.users;
   delete cfg.registration;
+  // Old-token grace removed: a revoked webToken must stop working immediately.
+  delete cfg.webTokenPrev;
+  delete cfg.webTokenPrevUntil;
 // Privacy filter: enable is the instance master switch; response filters the response direction; extra is custom regexes (string array)
   cfg.redact = (cfg.redact && typeof cfg.redact === 'object') ? cfg.redact : {};
   cfg.redact.enable = cfg.redact.enable !== false;

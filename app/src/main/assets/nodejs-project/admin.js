@@ -136,6 +136,9 @@ function saveCfg(name, cfg) {
   // Legacy multi-user data must never be written back (removed 2026-10).
   delete clean.users;
   delete clean.registration;
+  // The 5-minute old-token grace was a full admin window for anyone holding the old token; it is gone.
+  delete clean.webTokenPrev;
+  delete clean.webTokenPrevUntil;
   const plain = JSON.stringify(clean, null, 2) + '\n';
   let text = plain;
 if (crypt) { const pass = crypt.loadPass(); if (pass) text = crypt.encryptText(plain, pass); } // with a passphrase, everything is encrypted on write (fresh salt each time)
@@ -235,7 +238,6 @@ function totpVerify(secretB32, code) {
 }
 
 //// admin auth: panel session cookie / runtime admin token / optional webToken
-const WEB_TOKEN_GRACE_MS = 5 * 60 * 1000;
 // Session cookie name is port-scoped: cookies are not isolated per port, and several gateways may run
 // side by side on 127.0.0.1 -- a fixed name would let one login overwrite another instance's session.
 function sessCookieName(cfg) {
@@ -263,10 +265,7 @@ function checkAdminAuth(cfg, req, query, opts = {}) {
 
 // Optional long-lived API token (kept for scripts; the panel itself only accepts a login session)
   if (!opts.panel) {
-    const validTokens = [];
-    if (cfg.webToken) validTokens.push(cfg.webToken);
-    if (cfg.webTokenPrev && Number(cfg.webTokenPrevUntil) > Date.now()) validTokens.push(cfg.webTokenPrev);
-    if (validTokens.some(t => supplied.includes(t))) mainOk = true;
+    if (cfg.webToken && supplied.includes(cfg.webToken)) mainOk = true;
     if (!mainOk && cfg.webToken && (h.cookie || '').includes(`agwWeb=${cfg.webToken}`)) mainOk = true;
     if (!mainOk && panelState && panelState.adminToken && supplied.includes(panelState.adminToken)) mainOk = true;
   }
@@ -856,28 +855,33 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
 
   const api = p.slice('/admin/api/'.length);
 
-// POST /admin/api/web-token/rotate -- rotate the long-lived API token; old token stays valid for 5 min
+// POST /admin/api/web-token/rotate -- rotate the long-lived API token.
+// Only the *current* webToken may rotate: a leaked/old token must never be able to mint a new one.
+// A lost response is recovered out of band (agw web login / CLI), never by keeping the old token alive.
   if (api === 'web-token/rotate') {
-    if (req.method !== 'POST') return jsonRes(res, 405, { error: '只支持 POST' });
+    if (req.method !== 'POST') return jsonRes(res, 405, { error: '只支持 POST', Allow: 'POST' });
+    const hh = req.headers || {};
+    const bearer2 = String(hh.authorization || '').startsWith('Bearer ') ? String(hh.authorization).slice(7).trim() : '';
+    const supplied2 = [bearer2, hh['x-agw-token'], u.searchParams && u.searchParams.get('key')].filter(Boolean);
+    if (!cfg.webToken || !supplied2.includes(cfg.webToken)) {
+      return jsonRes(res, 401, { error: '轮换需要当前 webToken（x-agw-token），不接受旧 token / 面板会话' });
+    }
     const nm = cfg._name || currentName(cfg);
-    const oldToken = String(cfg.webToken || '');
-    if (!oldToken) return jsonRes(res, 409, { error: '当前 webToken 为空，无法轮换；请先在配置中设置一个 token' });
     const newToken = require('crypto').randomBytes(24).toString('base64url');
-    const prevUntil = Date.now() + WEB_TOKEN_GRACE_MS;
     try {
       const disk = loadCfg(nm);
       if (!disk) return jsonRes(res, 404, { error: '实例不存在' });
-      disk.webTokenPrev = oldToken;
-      disk.webTokenPrevUntil = prevUntil;
       disk.webToken = newToken;
+      delete disk.webTokenPrev;
+      delete disk.webTokenPrevUntil;
       saveCfg(nm, disk);
     } catch (e) {
       return jsonRes(res, 500, { error: '轮换失败: ' + e.message });
     }
-    cfg.webTokenPrev = oldToken;
-    cfg.webTokenPrevUntil = prevUntil;
     cfg.webToken = newToken;
-    return jsonRes(res, 200, { ok: true, webToken: newToken, prevUntil });
+    delete cfg.webTokenPrev;
+    delete cfg.webTokenPrevUntil;
+    return jsonRes(res, 200, { ok: true, webToken: newToken });
   }
 
 // POST /admin/api/web-expired -- log out every panel session (agw admin expire)
@@ -1258,8 +1262,8 @@ async function handleAdmin(cfg, req, res, u, p, bodyStr) {
       const oldToken = String(c.webToken || '');
       if (nextToken !== oldToken) {
         if (nextToken && oldToken) {
-          c.webTokenPrev = oldToken;
-          c.webTokenPrevUntil = Date.now() + WEB_TOKEN_GRACE_MS;
+          delete c.webTokenPrev;
+          delete c.webTokenPrevUntil;
         } else {
           delete c.webTokenPrev;
           delete c.webTokenPrevUntil;
