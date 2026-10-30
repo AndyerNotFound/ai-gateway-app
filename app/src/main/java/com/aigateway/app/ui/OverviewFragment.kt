@@ -33,7 +33,7 @@ class OverviewFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         b.btnRefresh.setOnClickListener { load() }
         b.btnRouting.setOnClickListener { (activity as? MainActivity)?.showFragment("routing") }
-        b.btnConnection.setOnClickListener { (activity as? MainActivity)?.showConnectionDialog() }
+        b.btnConnection.setOnClickListener { (activity as? MainActivity)?.showConnectionDialogPublic() }
         b.btnTheme.setOnClickListener { (activity as? MainActivity)?.showThemeDialogPublic() }
         b.btnAllStats.setOnClickListener { (activity as? MainActivity)?.showFragment("stats") }
         b.btnAllRequests.setOnClickListener { (activity as? MainActivity)?.showFragment("requests") }
