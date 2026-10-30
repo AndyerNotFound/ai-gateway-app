@@ -6,3 +6,9 @@ It can also filter some **privacy contents** like API-Keys\IDcards\Passwords and
 And it can **route** your requests automatically between different channels. 
 Holy shit I don't know How to continue so it's short
 ☝️🤓
+## 0.5.0
+
+- **Built-in gateway**: run ai-gateway-AI on the phone itself. A foreground service (separate `:node` process) hosts the bundled Node 18.20.4 runtime, so the phone can serve `/v1` without Termux. Battery-optimization whitelist is one tap away; nothing auto-starts after reboot.
+- **File extractor**: open a `requests-<instance>.jsonl` (or a JSON array) with the system file picker and read the request/response bodies of every recorded call.
+- **Accounts removed**: user registration, password login and the user-management pages are gone from both the app and the server. API key cards stay exactly where they were.
+- **Smaller APK**: release builds now run R8 and resource shrinking.
