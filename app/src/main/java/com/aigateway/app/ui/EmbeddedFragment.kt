@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.aigateway.app.App
 import com.aigateway.app.BuildConfig
 import com.aigateway.app.MainActivity
@@ -27,6 +28,9 @@ import com.aigateway.app.embedded.EmbeddedGatewayService
 import com.aigateway.app.embedded.EmbeddedPaths
 import com.aigateway.app.embedded.NodeBridge
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /** 内置网关：在手机本地运行 ai-gateway-AI（Node 18.20.4 运行时）。 */
 class EmbeddedFragment : Fragment() {
@@ -36,6 +40,12 @@ class EmbeddedFragment : Fragment() {
     private val app: App get() = requireActivity().application as App
     private val main = Handler(Looper.getMainLooper())
     private var polling = false
+    private var probing = false
+
+    private companion object {
+        const val PROFILE_LABEL = "Local gateway"
+        const val STARTING_TIMEOUT_MS = 45_000L
+    }
 
     private val tick = object : Runnable {
         override fun run() {
@@ -74,7 +84,10 @@ class EmbeddedFragment : Fragment() {
 
     private fun refresh() {
         if (_b == null) return
-        val st = EmbeddedPaths.readStatus(requireContext())
+        val raw = EmbeddedPaths.readStatus(requireContext())
+        // A process killed while starting leaves "starting" behind forever; age it out.
+        val st = if (raw.state == "starting" && System.currentTimeMillis() - raw.since > STARTING_TIMEOUT_MS)
+            raw.copy(state = "stopped") else raw
         val pageSize = NodeBridge.pageSize()
         b.embStatus.text = when (st.state) {
             "running" -> getString(R.string.emb_state_running)
@@ -96,6 +109,26 @@ class EmbeddedFragment : Fragment() {
         b.embStop.isEnabled = st.running || st.state == "starting"
         b.embUse.isEnabled = st.running
         b.embBatteryState.text = batteryStateText()
+        if (st.running && !probing) probe(st.port)
+    }
+
+    /** The status file is written by another process; a dead process leaves "running" behind. */
+    private fun probe(port: Int) {
+        probing = true
+        viewLifecycleOwner.lifecycleScope.launch {
+            val alive = withContext(Dispatchers.IO) {
+                runCatching {
+                    java.net.Socket().use { it.connect(java.net.InetSocketAddress("127.0.0.1", port), 300) }
+                    true
+                }.getOrDefault(false)
+            }
+            probing = false
+            if (_b == null) return@launch
+            if (!alive) {
+                b.embStatus.text = getString(R.string.emb_state_unreachable)
+                b.embUse.isEnabled = false
+            }
+        }
     }
 
     private fun batteryStateText(): String {
@@ -143,14 +176,17 @@ class EmbeddedFragment : Fragment() {
             toast(getString(R.string.emb_err_token))
             return
         }
-        val profile = (app.connectionStore.getCurrentProfile() ?: ConnectionProfile()).apply {
-            baseUrl = "http://127.0.0.1:${st.port}"
-            webToken = token
-            secondKey = ""
-            totpSecret = ""
-            allowInsecureTls = false
-        }
+        // Never overwrite the user's remote server: keep a dedicated local profile instead.
+        val store = app.connectionStore
+        val profile = store.getProfiles().firstOrNull { it.label == PROFILE_LABEL }
+            ?: ConnectionProfile(label = PROFILE_LABEL)
+        profile.baseUrl = "http://127.0.0.1:${st.port}"
+        profile.webToken = token
+        profile.secondKey = ""
+        profile.totpSecret = ""
+        profile.allowInsecureTls = false
         app.updateRemoteProfile(profile)
+        store.currentProfileId = profile.id
         app.connectionStore.activeInstance = "default"
         app.connectionStore.setupDone = true
         (activity as? MainActivity)?.onProfileChanged()
@@ -159,10 +195,7 @@ class EmbeddedFragment : Fragment() {
 
     private fun showLogs() {
         val f = EmbeddedPaths.logFile(requireContext())
-        val content = if (!f.exists()) getString(R.string.emb_log_empty) else {
-            val all = f.readText()
-            if (all.length > 60_000) all.takeLast(60_000) else all
-        }
+        val content = tail(f, 60_000) ?: getString(R.string.emb_log_empty)
         val tv = TextView(requireContext()).apply {
             text = content
             typeface = android.graphics.Typeface.MONOSPACE
@@ -177,6 +210,19 @@ class EmbeddedFragment : Fragment() {
             .setView(scroll)
             .setPositiveButton(R.string.ok, null)
             .show()
+    }
+
+    private fun tail(f: java.io.File, max: Int): String? {
+        if (!f.exists() || f.length() == 0L) return null
+        return runCatching {
+            java.io.RandomAccessFile(f, "r").use { raf ->
+                val start = maxOf(0L, raf.length() - max)
+                raf.seek(start)
+                val buf = ByteArray((raf.length() - start).toInt())
+                raf.readFully(buf)
+                String(buf, Charsets.UTF_8)
+            }
+        }.getOrNull()
     }
 
     private fun requestBatteryWhitelist() {

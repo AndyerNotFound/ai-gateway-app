@@ -63,7 +63,7 @@ class FileExtractorFragment : Fragment() {
                         ?: RecordParser.Result(emptyList(), "无法打开文件")
                 }.getOrElse { RecordParser.Result(emptyList(), it.message ?: "") }
             }
-            if (!isAdded) return@launch
+            if (_b == null) return@launch
             b.extProgress.visibility = View.GONE
             if (result.error != null) {
                 toast(getString(R.string.ext_parse_error, result.error))

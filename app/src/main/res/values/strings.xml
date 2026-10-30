@@ -826,6 +826,7 @@
     <string name="emb_detail_pid">pid %1$d</string>
     <string name="emb_detail_runtime">Node %1$s · app %2$s</string>
     <string name="emb_detail_pagesize">page size %1$d</string>
+    <string name="emb_state_unreachable">Running (port not responding)</string>
     <string name="emb_start">Start</string>
     <string name="emb_stop">Stop</string>
     <string name="emb_use">Manage this gateway</string>

@@ -809,6 +809,7 @@
     <string name="emb_detail_pid">进程 %1$d</string>
     <string name="emb_detail_runtime">Node %1$s · 应用 %2$s</string>
     <string name="emb_detail_pagesize">内存页 %1$d</string>
+    <string name="emb_state_unreachable">运行中（端口无响应）</string>
     <string name="emb_start">启动</string>
     <string name="emb_stop">停止</string>
     <string name="emb_use">管理这个网关</string>

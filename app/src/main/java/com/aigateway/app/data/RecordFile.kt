@@ -30,7 +30,7 @@ object RecordParser {
 
     fun parse(input: InputStream, maxRecords: Int = 2000): Result {
         return try {
-            val reader = BufferedReader(InputStreamReader(input, Charsets.UTF_8))
+            val reader = bomSkippingReader(input)
             val first = firstNonWhitespace(reader)
             if (first == '[') Result(parseArray(readBounded(reader, MAX_ARRAY_CHARS), maxRecords))
             else Result(parseLines(reader, maxRecords))
@@ -54,6 +54,15 @@ object RecordParser {
         return sb.toString()
     }
 
+    /** Windows/Android exporters often prepend a UTF-8 BOM; otherwise the first line is dropped. */
+    private fun bomSkippingReader(input: InputStream): BufferedReader {
+        val raw = java.io.BufferedInputStream(input)
+        raw.mark(3)
+        val b0 = raw.read(); val b1 = raw.read(); val b2 = raw.read()
+        if (!(b0 == 0xEF && b1 == 0xBB && b2 == 0xBF)) raw.reset()
+        return BufferedReader(InputStreamReader(raw, Charsets.UTF_8))
+    }
+
     private fun firstNonWhitespace(reader: BufferedReader): Char {
         reader.mark(4096)
         var c = reader.read()
@@ -65,12 +74,15 @@ object RecordParser {
     private fun parseArray(text: String, max: Int): List<RequestRecord> {
         val arr = JsonParser.parseString(text)
         if (!arr.isJsonArray) return emptyList()
-        val out = ArrayList<RequestRecord>()
+        // Keep the newest `max` entries, same as the JSONL path.
+        val out = ArrayDeque<RequestRecord>()
         for (el in arr.asJsonArray) {
-            toRecord(el)?.let { out.add(it) }
-            if (out.size >= max) break
+            toRecord(el)?.let {
+                out.addLast(it)
+                if (out.size > max) out.removeFirst()
+            }
         }
-        return out.asReversed()
+        return out.toList().asReversed()
     }
 
     private fun parseLines(reader: BufferedReader, max: Int): List<RequestRecord> {
@@ -81,8 +93,8 @@ object RecordParser {
                 toRecord(JsonParser.parseString(line))?.let { out.add(it) }
             } catch (_: Exception) {}
         }
-        if (out.size > max) return out.subList(out.size - max, out.size).asReversed()
-        return out.asReversed()
+        val kept = if (out.size > max) out.subList(out.size - max, out.size).toList() else out.toList()
+        return kept.asReversed()
     }
 
     private fun toRecord(el: JsonElement): RequestRecord? {

@@ -41,6 +41,9 @@ class EmbeddedGatewayService : Service() {
         fun stop(ctx: android.content.Context) {
             ctx.stopService(Intent(ctx, EmbeddedGatewayService::class.java))
         }
+
+        /** nodejs-mobile 一个进程只能启动一次 Node；本标志在进程内生效。 */
+        private val nodeStarted = java.util.concurrent.atomic.AtomicBoolean(false)
     }
 
     private val main = Handler(Looper.getMainLooper())
@@ -51,6 +54,7 @@ class EmbeddedGatewayService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        stopping = false
         createChannel()
         startInForeground(getString(R.string.emb_notif_starting))
     }
@@ -58,7 +62,11 @@ class EmbeddedGatewayService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_STOP -> {
+                stopping = true
+                EmbeddedPaths.writeStatus(this, "stopped", EmbeddedPaths.portOf(this))
                 stopSelf()
+                // Immediate: a delayed kill would murder a service restarted moments later.
+                android.os.Process.killProcess(android.os.Process.myPid())
                 return START_NOT_STICKY
             }
         }
@@ -76,6 +84,14 @@ class EmbeddedGatewayService : Service() {
 
     private fun launchNode() {
         if (stopping) return
+        // Repeated START (double tap / sticky restart) must never call node::Start twice.
+        if (!Companion.nodeStarted.compareAndSet(false, true)) {
+            waitUntilListening()
+            return
+        }
+        val port = EmbeddedPaths.portOf(this)
+        // Written synchronously *before* the worker starts, so a stale "error" can never abort the wait.
+        EmbeddedPaths.writeStatus(this, "starting", port)
         val pageSize = NodeBridge.pageSize()
         if (pageSize != 4096) {
             fail(getString(R.string.emb_err_pagesize, pageSize))
@@ -94,7 +110,6 @@ class EmbeddedGatewayService : Service() {
                 fail(getString(R.string.emb_err_assets, t.message ?: ""))
                 return@Thread
             }
-            val port = EmbeddedPaths.portOf(this)
             EmbeddedPaths.writeStatus(this, "starting", port)
             updateNotification(getString(R.string.emb_notif_starting))
 
@@ -194,9 +209,18 @@ class EmbeddedGatewayService : Service() {
 
     override fun onDestroy() {
         stopping = true
-        EmbeddedPaths.writeStatus(this, "stopped", EmbeddedPaths.portOf(this))
+        val st = EmbeddedPaths.readStatus(this)
+        // Keep the failure text: the UI polls this file and "stopped" with an empty error hides the cause.
+        if (st.state == "error") {
+            EmbeddedPaths.writeStatus(this, "error", st.port, st.error)
+        } else {
+            EmbeddedPaths.writeStatus(this, "stopped", EmbeddedPaths.portOf(this))
+        }
         super.onDestroy()
-        main.postDelayed({ android.os.Process.killProcess(android.os.Process.myPid()) }, 200)
+        // The service owns a dedicated process, so this kills only Node -- never the UI process.
+        // No delay: a queued kill would murder a service the user restarts moments later.
+        main.removeCallbacksAndMessages(null)
+        android.os.Process.killProcess(android.os.Process.myPid())
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
