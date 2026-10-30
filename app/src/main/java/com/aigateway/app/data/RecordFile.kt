@@ -24,6 +24,7 @@ data class RequestRecord(
 object RecordParser {
 
     private val pretty = GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create()
+    private const val MAX_ARRAY_CHARS = 32 * 1024 * 1024
 
     data class Result(val records: List<RequestRecord>, val error: String? = null)
 
@@ -31,11 +32,26 @@ object RecordParser {
         return try {
             val reader = BufferedReader(InputStreamReader(input, Charsets.UTF_8))
             val first = firstNonWhitespace(reader)
-            if (first == '[') Result(parseArray(reader.readText(), maxRecords))
+            if (first == '[') Result(parseArray(readBounded(reader, MAX_ARRAY_CHARS), maxRecords))
             else Result(parseLines(reader, maxRecords))
         } catch (t: Throwable) {
             Result(emptyList(), t.message ?: t.javaClass.simpleName)
         }
+    }
+
+    /** JSON 数组必须整体解析；超过上限直接报错，避免大文件把内存打爆。 */
+    private fun readBounded(reader: BufferedReader, limit: Int): String {
+        val sb = StringBuilder()
+        val buf = CharArray(16 * 1024)
+        var total = 0
+        while (true) {
+            val n = reader.read(buf)
+            if (n < 0) break
+            total += n
+            if (total > limit) throw IllegalStateException("JSON array larger than ${limit / 1024 / 1024}MB")
+            sb.append(buf, 0, n)
+        }
+        return sb.toString()
     }
 
     private fun firstNonWhitespace(reader: BufferedReader): Char {
