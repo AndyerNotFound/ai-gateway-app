@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 750" width="512" height="512">
+  <rect width="750" height="750" fill="#000000"/>
+  <g fill="#FFFFFF" fill-rule="evenodd">
+    <path d="M 150 130 L 640 130 L 640 188 L 150 188 Z"/>
+    <path d="M 584 188 L 640 188 L 640 548 L 584 548 Z"/>
+    <path d="M 145 196 L 200 196 L 200 600 L 145 600 Z"/>
+    <path d="M 145 545 L 505 545 L 505 600 L 145 600 Z"/>
+    <path d="M 62 88 L 150 130 L 150 188 L 300 238 Z"/>
+    <path d="M 280 200 L 575 200 L 575 528 L 280 528 L 322 242 L 322 486 L 533 486 L 533 242 Z"/>
+    <path d="M 280 486 L 208 528 L 280 528 Z"/>
+    <path d="M 548 492 L 700 492 L 700 545 L 644 545 L 578 700 L 540 576 L 498 652 L 540 545 L 548 545 Z"/>
+  </g>
+</svg>
