@@ -79,6 +79,12 @@ Module._load = function (request, parent, isMain) {
 process.env.AGW_SINGLE = '1';
 delete process.env.AGW_HOT;
 
+// Android has no $HOME and no writable /tmp: os.homedir() throws ENOENT and os.tmpdir() points at
+// a path that does not exist, both of which are hit at module load time (admin.js, server.js).
+process.env.HOME = DATA;
+process.env.TMPDIR = path.join(DATA, 'tmp');
+try { fs.mkdirSync(process.env.TMPDIR, { recursive: true }); } catch (_) {}
+
 process.on('uncaughtException', e => console.error('uncaughtException:', e && (e.stack || e.message) || e));
 process.on('unhandledRejection', e => console.error('unhandledRejection:', e && (e.message || e) || e));
 
