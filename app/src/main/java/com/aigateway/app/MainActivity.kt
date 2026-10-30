@@ -367,8 +367,7 @@ class MainActivity : AppCompatActivity() {
         db.editKey.setText(cur?.webToken.orEmpty())
         db.editSecondKey.setText(cur?.secondKey.orEmpty())
         db.editTotpSecret.setText(cur?.totpSecret.orEmpty())
-        db.cbAllowInsecure.isChecked = cur?.allowInsecureTls == true ||
-            ConnectionStore.isLoopbackUrl(cur?.baseUrl ?: ConnectionStore.DEFAULT_URL)
+        db.cbAllowInsecure.isChecked = cur?.allowInsecureTls == true
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.menu_connection)

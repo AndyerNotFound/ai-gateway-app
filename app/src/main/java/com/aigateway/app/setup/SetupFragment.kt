@@ -29,8 +29,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         val cur = app.connectionStore.getCurrentProfile()
         b.editUrl.setText(cur?.baseUrl ?: ConnectionStore.DEFAULT_URL)
         b.editKey.setText(cur?.webToken.orEmpty())
-        b.cbAllowInsecure.isChecked = cur?.allowInsecureTls == true ||
-            ConnectionStore.isLoopbackUrl(cur?.baseUrl ?: ConnectionStore.DEFAULT_URL)
+        b.cbAllowInsecure.isChecked = cur?.allowInsecureTls == true
         b.btnConnect.setOnClickListener { connectAndEnter() }
     }
 
